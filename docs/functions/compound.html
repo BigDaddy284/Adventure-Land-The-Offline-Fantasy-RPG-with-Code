@@ -1,0 +1,144 @@
+<p>{{ phrase("docs.functions.compound.arguments") }}</p>
+	<div>{{ phrase_html("docs.functions.compound.integer-inventory-index-of-the-first-item-0") }}</div>
+	<div>{{ phrase_html("docs.functions.compound.integer-inventory-index-of-the-second-item-0") }}</div>
+	<div>{{ phrase_html("docs.functions.compound.integer-inventory-index-of-the-third-item-0") }}</div>
+	<div>{{ phrase_html("docs.functions.compound.integer-inventory-index-of-the-scroll-0-to") }}</div>
+	<div>{{ phrase_html("docs.functions.compound.integer-optional-inventory-index-of-the-offering-0") }}</div>
+	<div>{{ phrase_html("docs.functions.compound.boolean-optional-calculate-the-chance-without-starting-the") }}</div>
+<p>{{ phrase("docs.functions.compound.returns") }}</p>
+	<div>{{ phrase_html("docs.functions.compound.promise") }}</div>
+<p>{{ phrase("interface.item.scroll_consumed") }}</p>
+
+<!-- <p>Current inventory with indexes: <br/><span class="xlabel" onclick="code_eval($(this).html())">show_json([Array(42).keys()].reduce(function(map,i){ map[i]=character.items[i]; return map; },{}))</span></p> -->
+
+<p>{{ phrase("docs.functions.compound.example-usages") }}</p>
+
+<div class='code'>
+compound(0,1,2,3); // Combines the first 3 items in your inventory [0,1,2] using the scroll in the 4th slot [3]
+
+compound(0,1,2,3,4); // A primordial essence in the 5th slot[4]
+
+async function preview_compound() {
+	var preview = await compound(0,1,2,3,null,true); // Consumes nothing
+	game_log("Chance: "+(preview.chance*100).toFixed(2)+"%");
+}
+
+if(character.q.compound) log("Already combining something!");
+
+compound(0,1,2,locate_item("cscroll0")).then(function(data){
+	if(data.success) game_log("I have a +"+data.level+" accessory now!");
+	else game_log("Rip accessories, you'll be missed.");
+});
+
+compound(0,1,2,locate_item("cscroll0")).then(
+	function(data){
+		game_log("Compound call completed");
+		log(data);
+	},
+	function(data){
+		game_log("Compound call failed with reason: "+data.reason);
+	},
+);
+</div>
+
+<p>{{ phrase("docs.functions.compound.promise-reference") }}</p>
+
+<span class='dlabel'>{{ phrase("docs.reference.fulfilled") }}</span>
+<div class='code'>
+{
+	success: true,
+	calculate: true,
+	chance: 0.95,
+	item: {name: "ringsj", level: 0},
+	scroll: "cscroll0",
+	grace: 0,
+}
+</div>
+<div style='margin-bottom: 1px'></div>
+<div class='code'>
+{
+	success: true,
+	level: 2,
+	num: 16, // Inventory index
+}
+</div>
+<div style='margin-bottom: 1px'></div>
+<div class='code'>
+{
+	success: false, // Compound failed
+	failed: true, 
+	level: 2,
+	num: 16,
+}
+</div>
+<div style='margin-bottom: 10px'></div>
+
+<span class='dlabel'>{{ phrase("docs.reference.rejected") }}</span>
+<div class='code'>
+{
+	reason: "max_level", // Item reached it's max level
+}
+</div>
+<div style='margin-bottom: 1px'></div>
+<div class='code'>
+{
+	reason: "scroll", // Incompatible scroll
+}
+</div>
+<div style='margin-bottom: 1px'></div>
+<div class='code'>
+{
+	reason: "locked", // Item locked
+}
+</div>
+<div style='margin-bottom: 1px'></div>
+<div class='code'>
+{
+	reason: "in_progress", // Another compound in progress
+}
+</div>
+<div style='margin-bottom: 1px'></div>
+<div class='code'>
+{
+	reason: "no_item", // Inventory index issues
+}
+</div>
+<div style='margin-bottom: 1px'></div>
+<div class='code'>
+{
+	reason: "no_scroll", // There's no scroll on that inventory index
+}
+</div>
+<div style='margin-bottom: 1px'></div>
+<div class='code'>
+{
+	reason: "not_combinable", // Items are not combinable
+}
+</div>
+<div style='margin-bottom: 1px'></div>
+<div class='code'>
+{
+	reason: "mismatch", // Items are not the same
+}
+</div>
+<div style='margin-bottom: 1px'></div>
+<div class='code'>
+{
+	reason: "offering", // Invalid offering
+}
+</div>
+<div style='margin-bottom: 1px'></div>
+<div class='code'>
+{
+	reason: "bank", // If operation isn't allowed inside
+}
+</div>
+<div style='margin-bottom: 1px'></div>
+<div class='code'>
+{
+	reason: "exception", // Possible server exception
+}
+</div>
+
+<p></p>
+<span class='redlabel'>{{ phrase("docs.reference.source_code") }}</span>

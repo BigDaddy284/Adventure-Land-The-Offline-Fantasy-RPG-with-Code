@@ -1,0 +1,11 @@
+<p><span class='dlabel'>handle_command(command, args)</span></p>
+<p>{{ phrase("docs.functions.handle_command.override-point-called-for-slash-commands-entered-through") }}</p>
+<p>{{ phrase_html("docs.functions.handle_command.returns-return-true-to-claim-a-command-the") }}</p>
+<p>{{ phrase_html("docs.functions.handle_command.example") }}</p>
+<div class='code'>function handle_command(command, args) {
+	if (command == "home") { smart_move("main"); return true; }
+	return -1;
+}</div>
+
+<p></p>
+<span class='redlabel'>{{ phrase("docs.reference.source_code") }}</span>

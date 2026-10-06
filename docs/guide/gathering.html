@@ -1,0 +1,66 @@
+<div class="guide-kicker">{{ phrase("docs.guide.gathering.patient-work") }}</div>
+<div class="guide-title">{{ phrase("docs.guide.gathering.fishing-mining") }}</div>
+<p>{{ phrase("docs.guide.gathering.gathering-is-a-merchant-specialty-a-level-16") }}</p>
+
+<div class="guide-card-grid">
+	<div class="guide-card">{{ phrase_html("docs.guide.gathering.fishing-equip-a-rod-in-the-main-hand") }}</div>
+	<div class="guide-card">{{ phrase_html("docs.guide.gathering.mining-equip-a-pickaxe-in-the-main-hand") }}</div>
+</div>
+
+<div class="guide-flow" style="border-color:#368D79" data-guide-visual="gathering">
+	<div class="guide-flow-node">{{ phrase_html("docs.guide.gathering.equip-tool") }}</div>
+	<div class="guide-flow-arrow">→</div>
+	<div class="guide-flow-node">{{ phrase_html("docs.guide.gathering.stand-still-in-zone") }}</div>
+	<div class="guide-flow-arrow">→</div>
+	<div class="guide-flow-node">{{ phrase_html("docs.guide.gathering.find-something-or-nothing") }}</div>
+</div>
+
+<div class="divider"></div>
+<div class="title mt15">{{ phrase("docs.guide.gathering.before-each-attempt") }}</div>
+<div class="guide-card-grid">
+	<div class="guide-card">{{ phrase_html("docs.guide.gathering.merchant-level-16-other-classes-and-lower-level") }}</div>
+	<div class="guide-card">{{ phrase_html("docs.guide.gathering.correct-main-hand-tool-a-rod-starts-fishing") }}</div>
+	<div class="guide-card">{{ phrase_html("docs.guide.gathering.120-mp-and-one-space-keep-enough-mana") }}</div>
+	<div class="guide-card">{{ phrase_html("docs.guide.gathering.stopped-inside-the-zone-movement-or-standing-outside") }}</div>
+</div>
+<p>{{ phrase("docs.guide.gathering.the-action-takes-a-few-moments-a-valid") }}</p>
+<div class="guide-flow" style="border-color:#987B45" data-guide-visual="gathering-results">
+	<div class="guide-flow-node">{{ phrase_html("docs.guide.gathering.mainland-fishing-example") }}</div>
+	<div class="guide-flow-node">{{ phrase_html("docs.guide.gathering.tunnel-mining-example") }}</div>
+	<div class="guide-flow-node">{{ phrase_html("docs.guide.gathering.valid-attempt-no-find") }}</div>
+</div>
+<div class="guide-note">{{ phrase("docs.guide.gathering.some-tools-carry-a-break-chance-a-successful") }}</div>
+
+<div class="divider"></div>
+<div class="title mt15">CODE</div>
+<div class="code">async function gather(kind) {
+	if (character.ctype !== "merchant" || character.level &lt; 16) return;
+	if (character.moving || character.mp &lt; 120 || character.esize &lt; 1) return;
+	if (is_on_cooldown(kind)) return;
+
+	var required = kind === "fishing" ? "rod" : "pickaxe";
+	var equipped = character.slots.mainhand;
+	if (!equipped || G.items[equipped.name].wtype !== required) {
+		return game_log("Equip a " + required + " first");
+	}
+
+	var result = await use_skill(kind);
+	game_log(result.found ? "Found something" : "Nothing this time");
+}
+
+gather("fishing").catch(show_json); // or "mining"</div>
+<p>{{ phrase_html("docs.guide.gathering.use-skill-waits-for-the-gathering-animation-and") }}</p>
+<p>{{ phrase_html("docs.guide.gathering.references-use-skill-is-on-cooldown-equip") }}</p>
+
+<div class="guide-related">{{ phrase_html("docs.guide.gathering.gathered-materials-often-continue-into-crafting-and-dismantling") }}</div>
+
+<script>
+	$(".gather-rod").html(item_container({ skin: G.items.rod.skin }, { name: "rod" }));
+	$(".gather-pickaxe,.gather-tool").html(item_container({ skin: G.items.pickaxe.skin }, { name: "pickaxe" }));
+	$(".gather-result,.gather-coat").html(item_container({ skin: G.items.coat1.skin }, { name: "coat1" }));
+	$(".gather-bronze").html(item_container({ skin: G.items.bronzenugget.skin }, { name: "bronzenugget" }));
+</script>
+
+<style>
+	.guide-kicker{color:#368D79;font-size:18px;font-weight:bold;letter-spacing:2px}.guide-title{color:#286A5B;font-size:44px;line-height:48px;margin:2px 0 12px}.title{color:#286A5B;font-size:36px;margin-top:15px}.divider{margin-top:15px;height:5px;background-color:#A2A2A2;margin-left:-26px;margin-right:-26px}.guide-note{border-left:6px solid #3E9681;background:#DCEEE9;padding:10px 14px;margin:12px 0}.guide-related{border-top:2px dotted #AAA;margin-top:18px;padding-top:10px;color:#666}.guide-related span{color:#287461;cursor:pointer;text-decoration:underline}.gather-zone,.gather-empty{font-size:42px;color:#71D3BC}
+</style>

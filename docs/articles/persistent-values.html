@@ -1,0 +1,59 @@
+<p>{{ phrase("docs.articles.persistent-values.your-code-and-javascript-variables-all-reset-when") }}</p>
+
+<p>{{ phrase_html("docs.articles.persistent-values.to-solve-this-problem-you-ll-need-a") }}</p>
+
+<div class='code'>
+set("test",{a:42,b:true}); // set function can store objects too
+</div>
+<div style='margin-bottom: 10px'></div>
+
+<div class='code'>
+log(get("test").a); // logs 42 - even after the game is refreshed
+</div>
+
+<p>{{ phrase("docs.articles.persistent-values.here-s-an-example-usage-that-makes-your") }}</p>
+
+<div class='code'>
+var action=null; // Local variable action
+
+setInterval(function(){
+	
+	// Since we always set "flag" and action to the same value, if they mismatch, it must mean the game was refreshed
+	if(get("flag")!=action)
+	{
+		game_log("Variable action doesn't match the stored flag therefore the game was refreshed!");
+		if(get("flag")=="crab")
+		{
+			game_log("Continuing the move to crabs!");
+			action="crab";
+			smart_move("crab");
+		}
+		else if(get("flag")=="goo")
+		{
+			game_log("Continuing the move to goos!");
+			action="goo";
+			smart_move("goo");
+		}
+		set("flag",action);
+	}
+	else if(smart.moving)
+	{
+		// Do nothing, we are moving!
+	}
+	else if(action=="goo")
+	{
+		// Arrived at goo's, back to crab's now
+		action="crab";
+		smart_move("crab");
+		set("flag",action);
+	}
+	else
+	{
+		// Either arrived at crab's, or this is our first action!
+		action="goo";
+		smart_move("goo");
+		set("flag",action);
+	}
+
+},100);
+</div>

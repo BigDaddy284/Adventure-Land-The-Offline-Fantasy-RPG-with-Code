@@ -1,0 +1,11 @@
+<p><span class='dlabel'>async exchange(item_num)</span></p>
+<p>{{ phrase("docs.functions.exchange.starts-an-item-exchange-and-waits-until-the") }}</p>
+<p>{{ phrase_html("docs.functions.exchange.returns-promise-resolving-with-success-true-reward-num") }}</p>
+<p>{{ phrase_html("docs.functions.exchange.promise-failures-unless-a-function-specific-note-says") }}</p>
+<p>{{ phrase_html("docs.functions.exchange.example") }}</p>
+<div class='code'>exchange(0).then(function (data) {
+	game_log("Received: " + data.reward);
+});</div>
+
+<p></p>
+<span class='redlabel'>{{ phrase("docs.reference.source_code") }}</span>

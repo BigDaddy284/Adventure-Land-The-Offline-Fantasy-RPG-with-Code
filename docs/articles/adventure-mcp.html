@@ -1,0 +1,386 @@
+<style>
+.mcp-guide {
+	--mcp-blue: #238DB9;
+	--mcp-blue-dark: #116A91;
+	--mcp-blue-pale: #D8EDF5;
+	font-size: 30px;
+	line-height: 1.45;
+	text-align: left;
+}
+.mcp-guide p {
+	margin: 0 0 28px;
+}
+.mcp-guide > p > .dlabel:only-child {
+	background: var(--mcp-blue);
+	color: white;
+	font-size: 31px;
+	line-height: 1.15;
+	margin: 18px 0 0;
+	padding: 5px 10px 7px;
+}
+.mcp-guide > p:first-of-type > .dlabel:only-child {
+	font-size: 37px;
+	margin-top: 0;
+	padding: 7px 12px 9px;
+}
+.mcp-guide a,
+.mcp-guide a:link,
+.mcp-guide a:visited,
+.mcp-guide a:hover,
+.mcp-guide a:focus,
+.mcp-guide a:active {
+	color: var(--mcp-blue-dark);
+	text-decoration-color: var(--mcp-blue);
+}
+.mcp-guide .dlabel {
+	background: var(--mcp-blue-pale);
+	color: var(--mcp-blue-dark);
+	font-size: 0.86em;
+	line-height: 1.15;
+	margin: 0;
+	max-width: 100%;
+	overflow-wrap: anywhere;
+	padding: 3px 7px 5px;
+	vertical-align: baseline;
+}
+.mcp-guide ol {
+	margin: 0 0 32px;
+	padding-left: 52px;
+}
+.mcp-guide li {
+	font-size: 29px;
+	line-height: 1.45;
+	margin: 7px 0;
+	padding-left: 5px;
+}
+.mcp-guide table {
+	border-collapse: collapse;
+	font-size: 27px;
+	line-height: 1.4;
+	margin: 4px 0 32px;
+	table-layout: fixed;
+	text-align: left;
+	width: 100%;
+}
+.mcp-guide th {
+	border-bottom: 3px solid var(--mcp-blue);
+	color: var(--mcp-blue-dark);
+	font-size: 28px;
+	padding: 8px 12px 10px;
+}
+.mcp-guide td {
+	border-bottom: 1px solid #A9CFDE;
+	padding: 10px 12px;
+	vertical-align: top;
+}
+.mcp-guide .mcp-example {
+	background: var(--mcp-blue-pale);
+	border-left: 5px solid var(--mcp-blue);
+	box-sizing: border-box;
+	color: #073B50;
+	font-family: pixel;
+	font-size: 25px;
+	line-height: 1.45;
+	margin: 4px 0 32px;
+	overflow-x: auto;
+	padding: 18px 20px;
+	text-align: left;
+	white-space: pre;
+}
+.mcp-guide th:first-child,
+.mcp-guide td:first-child {
+	width: 34%;
+}
+@media (max-width: 760px) {
+	.mcp-guide {
+		font-size: 27px;
+	}
+	.mcp-guide li {
+		font-size: 27px;
+	}
+	.mcp-guide table,
+	.mcp-guide th {
+		font-size: 24px;
+	}
+}
+</style>
+
+<div class="mcp-guide">
+<p>{{ phrase_html("docs.articles.adventure-mcp.adventure-land-mcp-for-ai") }}</p>
+
+<p>{{ phrase_html("docs.articles.adventure-mcp.adventure-land-is-an-online-role-playing-game") }}</p>
+
+<p>{{ phrase_html("docs.articles.adventure-mcp.get-an-account-token") }}</p>
+
+<ol>
+<li>{{ phrase_html("docs.articles.adventure-mcp.sign-in-at-adventure-land") }}</li>
+<li>{{ phrase_html("docs.articles.adventure-mcp.open-mainframe") }}</li>
+<li>{{ phrase_html("docs.articles.adventure-mcp.find-connect-an-ai") }}</li>
+<li>{{ phrase_html("docs.articles.adventure-mcp.press-create-token-if-a-token-already-exists") }}</li>
+<li>{{ phrase("docs.articles.adventure-mcp.confirm-the-warning-replacing-it-invalidates-the-previous") }}</li>
+<li>{{ phrase_html("docs.articles.adventure-mcp.press-reveal-token-then-copy-the-connection-details") }}</li>
+<li>{{ phrase("docs.articles.adventure-mcp.keep-the-token-out-of-character-code-screenshots") }}</li>
+</ol>
+
+<p>{{ phrase_html("docs.articles.adventure-mcp.adventure-land-encrypts-the-token-at-rest-and") }}</p>
+
+<p>{{ phrase_html("docs.articles.adventure-mcp.connect-an-ai-client") }}</p>
+
+<p>{{ phrase("docs.articles.adventure-mcp.add-a-remote-mcp-server-in-your-ai") }}</p>
+
+<table style="width:100%; text-align:left; border-spacing:12px 7px">
+<tr><th>{{ phrase("docs.articles.adventure-mcp.field") }}</th><th>{{ phrase("docs.articles.adventure-mcp.value") }}</th></tr>
+<tr><td>{{ phrase("docs.articles.adventure-mcp.name") }}</td><td>Adventure Land</td></tr>
+<tr><td>{{ phrase("docs.articles.adventure-mcp.transport") }}</td><td>{{ phrase("docs.articles.adventure-mcp.streamable-http") }}</td></tr>
+<tr><td>{{ phrase("docs.articles.adventure-mcp.server-url") }}</td><td><a href="https://adventure.land/mcp">https://adventure.land/mcp</a></td></tr>
+<tr><td>{{ phrase("docs.articles.adventure-mcp.header-name") }}</td><td><span class="dlabel">Authorization</span></td></tr>
+<tr><td>{{ phrase("docs.articles.adventure-mcp.header-value") }}</td><td>{{ phrase_html("docs.articles.adventure-mcp.bearer-your-token") }}</td></tr>
+</table>
+
+<p>{{ phrase_html("docs.articles.adventure-mcp.client-configuration-screens-differ-but-the-server-url") }}</p>
+
+<p>{{ phrase_html("docs.articles.adventure-mcp.how-the-game-fits-together") }}</p>
+
+<table>
+<tr><th>{{ phrase("docs.articles.adventure-mcp.layer") }}</th><th>{{ phrase("docs.articles.adventure-mcp.responsibility") }}</th></tr>
+<tr><td>{{ phrase("docs.articles.adventure-mcp.ai-client") }}</td><td>{{ phrase("docs.articles.adventure-mcp.reads-game-knowledge-and-account-state-researches-exact") }}</td></tr>
+<tr><td>Mainframe</td><td>{{ phrase("docs.articles.adventure-mcp.runs-a-separate-isolated-machine-for-each-direct") }}</td></tr>
+<tr><td>{{ phrase("docs.articles.adventure-mcp.character-code") }}</td><td>{{ phrase("docs.articles.adventure-mcp.runs-long-lived-javascript-using-adventure-land-globals") }}</td></tr>
+<tr><td>{{ phrase("docs.articles.adventure-mcp.game-server") }}</td><td>{{ phrase("docs.articles.adventure-mcp.owns-the-live-character-map-entities-combat-inventory") }}</td></tr>
+</table>
+
+<p>{{ phrase("docs.articles.adventure-mcp.the-ai-writes-and-runs-code-through-the") }}</p>
+
+<p>{{ phrase_html("docs.articles.adventure-mcp.gameplay-mental-model") }}</p>
+
+<table>
+<tr><th>{{ phrase("docs.articles.adventure-mcp.concept") }}</th><th>{{ phrase("docs.articles.adventure-mcp.what-an-ai-must-understand") }}</th></tr>
+<tr><td>{{ phrase("docs.articles.adventure-mcp.definitions-and-live-state") }}</td><td>{{ phrase_html("docs.articles.adventure-mcp.records-in-g-describe-classes-skills-items-monsters") }}</td></tr>
+<tr><td>{{ phrase("docs.articles.adventure-mcp.characters-and-realms") }}</td><td>{{ phrase("docs.articles.adventure-mcp.a-character-s-progression-inventory-and-equipment-follow") }}</td></tr>
+<tr><td>{{ phrase("docs.articles.adventure-mcp.maps-and-entities") }}</td><td>{{ phrase("docs.articles.adventure-mcp.maps-connect-through-doors-transports-and-named-destinations") }}</td></tr>
+<tr><td>{{ phrase("docs.articles.adventure-mcp.combat-and-skills") }}</td><td>{{ phrase("docs.articles.adventure-mcp.the-game-server-owns-range-cooldowns-mp-damage") }}</td></tr>
+<tr><td>{{ phrase("docs.articles.adventure-mcp.items-and-inventory") }}</td><td>{{ phrase_html("docs.articles.adventure-mcp.g-items-contains-definitions-inventory-and-equipment-contain") }}</td></tr>
+<tr><td>{{ phrase("docs.articles.adventure-mcp.economy-and-progression") }}</td><td>{{ phrase("docs.articles.adventure-mcp.gold-items-upgrades-compounds-crafts-exchanges-mail-trade") }}</td></tr>
+<tr><td>{{ phrase("docs.articles.adventure-mcp.events-and-quests") }}</td><td>{{ phrase("docs.articles.adventure-mcp.definitions-explain-possible-content-live-server-status-and") }}</td></tr>
+<tr><td>{{ phrase("docs.articles.adventure-mcp.communication") }}</td><td>{{ phrase("docs.articles.adventure-mcp.party-and-code-messages-help-characters-coordinate-on") }}</td></tr>
+<tr><td>{{ phrase("docs.articles.adventure-mcp.parties-and-shops") }}</td><td>{{ phrase("docs.articles.adventure-mcp.sending-an-invite-or-listing-request-is-not") }}</td></tr>
+</table>
+
+<p>{{ phrase_html("docs.articles.adventure-mcp.choose-the-right-source") }}</p>
+
+<table>
+<tr><th>{{ phrase("docs.articles.adventure-mcp.question") }}</th><th>{{ phrase("docs.articles.adventure-mcp.use") }}</th></tr>
+<tr><td>{{ phrase("docs.articles.adventure-mcp.what-guides-and-rules-exist") }}</td><td>{{ phrase_html("docs.articles.adventure-mcp.read-adventureland-catalog-docs-then-use-get-doc") }}</td></tr>
+<tr><td>{{ phrase("docs.articles.adventure-mcp.which-code-function-performs-an-action") }}</td><td>{{ phrase_html("docs.articles.adventure-mcp.search-list-code-methods-by-action-or-concept") }}</td></tr>
+<tr><td>{{ phrase("docs.articles.adventure-mcp.what-does-an-item-skill-monster-map-drop") }}</td><td>{{ phrase_html("docs.articles.adventure-mcp.use-search-game-data-then-read-the-exact") }}</td></tr>
+<tr><td>{{ phrase("docs.articles.adventure-mcp.what-does-this-account-own") }}</td><td>{{ phrase_html("docs.articles.adventure-mcp.use-mainframe-get-dashboard-mainframe-get-character-get") }}</td></tr>
+<tr><td>{{ phrase("docs.articles.adventure-mcp.how-should-this-character-improve") }}</td><td>{{ phrase_html("docs.articles.adventure-mcp.use-plan-character-progression-for-the-character-s") }}</td></tr>
+<tr><td>{{ phrase("docs.articles.adventure-mcp.what-is-the-character-doing-now") }}</td><td>{{ phrase("docs.articles.adventure-mcp.use-current-mainframe-character-state-and-code-logs") }}</td></tr>
+<tr><td>{{ phrase("docs.articles.adventure-mcp.how-is-the-game-implemented") }}</td><td>{{ phrase("docs.articles.adventure-mcp.use-the-shipped-runner-resource-and-the-open") }}</td></tr>
+</table>
+
+<p>{{ phrase_html("docs.articles.adventure-mcp.what-the-ai-discovers") }}</p>
+
+<table style="width:100%; text-align:left; border-spacing:12px 7px">
+<tr><th>{{ phrase("docs.articles.adventure-mcp.capability") }}</th><th>{{ phrase("docs.articles.adventure-mcp.purpose") }}</th></tr>
+<tr><td>{{ phrase("docs.articles.adventure-mcp.tools") }}</td><td>{{ phrase("docs.articles.adventure-mcp.search-game-data-read-documentation-and-code-contracts") }}</td></tr>
+<tr><td>{{ phrase("docs.articles.adventure-mcp.resources") }}</td><td>{{ phrase("docs.articles.adventure-mcp.load-the-game-model-code-architecture-globals-object") }}</td></tr>
+<tr><td>{{ phrase("docs.articles.adventure-mcp.resource-templates") }}</td><td>{{ phrase("docs.articles.adventure-mcp.read-one-exact-guide-function-game-definition-saved") }}</td></tr>
+<tr><td>{{ phrase("docs.articles.adventure-mcp.prompts") }}</td><td>{{ phrase("docs.articles.adventure-mcp.teach-the-ai-the-game-write-character-code") }}</td></tr>
+</table>
+
+<p>{{ phrase_html("docs.articles.adventure-mcp.core-resources") }}</p>
+
+<table style="width:100%; text-align:left; border-spacing:12px 7px">
+<tr><th>{{ phrase("docs.articles.adventure-mcp.resource") }}</th><th>{{ phrase("docs.articles.adventure-mcp.purpose") }}</th></tr>
+<tr><td><span class="dlabel">adventureland://guide/start-here</span></td><td>{{ phrase("docs.articles.adventure-mcp.where-an-ai-should-begin-and-how-the") }}</td></tr>
+<tr><td><span class="dlabel">adventureland://guide/code-runtime</span></td><td>{{ phrase("docs.articles.adventure-mcp.how-character-code-runs-and-which-browser-features") }}</td></tr>
+<tr><td><span class="dlabel">adventureland://guide/code-architecture</span></td><td>{{ phrase("docs.articles.adventure-mcp.how-to-structure-reliable-character-code") }}</td></tr>
+<tr><td><span class="dlabel">adventureland://guide/navigation</span></td><td>{{ phrase("docs.articles.adventure-mcp.movement-smart-destinations-interruption-arrival-and-route-failures") }}</td></tr>
+<tr><td><span class="dlabel">adventureland://guide/items-and-inventory</span></td><td>{{ phrase("docs.articles.adventure-mcp.definitions-owned-items-equipment-inventory-indexes-and-mutation") }}</td></tr>
+<tr><td><span class="dlabel">adventureland://guide/skills</span></td><td>{{ phrase("docs.articles.adventure-mcp.class-skills-targets-cooldowns-range-and-timed-actions") }}</td></tr>
+<tr><td><span class="dlabel">adventureland://guide/code-messages</span></td><td>{{ phrase("docs.articles.adventure-mcp.same-server-code-messages-sender-validation-payloads-and") }}</td></tr>
+<tr><td><span class="dlabel">adventureland://guide/multiple-characters</span></td><td>{{ phrase("docs.articles.adventure-mcp.ways-to-coordinate-characters-without-loading-one-twice") }}</td></tr>
+<tr><td><span class="dlabel">adventureland://guide/server-rules</span></td><td>{{ phrase("docs.articles.adventure-mcp.shared-state-character-limits-request-limits-accounts-and") }}</td></tr>
+<tr><td><span class="dlabel">adventureland://reference/code-globals</span></td><td>{{ phrase("docs.articles.adventure-mcp.globals-available-inside-character-code") }}</td></tr>
+<tr><td><span class="dlabel">adventureland://reference/character</span></td><td>{{ phrase("docs.articles.adventure-mcp.the-character-object-and-important-fields") }}</td></tr>
+<tr><td><span class="dlabel">adventureland://reference/monster</span></td><td>{{ phrase("docs.articles.adventure-mcp.monster-objects-and-combat-state") }}</td></tr>
+<tr><td><span class="dlabel">adventureland://reference/character-events</span></td><td>{{ phrase("docs.articles.adventure-mcp.character-event-hooks") }}</td></tr>
+<tr><td><span class="dlabel">adventureland://reference/game-events</span></td><td>{{ phrase("docs.articles.adventure-mcp.game-event-hooks") }}</td></tr>
+<tr><td><span class="dlabel">adventureland://guide/mainframe</span></td><td>{{ phrase("docs.articles.adventure-mcp.mainframe-access-billing-and-operating-rules") }}</td></tr>
+<tr><td><span class="dlabel">adventureland://catalog/docs</span></td><td>{{ phrase("docs.articles.adventure-mcp.every-guide-name-topic-section-and-public-link") }}</td></tr>
+<tr><td><span class="dlabel">adventureland://catalog/code-methods</span></td><td>{{ phrase("docs.articles.adventure-mcp.every-public-code-function-signature-and-reference-link") }}</td></tr>
+<tr><td><span class="dlabel">adventureland://catalog/game-data</span></td><td>{{ phrase("docs.articles.adventure-mcp.every-deployed-data-section-purpose-record-count-and") }}</td></tr>
+<tr><td><span class="dlabel">adventureland://code/starters/samaritan</span></td><td>{{ phrase("docs.articles.adventure-mcp.class-aware-adventurer-baseline-with-support-trusted-parties") }}</td></tr>
+<tr><td><span class="dlabel">adventureland://code/starters/samaritan-merchant</span></td><td>{{ phrase("docs.articles.adventure-mcp.conservative-merchant-baseline-with-helpful-buffs-explicit-public") }}</td></tr>
+<tr><td><span class="dlabel">adventureland://source/runner-functions</span></td><td>{{ phrase("docs.articles.adventure-mcp.the-javascript-runner-functions-shipped-by-the-game") }}</td></tr>
+<tr><td><span class="dlabel">adventureland://account/dashboard</span></td><td>{{ phrase("docs.articles.adventure-mcp.owned-characters-assignments-status-and-account-mainframe-state") }}</td></tr>
+<tr><td><span class="dlabel">adventureland://account/code-slots</span></td><td>{{ phrase("docs.articles.adventure-mcp.saved-character-code-slots") }}</td></tr>
+<tr><td><span class="dlabel">adventureland://account/bank</span></td><td>{{ phrase("docs.articles.adventure-mcp.every-owned-bank-pack-and-the-shared-bank") }}</td></tr>
+<tr><td><span class="dlabel">adventureland://game/servers</span></td><td>{{ phrase("docs.articles.adventure-mcp.available-game-servers") }}</td></tr>
+</table>
+
+<p>{{ phrase_html("docs.articles.adventure-mcp.the-runner-resource-is-the-same-public-runner") }}</p>
+
+<p>{{ phrase_html("docs.articles.adventure-mcp.resource-templates-2") }}</p>
+
+<table style="width:100%; text-align:left; border-spacing:12px 7px">
+<tr><th>{{ phrase("docs.articles.adventure-mcp.template") }}</th><th>{{ phrase("docs.articles.adventure-mcp.purpose") }}</th></tr>
+<tr><td><span class="dlabel">adventureland://docs/{name}</span></td><td>{{ phrase("docs.articles.adventure-mcp.read-one-documentation-page") }}</td></tr>
+<tr><td><span class="dlabel">adventureland://code/functions/{name}</span></td><td>{{ phrase("docs.articles.adventure-mcp.read-the-exact-contract-for-one-code-method") }}</td></tr>
+<tr><td><span class="dlabel">adventureland://game-data/{section}</span></td><td>{{ phrase("docs.articles.adventure-mcp.read-one-complete-deployed-data-section-this-uses") }}</td></tr>
+<tr><td><span class="dlabel">adventureland://game-data/{section}/{name}</span></td><td>{{ phrase("docs.articles.adventure-mcp.read-one-item-skill-monster-map-recipe-or") }}</td></tr>
+<tr><td><span class="dlabel">adventureland://code/slots/{slot}</span></td><td>{{ phrase("docs.articles.adventure-mcp.read-one-owned-code-slot") }}</td></tr>
+<tr><td><span class="dlabel">adventureland://mainframe/characters/{character}</span></td><td>{{ phrase("docs.articles.adventure-mcp.read-one-owned-character-s-mainframe-state") }}</td></tr>
+<tr><td><span class="dlabel">adventureland://progression/characters/{character}</span></td><td>{{ phrase("docs.articles.adventure-mcp.read-one-owned-character-s-progression-objectives-current") }}</td></tr>
+</table>
+
+<p>{{ phrase_html("docs.articles.adventure-mcp.find-exact-names-with-list-docs-list-code") }}</p>
+
+<p>{{ phrase_html("docs.articles.adventure-mcp.search-game-data-accepts-up-to-500-characters") }}</p>
+
+<p>{{ phrase("docs.articles.adventure-api.every-owned-bank-pack-and-the-shared-bank") }}</p>
+
+<p>{{ phrase_html("docs.articles.adventure-mcp.guided-prompts") }}</p>
+
+<table style="width:100%; text-align:left; border-spacing:12px 7px">
+<tr><th>{{ phrase("docs.articles.adventure-mcp.prompt") }}</th><th>{{ phrase("docs.articles.adventure-mcp.use") }}</th></tr>
+<tr><td><span class="dlabel">learn_adventure_land</span></td><td>{{ phrase("docs.articles.adventure-mcp.load-the-game-model-without-changing-account-state") }}</td></tr>
+<tr><td><span class="dlabel">research_gameplay</span></td><td>{{ phrase("docs.articles.adventure-mcp.answer-a-game-build-progression-economy-or-content") }}</td></tr>
+<tr><td><span class="dlabel">improve_character</span></td><td>{{ phrase("docs.articles.adventure-mcp.give-the-ai-character-context-and-long-term") }}</td></tr>
+<tr><td><span class="dlabel">configure_samaritan_code</span></td><td>{{ phrase("docs.articles.adventure-mcp.adapt-the-samaritan-adventurer-or-merchant-baseline-to") }}</td></tr>
+<tr><td><span class="dlabel">write_character_code</span></td><td>{{ phrase("docs.articles.adventure-mcp.research-the-goal-character-and-optional-slot-before") }}</td></tr>
+<tr><td><span class="dlabel">review_character_code</span></td><td>{{ phrase("docs.articles.adventure-mcp.check-an-owned-slot-against-exact-contracts-game") }}</td></tr>
+<tr><td><span class="dlabel">coordinate_character_team</span></td><td>{{ phrase("docs.articles.adventure-mcp.plan-several-owned-characters-on-one-server-with") }}</td></tr>
+<tr><td><span class="dlabel">operate_mainframe</span></td><td>{{ phrase("docs.articles.adventure-mcp.read-deploy-observe-and-improve-one-owned-character") }}</td></tr>
+<tr><td><span class="dlabel">debug_mainframe_character</span></td><td>{{ phrase("docs.articles.adventure-mcp.investigate-a-stuck-dead-slow-or-incorrect-character") }}</td></tr>
+</table>
+
+<p>{{ phrase_html("docs.articles.adventure-mcp.code-etiquette") }}</p>
+
+<p>{{ phrase_html("docs.articles.adventure-mcp.character-automation-should-not-use-public-private-or") }}</p>
+
+<p>{{ phrase("docs.articles.adventure-mcp.respect-other-players-fights-and-space-do-not") }}</p>
+
+<p>{{ phrase_html("docs.articles.adventure-mcp.character-progression") }}</p>
+
+<p>{{ phrase("docs.articles.adventure-mcp.the-enduring-objective-is-to-help-a-character") }}</p>
+
+<p>{{ phrase_html("docs.articles.adventure-mcp.plan-character-progression-supplies-current-context-explains-the") }}</p>
+
+<p>{{ phrase_html("docs.articles.adventure-mcp.samaritan-starter-code") }}</p>
+
+<p>{{ phrase("docs.articles.adventure-mcp.the-two-samaritan-resources-are-optional-advanced-starting") }}</p>
+
+<table>
+<tr><th>{{ phrase("docs.articles.adventure-mcp.starter") }}</th><th>{{ phrase("docs.articles.adventure-mcp.behavior") }}</th></tr>
+<tr><td>{{ phrase("docs.articles.adventure-mcp.samaritan-adventurer") }}</td><td>{{ phrase("docs.articles.adventure-mcp.chooses-only-monsters-allowed-by-its-configured-safety") }}</td></tr>
+<tr><td>{{ phrase("docs.articles.adventure-mcp.samaritan-merchant") }}</td><td>{{ phrase("docs.articles.adventure-mcp.buffs-nearby-players-joins-only-trusted-parties-lists") }}</td></tr>
+</table>
+
+<p>{{ phrase_html("docs.articles.adventure-mcp.every-item-rule-requires-an-exact-item-key") }}</p>
+
+<p>{{ phrase_html("docs.articles.adventure-mcp.how-an-ai-should-build-a-character") }}</p>
+
+<ol>
+<li>{{ phrase_html("docs.articles.adventure-mcp.read-adventureland-guide-start-here") }}</li>
+<li>{{ phrase_html("docs.articles.adventure-mcp.call-mainframe-get-dashboard") }}</li>
+<li>{{ phrase("docs.articles.adventure-mcp.inspect-the-character-s-saved-profile-class-equipment") }}</li>
+<li>{{ phrase("docs.articles.adventure-mcp.read-an-existing-target-slot-before-replacing-it") }}</li>
+<li>{{ phrase_html("docs.articles.adventure-mcp.find-exact-code-methods-with-list-code-methods") }}</li>
+<li>{{ phrase_html("docs.articles.adventure-mcp.find-exact-items-skills-monsters-maps-and-recipes") }}</li>
+<li>{{ phrase_html("docs.articles.adventure-mcp.save-the-complete-javascript-slot-with-save-code") }}</li>
+<li>{{ phrase("docs.articles.adventure-mcp.explain-that-starting-without-paid-time-charges-1") }}</li>
+<li>{{ phrase_html("docs.articles.adventure-mcp.link-the-character-with-one-stable-request-id") }}</li>
+<li>{{ phrase("docs.articles.adventure-mcp.verify-connection-position-activity-deaths-performance-code-logs") }}</li>
+</ol>
+
+<p>{{ phrase_html("docs.articles.adventure-mcp.live-code-controls") }}</p>
+
+<p>{{ phrase("docs.articles.adventure-mcp.saving-a-code-slot-does-not-replace-code") }}</p>
+
+<table>
+<tr><th>{{ phrase("docs.articles.adventure-mcp.tool") }}</th><th>{{ phrase("docs.articles.adventure-mcp.use") }}</th></tr>
+<tr><td><span class="dlabel">browser_code_status</span></td><td>{{ phrase("docs.articles.adventure-mcp.check-whether-the-browser-character-is-online-and") }}</td></tr>
+<tr><td><span class="dlabel">browser_code_start</span></td><td>{{ phrase("docs.articles.adventure-mcp.start-a-saved-slot-only-when-browser-code") }}</td></tr>
+<tr><td><span class="dlabel">browser_code_stop</span></td><td>{{ phrase("docs.articles.adventure-mcp.stop-the-current-browser-code-runner") }}</td></tr>
+<tr><td><span class="dlabel">browser_code_reload</span></td><td>{{ phrase("docs.articles.adventure-mcp.replace-the-current-browser-code-runner-with-a") }}</td></tr>
+<tr><td><span class="dlabel">browser_code_eval</span></td><td>{{ phrase("docs.articles.adventure-mcp.evaluate-a-requested-javascript-snippet-in-browser-code") }}</td></tr>
+<tr><td><span class="dlabel">mainframe_code_eval</span></td><td>{{ phrase("docs.articles.adventure-mcp.evaluate-a-requested-javascript-snippet-in-running-mainframe") }}</td></tr>
+</table>
+
+<p>{{ phrase("docs.articles.adventure-mcp.the-two-eval-tools-can-perform-any-game") }}</p>
+
+<p>{{ phrase("docs.articles.adventure-mcp.combat-loops-belong-inside-character-code-mcp-should") }}</p>
+
+<p>{{ phrase_html("docs.articles.adventure-mcp.how-to-write-character-code") }}</p>
+
+<p>{{ phrase("docs.articles.adventure-mcp.code-is-long-running-javascript-schedule-small-pieces") }}</p>
+
+<pre class="mcp-example">var working = false;
+
+setInterval(async function () {
+	if (working) return;
+	working = true;
+	try {
+		if (character.rip) return await respawn();
+
+		var target = get_nearest_monster({type: "goo"});
+		if (!target) return await smart_move("goo");
+		if (!is_in_range(target)) await xmove(target.x, target.y);
+		else if (can_attack(target)) await attack(target);
+		loot();
+	} catch (error) {
+		game_log("loop: " + (error.reason || error));
+	} finally {
+		working = false;
+	}
+}, 250);</pre>
+
+<p>{{ phrase("docs.articles.adventure-mcp.this-is-a-structure-not-a-universal-farming") }}</p>
+
+<p>{{ phrase_html("docs.articles.adventure-mcp.use-public-functions-such-as-attack-use-skill") }}</p>
+
+<p>{{ phrase_html("docs.articles.adventure-mcp.read-from-character-g-server-game-and-smart") }}</p>
+
+<p>{{ phrase_html("docs.articles.adventure-mcp.billing-safety") }}</p>
+
+<p>{{ phrase_html("docs.articles.adventure-mcp.mainframe-link-character-directly-starts-one-character-in") }}</p>
+
+<p>{{ phrase_html("docs.articles.adventure-mcp.inside-running-code-start-character-can-add-up") }}</p>
+
+<p>{{ phrase_html("docs.articles.adventure-mcp.at-each-renewal-boundary-mainframe-counts-the-characters") }}</p>
+
+<p>{{ phrase_html("docs.articles.adventure-mcp.if-a-link-response-is-lost-retry-the") }}</p>
+
+<p>{{ phrase("docs.articles.adventure-mcp.reading-state-logs-game-data-documentation-code-resources") }}</p>
+
+<p>{{ phrase_html("docs.articles.adventure-mcp.results-and-retries") }}</p>
+
+<p>{{ phrase_html("docs.articles.adventure-mcp.tool-calls-return-json-text-in-content-and") }}</p>
+
+<p>{{ phrase("docs.articles.adventure-mcp.read-before-changing-things-fetch-a-code-slot") }}</p>
+
+<p>{{ phrase_html("docs.articles.adventure-mcp.how-to-verify-behavior") }}</p>
+
+<p>{{ phrase_html("docs.articles.adventure-mcp.requested-action-counts-show-what-code-attempted-not") }}</p>
+
+<p>{{ phrase_html("docs.articles.adventure-mcp.open-source-map") }}</p>
+
+<p>{{ phrase_html("docs.articles.adventure-mcp.the-complete-game-is-available-in-the-adventure") }}</p>
+
+<table>
+<tr><th>{{ phrase("docs.articles.adventure-mcp.path") }}</th><th>{{ phrase("docs.articles.adventure-mcp.what-it-explains") }}</th></tr>
+<tr><td>{{ phrase_html("docs.articles.adventure-mcp.js-runner-functions-js") }}</td><td>{{ phrase("docs.articles.adventure-mcp.public-functions-loaded-into-character-code") }}</td></tr>
+<tr><td>{{ phrase_html("docs.articles.adventure-mcp.docs-functions") }}</td><td>{{ phrase("docs.articles.adventure-mcp.per-function-contracts-examples-and-failure-shapes") }}</td></tr>
+<tr><td>{{ phrase_html("docs.articles.adventure-mcp.docs-articles") }}</td><td>{{ phrase("docs.articles.adventure-mcp.code-concepts-object-references-events-and-guides") }}</td></tr>
+<tr><td>{{ phrase_html("docs.articles.adventure-mcp.design") }}</td><td>{{ phrase("docs.articles.adventure-mcp.items-skills-classes-monsters-maps-npcs-events-drops") }}</td></tr>
+<tr><td>{{ phrase_html("docs.articles.adventure-mcp.js-game-js-and-js-functions-js") }}</td><td>{{ phrase("docs.articles.adventure-mcp.browser-state-socket-handling-public-functions-and-code") }}</td></tr>
+<tr><td>{{ phrase_html("docs.articles.adventure-mcp.node-server-js") }}</td><td>{{ phrase("docs.articles.adventure-mcp.actual-game-server-behavior") }}</td></tr>
+<tr><td>{{ phrase_html("docs.articles.adventure-mcp.mainframe-js-and-mcp-api-js") }}</td><td>{{ phrase("docs.articles.adventure-mcp.mainframe-account-lifecycle-and-the-public-api-and") }}</td></tr>
+</table>
+
+<p>{{ phrase_html("docs.articles.adventure-mcp.rotate-or-revoke") }}</p>
+
+<p>{{ phrase_html("docs.articles.adventure-mcp.return-to-mainframe-s-connect-an-ai-panel") }}</p>
+</div>

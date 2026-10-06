@@ -1,0 +1,64 @@
+<div class="merrit-guide" style="text-align:left">
+	<p style="font-size:32px;text-decoration:underline dotted #C7C7B3">Merrit</p>
+	<div class="merrit-icon-text"><div class="merrit-portrait"></div><div>{{ phrase("docs.guide.npc-merrit.keep-a-shop-on-mainland-s-square-merrit") }}</div></div>
+
+	<div class="guide-card-grid">
+		<div class="guide-card">{{ phrase_html("docs.guide.npc-merrit.set-up-shop-any-class-can-take-part") }}</div>
+		<div class="guide-card">{{ phrase_html("docs.guide.npc-merrit.stay-two-minutes-keep-your-stock-and-your") }}</div>
+	</div>
+	<p>{{ phrase_html("docs.guide.npc-merrit.she-must-walk-within-32px-with-a-clear") }}</p>
+
+	<p style="font-size:32px;text-decoration:underline dotted #C7C7B3">{{ phrase("docs.guide.npc-merrit.market-parcels") }}</p>
+	<div class="merrit-icon-text"><div class="merrit-parcel-icon"></div><div>{{ phrase_html("docs.guide.npc-merrit.each-visit-gives-1-market-parcel-trade-it") }}</div></div>
+	<p>{{ phrase_html("docs.guide.npc-merrit.1-in-900-parcels-holds-one-of-five") }}</p>
+	<div class="merrit-all-rewards" style="font-size:24px"></div>
+	<p>{{ phrase("docs.guide.npc-merrit.exchange-1-parcel-for-1-result-luck-stand") }}</p>
+
+	<p style="font-size:32px;text-decoration:underline dotted #C7C7B3">{{ phrase("docs.guide.npc-merrit.leave-room") }}</p>
+	<p>{{ phrase_html("docs.guide.npc-merrit.no-parcels-within-40px-of-a-stationary-npc") }}</p>
+	<p>{{ phrase_html("docs.guide.npc-merrit.no-parcels-within-10px-of-another-open-stand") }}</p>
+	<p>{{ phrase_html("docs.guide.npc-merrit.no-parcels-directly-in-front-of-another-stand") }}</p>
+	<p>{{ phrase("docs.guide.npc-merrit.distances-use-character-foot-positions-trading-still-works") }}</p>
+	<p>{{ phrase("docs.guide.npc-merrit.placement-notices-appear-only-on-mainland-while-guides") }}</p>
+
+	<div class="merrit-shop-status">
+		<div class="divider"></div>
+		<p style="font-size:32px;text-decoration:underline dotted #C7C7B3">{{ phrase("docs.guide.npc-merrit.your-shop") }}</p>
+		<div class="merrit-status"></div>
+	</div>
+	<div class="divider"></div>
+	<p style="font-size:32px;text-decoration:underline dotted #C7C7B3">{{ phrase("docs.guide.npc-merrit.where-she-walks") }}</p>
+	<p>{{ phrase_html("docs.guide.npc-merrit.merrit-stays-within-600px-of-0-0-your") }}</p>
+	<div style="overflow-x:auto"><div style="position:relative;width:640px;height:640px"><img src="/images/guide/merrit-mainland.webp?v=1" width="640" height="640" alt="{{ phrase("docs.guide.npc-merrit.label-mainland-square-and-its-southern-aisle") }}" style="image-rendering:pixelated"><svg width="640" height="640" style="position:absolute;left:0;top:0" aria-label="{{ phrase("docs.guide.npc-merrit.label-reward-area") }}"><path d="M80 120H560V384H408V600H232V384H80Z" fill="none" stroke="#73FFAC" stroke-width="2"/><circle cx="320" cy="240" r="4" fill="white"/></svg></div></div>
+	<p>{{ phrase("docs.guide.npc-merrit.white-dot-0-0-square-x-240-to") }}</p>
+	<div class="divider"></div>
+	<p style="font-size:32px;text-decoration:underline dotted #C7C7B3">{{ phrase("docs.guide.npc-merrit.timing-stock-and-bag-space") }}</p>
+	<p>{{ phrase("docs.guide.npc-merrit.moving-closing-or-reopening-disconnecting-leaving-the-area") }}</p>
+	<p>{{ phrase("docs.guide.npc-merrit.after-each-delivery-settle-for-two-minutes-again") }}</p>
+	<p>{{ phrase_html("docs.guide.npc-merrit.parcels-stack-up-to-9-999-keep-an") }}</p>
+	<div class="divider"></div>
+	<p style="font-size:32px;text-decoration:underline dotted #C7C7B3">{{ phrase("docs.guide.npc-merrit.an-occasional-extra-1-shell") }}</p>
+	<p>{{ phrase_html("docs.guide.npc-merrit.sometimes-merrit-adds-1-shell-directly-to-your") }}</p>
+	<table><thead><tr><th>{{ phrase("docs.guide.npc-merrit.shells-before-the-visit") }}</th><th>{{ phrase("docs.guide.npc-merrit.chance-of-1-shell") }}</th></tr></thead><tbody class="merrit-shell-odds"></tbody></table>
+	<p>{{ phrase_html("docs.guide.npc-merrit.the-chance-is-0-5-at-zero-shells") }}</p>
+	<p>{{ phrase("docs.guide.npc-merrit.a-sparkle-and-a-coin-sound-mark-each") }}</p>
+	<div class="divider"></div>
+	<p style="font-size:32px;text-decoration:underline dotted #C7C7B3">CODE</p>
+	<p>{{ phrase_html("docs.guide.npc-merrit.open-shop-with-code") }}</p>
+	<div class="code">open_stand();</div>
+</div>
+<style>
+	.merrit-guide .merrit-icon-text{display:flex;align-items:flex-start;gap:12px;margin:1em 0}
+	.merrit-guide .merrit-icon-text>div:first-child{flex:0 0 auto;line-height:0}
+	.merrit-guide .merrit-icon-text>div:last-child{flex:1;min-width:0}
+	.merrit-guide .divider{margin:15px -26px 0;height:5px;background-color:#A2A2A2}
+</style>
+<script>
+	var merrit = G.npcs.citizen22;
+	$(".merrit-portrait").html(sprite(merrit.skin,{cx:clone(merrit.cx)}));
+	$(".merrit-parcel-icon").html(merrit_item_preview("marketparcel",1));
+	$(".merrit-all-rewards").html(render_drop([1,"open","marketparcel"],1,"#858B8E"));
+	$(".merrit-shell-odds").html(merrit_shell_odds_html());
+	if(window.character){$(".merrit-status").html(merrit_status_html(character.merrit));request_merrit_status();}
+	else $(".merrit-shop-status").hide();
+</script>

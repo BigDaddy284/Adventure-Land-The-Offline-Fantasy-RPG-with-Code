@@ -1,0 +1,32 @@
+<p>{{ phrase_html("docs.articles.x.sub-api.the-account-api") }}</p>
+
+<p>{{ phrase_html("docs.articles.x.sub-api.parent-api-call-method-args-options-sends-a") }}</p>
+
+<div class="code">async function inspect_account_data() {
+	try {
+		var result = await parent.api_call("pull_friends", {}, { timeout: 15000 });
+		show_json(result);
+	} catch (error) {
+		game_log("API failed: " + error.reason);
+	}
+}
+
+inspect_account_data();</div>
+
+<p>{{ phrase_html("docs.articles.x.sub-api.the-returned-promise-fulfills-with-the-api-result") }}</p>
+
+<p>{{ phrase_html("docs.articles.x.sub-api.the-optional-options-timeout-is-measured-in-milliseconds") }}</p>
+
+<p>{{ phrase_html("docs.articles.x.sub-api.additional-information-events") }}</p>
+
+<p>{{ phrase_html("docs.articles.x.sub-api.some-api-responses-carry-additional-information-records-those") }}</p>
+
+<div class="code">game.on("api_response", function (data) {
+	if (data.type == "merchants") show_json(data);
+});
+
+parent.api_call("pull_merchants").catch(function (error) {
+	game_log("Merchant lookup failed: " + error.reason);
+});</div>
+
+<p>{{ phrase_html("docs.articles.x.sub-api.prefer-a-documented-public-code-function-when-one") }}</p>

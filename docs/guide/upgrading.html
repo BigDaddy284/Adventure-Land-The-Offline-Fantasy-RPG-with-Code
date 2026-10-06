@@ -1,0 +1,97 @@
+<div class="guide-kicker">{{ phrase("docs.guide.upgrading.item-progression") }}</div>
+<div class="guide-title">{{ phrase("docs.guide.upgrading.upgrading") }}</div>
+<p>{{ phrase("docs.guide.upgrading.weapons-armor-and-other-upgradeable-items-grow-one") }}</p>
+
+<div class="guide-place">
+	<div class="spupgrade"></div>
+	<div>{{ phrase_html("docs.guide.upgrading.cue-and-the-upgrade-shrine-use-the-item") }}</div>
+</div>
+
+<div class="guide-process">
+	<div class="process-item eupgrading0"></div><span>+</span>
+	<div class="process-item euscroll0"></div><span class="process-arrow">→</span>
+	<div class="process-item eupgrading1"></div>
+</div>
+<div class="guide-process-caption">{{ phrase("docs.guide.upgrading.an-upgradeable-0-item-and-a-compatible-scroll") }}</div>
+
+<div class="divider"></div>
+<div class="title mt15">{{ phrase("docs.guide.upgrading.one-attempt") }}</div>
+<p>{{ phrase_html("docs.guide.upgrading.visit-an-upgrade-shrine-and-place-the-item") }}</p>
+<p>{{ phrase("docs.guide.upgrading.a-successful-attempt-raises-the-item-by-one") }}</p>
+
+<div class="guide-grid">
+	<div>{{ phrase_html("docs.guide.upgrading.1-read-the-grade-the-item-tooltip-shows") }}</div>
+	<div>{{ phrase_html("docs.guide.upgrading.2-match-the-scroll-a-scroll-must-support") }}</div>
+	<div>{{ phrase_html("docs.guide.upgrading.3-preview-again-changing-the-item-scroll-or") }}</div>
+	<div>{{ phrase_html("docs.guide.upgrading.4-protect-your-plan-keep-a-spare-lock") }}</div>
+</div>
+
+<div class="divider"></div>
+<div class="title mt15">{{ phrase("docs.guide.upgrading.scroll-grades") }}</div>
+<p>{{ phrase("docs.guide.upgrading.normal-high-rare-and-legendary-items-need-a") }}</p>
+<div class="guide-scrolls">
+	<div>{{ phrase_html("docs.guide.upgrading.normal-upgrade-scroll") }}</div>
+	<div>{{ phrase_html("docs.guide.upgrading.high-high-upgrade-scroll") }}</div>
+	<div>{{ phrase_html("docs.guide.upgrading.rare-rare-upgrade-scroll") }}</div>
+	<div>{{ phrase_html("docs.guide.upgrading.legendary-legendary-upgrade-scroll") }}</div>
+	<div>{{ phrase_html("docs.guide.upgrading.ultimate-any-non-exalted-grade") }}</div>
+</div>
+
+<div class="divider"></div>
+<div class="title mt15">{{ phrase("docs.guide.upgrading.offerings-grace-stats") }}</div>
+<p>{{ phrase("docs.guide.upgrading.primlings-primordial-essences-stronger-offerings-and-certain-metals") }}</p>
+<div class="guide-offerings">
+	<div>{{ phrase_html("docs.guide.upgrading.primling-an-offering-for-upgrade-and-compound-attempts") }}</div>
+	<div>{{ phrase_html("docs.guide.upgrading.primordial-essence-a-stronger-offering-preview-its-exact") }}</div>
+</div>
+<p>{{ phrase("docs.guide.upgrading.upgrade-and-compound-history-can-build-grace-the") }}</p>
+<p>{{ phrase("docs.upgrading.grace_only") }}</p>
+<p>{{ phrase_html("docs.guide.upgrading.stat-scrolls-are-different-they-replace-the-selected") }}</p>
+<div class="guide-note">{{ phrase("docs.guide.upgrading.exalted-means-the-item-has-reached-the-end") }}</div>
+
+<div class="divider"></div>
+<div class="title mt15">CODE</div>
+<div class="code">async function preview_grace() {
+	var item = locate_item("coat");
+	var offering = locate_item("offeringp");
+	if (item === -1 || offering === -1) return;
+	return await upgrade(item, null, offering, true);
+}
+
+preview_grace();</div>
+<p>{{ phrase_html("docs.guide.upgrading.pass-inventory-positions-to-upgrade-use-calculation-mode") }}</p>
+<div class="code">async function upgrade_item(item_name, scroll_name, minimum_chance) {
+	var item = locate_item(item_name);
+	var scroll = locate_item(scroll_name);
+	if (item === -1 || scroll === -1) return;
+
+	var preview = await upgrade(item, scroll, null, true);
+	game_log("Chance: " + (preview.chance * 100).toFixed(2) + "%");
+	if (preview.chance &lt; minimum_chance) return;
+
+	var result = await upgrade(item, scroll);
+	if (result.success) game_log(item_name + " is now +" + result.level);
+	else game_log("The upgrade failed");
+}
+
+upgrade_item("coat", "scroll0", 0.9).catch(show_json);</div>
+<p>{{ phrase_html("docs.guide.upgrading.useful-references-locate-item-item-grade-item-properties") }}</p>
+<div class="guide-note">{{ phrase_html("docs.guide.upgrading.if-upgrade-rejects-no-upgrade-started-if-it") }}</div>
+
+<div class="guide-related">{{ phrase_html("docs.guide.upgrading.see-also-items-and-grades-compounding-item-maintenance") }}</div>
+
+<script>
+	$(".spupgrade").html(sprite(G.npcs.newupgrade.skin, { height: 62 }));
+	$(".eupgrading0").html(item_container({ skin: G.items.coat.skin }, { name: "coat", level: 0 }));
+	$(".eupgrading1").html(item_container({ skin: G.items.coat.skin }, { name: "coat", level: 1 }));
+	$(".euscroll0").html(item_container({ skin: G.items.scroll0.skin }, { name: "scroll0" }));
+	["scroll0", "scroll1", "scroll2", "scroll3", "scroll4"].forEach(function (name, grade) {
+		$(".euscroll-grade" + grade).html(item_container({ skin: G.items[name].skin }, { name: name }));
+	});
+	$(".eprimling").html(item_container({ skin: G.items.offeringp.skin }, { name: "offeringp" }));
+	$(".eprimordial").html(item_container({ skin: G.items.offering.skin }, { name: "offering" }));
+</script>
+
+<style>
+	.guide-kicker{color:#8A623B;font-size:18px;font-weight:bold;letter-spacing:2px}.guide-title{color:#2E6B43;font-size:44px;line-height:48px;margin:2px 0 12px}.title{color:#406944;font-size:36px;margin-top:15px}.divider{margin-top:15px;height:5px;background-color:#A2A2A2;margin-left:-26px;margin-right:-26px}.guide-note{border-left:6px solid #C78B37;background:#F3E8D4;padding:10px 14px;margin:12px 0}.guide-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:12px 0}.guide-grid>div{border:3px solid #A9B6A5;padding:10px}.guide-step{background:#406944;color:white;display:inline-block;margin-right:7px;min-width:25px;text-align:center}.guide-place{display:flex;align-items:center;gap:14px;border:3px solid #A9B6A5;background:#EFF4ED;padding:10px 14px;margin:12px 0}.spupgrade{min-width:60px;text-align:center}.guide-process{display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap;border:4px solid #406944;background:#141B15;padding:12px;color:white;font-size:30px}.process-item{min-width:46px}.process-arrow{color:#9FCEA6;font-size:42px}.guide-process-caption{text-align:center;color:#666;margin:7px 0 14px}.guide-scrolls{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:12px 0}.guide-scrolls>div,.guide-offerings>div{border:3px solid #A9B6A5;padding:10px;text-align:center}.guide-scrolls span{display:block;min-height:46px;margin-bottom:5px}.guide-offerings{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:12px 0}.guide-offerings>div{display:grid;grid-template-columns:62px 1fr;align-items:center;text-align:left}.guide-offerings span{grid-row:1/3}.guide-related{border-top:2px dotted #AAA;margin-top:18px;padding-top:10px;color:#666}.guide-related span{color:#2B7B50;cursor:pointer;text-decoration:underline}@media(max-width:700px){.guide-grid{grid-template-columns:1fr}.guide-scrolls{grid-template-columns:1fr 1fr}}
+</style>

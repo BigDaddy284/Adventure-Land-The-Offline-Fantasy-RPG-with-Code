@@ -1,0 +1,13 @@
+<p><span class='dlabel'>async transport(map, spawn)</span></p>
+<p>{{ phrase("docs.functions.transport.uses-a-map-transport-and-waits-for-the") }}</p>
+<p>{{ phrase_html("docs.functions.transport.returns-promise-resolving-with-success-true-after-arrival") }}</p>
+<p>{{ phrase_html("docs.functions.transport.promise-failures-unless-a-function-specific-note-says") }}</p>
+<p>{{ phrase_html("docs.functions.transport.notes-only-one-different-transport-may-be-active") }}</p>
+<p>{{ phrase_html("docs.functions.transport.example") }}</p>
+<div class='code'>async function example() {
+	await transport("main", 0);
+}
+example();</div>
+
+<p></p>
+<span class='redlabel'>{{ phrase("docs.reference.source_code") }}</span>

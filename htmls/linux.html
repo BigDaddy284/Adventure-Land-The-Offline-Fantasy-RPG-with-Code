@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="{{domain.language or 'en'}}">
+	<head>
+		{% include "htmls/language.html" %}
+		<title>{{ phrase("pages.linux.adventure-land-on-linux-native-steam-proton-and") }}</title>
+		<meta name="description" content="{{ phrase("pages.linux.label-run-and-troubleshoot-adventure-land-s-native-linux") }}" />
+		<meta
+			name="keywords"
+			content="Adventure Land Linux, Adventure Land Steam Linux, Tauri Linux crash, Steam Linux browser play, Steam Proton WebView2, Wine WebView2 Runtime, Could not find the WebView2 Runtime, protontricks webview2"
+		/>
+		<link rel="apple-touch-icon-precomposed" href="/images/favicon.png" />
+		<!-- 152 -->
+		<link rel="icon" href="/images/favicon.png" />
+		<!-- 32 -->
+		<!--[if IE]><link rel="shortcut icon" href="/images/favicon.png" /><![endif]-->
+		<!-- .ico -->
+		<meta name="msapplication-TileImage" content="/images/favicon.png" />
+		<!-- 144 -->
+		<script src="/js/jquery/jquery-{{domain.jquery_version}}.min.js" {%if domain.electron%} onload="if (typeof require !== 'undefined') window.$ = window.jQuery = module.exports;" {%endif%}></script>
+		<script src="/js/common_functions.js?v={{domain.v}}"></script>
+		<script src="/js/old_common_functions.js?v={{domain.v}}"></script>
+		<script src="/js/functions.js?v={{domain.v}}"></script>
+		<link href="/css/common.css?v={{domain.v}}" rel="stylesheet" type="text/css" />
+		<link href="/css/index.css?v={{domain.v}}" rel="stylesheet" type="text/css" />
+		<style>
+			html {
+				background: black;
+			}
+			html,
+			pre,
+			body {
+				font-family: var(--pixel-font, pixel);
+				color: #cecece;
+				font-size: 24px;
+				/*text-shadow: 0 0 1px rgba(0, 0, 0, 0.4);*/
+				margin: 0;
+				padding: 0;
+			}
+			pre {
+				white-space: pre-wrap;
+				white-space: -moz-pre-wrap;
+				white-space: -pre-wrap;
+				white-space: -o-pre-wrap;
+				word-wrap: break-word;
+			}
+			body {
+				overflow-y: scroll;
+			}
+			.big {
+				color: #e0676d;
+			}
+			.feature {
+				color: #7bb18f;
+			}
+			.warning {
+				color: #d6627f;
+			}
+			#devlogs {
+				margin: 20px 20px 40px 20px;
+			}
+			#devlogs p {
+				margin-bottom: 4px;
+				margin-top: 4px;
+			}
+			#devheader {
+				margin-top: 15px;
+			}
+			#devheader,
+			.devtitle {
+				color: #939393;
+			}
+			.devlink {
+				color: #c64c4c;
+				color: #d85c61;
+			}
+			.devbig {
+			}
+			.command {
+				background: #1e1e1e;
+				color: #cecece;
+				font-size: 18px;
+				padding: 10px;
+				margin: 8px 0;
+			}
+			.small {
+				font-size: 18px;
+			}
+		</style>
+		{% if not domain.Dev %}
+		<script>
+			(function (i, s, o, g, r, a, m) {
+				i["GoogleAnalyticsObject"] = r;
+				((i[r] =
+					i[r] ||
+					function () {
+						(i[r].q = i[r].q || []).push(arguments);
+					}),
+					(i[r].l = 1 * new Date()));
+				((a = s.createElement(o)), (m = s.getElementsByTagName(o)[0]));
+				a.async = 1;
+				a.src = g;
+				m.parentNode.insertBefore(a, m);
+			})(window, document, "script", "https://www.google-analytics.com/analytics.js", "ga");
+			ga("create", "UA-81826565-1", "auto");
+			ga("send", "pageview");
+		</script>
+		{% endif %}
+	</head>
+	<body>
+		<div id="devlogs" style="margin-bottom: 32px">
+			<p>{{ phrase_html("pages.linux.linux-native-steam-proton-and-webview2-help") }}</p>
+
+			<p>{{ phrase("pages.linux.adventure-land-s-current-steam-client-uses-tauri") }}</p>
+
+			<div style="background: #eef1f1; color: #3b3b3c; padding: 10px 10px 10px 10px; margin: 10px -10px 10px -10px">
+				<div style="color: #7bb18f">{{ phrase("pages.linux.1-run-adventure-land-from-the-command-line") }}</div>
+				<p>{{ phrase_html("pages.linux.keep-steam-open-in-your-steam-library-right") }}</p>
+				<p>{{ phrase_html("pages.linux.open-a-terminal-in-that-folder-in-kde") }}</p>
+				<p>{{ phrase_html("pages.linux.make-sure-the-terminal-lists-adventure-land-then") }}</p>
+				<pre class="command">
+ls -la
+./Adventure\ Land</pre>
+				<p>{{ phrase("pages.linux.to-save-the-output-for-troubleshooting-close-the") }}</p>
+				<pre class="command">./Adventure\ Land 2&gt;&amp;1 | tee "$HOME/adventure-land-native.log"</pre>
+				<p>{{ phrase_html("pages.linux.if-the-game-opens-sign-up-or-log") }}</p>
+			</div>
+
+			<div style="background: #eef1f1; color: #3b3b3c; padding: 10px 10px 10px 10px; margin: 10px -10px 10px -10px">
+				<div style="color: #4da9df">{{ phrase("pages.linux.use-the-native-linux-client") }}</div>
+				<p>
+					{{ phrase("pages.linux.open-adventure-land-s-steam-properties-select-compatibility") }}
+				</p>
+				<p>
+					{{ phrase_html("pages.linux.under-installed-files-click-browse-the-game-folder") }}
+				</p>
+				<p>
+					{{ phrase("pages.linux.the-current-linux-package-prefers-your-system-libraries") }}
+				</p>
+				<pre class="command">ADVENTURELAND_FORCE_BUNDLED=1 %command%</pre>
+				<p>
+					{{ phrase_html("pages.linux.common-steam-locations-include-local-share-steam-steamapps") }}
+				</p>
+			</div>
+
+			<div style="background: #eef1f1; color: #3b3b3c; padding: 10px 10px 10px 10px; margin: 10px -10px 10px -10px">
+				<div style="color: #4da9df">{{ phrase("pages.linux.native-client-closes-instantly") }}</div>
+				<p>
+					{{ phrase_html("pages.linux.open-steam-s-properties-installed-files-browse-on") }}
+				</p>
+				<p>{{ phrase("pages.linux.run-these-commands-one-at-a-time") }}</p>
+				<pre class="command">
+pwd
+ls -la
+file ./Adventure\ Land
+ldd ./Adventure\ Land | grep "not found"
+./Adventure\ Land 2&gt;&amp;1 | tee "$HOME/adventure-land-native.log"
+uname -m
+echo "$XDG_SESSION_TYPE"</pre>
+				<p>{{ phrase_html("pages.linux.if-the-output-says-libwebkit2gtk-4-1-so") }}</p>
+				<pre class="command">
+sudo apt update
+sudo apt install libwebkit2gtk-4.1-0</pre>
+				<p>
+					{{ phrase_html("pages.linux.if-ldd-prints-another-missing-library-install-that") }}
+				</p>
+				<p>{{ phrase_html("pages.linux.please-send-the-complete-terminal-output-and-adventure") }}</p>
+			</div>
+
+			<div style="background: #eef1f1; color: #3b3b3c; padding: 10px 10px 10px 10px; margin: 10px -10px 10px -10px">
+				<div style="color: #7bb18f">{{ phrase("pages.linux.authorize-once-then-play-in-your-browser") }}</div>
+				<p>
+					{{ phrase("pages.linux.linux-distributions-combine-different-desktop-environments-graphics-drivers") }}
+				</p>
+				<p>
+					{{ phrase_html("pages.linux.open-the-native-client-from-a-terminal-sign") }}
+				</p>
+				<p>
+					{{ phrase_html("pages.linux.after-that-visit-adventure-land-log-in-with") }}
+				</p>
+			</div>
+
+			<div style="background: #eef1f1; color: #3b3b3c; padding: 10px 10px 10px 10px; margin: 10px -10px 10px -10px">
+				<div style="color: #d6627f">{{ phrase("pages.linux.proton-could-not-find-the-webview2-runtime") }}</div>
+				<p>
+					{{ phrase("pages.linux.this-means-proton-launched-the-windows-tauri-client") }}
+				</p>
+				<p>
+					{{ phrase_html("pages.linux.if-you-want-to-experiment-with-proton-anyway") }}
+				</p>
+				<pre class="command">
+winetricks --self-update
+protontricks 777150 webview2</pre>
+				<p>{{ phrase_html("pages.linux.then-launch-adventure-land-again-with-proton-if") }}</p>
+				<p>
+					{{ phrase_html("pages.linux.you-can-also-download-microsoft-s-x64-evergreen") }}
+				</p>
+				<pre class="command">protontricks-launch --appid 777150 "$HOME/Downloads/MicrosoftEdgeWebView2RuntimeInstallerX64.exe"</pre>
+				<p>
+					{{ phrase("pages.linux.change-the-filename-if-your-browser-saved-it") }}
+				</p>
+			</div>
+
+			<div style="background: #eef1f1; color: #3b3b3c; padding: 10px 10px 10px 10px; margin: 10px -10px 10px -10px">
+				<div style="color: #4da9df">{{ phrase("pages.linux.advanced-bundle-a-fixed-webview2-runtime") }}</div>
+				<p>
+					{{ phrase_html("pages.linux.microsoft-also-offers-an-x64-fixed-version-download") }}
+				</p>
+				<pre class="command">
+mkdir -p "$HOME/.local/share/adventure-land-webview2"
+cabextract -d "$HOME/.local/share/adventure-land-webview2" "$HOME/Downloads/Microsoft.WebView2.FixedVersionRuntime."*.x64.cab
+protontricks -c "winepath -w '$HOME/.local/share/adventure-land-webview2'" 777150</pre>
+				<p>{{ phrase("pages.linux.use-the-returned-windows-style-path-in-adventure") }}</p>
+				<pre class="command">WEBVIEW2_BROWSER_EXECUTABLE_FOLDER='Z:\home\YOUR_NAME\.local\share\adventure-land-webview2' %command%</pre>
+				<p>
+					{{ phrase_html("pages.linux.replace-the-example-with-the-exact-path-returned") }}
+				</p>
+				<p class="small">
+					{{ phrase("pages.linux.this-is-experimental-microsoft-currently-tracks-proton-wine") }}
+				</p>
+			</div>
+
+			<div style="background: #eef1f1; color: #3b3b3c; padding: 10px 10px 10px 10px; margin: 10px -10px 10px -10px">
+				<div style="color: #4da9df">{{ phrase("pages.linux.useful-error-and-search-terms") }}</div>
+				<p>
+					{{ phrase("pages.linux.adventure-land-linux-native-crash-adventure-land-tauri") }}
+				</p>
+			</div>
+
+			<p>{{ phrase_html("pages.linux.old-electron-notes-kept-here-for-players-using") }}</p>
+
+			<p>
+				{{ phrase("pages.linux.the-old-adventure-land-client-used-electron-when") }}
+			</p>
+
+			<div style="background: #eef1f1; color: #3b3b3c; padding: 10px 10px 10px 10px; margin: 10px -10px 10px -10px">
+				<div style="color: #4da9df">{{ phrase("pages.linux.black-or-blank-screen") }}</div>
+				<p>
+					{{ phrase("pages.linux.first-thing-to-try-is-to-find-the") }}
+				</p>
+			</div>
+
+			<div style="background: #eef1f1; color: #3b3b3c; padding: 10px 10px 10px 10px; margin: 10px -10px 10px -10px">
+				<div style="color: #4da9df">{{ phrase("pages.linux.disable-steam-overlay-modification") }}</div>
+				<p>
+					{{ phrase("pages.linux.find-main-js-it-s-the-electron-code") }}
+				</p>
+			</div>
+
+			<div style="background: #eef1f1; color: #3b3b3c; padding: 10px 10px 10px 10px; margin: 10px -10px 10px -10px">
+				<div style="color: #4da9df">{{ phrase("pages.linux.07-03-19-version-zlib-1-2-9") }}</div>
+				<p>
+					{{ phrase("pages.linux.user-foldm-on-discord-stumbled-onto-this-issue") }}
+				</p>
+			</div>
+
+			<div style="background: #eef1f1; color: #3b3b3c; padding: 10px 10px 10px 10px; margin: 10px -10px 10px -10px">
+				<div style="color: #4da9df">
+					{{ phrase("pages.linux.01-02-24-15629-1229-162230-657405-fatal") }}
+				</div>
+				<p>{{ phrase_html("pages.linux.richard-found-a-fix-for-this-issue-the") }}</p>
+			</div>
+
+			<p>{{ phrase("pages.linux.if-you-find-and-solve-an-issue-or") }}</p>
+		</div>
+	</body>
+</html>

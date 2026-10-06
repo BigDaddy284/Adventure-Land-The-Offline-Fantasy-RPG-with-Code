@@ -1,0 +1,54 @@
+<div style='width: 600px'>
+	<p style='font-size: 32px; color: #216D25; text-decoration: underline dotted #B30B1A'>{{ phrase("docs.guide.event-egghunt.egg-hunt-on-adventure-land") }}</p>
+
+	<p>
+		<div><div style='float:left; margin-right: 10px'><span class='eitemxbox'></span></div> {{ phrase("docs.guide.event-egghunt.collect-all-9-and-craft-the-basket-then") }}</div>
+		<div style='margin-top: 10px'><span class='eitemx0'></span> <span class='eitemx1'></span> <span class='eitemx2'></span> <span class='eitemx3'></span> <span class='eitemx4'></span> <span class='eitemx5'></span> <span class='eitemx6'></span> <span class='eitemx7'></span> <span class='eitemx8'></span></div>
+	</p>
+
+	<p>
+		{{ phrase("docs.guide.event-egghunt.collect-4-pieces-of-the-bunny-attire-to") }}
+		<div style='margin-top: -12px'><span class='eitemh0'></span> <span class='eitemh1'></span> <span class='eitemh2'></span> <span class='eitemh3'></span> <span class='eitemh4'></span> <span class='eitemh5'></span></div>
+	</p>
+
+	<p>
+		<span class='spsnowman'></span> {{ phrase("docs.guide.event-egghunt.wabbit-spawns-hourly-on-a-random-map-and") }}
+		<div style='margin-top: 5px'><div style='float:left; margin-right: 10px'><span class='ibuff'></span></div> {{ phrase("docs.guide.event-egghunt.each-time-you-defeat-the-wabbit-you-get") }}</div>
+	</p>
+
+	<p>
+		{{ phrase_html("docs.guide.event-egghunt.the-crafting-npc-is-near-the-goo-s") }}
+	</p>
+
+	<p style='font-size: 32px; color: #216D25; text-decoration: underline dotted #B30B1A; margin-bottom: 10px'>{{ phrase("docs.guide.event-egghunt.snippets") }}</p>
+
+<div class='code'>
+game.on("event",function(data){
+	if(data.name=="wabbit")
+	{
+		smart_move(data);
+		// Data includes only the "map"
+		// It's up to you to visit all the possible monster spawns
+	}
+});
+
+auto_craft("basketofeggs");
+
+// character.s.easterluck <- is the buff
+</div>
+
+<div style='margin-bottom: 24x'></div>
+
+
+	<script>
+		$(".eitem1").html(item_container({skin:G.items.basketofeggs.skin},{name:"basketofeggs",q:0}));
+		for(var i=0;i<9;i++)
+			$(".eitemx"+i).html(item_container({skin:G.items['egg'+i].skin},{name:'egg'+i,q:0}));
+		for(var i=0;i<6;i++)
+			$(".eitemh"+i).html(item_container({skin:G.items[G.sets.easter.items[i]].skin},{name:G.sets.easter.items[i],level:0}));
+		$(".eitemxbox").html(item_container({skin:G.items.basketofeggs.skin},{name:"basketofeggs",q:0}));
+		$(".ibuff").html(item_container({skin:"easterluck"}));
+		$(".spsnowman").html(sprite("wabbit"));
+		$(".spjayson").html(sprite("npcc"));
+	</script>
+</div>

@@ -1,0 +1,1137 @@
+<!DOCTYPE html>
+<html lang="{{domain.language or 'en'}}">
+	<head>
+		{% include "htmls/language.html" %}
+		<title>{{ phrase("pages.logs.development") }} <!--Logs-->{{ phrase("pages.logs.blog") }}</title>
+		<link rel="apple-touch-icon-precomposed" href="/images/favicon.png" /> <!-- 152 -->
+		<link rel="icon" href="/images/favicon.png" /> <!-- 32 -->
+		<!--[if IE]><link rel="shortcut icon" href="/images/favicon.png"><![endif]--> <!-- .ico -->
+		<meta name="msapplication-TileImage" content="/images/favicon.png"> <!-- 144 -->
+		<script src="/js/jquery/jquery-{{domain.jquery_version}}.min.js"{%if domain.electron%} onload="if(typeof require!=='undefined') window.$=window.jQuery=module.exports;"{%endif%}></script>
+		<script src="/js/common_functions.js?v={{domain.v}}"></script>
+		<script src="/js/old_common_functions.js?v={{domain.v}}"></script>
+		<script src="/js/functions.js?v={{domain.v}}"></script>
+		<link href="/css/common.css?v={{domain.v}}" rel="stylesheet" type="text/css"/>
+		<link href="/css/index.css?v={{domain.v}}" rel="stylesheet" type="text/css"/>
+		<style>
+			html{
+				background: black;
+			}
+			html,pre,body{
+				font-family: var(--pixel-font, pixel);
+				color: #CECECE;
+				font-size: 24px;
+				/*text-shadow: 0 0 1px rgba(0, 0, 0, 0.4);*/
+				margin: 0;
+				padding: 0;
+			}
+			pre{
+				white-space: pre-wrap;
+				white-space: -moz-pre-wrap;
+				white-space: -pre-wrap;
+				white-space: -o-pre-wrap;
+				word-wrap: break-word;
+			}
+			body{
+				overflow-y:scroll;
+			}
+			.big{
+				color:#E0676D;
+			}
+			.feature{
+				color:#7BB18F;
+			}
+			.warning{
+				color:#D6627F;
+			}
+			#devlogs{
+				margin: 20px 20px 40px 20px;
+			}
+			#devlogs p{
+				margin-bottom: 4px;
+				margin-top: 4px;
+			}
+			#devheader{
+				margin-top: 15px;
+			}
+			#devheader,.devtitle{
+				color: #939393;
+			}
+			.devlink{
+				color: #C64C4C;
+				color: #D85C61;
+			}
+			.devbig{
+
+			}
+		</style>
+		{% if not domain.Dev %}
+			<script>
+				(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+				(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+				m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+				})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+				ga('create', 'UA-81826565-1', 'auto');
+				ga('send', 'pageview');
+			</script>
+		{% endif %}
+	</head>
+	<body>
+		<div id="devlogs" style="margin-bottom: 32px">
+			<!-- <p><span class='devtitle'>Notice:</span> Looking for a "Pixel Artist" to join the team, to be a part of the game, to lead, direct, steer wherever possible.</p>
+			<p><span class='devtitle'>Email:</span> hello@adventure.land</p> -->
+
+			<div>{{ phrase_html("pages.logs.old-planned-features-new-all-update-notes") }}</div>
+
+			{#
+				[19/12/19]: Grinch made babies cry today :/
+			#}
+
+			{#<div style="background: #EEF1F1; color: #3B3B3C; padding: 10px 10px 10px 10px; margin: 10px -10px 10px -10px;">
+				<div style="color: #4DA9DF">[14/08/19]: Signs</div>
+				<p>Can't say that the last few months were super productive, in fact, they were only minimally productive, there's progress, but not enough to shape the game fast enough.</p>
+				<p>Back in 2015, before I started working on Adventure Land, I decided to cross an item off my bucket list, which was to gather the best gaming pc I could - I always wanted to have a high performance gaming system. After all the hurdles, one night, everything was finally coming together, it was time to update the motherboard's bios. I figured, since there was no power outage in the last 2 years, and the electrical infrastructure now seemed pretty reliable, it was a safe operation. It takes 30 seconds anyway. Started the bios update, and around 20 seconds later, right when it was just passing 60%, I sat in complete darkness, the power was gone... motherboard corrupted. A minute later, the power was back on - no outages again for a long long time.</p>
+				<p>Back then, I attributed this experience to my extreme luck, but later on, I started seeing it more as a sign. That gaming system ended up being both a time and money pit, affected my life significantly, possibly put me in a much worse course.</p>
+				<p>On 29th of July, I was outside on empty fields with my dog, there's a very serene place nearby, lots of hills, natural water and so on. It was around 19 pm, I started thinking about the power outage, kinda wished I received another sign like that, wishing it would pull me out of this endless loop of procrastination vs. progress.</p>
+				<p>This was the day and exact time when a player found a Sucker Punch, 6 times in a row, a one in a million chance proc'ing 6 times in a row, an impossibility. Suffice to say, I choose to see this as a sign too. To get things back on track.</p>
+				<p>Turns out, if you combine the -25% Luck from the non-verified email status, and the -85% Luck from the steam/mac authorization failure debuff, it dropped the Luck multiplier below 0, and caused the game to drop everything possible from monsters, but still, since this loophole was introduced months ago, it's quite a coincidence that it happened when it happened.</p>
+				<p>I was finally able to get things back on track some days ago, ultimately, I ended up eliminating all the sources of procrastination from my life. The last one was watching an excessive amount of movies and tv shows. Currently I either work on the game, or spend time outside/exercise. So even if I'm not in the mood to work, I end up exercising instead, so it's a win win scenario.</p>
+			</div>#}
+
+			<div style="background: #EEF1F1; color: #3B3B3C; padding: 10px 10px 10px 10px; margin: 10px -10px 10px -10px;">
+				<div style="color: #4DA9DF">{{ phrase("pages.logs.28-02-19-summer-mode-on") }}</div>
+				<p>{{ phrase("pages.logs.finally-mostly-healed-took-some-time-off-last") }}</p>
+				<p>{{ phrase("pages.logs.today-i-started-working-8-hours-a-week") }}</p>
+			</div>
+
+			<div style="background: #EEF1F1; color: #3B3B3C; padding: 10px 10px 10px 10px; margin: 10px -10px 10px -10px;">
+				<div style="color: #4DA9DF">{{ phrase("pages.logs.05-02-19-steam-release-and-a-new") }}</div>
+				<p>{{ phrase("pages.logs.never-expected-such-a-successful-release-steam-is") }}</p>
+				<p>{{ phrase("pages.logs.if-it-goes-like-this-and-i-hope") }}</p>
+				<p>{{ phrase("pages.logs.current-plan-is-to-address-the-initial-experience") }}</p>
+				<p>{{ phrase_html("pages.logs.meanwhile-launched-the-chinese-new-year-event-also") }}</p>
+			</div>
+
+			<div style="background: #EEF1F1; color: #3B3B3C; padding: 10px 10px 10px 10px; margin: 10px -10px 10px -10px;">
+				<div style="color: #4DA9DF">{{ phrase("pages.logs.05-02-19-just-before-the-steam-release") }}</div>
+				<p>{{ phrase("pages.logs.military-service-wasn-t-kind-started-around-10") }}</p>
+				<p>{{ phrase("pages.logs.returned-home-25th-of-january-and-started-the") }}</p>
+			</div>
+
+			<div style="background: #EEF1F1; color: #3B3B3C; padding: 10px 10px 10px 10px; margin: 10px -10px 10px -10px;">
+				<div style="color: #4DA9DF">{{ phrase("pages.logs.04-02-19-up-to-january") }}</div>
+				<p>{{ phrase("pages.logs.i-had-a-good-thing-going-until-october") }}</p>
+				<p>{{ phrase("pages.logs.started-working-more-in-a-free-manner-which") }}</p>
+				<p>{{ phrase("pages.logs.in-turkey-males-have-to-serve-in-the") }}</p>
+				<p>{{ phrase("pages.logs.apart-from-these-december-was-a-really-bad") }}</p>
+			</div>
+
+			<div style="background: #EEF1F1; color: #3B3B3C; padding: 10px 10px 10px 10px; margin: 10px -10px 10px -10px;">
+				<div style="color: #4DA9DF">{{ phrase("pages.logs.07-09-18-cloud-vs-dedicated") }}</div>
+				<p>{{ phrase("pages.logs.i-ll-start-this-small-informal-blog-post") }}</p>
+				<p>{{ phrase("pages.logs.first-app-engine-normally-i-was-a-big") }}</p>
+				<p>{{ phrase("pages.logs.spadar-one-of-our-hardcore-players-has-been") }}</p>
+				<p>{{ phrase("pages.logs.second-aws-i-had-15k-s-of-aws") }}</p>
+				<p>{{ phrase("pages.logs.at-this-point-in-time-we-have-only") }}</p>
+				<p>{{ phrase("pages.logs.i-started-web-development-with-dedicated-servers-those") }}</p>
+				<p>{{ phrase("pages.logs.as-players-prefer-the-us-servers-i-chose") }}</p>
+				<p>{{ phrase("pages.logs.so-i-m-a-computer-engineer-and-all") }}</p>
+				<p>{{ phrase("pages.logs.the-server-has-an-initial-pre-computing-stage") }}</p>
+				<p>{{ phrase("pages.logs.so-basically-that-s-a-huge-problem-solved") }}</p>
+			</div>
+
+			<div style="background: #EEF1F1; color: #3B3B3C; padding: 10px 10px 10px 10px; margin: 10px -10px 10px -10px;">
+				<div style="color: #4DA9DF">{{ phrase("pages.logs.07-09-18-a-new-era") }}</div>
+				<p>{{ phrase("pages.logs.around-december-2016-i-kind-of-broke-myself") }}</p>
+				<p>{{ phrase("pages.logs.after-1-5-years-of-bad-performance-around") }}</p>
+				<p>{{ phrase("pages.logs.basically-i-work-only-weekdays-wake-up-at") }}</p>
+				<p>{{ phrase("pages.logs.thanks-to-this-new-system-last-2-months") }}</p>
+			</div>
+
+			<div id="devheader">[22/05/17]</div>
+			<p>{{ phrase_html("pages.logs.today-s-feature-hardcore-mode") }}</p>
+
+			<div id="devheader">[21/05/17]</div>
+			<p>{{ phrase_html("pages.logs.today-s-feature-player") }}</p>
+			<p>{{ phrase("pages.logs.this-is-more-of-an-internal-change-enables") }}</p>
+
+			<div id="devheader">[20/05/17]</div>
+			<p>{{ phrase_html("pages.logs.today-s-feature-mail") }}</p>
+			<p>{{ phrase("pages.logs.implementing-the-mail-routines-there-will-be-multiple") }}</p>
+			<p>{{ phrase("pages.logs.considered-handling-all-incoming-pm-s-as-mail") }}</p>
+			<p>{{ phrase("pages.logs.i-have-a-lot-more-to-write-about") }}</p>
+
+			<div style="background: #EEF1F1; color: #3B3B3C; padding: 10px 10px 10px 10px; margin: 10px -10px 10px -10px;">
+				<div style="color: #4DA9DF">{{ phrase("pages.logs.22-04-17-development-logs-becomes-the-development") }}</div>
+				<p>{{ phrase("pages.logs.as-a-habit-i-take-a-lot-of") }}</p>
+				<p>{{ phrase("pages.logs.anyway-you-ve-probably-wondered-what-this-has") }}</p>
+				<p>{{ phrase("pages.logs.from-now-on-without-any-format-i-will") }}</p>
+				<p>{{ phrase("pages.logs.a-lot-has-happened-in-these-last-4") }}</p>
+				<p>{{ phrase("pages.logs.i-sincerely-hope-it-ends-up-being-a") }}</p>
+			</div>
+
+			<div id="devheader">[16/01/17]</div>
+			<p>{{ phrase_html("pages.logs.today-s-highlight-launch-of-the-new-town") }}</p>
+			<p>{{ phrase("pages.logs.after-the-midnight-updated-the-notes-looking-forward") }}</p>
+			<p>{{ phrase("pages.logs.this-was-the-first-update-that-refactored-all") }}</p>
+			<p>{{ phrase("pages.logs.after-the-update-some-players-were-experiencing-transport") }}</p>
+			<p>{{ phrase("pages.logs.discovered-another-pixi-bug-curse-started-causing-issues") }}</p>
+			<p>{{ phrase("pages.logs.preparing-to-convert-all-existing-16x16-items-to") }}</p>
+
+			<div id="devheader">[15/01/17]</div>
+			<p>{{ phrase_html("pages.logs.today-s-features-live-reload-new-town-well") }}</p>
+			<p>{{ phrase("pages.logs.today-was-a-long-and-productive-day-started") }}</p>
+			<p>{{ phrase("pages.logs.the-live-reload-feature-both-refreshes-the-server") }}</p>
+			<p>{{ phrase("pages.logs.added-all-the-planned-items-completed-re-visited") }}</p>
+
+			<div id="devheader">[14/01/17]</div>
+			<p>{{ phrase_html("pages.logs.today-s-feature-attack-animation-nudge") }}</p>
+			<p>{{ phrase("pages.logs.continuing-with-the-integrations") }}</p>
+			<p>{{ phrase("pages.logs.got-the-idea-to-add-a-new-attack") }}</p>
+
+			<div id="devheader">[13/01/17]</div>
+			<p>{{ phrase_html("pages.logs.today-s-highlights-new-town-s-integrations-vitality") }}</p>
+			<p>{{ phrase("pages.logs.added-the-tavern-premium-items-npc-s-set") }}</p>
+
+			<div id="devheader">[12/01/17]</div>
+			<p>{{ phrase_html("pages.logs.today-s-highlights-band-of-fury-evasion-reflection") }}</p>
+			<p>{{ phrase("pages.logs.added-the-reflection-evasion-scrolls-they-have-custom") }}</p>
+			<p>{{ phrase("pages.logs.tested-jayson-s-tavern-entities-including-the-roulette") }}</p>
+			<p>{{ phrase("pages.logs.crated-the-new-upgrade-compound-animation-it-iterates") }}</p>
+
+			<div id="devheader">{{ phrase("pages.logs.02-02-17-last-2-weeks-i-ve") }}</div>
+
+			<div id="devheader">{{ phrase("pages.logs.15-01-17-i-ve-been-working-on") }}</div>
+
+			<div id="devheader">[11/01/17]</div>
+			<p>{{ phrase_html("pages.logs.month-in-review") }}</p>
+			<p>{{ phrase("pages.logs.caught-up-with-my-logs-today-and-had") }}</p>
+			<p>{{ phrase("pages.logs.jayson-prepared-the-first-prototype-for-a-slot") }}</p>
+			<p>{{ phrase("pages.logs.received-an-awesome-suggestion-list-from-trexnamedtom-on") }}</p>
+
+			<div id="devheader">[10/01/17]</div>
+			<p>{{ phrase("pages.logs.catching-up-with-the-logs-finalised-the-improved") }}</p>
+
+			<div id="devheader">[09/01/17]</div>
+			<p>{{ phrase_html("pages.logs.today-s-highlight-how-machines-can-be-misunderstood") }}</p>
+			<p>{{ phrase("pages.logs.some-time-ago-i-ve-received-a-report") }}</p>
+			<p>{{ phrase("pages.logs.i-ve-asked-gleich-about-the-situation-didn") }}</p>
+			<p>{{ phrase("pages.logs.gleich-s-code-was-pretty-innocent-too-the") }}</p>
+			<p>{{ phrase("pages.logs.designed-an-improvement-to-overcome-this-scenario") }}</p>
+
+			<div id="devheader">[08/01/17]</div>
+			<p>{{ phrase_html("pages.logs.today-s-highlights-injustice-i-ve-caused-bugfix") }}</p>
+			<p>{{ phrase("pages.logs.deliagwath-brought-to-my-attention-that-the-grades") }}</p>
+			<p>{{ phrase("pages.logs.patched-the-pvp-combo-routines-it-seems-some") }}</p>
+			<p>{{ phrase("pages.logs.today-s-highlight-comes-from-thezhoul-on-discord") }}</p>
+
+			<div id="devheader">[07/01/17]</div>
+			<p>{{ phrase("pages.logs.integrated-our-new-cave-the-design-is-impressive") }}</p>
+
+			<div id="devheader">[06/01/17]</div>
+			<p>{{ phrase("pages.logs.integrated-the-npc-s-to-the-new-town") }}</p>
+			<p>{{ phrase("pages.logs.due-to-weather-conditions-jayson-wasn-t-around") }}</p>
+
+			<div id="devheader">[05/01/17]</div>
+			<p>{{ phrase("pages.logs.started-designing-the-new-movement-and-vision-system") }}</p>
+			<p>{{ phrase("pages.logs.updated-most-of-our-existing-items-to-the") }}</p>
+
+			<div id="devheader">[04/01/17]</div>
+			<p>{{ phrase_html("pages.logs.today-s-feature-temporary-account-blockage-analysis-routines") }}</p>
+			<p>{{ phrase("pages.logs.there-are-3-ways-to-violate-the-rules") }}</p>
+			<p>{{ phrase("pages.logs.added-2-new-internal-analysis-routines-one-of") }}</p>
+
+			<div id="devheader">[03/01/17]</div>
+			<p>{{ phrase("pages.logs.researched-possible-games-for-the-tavern-today-read") }} {#The thing I love most about developing Adventure Land is gaining experiences in such unexpected fields.#} {{ phrase("pages.logs.learned-a-lot-on-chance-games-design-today") }}</p>
+			<p>{{ phrase("pages.logs.earlier-i-made-some-performance-improvements-to-the") }}</p>
+
+			<div id="devheader">[02/01/17]</div>
+			<p>{{ phrase_html("pages.logs.today-s-feature-tavern-roulette") }}</p>
+			<p>{{ phrase("pages.logs.implemented-the-roulette-it-can-be-played-through") }}</p>
+			<p>{{ phrase_html("pages.logs.i-had-180m-on-my-local-test-character") }}</p>
+			<p>{{ phrase_html("pages.logs.life-yesterday-a-pigeon-entered-the-house-from") }}</p>
+
+			<div id="devheader">[01/01/17]</div>
+			<p>{{ phrase_html("pages.logs.today-s-highlight-tavern-first-step") }}</p>
+			<p>{{ phrase("pages.logs.implemented-started-the-internal-architecture-for-the-tavern") }}</p>
+
+			<div id="devheader">[31/12/16]</div>
+			<p>{{ phrase_html("pages.logs.new-year-s-eve") }}</p>
+			<p>{{ phrase("pages.logs.inspired-started-the-tavern-improved-the-game-performance") }}</p>
+			<p>{{ phrase_html("pages.logs.looking-back-on-a-personal-level-2016-didn") }}</p>
+			<p>{{ phrase_html("pages.logs.going-forward-code-teaching-aspect-of-the-game") }}</p>
+
+			<div id="devheader">[30/12/16]</div>
+			<p>{{ phrase_html("pages.logs.today-s-highlights-new-year-s-eve-boost") }}</p>
+			<p>{{ phrase("pages.logs.boosted-the-mistletoe-candy-cane-drops-significantly") }}</p>
+			<p>{{ phrase("pages.logs.improved-the-global-limits-enforcer-once-again-it") }}</p>
+
+			<div id="devheader">[29/12/16]</div>
+			<p>{{ phrase_html("pages.logs.today-s-highlight-greenlit") }}</p>
+			<p>{{ phrase("pages.logs.the-game-is-greenlit-on-steam-so-fast") }}</p>
+			<p>{{ phrase("pages.logs.integrated-the-new-looks-for-the-armors-sent") }}</p>
+
+			<div id="devheader">[28/12/16]</div>
+			<p>{{ phrase_html("pages.logs.today-s-highlight-new-items-with-ellian") }}</p>
+			<p>{{ phrase_html("pages.logs.created-the-graphics-for-our-new-items-with") }}</p>
+
+			<div id="devheader">[27/12/16]</div>
+			<p>{{ phrase_html("pages.logs.today-s-feature-the-second-chance-ability") }}</p>
+			<p>{{ phrase("pages.logs.improved-the-integration-of-the-new-town-finalised") }}</p>
+			<p>{{ phrase("pages.logs.implemented-the-second-chance-ability-it-s-a") }}</p>
+			<p>{{ phrase("pages.logs.reproduced-the-movement-issue-we-ve-been-hunting") }}</p>
+
+			<div id="devheader">[26/12/16]</div>
+			<p>{{ phrase_html("pages.logs.today-s-feature-stacked-listings-for-merchant-s") }}</p>
+			<p>{{ phrase("pages.logs.added-calibrated-the-spiked-shield-item-upgraded-to") }}</p>
+			<p>{{ phrase("pages.logs.improved-the-trade-system-to-allow-listings-for") }}</p>
+
+			<div id="devheader">[25/12/16]</div>
+			<p>{{ phrase_html("pages.logs.today-s-highlight-weapon-tiering-system") }}</p>
+			<p>{{ phrase("pages.logs.designed-the-system-that-will-govern-the-weapon") }}</p>
+
+			<div id="devheader">[24/12/16]</div>
+			<p>{{ phrase_html("pages.logs.today-s-highlight-the-mining-tunnel") }}</p>
+			<p>{{ phrase("pages.logs.created-integrated-the-mining-tunnel-drops-mole-s") }}</p>
+
+			<div id="devheader">[23/12/16]</div>
+			<p>{{ phrase_html("pages.logs.today-s-highlight-json-s-wings") }}</p>
+			<p>{{ phrase("pages.logs.this-was-a-productive-day-for-jayson-wish") }}</p>
+			<p>{{ phrase("pages.logs.improved-the-friends-server-guildies-interface-it-s") }}</p>
+			<p>{{ phrase_html("pages.logs.side-note-the-world-is-becoming-darker-and") }}</p>
+
+			<div id="devheader">[22/12/16]</div>
+			<p>{{ phrase_html("pages.logs.today-s-feature-dynamic-spawn-bosses") }}</p>
+			<p>{{ phrase("pages.logs.woke-up-early-to-a-semi-nightmare-it") }}</p>
+			<p>{{ phrase("pages.logs.today-s-feature-is-the-ability-for-bosses") }}</p>
+			<p>{{ phrase("pages.logs.integrating-new-monsters-improved-the-way-game-calls") }}</p>
+
+			<div id="devheader">[21/12/16]</div>
+			<p>{{ phrase("pages.logs.improved-the-design-of-the-new-town-discovered") }}</p>
+			<p>{{ phrase("pages.logs.working-on-an-improved-movement-and-visibility-system") }}</p>
+
+			<div id="devheader">[20/12/16]</div>
+			<p>{{ phrase_html("pages.logs.today-s-highlight-xmas-email-interaction") }}</p>
+			<p>{{ phrase_html("pages.logs.send-our-xmas-email-today-increased-the-drops") }}</p>
+
+			<div id="devheader">[19/12/16]</div>
+			<p>{{ phrase_html("pages.logs.today-s-highlight-steam-greenlight-page") }}</p>
+			<p>{{ phrase("pages.logs.interacted-with-our-new-players-until-4am-it") }}</p>
+			<p>{{ phrase_html("pages.logs.created-the-screenshots-i-was-planning-for-the") }}</p>
+
+			<div id="devheader">[18/12/16]</div>
+			<p>{{ phrase_html("pages.logs.today-s-highlight-second-reddit-announcement") }}</p>
+			<p>{{ phrase("pages.logs.preparing-the-steam-greenlight-page-improved-the-code") }}</p>
+			<p>{{ phrase_html("pages.logs.highlight-of-the-day-is-our-second-reddit") }}</p>
+
+			<div id="devheader">[17/12/16]</div>
+			<p>{{ phrase_html("pages.logs.today-s-highlight-code-video") }}</p>
+			<p>{{ phrase("pages.logs.executed-the-small-giveaway-i-was-planning-both") }}</p>
+			<p>{{ phrase("pages.logs.code_language_preparation") }}</p>
+
+			<div id="devheader">[16/12/16]</div>
+			<p>{{ phrase_html("pages.logs.today-s-feature-dynamic-observation") }}</p>
+			<p>{{ phrase("pages.logs.previously-the-login-character-selection-page-only-showed") }}</p>
+			<p>{{ phrase("pages.logs.improved-the-new-bank-added-the-clerk-s") }}</p>
+			<p>{{ phrase("pages.logs.added-a-booster-guide-and-accompanying-code-functions") }}</p>
+			<p>{{ phrase("pages.logs.updated-the-game-fixed-the-issues") }}</p>
+
+			<div id="devheader">[15/12/16]</div>
+			<p>{{ phrase_html("pages.logs.today-s-highlight-boosters") }}</p>
+			<p>{{ phrase("pages.logs.caught-up-with-these-logs-again-normally-i") }}</p>
+			<p>{{ phrase("pages.logs.the-taunt-now-takes-the-aggro-from-monsters") }}</p>
+			<p>{{ phrase("pages.logs.integrated-improved-the-new-boosters-simplified-the-internals") }}</p>
+			<p>{{ phrase("pages.logs.monster-xp-s-now-factor-in-the-xpm") }}</p>
+			<p>{{ phrase("pages.logs.improved-the-guide-added-a-limits-section") }}</p>
+
+			<div id="devheader">[14/12/16]</div>
+			<p>{{ phrase("pages.logs.started-finalising-the-new-booster-items-they-are") }}</p>
+			<p>{{ phrase("pages.logs.today-is-a-big-day-for-me-personally") }}</p>
+
+			<div id="devheader">[13/12/16]</div>
+			<p>{{ phrase("pages.logs.servers-are-performing-very-well-improved-the-bank") }}</p>
+			<p>{{ phrase("pages.logs.last-few-days-i-ve-been-on-a") }}</p>
+
+			<div id="devheader">[12/12/16]</div>
+			<p>{{ phrase_html("pages.logs.today-s-feature-bank-slots") }}</p>
+			<p>{{ phrase("pages.logs.started-relaxing-going-to-take-it-easy-for") }}</p>
+			<p>{{ phrase("pages.logs.implemented-the-system-for-additional-bank-slots-they") }}</p>
+			<p>{{ phrase("pages.logs.fixed-the-count-for-the-leather-quest-fixed") }}</p>
+
+			<div id="devheader">[11/12/16]</div>
+			<p>{{ phrase_html("pages.logs.today-s-highlight-xmas-launch") }}</p>
+			<p>{{ phrase("pages.logs.finalising-the-new-drops-added-the-stat-ring") }}</p>
+			<p>{{ phrase("pages.logs.added-a-well-crafted-cape-a-rare-but") }}</p>
+			<p>{{ phrase("pages.logs.calibrated-the-new-monsters-added-properties-most-monsters") }}</p>
+			<p>{{ phrase("pages.logs.added-guard-npcs-as-a-placeholders-they-will") }}</p>
+			<p>{{ phrase("pages.logs.replaced-dark-knight-s-with-croc-s-i") }}</p>
+			<p>{{ phrase("pages.logs.said-goodbye-to-mercury-he-was-a-really") }}</p>
+			<p>{{ phrase("pages.logs.further-enriched-the-leather-quest-there-are-other") }}</p>
+			<p>{{ phrase("pages.logs.calibrated-finalised-all-the-xmas-items-and-drops") }}</p>
+			<p>{{ phrase("pages.logs.set-the-update-notes-deployed-the-improvements-updated") }}</p>
+			<p>{{ phrase("pages.logs.it-was-delighting-to-see-so-many-players") }}</p>
+
+			<div id="devheader">[10/12/16]</div>
+			<p>{{ phrase_html("pages.logs.today-s-highlight-xmas-push") }}</p>
+			<p>{{ phrase("pages.logs.added-the-would-you-like-to-turn-on") }}</p>
+			<p>{{ phrase("pages.logs.added-the-initial-integration-of-music-fx-levels") }}</p>
+			<p>{{ phrase("pages.logs.completed-the-new-upgrade-or-compound-npc-i") }}</p>
+			<p>{{ phrase("pages.logs.completed-the-cape-orb-equip-logic") }}</p>
+			<p>{{ phrase("pages.logs.perfected-the-winter-inn") }}</p>
+			<p>{{ phrase("pages.logs.added-a-new-feature-to-npc-s-they") }}</p>
+			<p>{{ phrase("pages.logs.improving-the-game-client-server-interactions-ideally-server") }}</p>
+			<p>{{ phrase("pages.logs.turns-out-i-was-mis-spelling-mistletoe-all") }}</p>
+			<p>{{ phrase("pages.logs.added-the-transport-lady-to-winterland-the-captain") }}</p>
+			<p>{{ phrase("pages.logs.completed-all-the-details-for-the-winterland-and") }}</p>
+			<p>{{ phrase("pages.logs.integrated-improved-all-the-new-quests-and-monsters") }}</p>
+
+			<div id="devheader">[09/12/16]</div>
+			<p>{{ phrase_html("pages.logs.today-s-highlight-xmas-rush") }}</p>
+			<p>{{ phrase("pages.logs.created-integrated-rudolph-added-the-drop-integrating-the") }}</p>
+			<p>{{ phrase("pages.logs.added-the-orb-of-second-chances-our-first") }}</p>
+			<p>{{ phrase("pages.logs.created-tier-1-5-for-the-xmas-items") }}</p>
+			<p>{{ phrase("pages.logs.slowed-players-in-winterland") }}</p>
+			<p>{{ phrase("pages.logs.added-the-leather-merchant-polishing-the-quest-system") }}</p>
+			<p>{{ phrase("pages.logs.added-a-rage-property-similar-to-aggro-when") }}</p>
+			<p>{{ phrase("pages.logs.unified-all-npc-interactions-i-love-refactoring") }}</p>
+			<p>{{ phrase("pages.logs.today-was-an-extremely-productive-and-satisfying-day") }}</p>
+
+			<div id="devheader">[08/12/16]</div>
+			<p>{{ phrase_html("pages.logs.today-s-highlight-xmas-rush") }}</p>
+			<p>{{ phrase("pages.logs.we-ve-started-working-with-jayson-heavily-sadly") }}</p>
+			<p>{{ phrase("pages.logs.i-ve-improved-the-internal-drops-and-exchange") }}</p>
+			<p>{{ phrase("pages.logs.added-the-cape-an-exciting-item-yet-really") }}</p>
+			<p>{{ phrase("pages.logs.to-fix-a-small-issue-i-ve-deployed") }}</p>
+
+			<div id="devheader">[07/12/16]</div>
+			<p>{{ phrase("pages.logs.fixed-a-memory-leak-that-affected-hp-bar") }}</p>
+			<p>{{ phrase("pages.logs.started-creating-the-first-quests-the-xmas-quests") }}</p>
+			<p>{{ phrase("pages.logs.improved-the-ip-limitations-layer-improved-the-server") }}</p>
+			<p>{{ phrase("pages.logs.lately-i-ve-been-very-stressed-so-instead") }}</p>
+			
+			<div id="devheader">[06/12/16]</div>
+			<p>{{ phrase_html("pages.logs.today-s-feature-targeting-aggressive-monsters") }}</p>
+			<p>{{ phrase("pages.logs.up-to-now-some-monsters-only-attacked-players") }}</p>
+			<p>{{ phrase("pages.logs.improved-the-hp-bar-s-and-name-tag") }}</p>
+			<p>{{ phrase("pages.logs.started-refactoring-the-character-status-flags-like-cursed") }}</p>
+			<p>{{ phrase("pages.logs.added-the-candy-cane-and-blue-pom-pom") }}</p>
+			<p>{{ phrase("pages.logs.outside-the-game-a-very-positive-development-happened") }}</p>
+
+			<div id="devheader">[05/12/16]</div>
+			<p>{{ phrase_html("pages.logs.today-s-feature-damage-return") }}</p>
+			<p>{{ phrase("pages.logs.added-some-new-cache-s-to-the-game") }}</p>
+			<p>{{ phrase("pages.logs.implemented-the-damage-return-property-armadillo-is-going") }}</p>
+			<p>{{ phrase("pages.logs.added-the-eggnog") }}</p>
+
+			<div id="devheader">[04/12/16]</div>
+			<p>{{ phrase_html("pages.logs.today-s-highlight-improved-password-routines") }}</p>
+			<p>{{ phrase("pages.logs.improved-the-npc-animations-they-flow-better-now") }}</p>
+			<p>{{ phrase("pages.logs.re-implemented-the-password-routines-passwords-are-hashed") }}</p>
+
+			<div id="devheader">[03/12/16]</div>
+			<p>{{ phrase_html("pages.logs.today-s-highlights-random-respawns-and-other-stuff") }}</p>
+			<p>{{ phrase("pages.logs.the-phoenix-is-going-to-spawn-in-random") }}</p>
+			<p>{{ phrase("pages.logs.worked-with-jayson-a-bit-i-encouraged-him") }}</p>
+			<p>{{ phrase("pages.logs.improving-the-game-designs-the-winterland-the-desertland") }}</p>
+			<p>{{ phrase("pages.logs.improved-the-ip-security-layer-of-the-game") }}</p>
+			<p>{{ phrase("pages.logs.i-have-a-relaxed-and-simple-approach-to") }}</p>
+			<p>{{ phrase("pages.logs.after-working-non-stop-for-almost-6-years") }}</p>
+
+			<div id="devheader">{{ phrase("pages.logs.11-12-16-it-s-been-a-hectic") }}</div>
+
+			<div id="devheader">[02/12/16]</div>
+			<p>{{ phrase_html("pages.logs.today-s-highlights-elixirs-christmas-items-and-improved") }}</p>
+			<p>{{ phrase("pages.logs.implemented-the-elixir-logic-the-usage-expiry-integrations") }}</p>
+			<p>{{ phrase("pages.logs.finalised-the-christmas-events-and-items-the-most") }}</p>
+			<p>{{ phrase("pages.logs.made-my-decision-on-the-game-limits-this") }}</p>
+			<p>{{ phrase("pages.logs.reduced-the-monster-charge-speeds-for-squig-increasing") }}</p>
+			<p>{{ phrase("pages.logs.basher-s-speed-reduction-now-shows-up-on") }}</p>
+			<p>{{ phrase("pages.logs.integrated-the-christmas-event-sounds") }}</p>
+			<p>{{ phrase("pages.logs.discovered-and-fixed-a-rare-server-issue-newly") }}</p>
+
+			<div id="devheader">[01/12/16]</div>
+			<p>{{ phrase_html("pages.logs.today-s-highlights-paid-the-logs-debt-combined") }}</p>
+			<p>{{ phrase("pages.logs.today-was-a-slow-and-relaxing-day-caught") }}</p>
+			<p>{{ phrase("pages.logs.checked-out-aws-re-invent-adventure-land-uses") }}</p>
+			<p>{{ phrase("pages.logs.added-combined-damage-warnings-on-combined-damage-callback") }}</p>
+			<p>{{ phrase("pages.logs.picked-a-tune-for-the-christmas-event-i") }}</p>
+			<p>{{ phrase("pages.logs.the-new-pokemon-game-seems-like-a-flop") }}</p>
+			<p>{{ phrase("pages.logs.spent-a-lot-of-time-outside-bought-some") }}</p>
+
+			<div id="devheader">[30/11/16]</div>
+			<p>{{ phrase_html("pages.logs.today-s-highlight-fisherman-npc") }}</p>
+			<p>{{ phrase("pages.logs.continually-designing-our-new-items") }}</p>
+			<p>{{ phrase("pages.logs.improved-the-exchange-system-to-support-quests-too") }}</p>
+			<p>{{ phrase("pages.logs.there-will-be-3-4-quests-like-these") }}</p>
+			<p>{{ phrase("pages.logs.found-some-nice-solutions-to-some-of-the") }}</p>
+			<p>{{ phrase("pages.logs.received-the-new-pokemon-games-moon-for-myself") }}</p>
+
+			<div id="devheader">[29/11/16]</div>
+			<p>{{ phrase_html("pages.logs.today-s-addition-the-sneaky-goblin") }}</p>
+			<p>{{ phrase("pages.logs.the-sneaky-goblin-has-high-evasion-reflection-1") }}</p>
+			<p>{{ phrase("pages.logs.added-a-line-check-feature-to-our-map") }}</p>
+			<p>{{ phrase("pages.logs.added-the-skin-property-to-monsters-basically-two") }}</p>
+			<p>{{ phrase("pages.logs.took-care-of-some-things-i-was-delaying") }}</p>
+
+			<div id="devheader">[28/11/16]</div>
+			<p>{{ phrase("pages.logs.preparing-the-elementals-they-will-likely-be-random") }}</p>
+			<p>{{ phrase("pages.logs.considering-alternative-movement-systems-algorithms-our-system-is") }}</p>
+			<p>{{ phrase("pages.logs.negotiated-with-sun-pixels-leo-he-s-going") }}</p>
+
+			<div id="devheader">[27/11/16]</div>
+			<p>{{ phrase_html("pages.logs.today-s-feature-monsters-with-properties-charging-monsters") }}</p>
+			<p>{{ phrase("pages.logs.improved-our-internal-map-editor-added-the-ability") }}</p>
+			<p>{{ phrase("pages.logs.added-armor-resistance-evasion-reflection-to-monsters-feels") }}</p>
+			<p>{{ phrase("pages.logs.added-a-charge-behaviour-to-monsters-it-s") }}</p>
+
+			<div id="devheader">[26/11/16]</div>
+			<p>{{ phrase_html("pages.logs.today-s-highlight-post-server-update-stuff") }}</p>
+			<p>{{ phrase("pages.logs.server-updates-are-always-stressful-a-lot-changes") }}</p>
+			<p>{{ phrase("pages.logs.spent-some-time-with-allegaea-he-seemed-disruptive") }}</p>
+			<p>{{ phrase("pages.logs.life-wise-getting-things-back-on-track-slowly") }}</p>
+
+			<div id="devheader">[25/11/16]</div>
+			<p>{{ phrase_html("pages.logs.today-s-feature-sales-tax") }}</p>
+			<p>{{ phrase("pages.logs.worked-on-our-community-code-video-adjusted-the") }}</p>
+			<p>{{ phrase("pages.logs.decided-to-add-a-small-sales-tax-mainly") }}</p>
+			<p>{{ phrase("pages.logs.jayson-designed-a-beautiful-shells-island-it-s") }}</p>
+			<p>{{ phrase("pages.logs.tier2-armors-now-become-rare-at-7") }}</p>
+			<p>{{ phrase("pages.logs.perfected-the-combo-aggro-check-routine-the-logic") }}</p>
+			<p>{{ phrase("pages.logs.updating-this-logs-it-s-really-challenging-there") }}</p>
+			<p>{{ phrase("pages.logs.tested-our-latest-changes-made-some-last-minute") }}</p>
+
+			<div id="devheader">[24/11/16]</div>
+			<p>{{ phrase_html("pages.logs.today-s-highlights-more-pvp-improvements-vitality-scroll") }}</p>
+			<p>{{ phrase("pages.logs.added-a-12-second-respawn-cooldown-improved-the") }}</p>
+			<p>{{ phrase("pages.logs.added-a-re-log-cooldown-some-players-were") }}</p>
+			<p>{{ phrase("pages.logs.added-the-vitality-scroll-for-the-time-being") }}</p>
+			<p>{{ phrase("pages.logs.added-our-lottery-lady-after-working-on-the") }}</p>
+			<p>{{ phrase("pages.logs.there-are-players-who-commit-minor-offences-like") }}</p>
+			<p>{{ phrase("pages.logs.maps-had-signs-replaced-that-system-with-quirks") }}</p>
+
+			<div id="devheader">[23/11/16]</div>
+			<p>{{ phrase_html("pages.logs.today-s-feature-combo-s-or-penalties") }}</p>
+			<p>{{ phrase("pages.logs.combo-s-aren-t-exactly-what-they-sound") }}</p>
+			<p>{{ phrase_html("pages.logs.terrified-petrified-there-is-a-new-property-on") }}</p>
+			<p>{{ phrase_html("pages.logs.no-more-stacking-this-is-a-very-major") }}</p>
+			<p>{{ phrase("pages.logs.both-systems-aren-t-perfect-yet-the-first") }}</p>
+
+			<div id="devheader">[22/11/16]</div>
+			<p>{{ phrase_html("pages.logs.today-s-highlights-server-refactoring-new-layer-s") }}</p>
+			<p>{{ phrase("pages.logs.i-love-refactoring-today-was-a-fun-day") }}</p>
+			<p>{{ phrase("pages.logs.added-a-rid-property-to-trade-items-it") }}</p>
+			<p>{{ phrase("pages.logs.improved-the-trade-slots-the-data-for-the") }}</p>
+			<p>{{ phrase("pages.logs.jayson-decided-to-stop-playing-on-pvp-servers") }}</p>
+			<p>{{ phrase("pages.logs.started-adding-yet-another-layer-to-prevent-abuse") }}</p>
+
+			<div id="devheader">[21/11/16]</div>
+			<p>{{ phrase_html("pages.logs.today-s-highlight-addressed-the-pvp-issues") }}</p>
+			<p>{{ phrase("pages.logs.processed-the-video-asked-for-feedback-the-video") }}</p>
+			<p>{{ phrase("pages.logs.spent-some-time-outside-i-realised-i-ve") }}</p>
+			<p>{{ phrase("pages.logs.improved-pvp-dynamics-further-invincible-deals-45-damage") }}</p>
+
+			<div id="devheader">[20/11/16]</div>
+			<p>{{ phrase_html("pages.logs.today-s-highlights-agile-parties-added-the-pm") }}</p>
+			<p>{{ phrase("pages.logs.observed-the-first-referral-transaction-it-s-a") }}</p>
+			<p>{{ phrase("pages.logs.while-designing-the-new-items-decided-to-give") }}</p>
+			<p>{{ phrase("pages.logs.improved-the-party-system-now-any-member-of") }}</p>
+			<p>{{ phrase("pages.logs.integrating-the-new-maps-mainly-to-slowly-prepare") }}</p>
+			<p>{{ phrase_html("pages.logs.created-the-first-example-code-https-github-com") }}</p>
+			<p>{{ phrase("pages.logs.we-finally-synchronised-and-recorded-a-short-simple") }}</p>
+
+			<div id="devheader">[19/11/16]</div>
+			<p><span class="feature">{{ phrase("pages.logs.today-s-highlight-friends-system-materialising") }}</span>
+			<p>{{ phrase("pages.logs.started-implementing-the-friends-system-implemented-the-interface") }}</p>
+			<p>{{ phrase("pages.logs.collaborated-with-jayson-he-has-been-extremely-productive") }}</p>
+			<p>{{ phrase("pages.logs.i-m-spending-a-lot-of-time-outside") }}</p>
+
+			<div id="devheader">[18/11/16]</div>
+			<p><span class="feature">{{ phrase("pages.logs.today-s-highlight-item-designs") }}</span>
+			<p>{{ phrase("pages.logs.designing-our-high-and-rare-grade-items-the") }}</p>
+			<p>{{ phrase("pages.logs.draivin-has-been-helping-me-a-lot-behind") }}</p>
+			<p>{{ phrase("pages.logs.on-the-side-my-existential-crisis-has-been") }}</p>
+			<p>{{ phrase("pages.logs.after-3-years-away-from-the-hobby-received") }}</p>
+
+			<div id="devheader">[17/11/16]</div>
+			<p>{{ phrase_html("pages.logs.today-s-highlight-first-version-of-the-steam") }}</p>
+			<p>{{ phrase("pages.logs.i-m-already-behind-my-schedule-for-our") }}</p>
+			<p>{{ phrase("pages.logs.the-company-i-formed-is-both-adding-to") }}</p>
+			<p>{{ phrase("pages.logs.implemented-a-smooth-walk-routine-some-code-s") }}</p>
+
+			<div id="devheader">[16/11/16]</div>
+			<p>{{ phrase_html("pages.logs.today-s-feature-minimap") }}</p>
+			<p>{{ phrase("pages.logs.with-our-new-map-architecture-adding-a-minimap") }}</p>
+			<p>{{ phrase("pages.logs.spent-some-time-servicing-other-projects-as-a") }}</p>
+
+			<div id="devheader">[15/11/16]</div>
+			<p>{{ phrase_html("pages.logs.today-s-feature-vitality-attribute-first-npc-dialog") }}</p>
+			<p>{{ phrase("pages.logs.i-previously-decided-against-it-yet-as-pvp") }}</p>
+			<p>{{ phrase("pages.logs.as-the-hp-caps-increases-priests-became-more") }}</p>
+			<p>{{ phrase("pages.logs.hot-patched-some-game-issues-improved-my-workflow") }}</p>
+			<p>{{ phrase("pages.logs.improved-the-design-of-our-new-items-have") }}</p>
+			<p>{{ phrase("pages.logs.received-some-inspiring-feedback-on-reddit-decided-to") }}</p>
+			<p>{{ phrase("pages.logs.receiving-feedback-about-our-booster-items-the-new") }}</p>
+			<p>{{ phrase_html("pages.logs.improved-https-adventure-land-shells-there-is-a") }}</p>
+
+			<div id="devheader">[14/11/16]</div>
+			<p>{{ phrase_html("pages.logs.today-s-feature-crit-complicated-upgrades") }}</p>
+			<p>{{ phrase("pages.logs.added-the-crit-property-logic") }}</p>
+			<p>{{ phrase("pages.logs.further-balanced-the-pvp-the-respawn-mp-is") }}</p>
+			<p>{{ phrase("pages.logs.added-the-use-town-skill") }}</p>
+			<p>{{ phrase("pages.logs.fixed-our-new-smooth-movement-routine") }}</p>
+			<p>{{ phrase("pages.logs.designed-implemented-the-first-version-of-the-new") }}</p>
+			<p>{{ phrase("pages.logs.the-items-retain-a-hefty-history-now-exposing") }}</p>
+
+			<div id="devheader">[13/11/16]</div>
+			<p>{{ phrase_html("pages.logs.today-s-improvement-pvp-balancing-evasion-reflection") }}</p>
+			<p>{{ phrase("pages.logs.character-names-now-appear-on-the-browser-tab") }}</p>
+			<p>{{ phrase("pages.logs.improved-pvp-dynamics-significantly-xp-and-gold-loss") }}</p>
+			<p>{{ phrase("pages.logs.added-a-prompt-when-a-player-tries-to") }}</p>
+			<p>{{ phrase("pages.logs.pre-ordered-the-new-pokemon-3ds-games-and") }}</p>
+			<p>{{ phrase("pages.logs.since-i-ve-touched-the-combat-routines-decided") }}</p>
+
+			<div id="devheader">[12/11/16]</div>
+			<p>{{ phrase_html("pages.logs.today-s-topic-it-is-what-it-is") }}</p>
+			<p>{{ phrase("pages.logs.deployed-the-improvements-of-the-last-10-days") }}</p>
+			<p>{{ phrase("pages.logs.had-to-make-a-lot-of-restarts-for") }}</p>
+			<p>{{ phrase_html("pages.logs.dealt-with-a-user-drama-thanks-to-a") }}</p>
+			<p>{{ phrase("pages.logs.it-includes-various-pre-confessions-that-will-let") }}</p>
+
+			<div id="devheader">[20/10/16]</div>
+
+			<div id="devheader">[19/10/16]</div>
+			<p>{{ phrase_html("pages.logs.today-s-highlight-europas-i-down") }}</p>
+			<p>{{ phrase("pages.logs.continuing-the-reddit-day-took-a-break-around") }}</p>
+			<p>{{ phrase("pages.logs.i-went-to-sleep-but-woke-up-early") }}</p>
+			<p>{{ phrase("pages.logs.when-the-server-went-down-players-defaulted-to") }}</p>
+			<p>{{ phrase("pages.logs.researched-why-the-server-went-down-the-most") }}</p>
+			<p>{{ phrase("pages.logs.spent-most-of-this-day-interacting-with-players") }}</p>
+
+			<div id="devheader">[18/10/16]</div>
+			<p>{{ phrase_html("pages.logs.today-s-highlight-the-reddit-day") }}</p>
+			<p style="color: #6C9DDF">{{ phrase("pages.logs.01-12-16-writing-these-lines-more-than") }}</p>
+			<p>{{ phrase("pages.logs.discovering-the-email-issue-the-day-before-my") }}</p>
+			<p>{{ phrase("pages.logs.improved-the-recruits-system-as-i-hoped-the") }}</p>
+			<p>{{ phrase("pages.logs.converted-our-wav-sound-files-to-ogg-s") }}</p>
+			<p>{{ phrase("pages.logs.integrated-the-pumpkin-helmet-jayson-designed-this-was") }}</p>
+			<p>{{ phrase("pages.logs.fixed-our-new-ranger-warrior-characters-they-had") }}</p>
+			<p>{{ phrase("pages.logs.added-the-fancy-pots-npc-to-the-spooky") }}</p>
+			<p>{{ phrase("pages.logs.finally-deployed-the-game-made-early-tests-and") }}</p>
+			<p>{{ phrase_html("pages.logs.woke-up-around-8pm-our-regulars-were-enjoying") }}</p>
+			<p>{{ phrase("pages.logs.it-was-an-impulse-decision-normally-i-prepare") }}</p>
+
+			<div id="devheader">[17/10/16]</div>
+			<p>{{ phrase_html("pages.logs.today-s-feature-announcement-emails") }}</p>
+			<p>{{ phrase("pages.logs.implemented-an-email-system-to-email-all-players") }}</p>
+			<p>{{ phrase("pages.logs.added-the-str-int-dex-amulets-improved-mr") }}</p>
+			<p>{{ phrase("pages.logs.added-the-tier3-4-armor-drops-to-the") }}</p>
+			<p>{{ phrase("pages.logs.discovered-that-app-engine-s-mail-deprecation-affects") }}</p>
+
+			---
+
+			<div id="devheader">[16/10/16]</div>
+			<p>{{ phrase_html("pages.logs.today-s-highlights-ms-dracul-mobile-improvements-low") }}</p>
+			<p>{{ phrase("pages.logs.added-ms-dracul-improved-the-halloween-zone") }}</p>
+			<p>{{ phrase("pages.logs.improved-the-gameplay-on-mobile-devices-fixed-some") }}</p>
+			<p>{{ phrase("pages.logs.improved-the-inventory-interactions-previously-click-events-were") }}</p>
+
+			<div id="devheader">[15/10/16]</div>
+			<p>{{ phrase_html("pages.logs.today-s-feature-transport-npc-red-lady") }}</p>
+			<p>{{ phrase("pages.logs.moved-the-party-invites-to-the-left-tested") }}</p>
+			<p>{{ phrase("pages.logs.an-extreme-amount-of-thinking-on-clans-guilds") }}</p>
+			<p>{{ phrase("pages.logs.created-the-transport-npc-added-the-orange-snakes") }}</p>
+
+			<div id="devheader">[14/10/16]</div>
+			<p>{{ phrase("pages.logs.obsessed-over-a-resizing-issue-for-hours-even") }}</p>
+			<p>{{ phrase("pages.logs.updated-our-map-tilesets-and-refactored-our-maps") }}</p>
+			<p>{{ phrase("pages.logs.improved-the-skillbar-prototype-tested-pvp-the-movement") }}</p>
+
+			<div id="devheader">[13/10/16]</div>
+			<p>{{ phrase_html("pages.logs.today-s-feature-ancient-computer") }}</p>
+			<p>{{ phrase("pages.logs.jayson-prepared-new-ranger-and-warrior-looks-again") }}</p>
+			<p>{{ phrase("pages.logs.inspired-by-his-work-i-created-the-ancient") }}</p>
+			<p>{{ phrase_html("pages.logs.reference-dolch-computer-https-www-google-com-search") }}</p>
+
+			<div id="devheader">[12/10/16]</div>
+			<p>{{ phrase_html("pages.logs.today-s-feature-skillbar-prototype") }}</p>
+			<p>{{ phrase("pages.logs.another-slow-day-updated-my-ipad-to-ios10") }}</p>
+			<p>{{ phrase("pages.logs.created-the-first-skillbar-prototype-items-can-be") }}</p>
+
+			<div id="devheader">[11/10/16]</div>
+			<p>{{ phrase("pages.logs.jayson-designed-a-quiver-i-was-very-proud") }}</p>
+			<p>{{ phrase("pages.logs.decided-to-make-quiver-upgradeable-instead-of-compound") }}</p>
+			<p>{{ phrase("pages.logs.added-supershot-ranger-attack-animations-set-the-line") }}</p>
+			<p>{{ phrase("pages.logs.spent-some-time-outside-checked-out-a-house") }}</p>
+
+			<div id="devheader">[10/10/16]</div>
+			<p>{{ phrase_html("pages.logs.today-s-feature-supershot") }}</p>
+			<p>{{ phrase("pages.logs.today-was-a-slow-day-improved-rogue-s") }}</p>
+			<p>{{ phrase("pages.logs.updated-the-game-collaborated-with-jayson-improved-the") }}</p>
+			<p>{{ phrase("pages.logs.added-supershot-to-ranger-s-as-today-s") }}</p>
+
+			<div id="devheader">[09/10/16]</div>
+			<p>{{ phrase_html("pages.logs.today-s-feature-class-previews-at-creation") }}</p>
+			<p>{{ phrase("pages.logs.working-on-the-orb-design-3x-orb-s") }}</p>
+			<p>{{ phrase("pages.logs.brainstormed-various-alternatives-for-stats-attributes-decided-not") }}</p>
+			<p>{{ phrase("pages.logs.added-the-quiver-item-improved-character-deletion-tested") }}</p>
+			<p>{{ phrase("pages.logs.experimented-with-class-previews-at-character-creation-the") }}</p>
+
+			<div id="devheader">{{ phrase("pages.logs.slowly-catching-up-with-the-earlier-logs-14") }}</div>
+
+			<div id="devheader">[08/10/16]</div>
+			<p>{{ phrase_html("pages.logs.today-s-feature-ranger") }}</p>
+			<p>{{ phrase("pages.logs.checked-the-halloween-map-perfect-opened-a-dialog") }}</p>
+			<p>{{ phrase("pages.logs.researching-the-ranger-on-a-philosophical-level-decided") }}</p>
+			<p>{{ phrase("pages.logs.added-the-ability-to-create-5-characters") }}</p>
+			<p>{{ phrase("pages.logs.added-the-welcoming-code-comment-to-encourage-new") }}</p>
+			<p>{{ phrase("pages.logs.added-the-ranger-class-the-bow-the-attack") }}</p>
+			<p>{{ phrase("pages.logs.added-multiple-orb-s-to-test-the-dynamics") }}</p>
+			<p>{{ phrase("pages.logs.newidea-a-potion-that-replenishes-both-hp-and") }}</p>
+
+			<div id="devheader">{{ phrase("pages.logs.30-10-16-whew") }}</div>
+			<p>{{ phrase_html("pages.logs.it-s-been-the-most-exciting-joyful-interesting") }}</p>
+			<p>{{ phrase("pages.logs.i-was-hoping-but-wasn-t-expecting-such") }}</p>
+
+			<div id="devheader">[07/10/16]</div>
+			<p>{{ phrase_html("pages.logs.today-s-feature-rogue") }}</p>
+			<p>{{ phrase("pages.logs.i-ve-been-trapped-in-the-next-feature") }}</p>
+			<p>{{ phrase("pages.logs.re-calibrated-the-xp-level-dynamics-after-level") }}</p>
+			<p>{{ phrase("pages.logs.started-designing-the-new-items-pixel-art-became") }}</p>
+			<p>{{ phrase("pages.logs.i-ve-talked-to-a-lot-of-players") }}</p>
+			<p>{{ phrase("pages.logs.and-today-s-highlight-rogue-added-the-rogue") }}</p>
+
+			<div id="devheader">[06/10/16]</div>
+			<p>{{ phrase_html("pages.logs.today-s-theme-endgame-re-balancing") }}</p>
+			<p>{{ phrase("pages.logs.without-piercing-properties-950-armor-95-reduction-in") }}</p>
+			<p>{{ phrase("pages.logs.completed-and-balanced-the-armor-tiers-today-also") }}</p>
+			<p>{{ phrase("pages.logs.ideally-a-warrior-shouldn-t-one-hit-a") }}</p>
+			<p>{{ phrase("pages.logs.added-new-features-to-our-in-house-map") }}</p>
+
+			<div id="devheader">[05/10/16]</div>
+			<p>{{ phrase_html("pages.logs.today-s-feature-tier-1-2-3-4") }}</p>
+			<p>{{ phrase("pages.logs.preparing-the-rogue-class-decided-to-push-the") }}</p>
+
+			<div id="devheader">[04/10/16]</div>
+			<p>{{ phrase_html("pages.logs.today-s-feature-your-recruits") }}</p>
+			<p>{{ phrase("pages.logs.added-passive-character-abilities-currently-only-stun-is") }}</p>
+			<p>{{ phrase("pages.logs.pushed-both-stun-and-curse-as-far-as") }}</p>
+			<p>{{ phrase("pages.logs.updated-these-logs-i-hadn-t-synchronised-them") }}</p>
+			<p>{{ phrase("pages.logs.viewed-jayson-s-second-version-of-the-town") }}</p>
+			<p>{{ phrase("pages.logs.today-s-feature-is-actually-more-of-a") }}</p>
+
+			<div id="devheader">[03/10/16]</div>
+			<p>{{ phrase_html("pages.logs.today-s-feature-tiny-crab-s-and-in") }}</p>
+			<p>{{ phrase("pages.logs.added-crab-s-to-the-beach-but-they") }}</p>
+			<p>{{ phrase("pages.logs.pixi-has-a-new-tilingsprite-improvement-by-ivan") }}</p>
+			<p>{{ phrase("pages.logs.calibrated-tiny-crab-s-it-s-actually-challenging") }}</p>
+			<p>{{ phrase("pages.logs.re-visited-the-walking-line-routines-inner-corners") }}</p>
+
+			<div id="devheader">[02/10/16]</div>
+			<p>{{ phrase_html("pages.logs.today-s-feature-new-attribute-armor-piercing-and") }}</p>
+			<p>{{ phrase("pages.logs.i-really-like-armor-piercing-added-it-to") }}</p>
+			<p>{{ phrase("pages.logs.picked-up-the-random-looks-logic-fixed-it") }}</p>
+			<p>{{ phrase("pages.logs.implemented-skin-looks-selection-it-works-yet-i") }}</p>
+			<p>{{ phrase("pages.logs.i-m-really-worried-that-people-will-feel") }}</p>
+			<p>{{ phrase("pages.logs.added-new-routines-for-checking-the-disable-flags") }}</p>
+			<p>{{ phrase("pages.logs.imported-jayson-s-town-as-main2-it-will") }}</p>
+
+			<div id="devheader">[01/10/16]</div>
+			<p>{{ phrase_html("pages.logs.today-s-feature-first-item-ability-stun") }}</p>
+			<p>{{ phrase("pages.logs.a-new-month-reminds-me-of-the-passage") }}<p>
+			<p>{{ phrase("pages.logs.i-think-i-m-just-adding-a-new") }}</p>
+			<p>{{ phrase("pages.logs.mostly-added-the-ability-to-the-item-sheet") }}</p>
+
+			<div id="devheader">[30/09/16]</div>
+			<p>{{ phrase_html("pages.logs.today-s-feature-defeat-on-escape") }}</p>
+			<p>{{ phrase("pages.logs.this-was-more-of-an-ideas-day-added") }}</p>
+			<p>{{ phrase("pages.logs.generated-many-improvement-ideas-most-are-related-to") }}</p>
+			<p>{{ phrase("pages.logs.found-reported-an-electron-bug-researched-browser-notifications") }}</p>
+			<p>{{ phrase("pages.logs.added-defeat-on-escape-basically-on-pvp-one") }}</p>
+
+			<div id="devheader">[29/09/16]</div>
+			<p>{{ phrase_html("pages.logs.today-s-feature-curse") }}</p>
+			<p>{{ phrase("pages.logs.today-was-a-busy-day-for-me-not") }}</p>
+			<p>{{ phrase("pages.logs.we-improved-the-mystery-house-design-with-jayson") }}</p>
+			<p>{{ phrase("pages.logs.implemented-the-curse-ability-for-priest-s-it") }}</p>
+
+			<div id="devheader">[28/09/16]</div>
+			<p>{{ phrase_html("pages.logs.today-s-feature-merchanting-with-merchant-stand-s") }}</p>
+			<p>{{ phrase("pages.logs.well-this-was-a-productive-day") }}</p>
+			<p>{{ phrase("pages.logs.implemented-the-charge-effect-that-leaves-disappearing-clone") }}</p>
+			<p>{{ phrase("pages.logs.started-experimenting-with-trade-carts-drew-one-from") }}</p>
+			<p>{{ phrase("pages.logs.added-the-afk-notice-and-logic-there-are") }}</p>
+			<p>{{ phrase("pages.logs.adjusted-a-wooden-box-to-be-the-first") }}</p>
+			<p>{{ phrase("pages.logs.added-trade-history-integrated-it-to-the-merchant") }}</p>
+			<p>{{ phrase("pages.logs.implemented-a-speed-recalculation-logic-at-both-server") }}</p>
+			<p><a target="_blank" href="http://adventure.land/img/merchant.png" class="cancela"><span class="devlink">http://adventure.land/img/merchant.png</span></a></p>
+
+
+			<div id="devheader">[27/09/16]</div>
+			<p>{{ phrase_html("pages.logs.today-s-feature-charge") }}</p>
+			<p>{{ phrase("pages.logs.another-day-another-map-editor-improvement-with-similar") }}</p>
+			<p>{{ phrase("pages.logs.new-item-earring-of-dexterity-improved-the-pumpkin") }}</p>
+			<p>{{ phrase("pages.logs.new-ability-charge-for-warriors") }}</p>
+			<p>{{ phrase("pages.logs.received-inspected-a-bug-report-from-a-player") }}</p>
+			<p>{{ phrase("pages.logs.the-new-maps-are-progressing-well") }}</p>
+
+			<div id="devheader">[26/09/16]</div>
+			<p>{{ phrase_html("pages.logs.today-s-feature-random-looks-routine") }}</p>
+			<p>{{ phrase("pages.logs.improved-patched-many-of-the-server-routines-these") }}</p>
+			<p>{{ phrase("pages.logs.calibrated-boss-cooldowns-and-drops-implemented-the-random") }}</p>
+
+			<div id="devheader">[25/09/16]</div>
+			<p>{{ phrase_html("pages.logs.today-s-feature-s-dracul-s-cape-lifesteal") }}</p>
+			<p>{{ phrase("pages.logs.added-a-new-item-dracul-s-cape-this") }}</p>
+			<p>{{ phrase("pages.logs.added-the-basher-item-and-the-weapon-speed") }}</p>
+			<p>{{ phrase("pages.logs.made-a-lot-of-internal-improvements-testing-fixes") }}</p>
+			<p>{{ phrase("pages.logs.side-note-after-reading-my-own-logs-and") }}</p>
+
+			<div id="devheader">[24/09/16]</div>
+			<p>{{ phrase_html("pages.logs.today-s-feature-character-operations") }}</p>
+			<p>{{ phrase("pages.logs.slow-day-mostly-minor-improvements-improved-login-selection") }}</p>
+
+			<div id="devheader">[23/09/16]</div>
+			<p>{{ phrase_html("pages.logs.today-s-feature-referrals") }}</p>
+			<p>{{ phrase("pages.logs.mostly-fixed-newly-introduced-issues-today-improved-simplified") }}</p>
+			<p>{{ phrase("pages.logs.struggling-with-game-and-map-design-the-newcomer") }}</p>
+			<p>{{ phrase("pages.logs.i-don-t-know-whether-it-s-the") }}</p>
+			<p>{{ phrase_html("pages.logs.also-briefly-started-the-achievements-system-and-debating") }}</p>
+
+			<div id="devheader">[22/09/16]</div>
+			<p>{{ phrase_html("pages.logs.today-s-feature-tome-of-protection") }}</p>
+			<p>{{ phrase("pages.logs.so-pvp-is-super-fun-yet-it-s") }}</p>
+			<p>{{ phrase("pages.logs.applied-a-simple-fix-so-the-game-can") }}</p>
+			<p>{{ phrase("pages.logs.aided-jayson-on-the-issues-he-was-having") }}</p>
+			<p>{{ phrase("pages.logs.side-note-i-m-an-osx-user-myself") }}</p>
+
+			<div id="devheader">[21/09/16]</div>
+			<p>{{ phrase_html("pages.logs.today-s-feature-pvp-servers") }}</p>
+			<p>{{ phrase("pages.logs.americas-europas-ii-s-weren-t-too-useful") }}</p>
+			<p>{{ phrase("pages.logs.started-catching-up-on-the-development-diary-the") }}</p>
+
+			<div id="devheader">[20/09/16]</div>
+			<p>{{ phrase_html("pages.logs.today-s-feature-mana-burst") }}</p>
+			<p>{{ phrase("pages.logs.implemented-calibrated-the-mana-burst-ability-for-mage") }}</p>
+			<p>{{ phrase("pages.logs.added-the-a-q-r-keypresses-a-is") }}</p>
+
+			<div id="devheader">[19/09/16]</div>
+			<p>{{ phrase_html("pages.logs.today-s-feature-taunt") }}</p>
+			<p>{{ phrase("pages.logs.it-s-a-ranged-attack-for-warriors-inflicts") }}</p>
+			<p>{{ phrase("pages.logs.re-written-unified-all-the-attack-routines-both") }}</p>
+			<p>{{ phrase("pages.logs.disabled-stripe-for-now-i-need-to-refactor") }}</p>
+
+			<div id="devheader">[18/09/16]</div>
+			<p>{{ phrase("pages.logs.finally-caught-the-bank-issue-it-was-more") }}</p>
+			<p>{{ phrase("pages.logs.i-had-improvements-in-mind-that-would-push") }}</p>
+			<p>{{ phrase("pages.logs.found-and-started-investigating-a-serious-electron-issue") }}</p>
+			<p>{{ phrase("pages.logs.no-today-s-feature-today-but-the-bank") }}</p>
+
+			<div id="devheader">[17/09/16]</div>
+			<p>{{ phrase_html("pages.logs.today-s-feature-invis") }}</p>
+			<p>{{ phrase("pages.logs.improved-finalised-the-pvp-indicator-ui-started-designing") }}</p>
+			<p>{{ phrase("pages.logs.implemented-abilities-invis-is-the-first-one-and") }}</p>
+			<p>{{ phrase("pages.logs.improved-simplified-extended-the-character-effects-filters-like") }}</p>
+
+			<div id="devheader">[16/09/16]</div>
+			<p>{{ phrase("pages.logs.a-lot-of-minor-things-some-post-deployment") }}</p>
+			<p>{{ phrase("pages.logs.experienced-a-bank-dejavu-i-wasn-t-sure") }}</p>
+			<p>{{ phrase("pages.logs.decided-to-add-a-major-or-rather-significant") }}</p>
+			<p>{{ phrase_html("pages.logs.today-s-feature-pvp-hit-indicator-escape-prevention") }}</p>
+			<p>{{ phrase("pages.logs.basically-when-you-get-hit-your-name-becomes") }}</p>
+
+			<div id="devheader">[15/09/16]</div>
+			<p>{{ phrase("pages.logs.another-productive-day") }}</p>
+			<p>{{ phrase("pages.logs.improved-and-completed-the-stripe-payment-system-integration") }}</p>
+			<p>{{ phrase("pages.logs.implemented-a-simple-mapping-routine-as-the-map") }}</p>
+			<p>{{ phrase("pages.logs.added-shells-drops-to-monsters-gems-completed-and") }}</p>
+			<p>{{ phrase("pages.logs.tested-both-payment-routines-myself-made-fixes-improvements") }}</p>
+			<p>{{ phrase("pages.logs.i-play-the-game-as-any-other-player") }}</p>
+
+			<div id="devheader">[14/09/16]</div>
+			<p>{{ phrase("pages.logs.implemented-the-noob-mode-one-of-the-main") }}</p>
+			<p>{{ phrase("pages.logs.improved-the-stripe-integration-integrated-super-rewards-so") }}</p>
+			<p>{{ phrase("pages.logs.pixel-art-ist-research-got-some-inspiration") }}</p>
+
+			<div id="devheader">[13/09/16]</div>
+			<p>{{ phrase("pages.logs.minor-bugfixes-improvements-created-the-amulet-of-mystery") }}</p>
+
+			<div id="devheader">[12/09/16]</div>
+			<p>{{ phrase("pages.logs.today-is-my-birthday-getting-old-birthdays-are") }}</p>
+			<p>{{ phrase("pages.logs.calibrated-improved-the-new-monster-aggression-routines-disappearing") }}</p>
+			<p>{{ phrase("pages.logs.improved-the-login-selection-interface-added-last-update") }}</p>
+			<p>{{ phrase("pages.logs.jayson-was-having-issues-with-the-map-editor") }}</p>
+
+			<div id="devheader">[11/09/16]</div>
+			<p>{{ phrase("pages.logs.super-productive-day-i-needed-one") }}</p>
+			<p>{{ phrase("pages.logs.added-flexible-persistent-properties-to-characters-not-used") }}</p>
+			<p>{{ phrase("pages.logs.implemented-aggressiveness-this-is-a-simple-yet-major") }}</p>
+			<p>{{ phrase("pages.logs.refactored-the-monster-player-information-routines-initially-things") }}</p>
+			<p>{{ phrase("pages.logs.added-a-new-is-in-front-logic-so") }}</p>
+			<p>{{ phrase_html("pages.logs.disappearing-lines-there-was-no-way-to-know") }}</p>
+
+			<div id="devheader">[10/09/16]</div>
+			<p>{{ phrase("pages.logs.met-zenn-in-game-we-literally-debugged-an") }}</p>
+			<p>{{ phrase("pages.logs.made-some-other-drag-drop-item-related-improvements") }}</p>
+			<p>{{ phrase("pages.logs.created-the-first-custom-map-animations-a-small") }}</p>
+
+			<div id="devheader">[09/09/16]</div>
+			<p>{{ phrase("pages.logs.found-a-bank-issue-added-retry-fail-logic") }}</p>
+
+			<div id="devheader">[08/09/16]</div>
+			<p>{{ phrase("pages.logs.sick-day-took-care-of-some-external-things") }}</p>
+
+			<div id="devheader">[07/09/16]</div>
+			<p>{{ phrase("pages.logs.explored-the-casino-tavern-options-a-bit-i") }}</p>
+			<p>{{ phrase("pages.logs.wrapping-up-the-bugfixes-research-testing") }}</p>
+			<p>{{ phrase("pages.logs.started-feeling-dizzy-it-happens-every-3-4") }}</p>
+
+			<div id="devheader">[06/09/16]</div>
+			<p>{{ phrase("pages.logs.added-an-under-mode-to-the-map-editor") }}</p>
+			<p>{{ phrase("pages.logs.started-inspecting-improving-the-right-click-logic-currently") }}</p>
+			<p>{{ phrase("pages.logs.side-note-i-could-ve-never-imagined-3") }}</p>
+			<p>{{ phrase("pages.logs.side-note-2-since-in-the-past-i") }}</p>
+
+			<div id="devheader">[05/09/16]</div>
+			<p>{{ phrase("pages.logs.mostly-catching-up-with-things-small-fixes-i") }}</p>
+
+			<div id="devheader">[04/09/16]</div>
+			<p>{{ phrase("pages.logs.completed-the-bank-a-proud-moment") }}</p>
+			<p>{{ phrase("pages.logs.perfected-the-drag-drop-and-right-click-routines") }}
+			<p>{{ phrase("pages.logs.improved-the-auth-and-transport-routines-of-the") }}</p>
+			<p>{{ phrase("pages.logs.improved-the-map-editor-to-ease-working-with") }}</p>
+			<p>{{ phrase_html("pages.logs.deployed-the-bank-http-adventure-land-img-bank") }}</p>
+
+			<div id="devheader">[03/09/16]</div>
+			<p>{{ phrase("pages.logs.started-working-with-jayson-it-seems-i-neglected") }}</p>
+			<p>{{ phrase("pages.logs.tested-his-worldmap-while-impressive-it-had-too") }}</p>
+			<p>{{ phrase("pages.logs.made-other-small-improvements-to-tiling-and-generated") }}</p>
+			<p>{{ phrase("pages.logs.started-inspecting-a-code-issue-it-seems-to") }}</p>
+			<p>{{ phrase("pages.logs.added-signs-to-the-game-the-first-one") }}</p>
+			<p>{{ phrase("pages.logs.implemented-the-gold-npc-and-withdraw-deposit") }}</p>
+			<p>{{ phrase("pages.logs.designed-the-bank-map-the-counters-interior-design") }}</p>
+			<p>{{ phrase("pages.logs.started-implementing-the-item-storage-routines-completed-the") }}</p>
+
+			<div id="devheader">[02/09/16]</div>
+			<p>{{ phrase("pages.logs.implemented-the-internal-bank-connections-persistence-server-logic") }}</p>
+
+			<div id="devheader">[01/09/16]</div>
+			<p>{{ phrase("pages.logs.deployed-the-improvements-fixed-the-initial-issues-re") }}</p>
+			<p>{{ phrase("pages.logs.during-the-last-few-days-the-bank-design") }}</p>
+			<p>{{ phrase_html("pages.logs.pvp-zone-http-adventure-land-img-instances-png") }}</p>
+
+			<div id="devheader">[31/08/16]</div>
+			<p>{{ phrase("pages.logs.added-the-pvp-announcements-logic-starting-to-wrap") }}</p>
+			<p>{{ phrase("pages.logs.created-skeletor-the-boss-of-the-pvp-region") }}</p>
+			<p>{{ phrase("pages.logs.made-some-small-fixes-and-improvements-mainly-to") }}</p>
+			<p>{{ phrase("pages.logs.experimented-with-bitmap-text-s-fonts-converted-to") }}</p>
+
+			<div id="devheader">[30/08/16]</div>
+			<p>{{ phrase("pages.logs.created-a-new-internal-system-that-i-call") }}</p>
+			<p>{{ phrase("pages.logs.created-the-first-live-npc-so-basically-a") }}</p>
+			<p>{{ phrase("pages.logs.created-the-priest-s-mace-along-with-the") }}</p>
+			<p>{{ phrase("pages.logs.finalised-the-tier-2-armors-they-will-drop") }}</p>
+			<p>{{ phrase("pages.logs.added-a-spear-to-the-game-can-only") }}</p>
+			<p>{{ phrase("pages.logs.created-the-images-of-armor-box-and-weapon") }}</p>
+			<p>{{ phrase("pages.logs.note-starter-items-intentionally-don-t-look-super") }}</p>
+
+
+			<div id="devheader">[29/08/16]</div>
+			<p>{{ phrase("pages.logs.fixed-a-bug-that-eluded-me-for-some") }}</p>
+			<p>{{ phrase("pages.logs.improved-and-highly-simplified-player-right-clicks-implemented") }}</p>
+			<p>{{ phrase("pages.logs.to-procrastinate-completed-the-names-feature-now-whenever") }}</p>
+			<p>{{ phrase("pages.logs.created-the-tiny-ruby-for-the-pvp-zone") }}</p>
+			<p>{{ phrase("pages.logs.created-irradiated-goo-s-the-game-will-become") }}</p>
+			<p>{{ phrase_html("pages.logs.big-update-jayson-is-now-a-part-of") }}</p>
+			<p>{{ phrase("pages.logs.wow-just-realised-it-has-been-a-month") }}</p>
+
+
+			<div id="devheader">[28/08/16]</div>
+			<p>{{ phrase("pages.logs.improving-the-pvp-region-dynamics-and-the-surrounding") }}</p>
+			<p>{{ phrase("pages.logs.community-member-jayson-a-k-a-oragon-premier") }}</p>
+			<p>{{ phrase("pages.logs.i-realised-i-should-do-what-i-do") }}</p>
+
+			<div id="devheader">[27/08/16]</div>
+			<p>{{ phrase("pages.logs.improved-the-main-map-cave-area-tested-alternative") }}</p>
+
+			<div id="devheader">[26/08/16]</div>
+			<p>{{ phrase("pages.logs.fun-day-for-me-refactoring") }}</p>
+			<p>{{ phrase("pages.logs.implemented-instances-to-replace-maps-this-new-system") }}</p>
+			<p>{{ phrase("pages.logs.created-the-first-test-dungeon-dungeon0-it-was") }}</p>
+
+			<div id="devheader">[25/08/16]</div>
+			<p>{{ phrase("pages.logs.implemented-the-stone-of-wisdom-luck-riches-dynamics") }}</p>
+			<p>{{ phrase("pages.logs.started-implementing-a-community-map-editor") }}</p>
+
+			<div id="devheader">[24/08/16]</div>
+			<p>{{ phrase("pages.logs.tested-some-new-routines-to-improve-the-map") }}</p>
+			<p>{{ phrase("pages.logs.created-the-stone-of-wisdom-along-with-activate") }}</p>
+
+			<div id="devheader">[23/08/16]</div>
+			<p>{{ phrase("pages.logs.tested-improved-the-new-routines-implemented-new-internal") }}</p>
+			<p>{{ phrase("pages.logs.added-a-re-focus-routine-to-the-game") }}</p>
+			<p>{{ phrase("pages.logs.balanced-monsters-and-drops") }}</p>
+
+			<div id="devheader">[22/08/16]</div>
+			<p>{{ phrase("pages.logs.pursued-the-implementation-and-integration-of-the-new") }}</p>
+			<p>{{ phrase("pages.logs.implemented-new-payment-routines-and-interfaces-improved-the") }}</p>
+			<p>{{ phrase("pages.logs.by-design-adventure-land-isn-t-pay-to") }}</p>
+			<p>{{ phrase("pages.logs.the-addition-of-shells-won-t-change-this") }}</p>
+
+			<div id="devheader">[21/08/16]</div>
+			<p>{{ phrase("pages.logs.the-day-started-experimental-improved-sfx-a-bit") }}</p>
+			<p>{{ phrase("pages.logs.started-implementing-internal-event-and-backup-routines-for") }}</p>
+
+			<div id="devheader">[20/08/16]</div>
+			<p>{{ phrase("pages.logs.became-really-obsessed-with-the-memory-leak-and") }}</p>
+			<p>{{ phrase("pages.logs.after-eliminating-everything-started-introducing-things-one-by") }}</p>
+			<p>{{ phrase("pages.logs.while-i-was-at-it-tested-several-new") }}</p>
+			<p>{{ phrase("pages.logs.added-shadows-to-the-maps-still-experimental-first") }}</p>
+			<p>{{ phrase("pages.logs.first-event-designed-goo-brawl-everyone-is-teleported") }}</p>
+
+			<div id="devheader">[19/08/16]</div>
+			<p>{{ phrase("pages.logs.started-hunting-memory-leaks-and-performance-issues") }}</p>
+			<p>{{ phrase("pages.logs.designing-a-new-map-and-new-server-events") }}</p>
+			<p>{{ phrase("pages.logs.disabled-the-chaotic-cross-party-xp-messages-where") }}</p>
+			<p>{{ phrase("pages.logs.stackable-items-can-now-be-traded-individually") }}</p>
+
+			<div id="devheader">[18/08/16]</div>
+			<p>{{ phrase("pages.logs.new-npc-feature-gems-exchange-the-first-gem") }}</p>
+			<p>{{ phrase("pages.logs.first-game-refactoring-refactored-item-formats-and-routines") }}</p>
+			<p>{{ phrase("pages.logs.rare-items-and-high-level-items-are-high") }}</p>
+			<p>{{ phrase("pages.logs.created-new-images-for-future-gems-one-more") }}</p>
+			<p>{{ phrase("pages.logs.perfected-the-standalone-version-of-the-game") }}</p>
+			<p>{{ phrase_html("pages.logs.exchange-http-adventure-land-img-exchange-png") }}</p>
+
+			<div id="devheader">[17/08/16]</div>
+			<p>{{ phrase("pages.logs.the-party-player-buttons-are-now-functional-it") }}</p>
+			<p>{{ phrase("pages.logs.improved-code-added-new-functions-heal-buy-upgrade") }}</p>
+			<p>{{ phrase("pages.logs.created-a-standalone-executable-with-electron-patched-things") }}</p>
+
+			<div id="devheader">[16/08/16]</div>
+			<p>{{ phrase("pages.logs.another-day-of-huge-improvements-animated-death-priest") }}</p>
+			<p>{{ phrase("pages.logs.moved-away-from-bold-texts-now-all-texts") }}</p>
+			<p>{{ phrase("pages.logs.i-personally-don-t-like-how-town-works") }}</p>
+			<p>{{ phrase("pages.logs.with-death-in-the-picture-game-became-much") }}</p>
+			<p>{{ phrase("pages.logs.introduced-new-animations-and-skins") }}</p>
+			<p>{{ phrase("pages.logs.the-heal-att-button-on-the-middle-ui") }}</p>
+			<p>{{ phrase("pages.logs.next-step-passive-abilities-that-extend-to-party") }}</p>
+			<p>{{ phrase_html("pages.logs.death-http-adventure-land-img-death-png") }}</p>
+
+			<div id="devheader">[15/08/16]</div>
+			<p>{{ phrase("pages.logs.created-a-small-island-with-3-overpowered-fairies") }}</p>
+			<p>{{ phrase("pages.logs.fixed-the-character-movement-boundary-checks-previously-it") }}</p>
+			<p>{{ phrase("pages.logs.started-implementing-testing-an-actual-death-routine") }}</p>
+
+			<div id="devheader">[14/08/16]</div>
+			<p>{{ phrase("pages.logs.new-server-side-boundary-checks-for-monsters-no") }}</p>
+			<p>{{ phrase("pages.logs.implemented-the-definite-fix-to-the-consecutive-item") }}</p>
+			<p>{{ phrase("pages.logs.much-thicker-upgrade-animations-the-thin-ones-were") }}</p>
+			<p>{{ phrase("pages.logs.improved-the-server-failure-routine-players-are-no") }}</p>
+
+			<div id="devheader">[13/08/16]</div>
+			<p>{{ phrase("pages.logs.very-stressful-day-only-researched-peerjs-would-be") }}</p>
+
+			<div id="devheader">[12/08/16]</div>
+			<p>{{ phrase("pages.logs.ideally-font-worries-should-be-delayed-but-i") }}</p>
+			<p>{{ phrase("pages.logs.closed-the-gap-between-browser-font-differences-slightly") }}</p>
+			<p>{{ phrase("pages.logs.re-implemented-character-names-as-it-was-requested") }}</p>
+
+			<div id="devheader">[11/08/16]</div>
+			<p>{{ phrase("pages.logs.implemented-the-initial-fix-for-the-consequent-upgrade") }}</p>
+
+			<div id="devheader">[10/08/16]</div>
+			<p>{{ phrase("pages.logs.sfx-is-finally-not-totally-horrendous-managed-to") }}</p>
+			<p>{{ phrase("pages.logs.spending-too-much-time-in-game-it-really") }}</p>
+			<p>
+				{{ phrase_html("pages.logs.a-comparison-between-old-and-new-http-adventure") }}
+			</p>
+
+			<div id="devheader">[09/08/16]</div>
+			<p>{{ phrase("pages.logs.implemented-conf-for-game-settings-along-with-default") }}</p>
+			<p>{{ phrase("pages.logs.implemented-the-sfx-logic-improved-the-music-logic") }}</p>
+			<p>{{ phrase("pages.logs.added-the-perfect-pixels-switch-and-logic-as") }}</p>
+
+			<div id="devheader">[08/08/16]</div>
+			<p>{{ phrase("pages.logs.finally-added-range-checks-to-attacks-i-intentionally") }}</p>
+			<p>{{ phrase("pages.logs.experimented-with-some-alternative-character-graphics-ones-that") }}</p>
+			<p>{{ phrase("pages.logs.improved-the-server-offline-detection-routine-it-marked") }}</p>
+			<p>{{ phrase("pages.logs.first-version-of-music") }}</p>
+
+			<div id="devheader">[07/08/16]</div>
+			<p>{{ phrase("pages.logs.an-eventless-day-of-community-engagement-bug-fixes") }}</p>
+			<p>{{ phrase("pages.logs.patched-an-issue-that-occasionally-took-a-server") }}</p>
+
+			<div id="devheader">[06/08/16]</div>
+			<p>{{ phrase("pages.logs.the-day-of-huge-improvements-maybe-a-turning") }}</p>
+			<p>{{ phrase("pages.logs.started-by-designing-implementing-the-party-logic-had") }}</p>
+			<p>{{ phrase("pages.logs.really-proud-of-how-the-party-design-evolved") }}</p>
+			<p>{{ phrase("pages.logs.all-hp-bars-of-team-members-are-visible") }}</p>
+			<p>{{ phrase("pages.logs.while-spending-time-with-the-early-players-trade") }}</p>
+			<p>{{ phrase("pages.logs.added-a-show-hide-interface-and-4-showcase") }}</p>
+			<p>{{ phrase("pages.logs.improved-the-drag-equip-dynamics-a-lot-further") }}</p>
+			<p>{{ phrase("pages.logs.discovered-game-s-first-not-cheater-with-his") }}</p>
+			<p>{{ phrase("pages.logs.improved-npc-s-to-be-left-clickable-they") }}</p>
+			<p>{{ phrase("pages.logs.tested-adventure-land-on-safari-firefox-made-lots") }}</p>
+			<p>
+				<a target="_blank" href="http://adventure.land/img/p_b.png" class="cancela"><span class="devlink">http://adventure.land/img/p_b.png</span></a>
+				<a target="_blank" href="http://adventure.land/img/trui.png" class="cancela"><span class="devlink">http://adventure.land/img/trui.png</span></a>
+			</p>
+
+			<div id="devheader">[05/08/16]</div>
+			<p>{{ phrase("pages.logs.big-changes-today-re-designed-and-implemented-the") }}</p>
+			<p>{{ phrase("pages.logs.the-original-interface-had-the-att-xp-hp") }}</p>
+			<p>{{ phrase("pages.logs.the-new-interface-has-hp-mp-character-inventory") }}</p>
+			<p>{{ phrase("pages.logs.the-xp-interface-is-now-a-bar-like") }}</p>
+			<p>{{ phrase("pages.logs.improved-the-guide-a-bit-too-added-the") }}</p>
+			<p><a target="_blank" href="http://adventure.land/img/ui_new.png" class="cancela"><span class="devlink">http://adventure.land/img/ui_new.png</span></a></p>
+
+			<div id="devheader">[04/08/16]</div>
+			<p>{{ phrase("pages.logs.added-the-fiery-blade-and-fiery-staff-items") }}</p>
+			<p>{{ phrase("pages.logs.improved-the-ui-a-bit-stats-now-toggle") }}</p>
+			<p>{{ phrase("pages.logs.shown-the-code-to-the-new-players-now") }}</p>
+			<p>{{ phrase("pages.logs.connected-the-1st-island-to-the-3rd-island") }}</p>
+			<p>{{ phrase("pages.logs.next-feature-everyone-wants-to-party") }}
+
+			<div id="devheader">[03/08/16]</div>
+			<p>{{ phrase("pages.logs.met-with-new-players-the-initial-feedback-is") }}</p>
+			<p>{{ phrase("pages.logs.most-confusing-part-of-the-game-is-right") }}</p>
+			<p>{{ phrase("pages.logs.replaced-the-coordinates-interface-with-coordinates-map-name") }}</p>
+			<p>{{ phrase("pages.logs.re-improved-the-movement-system-teleports-it-seems") }}</p>
+			<p>{{ phrase("pages.logs.improved-the-server-upgrade-routines-the-chat-game") }}</p>
+			<p>{{ phrase("pages.logs.implemented-f-activate-nearest-npc-it-s-possible") }}</p>
+
+			<div id="devheader">[02/08/16]</div>
+			<p>{{ phrase("pages.logs.improved-the-server-registry-system-server-numbering-naming") }}</p>
+			<p>{{ phrase("pages.logs.implemented-the-multi-server-ui-logic-server-switching") }}</p>
+			<p>{{ phrase("pages.logs.implemented-auto-server-selection-based-on-rough-distance") }}</p>
+			<p>{{ phrase("pages.logs.deployed-tested-verified-americas-i-ii-and-europas") }}</p>
+
+			<div id="devheader">[01/08/16]</div>
+			<p>{{ phrase("pages.logs.created-a-very-basic-game-guide") }}</p>
+
+			<div id="devheader">[31/07/16]</div>
+			<p>{{ phrase("pages.logs.improved-the-main-town-brought-down-the-front") }}</p>
+			<p>{{ phrase("pages.logs.moving-towards-a-multi-server-ui-patched-the") }}</p>
+			<p>{{ phrase("pages.logs.implemented-a-password-reminder-email-feature-the-button") }}</p>
+
+			<div id="devheader">[30/07/16]</div>
+			<p>{{ phrase("pages.logs.planning-a-remake-of-the-map") }}</p>
+			<p>{{ phrase("pages.logs.improved-monster-player-movements-now-there-is-an") }}</p>
+			<p>{{ phrase("pages.logs.improving-the-disappearing-texts-font-rendering-is-still") }}</p>
+			<p>{{ phrase("pages.logs.refactored-simplified-most-of-the-server-client-events") }}</p>
+			<p>{{ phrase("pages.logs.players-monsters-now-change-direction-on-attack-if") }}</p>
+
+			<div id="devheader">[29/07/16]</div>
+			<p>{{ phrase("pages.logs.receiving-feedbacks-started-writing-a-small-guide-preparing") }}</p>
+			<p>{{ phrase_html("pages.logs.improved-code-runner-features-populated-https-github-com") }}</p>
+
+			<div id="devheader">[28/07/16]</div>
+			<p>{{ phrase("pages.logs.an-early-launch-for-adventure-land-mainly-to") }}</p>
+			<p>{{ phrase("pages.logs.honestly-it-was-super-fun") }}</p>
+			<p>{{ phrase("pages.logs.it-s-apparent-that-us-eu-asia-servers") }}</p>
+
+			<div id="devheader" style="color: #9361DF">{{ phrase("pages.logs.back-story-coming-soon-01-12-16") }}</div>
+		</div>
+	</body>
+</html>
+	

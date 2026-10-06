@@ -1,0 +1,96 @@
+<p class="tutlead">{{ phrase("docs.tutorial.interface.your-bag-keeps-the-useful-close-and-the") }}</p>
+
+<div class="tutlinks">
+	<div
+		class="gamebutton gamebutton-small"
+		onclick="
+			btc(event);
+			open_guide('items', '/docs/guide/items');
+		"
+	>
+		{{ phrase("docs.tutorial.interface.items-inventory") }}
+	</div>
+</div>
+
+{% for task in tutorial_data("interface").tasks %} {% if loop.first %}
+<div class="tutdivider"></div>
+{% endif %}
+<div class="tuttaskrow"><span class="tuttask tuttask{{task}}">o</span> <span class="tuttaskname">{{task_name(task)}}</span> <span class="tuttaskd tuttaskd{{task}}">{{ phrase("docs.tutorial.interface.done") }}</span></div>
+{% endfor %}
+
+<div class="tutpath manual">
+	<div class="tutpath-title">{{ phrase("docs.tutorial.interface.manual") }}</div>
+	<p>{{ phrase_html("docs.tutorial.interface.open-inv-right-click-equipment-to-wear-it") }}</p>
+	<p>{{ phrase("docs.tutorial.interface.hp-and-mp-potions-share-a-short-cooldown") }}</p>
+</div>
+
+<div class="tutpath codepath">
+	<div class="tutpath-title">{{ phrase("docs.tutorial.interface.optional-code") }}</div>
+	<!-- prettier-ignore -->
+	<div class="code">var weapon = locate_item("blade");
+if (weapon !== -1) equip(weapon);
+
+use_hp_or_mp();</div>
+	<p>{{ phrase_html("docs.tutorial.interface.replace-blade-with-an-item-key-from-your") }}</p>
+	<p>
+		{{ phrase_html("docs.tutorial.interface.locate-item-equip-use-hp-or-mp") }}
+	</p>
+</div>
+
+<p class="tuttip">{{ phrase_html("docs.tutorial.interface.careful-lock-anything-precious-before-selling-upgrading-or") }}</p>
+
+<style>
+	.tutlead {
+		color: #2b9ec9;
+		font-size: 34px;
+	}
+	.tutdivider {
+		border-top: 5px solid gray;
+		margin: 14px -24px 8px;
+	}
+	.tuttaskrow {
+		line-height: 44px;
+	}
+	.tuttask {
+		color: #4a4a4a;
+		font-size: 64px;
+		vertical-align: middle;
+	}
+	.tuttaskname {
+		color: #dc4c6e;
+		vertical-align: middle;
+	}
+	.tuttaskd {
+		color: #85c76b;
+		display: none;
+		vertical-align: middle;
+	}
+	.tutpath {
+		border: 4px solid #777;
+		margin: 12px 0;
+		padding: 10px 14px;
+		text-align: left;
+	}
+	.tutpath.manual {
+		border-color: #5e9f6e;
+	}
+	.tutpath.codepath {
+		border-color: #c58b3d;
+	}
+	.tutpath-title {
+		color: #555;
+		font-size: 24px;
+	}
+	.manual .tutpath-title {
+		color: #387649;
+	}
+	.codepath .tutpath-title {
+		color: #9a6328;
+	}
+	.tuttip {
+		color: #555;
+	}
+	.tutlinks {
+		text-align: center;
+	}
+</style>

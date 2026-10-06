@@ -1,0 +1,34 @@
+<div style='width: 600px'>
+	<p style='font-size: 32px; color: #8A203A; text-decoration: underline dotted #B30B1A'>{{ phrase("docs.guide.event-abtesting.a-b-testing-pvp-event") }}</p>
+
+	<p>
+		{{ phrase_html("docs.guide.event-abtesting.in-a-b-testing-players-are-divided-into") }}
+	</p>
+
+	<p>
+		{{ phrase_html("docs.guide.event-abtesting.character-team-is-either-a-or-b-for") }}
+	</p>
+
+	<p>
+		{{ phrase_html("docs.guide.event-abtesting.1000-kills-get-you-the-g-achievements-abtesting") }}
+	</p>
+
+
+	<div style='margin-bottom: 24x'></div>
+
+	<div class='gamebutton' onclick="btc(event); join('abtesting'); hide_modal();">{{ phrase("docs.guide.event-abtesting.join-the-event") }}</div>
+
+
+	<script>
+		$(".sphelmet").html(sprite("thehelmet",{width:50,height:88,scale:3}));
+	</script>
+
+<p style='font-size: 32px; color: #216D25; text-decoration: underline dotted #B30B1A; margin-bottom: 10px'>{{ phrase("docs.guide.event-abtesting.snippets") }}</p>
+
+<div class='code'>
+	if(server.status.abtesting && character.map!="abtesting")
+		join('abtesting');
+		// Takes you there
+</div>
+
+</div>

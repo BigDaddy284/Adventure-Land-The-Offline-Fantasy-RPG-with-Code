@@ -1,0 +1,98 @@
+<div class="guide-kicker">{{ phrase("docs.guide.events-and-home.the-world-keeps-moving") }}</div>
+<div class="guide-title">{{ phrase("docs.guide.events-and-home.events-home-servers") }}</div>
+<p>{{ phrase("docs.guide.events-and-home.the-realm-clock-event-buttons-and-live-server") }}</p>
+<p>{{ phrase("docs.guide.events-and-home.in-the-menu-active-events-appear-in-colored") }}</p>
+
+<div class="guide-card-grid">
+	<div class="guide-card">{{ phrase_html("docs.guide.events-and-home.schedule-open-the-clock-to-inspect-planned-events") }}</div>
+	<div class="guide-card">{{ phrase_html("docs.guide.events-and-home.live-event-an-event-button-portal-creature-or") }}</div>
+	<div class="guide-card">{{ phrase_html("docs.guide.events-and-home.bean-sets-this-character-s-home-realm-home") }}</div>
+	<div class="guide-card">{{ phrase_html("docs.guide.events-and-home.favor-shows-the-shell-cost-and-remaining-time") }}</div>
+</div>
+
+<div class="guide-flow" style="border-color:#7D5DA5" data-guide-visual="events">
+	<div class="guide-flow-node">{{ phrase_html("docs.guide.events-and-home.read-schedule-status") }}</div>
+	<div class="guide-flow-arrow">→</div>
+	<div class="guide-flow-node">{{ phrase_html("docs.guide.events-and-home.open-event-guide") }}</div>
+	<div class="guide-flow-arrow">→</div>
+	<div class="guide-flow-node">{{ phrase_html("docs.guide.events-and-home.join-or-travel") }}</div>
+</div>
+
+<div class="divider"></div>
+<div class="title mt15">{{ phrase("docs.guide.events-and-home.events-enter-in-different-ways") }}</div>
+<div class="guide-card-grid">
+	<div class="guide-card">{{ phrase_html("docs.guide.events-and-home.joinable-event-some-server-activities-accept-join-name") }}</div>
+	<div class="guide-card">{{ phrase_html("docs.guide.events-and-home.world-creature-a-live-boss-may-need-ordinary") }}</div>
+	<div class="guide-card">{{ phrase_html("docs.guide.events-and-home.portal-or-npc-seasonal-events-may-begin-through") }}</div>
+	<div class="guide-card">{{ phrase_html("docs.guide.events-and-home.scheduled-window-the-clock-can-announce-an-event") }}</div>
+</div>
+<div class="guide-note">{{ phrase_html("docs.guide.events-and-home.an-event-name-appearing-in-g-events-proves") }}</div>
+
+<div class="divider"></div>
+<div class="title mt15">{{ phrase("docs.guide.events-and-home.the-tenth-anniversary") }}</div>
+<p>{{ phrase("docs.guide.events-and-home.during-the-anniversary-a-non-afk-player-is") }}</p>
+<p>{{ phrase_html("docs.guide.events-and-home.how-to-kiss-open-skills-and-drag-i") }}</p>
+<p>{{ phrase("docs.guide.events-and-home.your-visit-is-used-up-you-and-the") }}</p>
+<p>{{ phrase("docs.guide.events-and-home.the-visitor-also-has-a-0-1-chance") }}</p>
+<p>{{ phrase("docs.guide.events-and-home.every-character-on-your-account-finds-the-same") }}</p>
+<p>{{ phrase("interface.anniversary.offseason_crafting") }}</p>
+<p>{{ phrase("docs.guide.events-and-home.the-guestbook-and-keepsake-pendant-combine-at-the") }}</p>
+<p>{{ phrase("docs.guide.events-and-home.opening-a-sixfold-cake-gives-one-anniversary-equipment") }}</p>
+<p>{{ phrase("docs.guide.events-and-home.ordinary-eligible-monsters-also-drop-slices-and-gifts") }}</p>
+<div class="guide-note">{{ phrase_html("docs.guide.events-and-home.check-server-status-anniversary-its-live-field-identifies") }}</div>
+
+<div class="divider"></div>
+<div class="title mt15">{{ phrase("docs.guide.events-and-home.home-and-blessings") }}</div>
+<p>{{ phrase("docs.guide.events-and-home.choosing-server") }}</p>
+<p>{{ phrase("docs.guide.events-and-home.saved-home") }}</p>
+<p>{{ phrase("docs.guide.events-and-home.speak-with-bean-while-on-the-realm-this") }}</p>
+<p>{{ phrase("docs.guide.events-and-home.hop-sickness", {"condition": phrase("condition.hopsickness.name")}) }}</p>
+<p>{{ phrase("docs.guide.events-and-home.if-another-non-merchant-character-on-your-account") }}</p>
+<div class="guide-note">{{ phrase("docs.guide.events-and-home.settle-on-one-realm-for-30-minutes-to") }}</div>
+<p>{{ phrase("docs.guide.events-and-home.changing-home-has-a-36-hour-cooldown-so") }}</p>
+<p>{{ phrase("docs.guide.events-and-home.favor-s-blessing-is-realm-wide-and-spends") }}</p>
+
+<div class="divider"></div>
+<div class="title mt15">{{ phrase("docs.guide.events-and-home.code-read-before-acting") }}</div>
+<div class="code">function report_live_events() {
+	for (var name in G.events) {
+		var state = server.status[name];
+		if (state &amp;&amp; state.active !== false &amp;&amp;
+			(G.events[name].type === "seasonal" || state.live !== false)) {
+			game_log(G.events[name].name + " is active here");
+		}
+	}
+}
+
+report_live_events();
+show_json(server.status);</div>
+<div class="code">show_json({server: server.region + server.id, home: character.home});
+var sickness = character.s.hopsickness;
+if (sickness) game_log("Hop Sickness: " + Math.ceil(sickness.ms / 60000) + " minutes remaining");
+var fatigue = character.s.realmfatigue;
+if (fatigue) game_log("Realm Fatigue: " + Math.ceil(fatigue.ms / 60000) + " minutes remaining");</div>
+<div class="code">async function join_goobrawl_if_live() {
+	if (!server.status.goobrawl) return game_log("No Goo Brawl here");
+	await join("goobrawl");
+}
+
+// These change account or realm state; call them only beside the NPC.
+// await set_home();
+// await bless_server(); // Spends Shells.
+
+join_goobrawl_if_live().catch(show_json);</div>
+<p>{{ phrase_html("docs.guide.events-and-home.static-definitions-are-in-g-events-live-state") }}</p>
+<p>{{ phrase_html("docs.guide.events-and-home.references-join-smart-move-set-home-bless-server") }}</p>
+
+<div class="guide-related">{{ phrase_html("docs.guide.events-and-home.see-also-travel-and-instances") }}</div>
+
+<script>
+	$(".events-tracker").html(item_container({ skin: "schedule_clock" }));
+	$(".events-rgoo").html(sprite("rgoo", { height: 48, overflow: true }));
+	$(".events-bean").html(sprite(G.npcs.bean.skin, { height: 58 }));
+	$(".events-favore").html(sprite(G.npcs.favors.skin, { height: 58 }));
+</script>
+
+<style>
+	.guide-kicker{color:#7D5DA5;font-size:18px;font-weight:bold;letter-spacing:2px}.guide-title{color:#58417A;font-size:44px;line-height:48px;margin:2px 0 12px}.title{color:#58417A;font-size:36px;margin-top:15px}.divider{margin-top:15px;height:5px;background-color:#A2A2A2;margin-left:-26px;margin-right:-26px}.guide-note{border-left:6px solid #8061A8;background:#EAE3F1;padding:10px 14px;margin:12px 0}.guide-related{border-top:2px dotted #AAA;margin-top:18px;padding-top:10px;color:#666}.guide-related span{color:#674C8A;cursor:pointer;text-decoration:underline}.events-route{font-size:42px;color:#C2A8E0}
+</style>

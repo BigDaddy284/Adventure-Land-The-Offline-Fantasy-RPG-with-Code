@@ -1,0 +1,14 @@
+<p><span class='dlabel'>get_pvp_history(timeout_ms)</span></p>
+<p>{{ phrase("docs.functions.get_pvp_history.retrieves-the-server-s-recent-pvp-defeats-without") }}</p>
+<p>{{ phrase_html("docs.functions.get_pvp_history.returns-promise-resolving-with-success-true-list-it") }}</p>
+<p>{{ phrase_html("docs.functions.get_pvp_history.promise-failures-unless-a-function-specific-note-says") }}</p>
+<p>{{ phrase_html("docs.functions.get_pvp_history.notes-the-server-returns-up-to-200-recent") }}</p>
+<p>{{ phrase_html("docs.functions.get_pvp_history.example") }}</p>
+<div class='code'>async function example() {
+	var history = await get_pvp_history();
+	show_json(history.list);
+}
+example();</div>
+
+<p></p>
+<span class='redlabel'>{{ phrase("docs.reference.source_code") }}</span>

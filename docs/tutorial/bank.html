@@ -1,0 +1,108 @@
+<p class="tutlead">{{ phrase("docs.tutorial.bank.the-bank-keeps-items-and-gold-safe-and") }}</p>
+
+<div class="tutlinks">
+	<div
+		class="gamebutton gamebutton-small"
+		onclick="
+			btc(event);
+			open_guide('banking', get_guide_url('banking'));
+		"
+	>
+		{{ phrase("docs.tutorial.bank.banking-guide") }}
+	</div>
+	<span class="tutorial-travel" data-type="map" data-target="bank"></span>
+</div>
+
+{% for task in tutorial_data("bank").tasks %} {% if loop.first %}
+<div class="tutdivider"></div>
+{% endif %}
+<div class="tuttaskrow">
+	<span class="tuttask tuttask{{task}}">o</span> <span class="tuttaskname">{{task_name(task)}}</span> <span class="tuttaskd tuttaskd{{task}}">{{ phrase("docs.tutorial.bank.done") }}</span>
+</div>
+{% endfor %}
+
+<div class="tutpath manual">
+	<div class="tutpath-title">{{ phrase("docs.tutorial.bank.manual") }}</div>
+	<p>{{ phrase("docs.tutorial.bank.enter-the-bank-to-the-right-of-the") }}</p>
+	<p style="display: flex; align-items: center; gap: 16px">
+		<span class="tutorial-npc" data-npc="items0"></span><span>Gabrielle</span><span class="tutorial-npc" data-npc="goldnpc"></span><span>Mr. Rich</span>
+	</p>
+	<div><span class="tutorial-travel" data-type="npc" data-target="items0"></span> <span class="tutorial-travel" data-type="npc" data-target="goldnpc"></span></div>
+	<p>{{ phrase("docs.tutorial.bank.only-one-of-your-characters-can-be-inside") }}</p>
+</div>
+
+<div class="tutpath codepath">
+	<div class="tutpath-title">{{ phrase("docs.tutorial.bank.optional-code") }}</div>
+	<p>{{ phrase("docs.tutorial.bank.example_supplies") }}</p>
+	<!-- prettier-ignore -->
+	<div class="code">async function visit_bank() {
+	await smart_move("bank");
+	await bank_deposit(1);
+
+	var potions = locate_item("hpot0");
+	if (potions === -1) throw {reason: "missing_item", name: "hpot0"};
+	await bank_store(potions);
+}
+
+visit_bank().catch(function (error) {
+	show_json(error);
+});</div>
+	<p>{{ phrase("docs.tutorial.bank.the-item-can-be-retrieved-later-from-its") }}</p>
+	<p>{{ phrase_html("docs.tutorial.bank.bank-deposit-bank-store-bank-retrieve") }}</p>
+</div>
+
+<style>
+	.tutlead {
+		color: #2b9ec9;
+		font-size: 34px;
+	}
+	.tutdivider {
+		border-top: 5px solid gray;
+		margin: 14px -24px 8px;
+	}
+	.tuttaskrow {
+		line-height: 44px;
+	}
+	.tuttask {
+		color: #4a4a4a;
+		font-size: 64px;
+		vertical-align: middle;
+	}
+	.tuttaskname {
+		color: #dc4c6e;
+		vertical-align: middle;
+	}
+	.tuttaskd {
+		color: #85c76b;
+		display: none;
+		vertical-align: middle;
+	}
+	.tutpath {
+		border: 4px solid #777;
+		margin: 12px 0;
+		padding: 10px 14px;
+		text-align: left;
+	}
+	.tutpath.manual {
+		border-color: #5e9f6e;
+	}
+	.tutpath.codepath {
+		border-color: #c58b3d;
+	}
+	.tutpath-title {
+		color: #555;
+		font-size: 24px;
+	}
+	.manual .tutpath-title {
+		color: #387649;
+	}
+	.codepath .tutpath-title {
+		color: #9a6328;
+	}
+	.tutlinks {
+		text-align: center;
+	}
+</style>
+<script>
+	render_tutorial_items();
+</script>

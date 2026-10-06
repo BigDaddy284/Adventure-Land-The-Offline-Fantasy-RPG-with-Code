@@ -1,0 +1,286 @@
+<p>{{ phrase_html("docs.articles.events-character.character-events") }}</p>
+
+<p>{{ phrase("docs.articles.events-character.character-events-describe-things-that-happen-to-your") }}</p>
+
+<div class="code">var listener = character.on("level_up", function (data, event) {
+	game_log("I am now level " + data.level);
+});
+
+character.once("new_map", function (data) {
+	game_log("Entered " + data.name);
+});
+
+character.all(function (event, data) {
+	game_log(event + ": " + JSON.stringify(data));
+});
+
+character.remove(listener);</div>
+
+<p>{{ phrase_html("docs.articles.events-character.character-on-event-callback-and-character-once-event") }}</p>
+
+<p>{{ phrase_html("docs.articles.events-character.for-one-event-in-an-async-sequence-wait") }}</p>
+
+<div class="code">async function wait_for_loot() {
+	var data = await wait_for_event(character, "loot", 5000, function (loot) {
+		return loot.gold > 0;
+	});
+	game_log("Looted " + data.gold + " gold");
+}</div>
+
+<p><span class="dlabel" data-event="new_map">new_map</span></p>
+
+<div class="code">{
+	name: "main", // G.maps.main
+	in: "main",   // Unique instance ID inside instances
+}</div>
+
+<p>{{ phrase_html("docs.articles.events-character.emitted-after-the-character-enters-a-map-on") }}</p>
+
+<p><span class="dlabel" data-event="incoming">incoming</span></p>
+
+<div class="code">{
+	source: "attack",
+	actor: "AttackerID",
+	target: "YourCharacterName",
+	damage: 1390,       // Or heal for a healing action
+	projectile: "momentum",
+	eta: 50,            // Expected arrival in milliseconds
+	pid: "abcd1234",
+}</div>
+
+<p>{{ phrase_html("docs.articles.events-character.emitted-when-an-action-is-sent-toward-your") }}</p>
+
+<p>{{ phrase_html("docs.articles.events-character.hit-and-target-hit") }}</p>
+
+<div class="code">{
+	source: "attack",
+	actor: "AttackerID",
+	target: "TargetID",
+	damage: 1390,       // Or heal
+	pid: "abcd1234",
+	crit: true,
+	kill: false,
+	evade: false,
+	miss: false,
+	avoid: false,
+	reflect: 0,
+	dreturn: 0,
+	poison: false,
+	freeze: false,
+	stun: false,
+	condition: "curse",
+	trigger: "sugarrush",
+	stacked: ["OtherTargetID"],
+	mobbing: 0,
+	unintentional: false,
+	aoe: false,
+}</div>
+
+<p>{{ phrase_html("docs.articles.events-character.hit-is-emitted-when-your-character-is-the") }}</p>
+
+<p><span class="dlabel" data-event="loot">loot</span></p>
+
+<div class="code">{
+	id: "ChestID",
+	opener: "CharacterName",
+	goldm: 1.2,
+	dry: false,
+	stale: false,
+	gold: 87,
+	party: true,
+	items: [
+		{ name: "staff", level: 0, looter: "CharacterName" },
+		{ name: "bow", level: 9, looter: null, lostandfound: true },
+	],
+}</div>
+
+<p>{{ phrase("docs.articles.events-character.emitted-for-chests-opened-by-you-or-your") }}</p>
+
+<p>{{ phrase_html("docs.articles.events-character.encouragement-items") }}</p>
+
+<p>{{ phrase_html("docs.articles.events-character.encouragement-reserved") }}</p>
+
+<div class="code">character.on('loot', (data) => {
+	show_json(data);
+});</div>
+
+<p>{{ phrase_html("docs.articles.events-character.cm-pm-and-partym") }}</p>
+
+<div class="code">// cm
+{
+	name: "SenderName",
+	message: { command: "farm", monster: "goo" },
+	local: true, // Present for same-device local delivery
+	date: Date,  // Present for same-device local delivery
+}
+
+// pm and partym
+{
+	from: "SenderName",
+	message: "Ready",
+}</div>
+
+<p>{{ phrase_html("docs.articles.events-character.code-messages-carry-json-serializable-values-private-and") }}</p>
+
+<p>{{ phrase_html("docs.articles.events-character.item-sent-and-item-received") }}</p>
+
+<div class="code">// item_sent
+{
+	response: "item_sent",
+	name: "ReceiverName", // Documented legacy field
+	to: "ReceiverName",   // Directional alias
+	item: "hpot0",
+	q: 10,
+	num: 0,
+	place: "send",
+	success: true,
+}
+
+// item_received
+{
+	response: "item_received",
+	name: "SenderName", // Documented legacy field
+	from: "SenderName", // Directional alias
+	item: "hpot0",
+	q: 10,
+	num: 12,
+}</div>
+
+<p>{{ phrase_html("docs.articles.events-character.each-transfer-emits-exactly-one-event-the-legacy") }}</p>
+
+<p>{{ phrase_html("docs.articles.events-character.gold-sent-and-gold-received") }}</p>
+
+<div class="code">// gold_sent
+{
+	response: "gold_sent",
+	name: "ReceiverName",
+	to: "ReceiverName",
+	gold: 100,
+	amount: 100,
+	place: "send",
+	success: true,
+}
+
+// gold_received
+{
+	response: "gold_received",
+	name: "SenderName",
+	from: "SenderName",
+	gold: 100,
+	amount: 100,
+}</div>
+
+<p>{{ phrase_html("docs.articles.events-character.gold-is-the-documented-transfer-field-amount-is") }}</p>
+
+<p>{{ phrase_html("docs.articles.events-character.death-respawn-and-level-up") }}</p>
+
+<div class="code">// death
+{}
+
+// respawn
+{
+	response: "data",
+	place: "respawn",
+	success: true,
+}
+
+// level_up
+{
+	level: 72,
+}</div>
+
+<p>{{ phrase_html("docs.articles.events-character.stacked-and-mobbing") }}</p>
+
+<div class="code">// stacked
+{
+	method: "attack",
+	ids: ["CharacterName1", "CharacterName2"],
+}
+
+// mobbing
+{
+	intensity: 1,
+}</div>
+
+<p>{{ phrase_html("docs.articles.events-character.move-overlapping-characters-apart-after-stacked-mobbing-reports") }}</p>
+
+<p>{{ phrase_html("docs.articles.events-character.challenge-and-duel") }}</p>
+
+<div class="code">// challenge
+"ChallengerName"
+
+// duel
+{
+	challenger: "ChallengerName",
+	vs: "OpponentName",
+	id: "DuelID",
+}</div>
+
+<p>{{ phrase_html("docs.articles.events-character.action-result-event-index") }}</p>
+
+<p>{{ phrase_html("docs.articles.events-character.many-server-responses-also-become-character-events-their") }}</p>
+
+<div class="code"><span data-event="buy">buy</span>
+<span data-event="sell">sell</span>
+<span data-event="craft">craft</span>
+<span data-event="dismantle">dismantle</span>
+<span data-event="destroy">destroy</span>
+<span data-event="exchange_buy">exchange_buy</span>
+<span data-event="mail_sent">mail_sent</span>
+<span data-event="mail_failed">mail_failed</span>
+<span data-event="mail_item_taken">mail_item_taken</span>
+<span data-event="mail_take_item_failed">mail_take_item_failed</span>
+<span data-event="shell_purchase_complete">shell_purchase_complete</span>
+<span data-event="shell_purchase_failed">shell_purchase_failed</span>
+<span data-event="blessed">blessed</span>
+<span data-event="blessed_fail">blessed_fail</span>
+<span data-event="friend_complete">friend_complete</span>
+<span data-event="friend_failed">friend_failed</span>
+<span data-event="unfriend_complete">unfriend_complete</span>
+<span data-event="unfriend_failed">unfriend_failed</span>
+<span data-event="mluck">mluck</span>
+<span data-event="cx_sent">cx_sent</span>
+<span data-event="cx_received">cx_received</span>
+<span data-event="bank_withdraw">bank_withdraw</span>
+<span data-event="bank_store">bank_store</span>
+<span data-event="bank_new_pack">bank_new_pack</span>
+<span data-event="bank_new_pack_failed">bank_new_pack_failed</span>
+<span data-event="giveaway_join">giveaway_join</span>
+<span data-event="picked">picked</span>
+<span data-event="got_picked">got_picked</span>
+<span data-event="pick_failed">pick_failed</span>
+<span data-event="item_break">item_break</span>
+<span data-event="fishing_fail">fishing_fail</span>
+<span data-event="fishing_success">fishing_success</span>
+<span data-event="fishing_none">fishing_none</span>
+<span data-event="mining_fail">mining_fail</span>
+<span data-event="mining_success">mining_success</span>
+<span data-event="mining_none">mining_none</span></div>
+
+<p>{{ phrase_html("docs.articles.events-character.response-events-include-a-response-name-when-they") }}</p>
+
+<p>{{ phrase_html("docs.articles.events-character.mail-sent-and-mail-failed-include-to-and") }}</p>
+
+<p>{{ phrase_html("docs.articles.events-character.mail-item-taken-and-mail-take-item-failed") }}</p>
+
+<p>{{ phrase_html("docs.articles.events-character.shell-purchase-complete-and-shell-purchase-failed-include") }}</p>
+
+<p>{{ phrase_html("docs.articles.events-character.blessed-and-blessed-fail-include-cost-result-and") }}</p>
+
+<p>{{ phrase_html("docs.articles.events-character.friend-complete-and-friend-failed-include-name-and") }}</p>
+
+<p>{{ phrase_html("docs.articles.events-character.unfriend-complete-and-unfriend-failed-include-name-and") }}</p>
+
+<p>{{ phrase_html("docs.articles.events-character.bank-new-pack-and-bank-new-pack-failed") }}</p>
+
+<p>{{ phrase_html("docs.articles.events-character.picked-pick-failed-and-the-fishing-mining-result") }}</p>
+
+<p>{{ phrase_html("docs.articles.events-character.merrit-a-delivered-market-parcel-with-item-quantity") }}</p>
+
+<hr>
+<p><span class="dlabel" data-event="cave">cave</span></p>
+<p>{{ phrase("docs.cave.state") }}</p>
+
+<div class="code">character.on("cave", function (state) {
+    if (state) game_log(state.floor + 1 + ": " + state.remaining_ms);
+});</div>

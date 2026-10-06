@@ -1,0 +1,82 @@
+<p>
+	{{ phrase("docs.functions.buy.arguments") }}
+	<div>{{ phrase_html("docs.functions.buy.string-an-item-key-name-from-g-items") }}</div>
+	<div>{{ phrase_html("docs.functions.buy.integer-optional-quantity") }}</div>
+</p>
+<p>
+	{{ phrase("docs.functions.buy.returns") }}
+	<div>{{ phrase_html("docs.functions.buy.promise") }}</div>
+</p>
+
+<p>{{ phrase_html("docs.functions.buy.list-of-available-key-names-show-json-object") }}</p>
+
+<p>{{ phrase("docs.functions.buy.example-usages") }}</p>
+
+<div class='code'>
+buy("shoes");
+
+buy("hpot0",100);
+
+buy("coat").then(function(data){
+	game_log("Got a new coat at the "+data.num+"th inventory slot!");
+});
+
+buy("shoes").then(
+	function(data){
+		game_log("New shoes!");
+	},
+	function(data){
+		game_log("Can't buy shoes :(");
+	},
+);
+</div>
+
+<p>{{ phrase("docs.functions.buy.wooden_axe") }}</p>
+<div class='code' id='buy-wooden-axe-code'>buy("waxe").then(show_json).catch(show_json);</div>
+
+<p>{{ phrase("docs.functions.buy.promise-reference") }}</p>
+
+<span class='dlabel'>{{ phrase("docs.reference.fulfilled") }}</span>
+<div class='code'>
+{
+	name: "coat",
+	num: 0, // Inventory slot 0
+	q: 1, // Quantity
+	cost: 6000, // Gold spent
+}
+</div>
+<div style='margin-bottom: 10px'></div>
+
+<span class='dlabel'>{{ phrase("docs.reference.rejected") }}</span>
+<div class='code'>
+{
+	reason: "distance", // Too far away from an NPC
+}
+</div>
+<div style='margin-bottom: 1px'></div>
+<div class='code'>
+{
+	reason: "not_buyable", // Can't buy this from an NPC
+}
+</div>
+<div style='margin-bottom: 1px'></div>
+<div class='code'>
+{
+	reason: "space", // No inventory space
+}
+</div>
+<div style='margin-bottom: 1px'></div>
+<div class='code'>
+{
+	reason: "cost", // Don't have enough gold
+}
+</div>
+<div style='margin-bottom: 1px'></div>
+<div class='code'>
+{
+	reason: "bank", // If operation isn't allowed inside
+}
+</div>
+
+<p></p>
+<span class='redlabel'>{{ phrase("docs.reference.source_code") }}</span>

@@ -1,0 +1,14 @@
+<p><span class='dlabel'>bet_dice(direction, num, gold, timeout_ms)</span></p>
+<p>{{ phrase("docs.functions.bet_dice.places-one-tavern-dice-wager-and-waits-for") }}</p>
+<p>{{ phrase_html("docs.functions.bet_dice.returns-promise-resolving-with-won-roll-wager-payout") }}</p>
+<p>{{ phrase_html("docs.functions.bet_dice.promise-failures-unless-a-function-specific-note-says") }}</p>
+<p>{{ phrase_html("docs.functions.bet_dice.notes-use-up-down-1-for-up-or") }}</p>
+<p>{{ phrase_html("docs.functions.bet_dice.example") }}</p>
+<div class='code'>async function example() {
+	var result = await bet_dice("down", 55, 10000);
+	game_log(result.won ? "Won " + result.net : "Lost " + result.wager);
+}
+example();</div>
+
+<p></p>
+<span class='redlabel'>{{ phrase("docs.reference.source_code") }}</span>

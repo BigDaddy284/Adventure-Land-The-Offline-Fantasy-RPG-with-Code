@@ -1,0 +1,13 @@
+<p><span class='dlabel'>buy_with_shells(name, quantity, timeout_ms)</span></p>
+<p>{{ phrase("docs.functions.buy_with_shells.buys-an-item-with-shells-and-waits-for") }}</p>
+<p>{{ phrase_html("docs.functions.buy_with_shells.returns-promise-resolving-with-the-matching-shell-purchase") }}</p>
+<p>{{ phrase_html("docs.functions.buy_with_shells.promise-failures-unless-a-function-specific-note-says") }}</p>
+<p>{{ phrase_html("docs.functions.buy_with_shells.notes-the-optional-timeout-defaults-to-15-000ms") }}</p>
+<p>{{ phrase_html("docs.functions.buy_with_shells.example") }}</p>
+<div class='code'>async function example() {
+	await buy_with_shells("computer", 1, 15000);
+}
+example();</div>
+
+<p></p>
+<span class='redlabel'>{{ phrase("docs.reference.source_code") }}</span>

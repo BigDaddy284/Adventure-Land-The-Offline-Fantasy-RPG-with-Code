@@ -1,0 +1,29 @@
+<div style='width: 600px'>
+	<p style='font-size: 32px; color: #8A203A; text-decoration: underline dotted #B30B1A'>{{ phrase("docs.guide.event-crabxx.giga-crab-beach-event") }}</p>
+
+	<p>
+		{{ phrase_html("docs.guide.event-crabxx.giga-crab-is-a-challenging-server-event-boss") }}
+	</p>
+
+	<p>
+		{{ phrase_html("docs.guide.event-crabxx.giga-crab-s-id-is-crabxx-it-spawns") }}
+	</p>
+
+
+	<div style='margin-bottom: 24x'></div>
+
+	<div class='gamebutton' onclick="btc(event); join('crabxx'); hide_modal();">{{ phrase("docs.guide.event-crabxx.join-the-event") }}</div>
+
+	<script>
+		$(".spcrabxx").html(sprite("crabxx",{width:120,height:75,scale:3}));	
+	</script>
+
+<p style='font-size: 32px; color: #216D25; text-decoration: underline dotted #B30B1A; margin-bottom: 10px'>{{ phrase("docs.guide.event-crabxx.snippets") }}</p>
+
+<div class='code'>
+	if(server.status.crabxx && !get_nearest_monster({type:'crabxx'}))
+		join('crabxx');
+		// Takes you there
+</div>
+
+</div>

@@ -1,0 +1,80 @@
+<div class="guide-kicker">{{ phrase("docs.guide.travel-and-instances.roads-doors-and-strange-places") }}</div>
+<div class="guide-title">{{ phrase("docs.guide.travel-and-instances.travel-instances") }}</div>
+<p>{{ phrase("docs.guide.travel-and-instances.walking-route-planning-transporters-town-teleports-doors-and") }}</p>
+
+<div class="guide-showcase" style="border-color:#36799A">
+	<div class="guide-showcase-art"><span class="travel-alia"></span><span class="travel-key"></span></div>
+	<div class="guide-showcase-copy">{{ phrase_html("docs.guide.travel-and-instances.alia-handles-public-transport-her-panel-lists-reachable") }}</div>
+</div>
+
+<div class="guide-flow" style="border-color:#36799A" data-guide-visual="travel-route">
+	<div class="guide-flow-node">{{ phrase_html("docs.guide.travel-and-instances.you-current-position") }}</div>
+	<div class="guide-flow-arrow">→</div>
+	<div class="guide-flow-node">{{ phrase_html("docs.guide.travel-and-instances.walk-route-points") }}</div>
+	<div class="guide-flow-arrow">→</div>
+	<div class="guide-flow-node">{{ phrase_html("docs.guide.travel-and-instances.door-or-transporter") }}</div>
+	<div class="guide-flow-arrow">→</div>
+	<div class="guide-flow-node">{{ phrase_html("docs.guide.travel-and-instances.bank-destination") }}</div>
+</div>
+
+<div class="divider"></div>
+<div class="title mt15">{{ phrase("docs.guide.travel-and-instances.four-ways-to-move") }}</div>
+<div class="guide-card-grid">
+	<div class="guide-card">{{ phrase_html("docs.guide.travel-and-instances.smart-move-plans-and-follows-a-collision-aware") }}</div>
+	<div class="guide-card">{{ phrase_html("docs.guide.travel-and-instances.transport-uses-a-nearby-transporter-route-point-it") }}</div>
+	<div class="guide-card">{{ phrase_html("docs.guide.travel-and-instances.use-nearest-door-uses-a-door-already-within") }}</div>
+	<div class="guide-card">{{ phrase_html("docs.guide.travel-and-instances.town-channels-a-return-to-the-map-s") }}</div>
+</div>
+<div class="guide-note">{{ phrase_html("docs.guide.travel-and-instances.wait-for-one-travel-promise-before-starting-another") }}</div>
+
+<div class="divider"></div>
+<div class="title mt15">{{ phrase("docs.guide.travel-and-instances.keyed-party-instances") }}</div>
+<div class="guide-flow" style="border-color:#695D9A" data-guide-visual="party-instance">
+	<div class="guide-flow-node">{{ phrase_html("docs.guide.travel-and-instances.leader-opens-named-instance") }}</div>
+	<div class="guide-flow-arrow">→</div>
+	<div class="guide-flow-node">{{ phrase_html("docs.guide.travel-and-instances.p-party-uses-same-name") }}</div>
+	<div class="guide-flow-arrow">→</div>
+	<div class="guide-flow-node">{{ phrase_html("docs.guide.travel-and-instances.crypt-same-private-map") }}</div>
+</div>
+<p>{{ phrase("docs.guide.travel-and-instances.stand-at-the-matching-entrance-one-party-member") }}</p>
+<p>{{ phrase("docs.guide.travel-and-instances.instances-do-not-remain-alive-forever-when-nobody") }}</p>
+
+<div class="divider"></div>
+<div class="title mt15">{{ phrase("docs.guide.travel-and-instances.code-complete-trips") }}</div>
+<div class="code">async function visit_bank_and_return() {
+	await smart_move("bank");
+	game_log("Arrived at the Bank");
+
+	// This is a separate trip and waits for its channel to finish.
+	await town();
+	game_log("Returned to town");
+}
+
+visit_bank_and_return().catch(function (error) {
+	game_log("Travel stopped: " + (error.reason || error.message));
+});</div>
+<div class="code">async function use_local_route_point() {
+	// Call only while already beside the matching object.
+	// await transport("winterland", 0);
+	// await use_nearest_door();
+}
+
+async function enter_party_crypt(instance_name) {
+	// Call at the Crypt entrance. Every party member uses the same name.
+	var result = await enter("crypt", instance_name);
+	show_json(result);
+}
+
+// enter_party_crypt("sunday-party").catch(show_json);</div>
+<p>{{ phrase_html("docs.guide.travel-and-instances.references-smart-move-transport-town-use-nearest-door") }}</p>
+
+<div class="guide-related">{{ phrase_html("docs.guide.travel-and-instances.active-portals-are-covered-in-events-and-home") }}</div>
+
+<script>
+	$(".travel-alia").html(sprite(G.npcs.transporter.skin, { height: 62 }));
+	$(".travel-key").html(item_container({ skin: G.items.cryptkey.skin }, { name: "cryptkey" }));
+</script>
+
+<style>
+	.guide-kicker{color:#36799A;font-size:18px;font-weight:bold;letter-spacing:2px}.guide-title{color:#2A617C;font-size:44px;line-height:48px;margin:2px 0 12px}.title{color:#2A617C;font-size:36px;margin-top:15px}.divider{margin-top:15px;height:5px;background-color:#A2A2A2;margin-left:-26px;margin-right:-26px}.guide-note{border-left:6px solid #4087A7;background:#DEECF2;padding:10px 14px;margin:12px 0}.guide-related{border-top:2px dotted #AAA;margin-top:18px;padding-top:10px;color:#666}.guide-related span{color:#2D708E;cursor:pointer;text-decoration:underline}.travel-you,.travel-bank,.travel-party,.travel-crypt{display:inline-flex;align-items:center;justify-content:center;min-width:48px;height:40px;border:3px solid #5FA4C3;background:#15242B;color:#A6DDF3;font-size:17px}.travel-road{font-size:40px;color:#A6DDF3}
+</style>

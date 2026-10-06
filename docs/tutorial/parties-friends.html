@@ -1,0 +1,98 @@
+<p class="tutlead">{{ phrase("docs.tutorial.parties-friends.some-roads-are-easier-with-company-some-are") }}</p>
+
+<div class="tutlinks">
+	<div
+		class="gamebutton gamebutton-small"
+		onclick="
+			btc(event);
+			open_guide('multi', '/docs/guide/multi');
+		"
+	>
+		{{ phrase("docs.tutorial.parties-friends.playing-together") }}
+	</div>
+</div>
+
+{% for task in tutorial_data("parties-friends").tasks %} {% if loop.first %}
+<div class="tutdivider"></div>
+{% endif %}
+<div class="tuttaskrow"><span class="tuttask tuttask{{task}}">o</span> <span class="tuttaskname">{{task_name(task)}}</span> <span class="tuttaskd tuttaskd{{task}}">{{ phrase("docs.tutorial.parties-friends.done") }}</span></div>
+{% endfor %}
+
+<div class="tutpath manual">
+	<div class="tutpath-title">{{ phrase("docs.tutorial.parties-friends.manual") }}</div>
+	<p>
+		{{ phrase_html("docs.tutorial.parties-friends.open-com-to-see-adventurers-friends-servers-merchants") }}
+	</p>
+	<p>{{ phrase("docs.tutorial.parties-friends.party-chat-reaches-the-group-friends-can-find") }}</p>
+</div>
+
+<div class="tutpath codepath">
+	<div class="tutpath-title">{{ phrase("docs.tutorial.parties-friends.optional-code") }}</div>
+	<!-- prettier-ignore -->
+	<div class="code">var name = "TrustedFriend";
+
+send_party_invite(name).catch(function (error) {
+	show_json(error);
+});
+
+send_friend_request(name).catch(function (error) {
+	show_json(error);
+});</div>
+	<p>{{ phrase("docs.tutorial.parties-friends.replace-the-name-before-running-for-incoming-requests") }}</p>
+	<p>
+		{{ phrase_html("docs.tutorial.parties-friends.send-party-invite-send-friend-request-party-say") }}
+	</p>
+</div>
+
+<style>
+	.tutlead {
+		color: #2b9ec9;
+		font-size: 34px;
+	}
+	.tutdivider {
+		border-top: 5px solid gray;
+		margin: 14px -24px 8px;
+	}
+	.tuttaskrow {
+		line-height: 44px;
+	}
+	.tuttask {
+		color: #4a4a4a;
+		font-size: 64px;
+		vertical-align: middle;
+	}
+	.tuttaskname {
+		color: #dc4c6e;
+		vertical-align: middle;
+	}
+	.tuttaskd {
+		color: #85c76b;
+		display: none;
+		vertical-align: middle;
+	}
+	.tutpath {
+		border: 4px solid #777;
+		margin: 12px 0;
+		padding: 10px 14px;
+		text-align: left;
+	}
+	.tutpath.manual {
+		border-color: #5e9f6e;
+	}
+	.tutpath.codepath {
+		border-color: #c58b3d;
+	}
+	.tutpath-title {
+		color: #555;
+		font-size: 24px;
+	}
+	.manual .tutpath-title {
+		color: #387649;
+	}
+	.codepath .tutpath-title {
+		color: #9a6328;
+	}
+	.tutlinks {
+		text-align: center;
+	}
+</style>

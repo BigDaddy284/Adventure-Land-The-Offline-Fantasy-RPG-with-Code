@@ -1,0 +1,75 @@
+<div class="guide-kicker">{{ phrase("docs.guide.exchanges-and-quests.turn-in-your-treasures") }}</div>
+<div class="guide-title">{{ phrase("docs.guide.exchanges-and-quests.exchanges-quests") }}</div>
+<p>{{ phrase("docs.guide.exchanges-and-quests.some-loot-is-meant-to-be-turned-in") }}</p>
+
+<div class="guide-showcase" style="border-color:#779C55">
+	<div class="guide-showcase-art"><span class="exchange-xyn"></span><span class="exchange-box"></span></div>
+	<div class="guide-showcase-copy">{{ phrase_html("docs.guide.exchanges-and-quests.xyn-handles-boxes-and-bundles-place-the-full") }}</div>
+</div>
+
+<div class="guide-flow" style="border-color:#779C55" data-guide-visual="exchange-box">
+	<div class="guide-flow-node"><span class="guide-flow-icon exchange-box"></span><span class="guide-flow-label">Armor Box</span></div>
+	<div class="guide-flow-arrow">→</div>
+	<div class="guide-flow-node">{{ phrase_html("docs.guide.exchanges-and-quests.random-rare-armor") }}</div>
+</div>
+
+<div class="guide-flow" style="border-color:#9B7A2E" data-guide-visual="token-shop">
+	<div class="guide-flow-node">{{ phrase_html("docs.guide.exchanges-and-quests.fun-tokens") }}</div>
+	<div class="guide-flow-arrow">→</div>
+	<div class="guide-flow-node">{{ phrase_html("docs.guide.exchanges-and-quests.confetti") }}</div>
+</div>
+
+<div class="divider"></div>
+<div class="title mt15">{{ phrase("docs.guide.exchanges-and-quests.read-the-tooltip-first") }}</div>
+<div class="guide-card-grid">
+	<div class="guide-card">{{ phrase_html("docs.guide.exchanges-and-quests.exchange-item-the-tooltip-shows-the-required-stack") }}</div>
+	<div class="guide-card">{{ phrase_html("docs.guide.exchanges-and-quests.token-shop-the-npc-shows-each-named-reward") }}</div>
+	<div class="guide-card">{{ phrase_html("docs.guide.exchanges-and-quests.quest-material-a-named-collector-may-require-several") }}</div>
+	<div class="guide-card">{{ phrase_html("docs.guide.exchanges-and-quests.seasonal-turn-in-the-npc-may-exist-only") }}</div>
+</div>
+<p>{{ phrase_html("docs.guide.exchanges-and-quests.recipes-exchanges-and-quests-are-different-systems-even") }}</p>
+<div class="guide-note">{{ phrase("docs.guide.exchanges-and-quests.the-exchange-begins-only-with-a-complete-eligible") }}</div>
+
+<div class="divider"></div>
+<div class="title mt15">{{ phrase("docs.guide.exchanges-and-quests.code-exchange-an-item") }}</div>
+<div class="code">async function exchange_armor_box() {
+	var slot = locate_item("armorbox");
+	if (slot === -1) return game_log("No Armor Box found");
+
+	var item = character.items[slot];
+	var needed = G.items[item.name].e || 1;
+	if ((item.q || 1) &lt; needed) {
+		return game_log("Need " + needed + " boxes in one stack");
+	}
+
+	var result = await exchange(slot);
+	game_log("Received " + result.reward);
+}
+
+exchange_armor_box().catch(show_json);</div>
+
+<div class="title mt15">{{ phrase("docs.guide.exchanges-and-quests.code-buy-with-tokens") }}</div>
+<div class="code">async function buy_confetti() {
+	var price = G.tokens.funtoken.confetti;
+	game_log("Confetti token price: " + price);
+	if (quantity("funtoken") &lt; price) return;
+	await exchange_buy("funtoken", "confetti");
+}
+
+buy_confetti().catch(show_json);</div>
+<p>{{ phrase_html("docs.guide.exchanges-and-quests.references-exchange-exchange-buy-locate-item-quantity") }}</p>
+
+<div class="guide-related">{{ phrase_html("docs.guide.exchanges-and-quests.see-also-crafting-and-dismantling-monster-hunts") }}</div>
+
+<script>
+	$(".exchange-xyn").html(sprite(G.npcs.exchange.skin, { height: 62 }));
+	$(".exchange-box").html(item_container({ skin: G.items.armorbox.skin }, { name: "armorbox" }));
+	$(".exchange-funtoken").html(item_container({ skin: G.items.funtoken.skin }, { name: "funtoken" }));
+	$(".exchange-confetti").html(item_container({ skin: G.items.confetti.skin }, { name: "confetti" }));
+</script>
+
+<style>
+	.guide-kicker{color:#94752C;font-size:18px;font-weight:bold;letter-spacing:2px}.guide-title{color:#4D7040;font-size:44px;line-height:48px;margin:2px 0 12px}.title{color:#4D7040;font-size:36px;margin-top:15px}.divider{margin-top:15px;height:5px;background-color:#A2A2A2;margin-left:-26px;margin-right:-26px}.guide-note{border-left:6px solid #94752C;background:#F0E9D0;padding:10px 14px;margin:12px 0}.guide-related{border-top:2px dotted #AAA;margin-top:18px;padding-top:10px;color:#666}.guide-related span{color:#537541;cursor:pointer;text-decoration:underline}.exchange-random{font-size:42px;color:#9FCB7B}
+</style>
+
+<p>{{ phrase_html("docs.guide.exchanges-and-quests.merrit-s-visits-keep-an-open-stocked-stand") }}</p>

@@ -1,0 +1,14 @@
+<p><span class='dlabel'>buy_secondhand(rid, timeout_ms)</span></p>
+<p>{{ phrase("docs.functions.buy_secondhand.buys-one-current-ponty-listing") }}</p>
+<p>{{ phrase_html("docs.functions.buy_secondhand.returns-promise-resolving-after-the-item-reaches-your") }}</p>
+<p>{{ phrase_html("docs.functions.buy_secondhand.promise-failures-unless-a-function-specific-note-says") }}</p>
+<p>{{ phrase_html("docs.functions.buy_secondhand.notes-pass-the-listing-object-returned-by-get") }}</p>
+<p>{{ phrase_html("docs.functions.buy_secondhand.example") }}</p>
+<div class='code'>async function example() {
+	var listings = await get_secondhands();
+	if (listings.items.length) await buy_secondhand(listings.items[0]);
+}
+example();</div>
+
+<p></p>
+<span class='redlabel'>{{ phrase("docs.reference.source_code") }}</span>

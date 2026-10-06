@@ -1,0 +1,15 @@
+<p><span class='dlabel'>async wait_for(condition, timeout_ms, interval_ms)</span></p>
+<p>{{ phrase("docs.functions.wait_for.polls-a-synchronous-or-asynchronous-condition-until-it") }}</p>
+<p>{{ phrase_html("docs.functions.wait_for.returns-promise-resolving-with-the-condition-s-first") }}</p>
+<p>{{ phrase_html("docs.functions.wait_for.promise-failures-unless-a-function-specific-note-says") }}</p>
+<p>{{ phrase_html("docs.functions.wait_for.notes-defaults-are-a-10-000ms-timeout-and") }}</p>
+<p>{{ phrase_html("docs.functions.wait_for.example") }}</p>
+<div class='code'>async function example() {
+	var target = await wait_for(function () {
+		return get_nearest_monster({ type: "goo" });
+	}, 5000, 50);
+}
+example();</div>
+
+<p></p>
+<span class='redlabel'>{{ phrase("docs.reference.source_code") }}</span>

@@ -1,0 +1,13 @@
+<p><span class='dlabel'>unfriend(name, timeout_ms)</span></p>
+<p>{{ phrase("docs.functions.unfriend.removes-a-friend-by-character-name-or-owner") }}</p>
+<p>{{ phrase_html("docs.functions.unfriend.returns-promise-resolving-with-the-unfriend-complete-response") }}</p>
+<p>{{ phrase_html("docs.functions.unfriend.promise-failures-unless-a-function-specific-note-says") }}</p>
+<p>{{ phrase_html("docs.functions.unfriend.notes-the-optional-timeout-defaults-to-15-000ms") }}</p>
+<p>{{ phrase_html("docs.functions.unfriend.example") }}</p>
+<div class='code'>async function example() {
+	await unfriend("CharacterName", 15000);
+}
+example();</div>
+
+<p></p>
+<span class='redlabel'>{{ phrase("docs.reference.source_code") }}</span>

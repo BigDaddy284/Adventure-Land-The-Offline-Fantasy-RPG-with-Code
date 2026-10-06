@@ -1,0 +1,42 @@
+<div style='width: 600px'>
+	<p style='font-size: 32px; color: #216D25; text-decoration: underline dotted #B30B1A'>{{ phrase("docs.guide.dungeon-darkmage.lair-of-the-dark-mage-dungeon") }}</p>
+
+	<p>
+		<div style='float:left; margin-right: 20px'><span class='eitem1'></span></div> {{ phrase("docs.guide.dungeon-darkmage.you-need-the-frozen-key-to-enter-the") }} <br />
+	</p>
+
+	<p>
+		{{ phrase_html("docs.guide.dungeon-darkmage.first-phase-has-a-random-freeze-burst-every") }}
+	</p>
+
+	<p>
+		{{ phrase_html("docs.guide.dungeon-darkmage.second-stage-has-anger-random-targeting-and-the") }}
+	</p>
+
+	<p>
+		{{ phrase_html("docs.guide.dungeon-darkmage.third-stage-has-tangle-reflection-and-self-healing") }}
+	</p>
+
+	<p>
+		{{ phrase_html("docs.guide.dungeon-darkmage.the-last-stage-has-12-640-damage-immunity") }}
+	</p>
+
+	<p>{{ phrase_html("docs.guide.dungeon-darkmage.note-instances-are-only-alive-as-long-as") }}</p>
+	
+<div class='code'>
+enter("winter_instance");
+// To unlock using a key
+
+enter("winter_instance",player.in);
+// To enter an already unlocked dungeon
+</div>
+
+
+	<script>
+		$(".eitem1").html(item_container({skin:G.items.frozenkey.skin},{name:"frozenkey",q:0}));
+		$(".spxmagefz").html(sprite("xmagefz"));
+		$(".spxmagefi").html(sprite("xmagefi"));
+		$(".spxmagen").html(sprite("xmagen"));
+		$(".spxmagex").html(sprite("xmagex"));
+	</script>
+</div>

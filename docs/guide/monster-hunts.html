@@ -1,0 +1,69 @@
+<div class="guide-kicker">{{ phrase("docs.guide.monster-hunts.daisy-s-work") }}</div>
+<div class="guide-title">{{ phrase("docs.guide.monster-hunts.monster-hunts") }}</div>
+<p>{{ phrase("docs.guide.monster-hunts.daisy-marks-one-monster-type-and-a-number") }}</p>
+<p>{{ phrase("docs.guide.monster-hunts.beginner-scaling") }}</p>
+
+<div class="guide-showcase" style="border-color:#B45C61">
+	<div class="guide-showcase-art"><span class="hunt-daisy"></span><span class="hunt-goo"></span><span class="hunt-token"></span></div>
+	<div class="guide-showcase-copy">{{ phrase_html("docs.guide.monster-hunts.accept-hunt-return-your-condition-bar-holds-the") }}</div>
+</div>
+
+<div class="guide-flow" style="border-color:#B45C61" data-guide-visual="monster-hunt">
+	<div class="guide-flow-node">{{ phrase_html("docs.guide.monster-hunts.accept-from-daisy") }}</div>
+	<div class="guide-flow-arrow">→</div>
+	<div class="guide-flow-node">{{ phrase_html("docs.guide.monster-hunts.defeat-marked-monsters") }}</div>
+	<div class="guide-flow-arrow">→</div>
+	<div class="guide-flow-node">{{ phrase_html("docs.guide.monster-hunts.return-for-token") }}</div>
+</div>
+
+<div class="divider"></div>
+<div class="title mt15">{{ phrase("docs.guide.monster-hunts.follow-the-hunt-condition") }}</div>
+<div class="guide-card-grid">
+	<div class="guide-card">{{ phrase_html("docs.guide.monster-hunts.target-id-is-the-monster-key-use-g") }}</div>
+	<div class="guide-card">{{ phrase_html("docs.guide.monster-hunts.remaining-c-counts-down-only-for-eligible-kills") }}</div>
+	<div class="guide-card">{{ phrase_html("docs.guide.monster-hunts.server-sn-records-the-realm-kills-elsewhere-do") }}</div>
+	<div class="guide-card">{{ phrase_html("docs.guide.monster-hunts.time-ms-is-the-remaining-duration-return-before") }}</div>
+</div>
+<p>{{ phrase("docs.guide.monster-hunts.if-the-count-reaches-zero-stop-hunting-and") }}</p>
+<div class="guide-note">{{ phrase_html("docs.guide.monster-hunts.do-not-repeatedly-call-daisy-while-a-hunt") }}</div>
+
+<div class="divider"></div>
+<div class="title mt15">CODE</div>
+<div class="code">function show_hunt() {
+	var hunt = character.s.monsterhunt;
+	if (!hunt) return game_log("No active monster hunt");
+
+	var name = G.monsters[hunt.id].name;
+	game_log(name + ": " + hunt.c + " remaining on " + hunt.sn);
+}
+
+show_hunt();</div>
+<div class="code">async function visit_daisy() {
+	await smart_move("monsterhunter");
+	var hunt = character.s.monsterhunt;
+
+	// Start a hunt only when none exists; turn in only at zero.
+	if (!hunt || hunt.c === 0) {
+		var result = await interact("monsterhunt");
+		if (result.started) game_log("A new hunt begins");
+		if (result.completed) game_log("Monster Token received");
+		return;
+	}
+
+	game_log(hunt.c + " targets remain");
+}
+
+visit_daisy().catch(show_json);</div>
+<p>{{ phrase_html("docs.guide.monster-hunts.references-interact-smart-move-get-nearest-monster") }}</p>
+
+<div class="guide-related">{{ phrase_html("docs.guide.monster-hunts.need-help-finding-creatures-open-tracktrix") }}</div>
+
+<script>
+	$(".hunt-daisy").html(sprite(G.npcs.monsterhunter.skin, { height: 62 }));
+	$(".hunt-goo").html(sprite("goo", { height: 48, overflow: true }));
+	$(".hunt-token").html(item_container({ skin: G.items.monstertoken.skin }, { name: "monstertoken" }));
+</script>
+
+<style>
+	.guide-kicker{color:#B45C61;font-size:18px;font-weight:bold;letter-spacing:2px}.guide-title{color:#8D4248;font-size:44px;line-height:48px;margin:2px 0 12px}.title{color:#8D4248;font-size:36px;margin-top:15px}.divider{margin-top:15px;height:5px;background-color:#A2A2A2;margin-left:-26px;margin-right:-26px}.guide-note{border-left:6px solid #B45C61;background:#F3DFE0;padding:10px 14px;margin:12px 0}.guide-related{border-top:2px dotted #AAA;margin-top:18px;padding-top:10px;color:#666}.guide-related span{color:#98484E;cursor:pointer;text-decoration:underline}
+</style>

@@ -1,0 +1,82 @@
+<div class="guide-kicker">{{ phrase("docs.guide.item-maintenance.protect-your-gear") }}</div>
+<div class="guide-title">{{ phrase("docs.guide.item-maintenance.item-maintenance") }}</div>
+<p>{{ phrase("docs.guide.item-maintenance.smith-protects-valuable-items-from-ordinary-destructive-actions") }}</p>
+
+<div class="guide-card-grid">
+	<div class="guide-card">{{ phrase_html("docs.guide.item-maintenance.smith-desertland-lock-instantly-seal-for-stronger-protection") }}</div>
+	<div class="guide-card">{{ phrase_html("docs.guide.item-maintenance.sir-bob-desertland-remove-a-str-int-dex") }}</div>
+</div>
+
+<div class="guide-flow" style="border-color:#607F98" data-guide-visual="item-protection">
+	<div class="guide-flow-node">{{ phrase_html("docs.guide.item-maintenance.unprotected") }}</div>
+	<div class="guide-flow-arrow">→</div>
+	<div class="guide-flow-node">{{ phrase_html("docs.guide.item-maintenance.locked") }}</div>
+	<div class="guide-flow-arrow">→</div>
+	<div class="guide-flow-node">{{ phrase_html("docs.guide.item-maintenance.sealed") }}</div>
+</div>
+
+<div class="divider"></div>
+<div class="title mt15">{{ phrase("docs.guide.item-maintenance.lock-seal-unlock") }}</div>
+<div class="guide-card-grid">
+	<div class="guide-card">{{ phrase_html("docs.guide.item-maintenance.lock-blocks-selling-upgrading-compounding-dismantling-destroying-and") }}</div>
+	<div class="guide-card">{{ phrase_html("docs.guide.item-maintenance.seal-uses-stronger-protection-the-first-unlock-visit") }}</div>
+	<div class="guide-card">{{ phrase_html("docs.guide.item-maintenance.unsealing-the-item-remains-protected-while-its-marker") }}</div>
+	<div class="guide-card">{{ phrase_html("docs.guide.item-maintenance.verify-the-slot-every-routine-works-on-an") }}</div>
+</div>
+
+<div class="divider"></div>
+<div class="title mt15">{{ phrase("docs.guide.item-maintenance.remove-an-applied-stat") }}</div>
+<div class="guide-flow" style="border-color:#7E63A4" data-guide-visual="destat">
+	<div class="guide-flow-node">{{ phrase_html("docs.guide.item-maintenance.str-coat-4") }}</div>
+	<div class="guide-flow-arrow">→</div>
+	<div class="guide-flow-node">{{ phrase_html("docs.guide.item-maintenance.coat-4") }}</div>
+	<div class="guide-flow-node">{{ phrase_html("docs.guide.item-maintenance.stat-scrolls-returned") }}</div>
+</div>
+<p>{{ phrase("docs.guide.item-maintenance.sir-bob-s-preview-names-the-scroll-and") }}</p>
+<div class="guide-note">{{ phrase("docs.guide.item-maintenance.locking-protects-an-item-it-does-not-make") }}</div>
+
+<div class="divider"></div>
+<div class="title mt15">CODE</div>
+<div class="code">async function protect_named_item(name) {
+	var slot = locate_item(name);
+	if (slot === -1) return game_log(name + " is not in inventory");
+	if (character.items[slot].l) return game_log(name + " is already protected");
+
+	await lock_item(slot); // Stand beside Smith.
+	game_log(name + " is locked");
+}
+
+protect_named_item("fireblade").catch(show_json);</div>
+<div class="code">async function check_sealed_item(slot) {
+	var result = await unlock_item(slot);
+	if (result.in_progress) {
+		game_log(result.hours + " hours remain");
+		return;
+	}
+	game_log("The item is unlocked");
+}
+
+async function remove_applied_stat(slot) {
+	var item = character.items[slot];
+	if (!item || !item.stat_type) return game_log("That item has no applied stat");
+	var result = await destat_item(slot); // Stand beside Sir Bob.
+	game_log("Returned " + result.quantity + " " + result.scroll);
+}</div>
+<p>{{ phrase_html("docs.guide.item-maintenance.references-lock-item-seal-item-unlock-item-destat") }}</p>
+
+<div class="guide-related">{{ phrase_html("docs.guide.item-maintenance.see-also-upgrading-compounding") }}</div>
+
+<script>
+	$(".maintenance-smith").html(sprite(G.npcs.locksmith.skin, { height: 58 }));
+	$(".maintenance-bob").html(sprite(G.npcs.scrollsmith.skin, { height: 58 }));
+	$(".maintenance-coat").html(item_container({ skin: G.items.coat.skin }, { name: "coat", level: 0 }));
+	$(".maintenance-locked").html(item_container({ skin: G.items.coat.skin }, { name: "coat", level: 0, l: "l" }));
+	$(".maintenance-sealed").html(item_container({ skin: G.items.coat.skin }, { name: "coat", level: 0, l: "s" }));
+	$(".maintenance-statted").html(item_container({ skin: G.items.coat.skin }, { name: "coat", level: 4, stat_type: "str", stat: 4 }));
+	$(".maintenance-plain4").html(item_container({ skin: G.items.coat.skin }, { name: "coat", level: 4 }));
+	$(".maintenance-scroll").html(item_container({ skin: G.items.strscroll.skin }, { name: "strscroll", q: 4 }));
+</script>
+
+<style>
+	.guide-kicker{color:#62727E;font-size:18px;font-weight:bold;letter-spacing:2px}.guide-title{color:#3E5968;font-size:44px;line-height:48px;margin:2px 0 12px}.title{color:#3E5968;font-size:36px;margin-top:15px}.divider{margin-top:15px;height:5px;background-color:#A2A2A2;margin-left:-26px;margin-right:-26px}.guide-note{border-left:6px solid #647985;background:#E2E9EC;padding:10px 14px;margin:12px 0}.guide-related{border-top:2px dotted #AAA;margin-top:18px;padding-top:10px;color:#666}.guide-related span{color:#3E687D;cursor:pointer;text-decoration:underline}
+</style>

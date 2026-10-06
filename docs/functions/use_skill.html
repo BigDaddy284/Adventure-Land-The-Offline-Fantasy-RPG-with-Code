@@ -1,0 +1,32 @@
+<p><span class='dlabel'>use_skill(name, target, extra_arg, timeout_ms)</span></p>
+<p>{{ phrase("docs.functions.use_skill.uses-a-named-skill-with-an-optional-target") }}</p>
+<p>{{ phrase("docs.items.stunned_use") }}</p>
+<p>{{ phrase_html("docs.functions.use_skill.returns-one-promise-pickpocket-fishing-and-mining-wait") }}</p>
+<p>{{ phrase_html("docs.functions.use_skill.promise-failures-unless-a-function-specific-note-says") }}</p>
+<p>{{ phrase_html("docs.functions.use_skill.notes-targets-may-be-entity-objects-character-names") }}</p>
+<p>{{ phrase_html("docs.functions.use_skill.example") }}</p>
+<div class='code'>async function example() {
+	var result = await use_skill("fishing", null, null, 20000);
+	if (result.found === false) game_log("Nothing caught this time");
+}
+example();</div>
+<p>{{ phrase_html("docs.functions.use_skill.paladin-aura-at-level-60-pass-the-aura") }}</p>
+<div class='code'>async function select_aura() {
+	try {
+		var result = await use_skill("paladin_aura", "zeal");
+		game_log("Aura: " + result.aura);
+	} catch (error) {
+		game_log("Aura change failed: " + error.reason);
+	}
+}
+select_aura();</div>
+<p>{{ phrase_html("docs.functions.use_skill.switching-costs-no-mp-and-has-a-500ms") }}</p>
+
+<p>{{ phrase_html("docs.functions.use_skill.regeneration_output") }}</p>
+<div class="code" id="regeneration-output">show_json({
+	hp: G.skills.regen_hp.output,
+	mp: G.skills.regen_mp.output
+});</div>
+
+<p></p>
+<span class='redlabel'>{{ phrase("docs.reference.source_code") }}</span>

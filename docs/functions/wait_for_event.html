@@ -1,0 +1,15 @@
+<p><span class='dlabel'>wait_for_event(emitter, event, timeout_ms, filter)</span></p>
+<p>{{ phrase("docs.functions.wait_for_event.waits-for-the-next-matching-event-from-character") }}</p>
+<p>{{ phrase_html("docs.functions.wait_for_event.returns-promise-resolving-with-the-event-data-it") }}</p>
+<p>{{ phrase_html("docs.functions.wait_for_event.promise-failures-unless-a-function-specific-note-says") }}</p>
+<p>{{ phrase_html("docs.functions.wait_for_event.notes-the-optional-filter-may-return-a-value") }}</p>
+<p>{{ phrase_html("docs.functions.wait_for_event.example") }}</p>
+<div class='code'>async function example() {
+	var loot = await wait_for_event(character, "loot", 5000, function (data) {
+		return data.gold &gt; 0;
+	});
+}
+example();</div>
+
+<p></p>
+<span class='redlabel'>{{ phrase("docs.reference.source_code") }}</span>

@@ -1,0 +1,119 @@
+<p>{{ phrase_html("docs.articles.data-monster.monster-entities") }}</p>
+
+<p>{{ phrase_html("docs.articles.data-monster.visible-monsters-live-in-parent-entities-use-get") }}</p>
+
+<div class="code">var target = get_nearest_monster({
+	type: "goo",
+	no_target: true,
+	path_check: true,
+});
+
+if (target && target.visible && !target.dead) attack(target);</div>
+
+<p>{{ phrase_html("docs.articles.data-monster.when-an-entity-leaves-view-an-old-object") }}</p>
+
+<p>{{ phrase_html("docs.articles.data-monster.identity-and-location") }}</p>
+
+<div class="code">{
+	<span data-field="id">id</span>: "376",
+	<span data-field="type">type</span>: "monster",
+	<span data-field="mtype">mtype</span>: "goo", // Key from G.monsters
+	<span data-field="name">name</span>: "Goo",
+	<span data-field="skin">skin</span>: "goo",
+	<span data-field="map">map</span>: "main",
+	<span data-field="in">in</span>: "main",
+	<span data-field="x">x</span>: 200,
+	<span data-field="y">y</span>: 300,
+	<span data-field="width">width</span>: 23,
+	<span data-field="height">height</span>: 22,
+	<span data-field="visible">visible</span>: true,
+	<span data-field="dead">dead</span>: false,
+}</div>
+
+<p>{{ phrase_html("docs.articles.data-monster.dead-can-also-contain-a-reason-such-as") }}</p>
+
+<p>{{ phrase_html("docs.articles.data-monster.vitals-and-combat") }}</p>
+
+<div class="code">{
+	<span data-field="hp">hp</span>: 20000,
+	<span data-field="max_hp">max_hp</span>: 50000,
+	<span data-field="mp">mp</span>: 100,
+	<span data-field="level">level</span>: 8,
+	<span data-field="xp">xp</span>: 1200,
+	<span data-field="attack">attack</span>: 120,
+	<span data-field="frequency">frequency</span>: 0.4,
+	<span data-field="speed">speed</span>: 36,
+	<span data-field="range">range</span>: 12,
+	<span data-field="damage_type">damage_type</span>: "physical",
+	<span data-field="armor">armor</span>: 0,
+	<span data-field="resistance">resistance</span>: 750,
+	<span data-field="apiercing">apiercing</span>: 0,
+	<span data-field="rpiercing">rpiercing</span>: 0,
+	<span data-field="evasion">evasion</span>: 12.5,
+	<span data-field="reflection">reflection</span>: 5,
+	<span data-field="dreturn">dreturn</span>: 3,
+	<span data-field="lifesteal">lifesteal</span>: 120,
+	<span data-field="target">target</span>: "CharacterName",
+}</div>
+
+<p>{{ phrase_html("docs.articles.data-monster.live-monster-stats-can-differ-from-g-monsters") }}</p>
+
+<p>{{ phrase_html("docs.articles.data-monster.movement-and-conditions") }}</p>
+
+<div class="code">{
+	<span data-field="moving">moving</span>: true,
+	<span data-field="vx">vx</span>: 36,
+	<span data-field="vy">vy</span>: 0,
+	<span data-field="from_x">from_x</span>: 200,
+	<span data-field="from_y">from_y</span>: 300,
+	<span data-field="going_x">going_x</span>: 300,
+	<span data-field="going_y">going_y</span>: 300,
+	<span data-field="s">s</span>: {
+		cursed: { ms: 400 },
+	},
+}</div>
+
+<p>{{ phrase_html("docs.articles.data-monster.s-contains-active-monster-conditions-movement-vectors-and") }}</p>
+
+<p>{{ phrase_html("docs.articles.data-monster.optional-monster-traits") }}</p>
+
+<div class="code">{
+	<span data-field="aggro">aggro</span>: 0.5,
+	<span data-field="rage">rage</span>: 0.5,
+	<span data-field="respawn">respawn</span>: 10,
+	<span data-field="difficulty">difficulty</span>: 1.25,
+	<span data-field="humanoid">humanoid</span>: false,
+	<span data-field="cooperative">cooperative</span>: true,
+	<span data-field="immune">immune</span>: true,
+	<span data-field="1hp">"1hp"</span>: true,
+	<span data-field="abilities">abilities</span>: {
+		portal: { cooldown: 0 },
+	},
+	<span data-field="spawns">spawns</span>: [
+		[200, "nerfedmummy"],
+	],
+}</div>
+
+<p>{{ phrase_html("docs.articles.data-monster.traits-are-monster-specific-and-often-absent-inspect") }}</p>
+
+<p>{{ phrase_html("docs.articles.data-monster.definitions-and-spawn-packs") }}</p>
+
+<div class="code">show_json(G.monsters.goo);
+show_json(G.maps.main.monsters);</div>
+
+<p>{{ phrase_html("docs.articles.data-monster.g-maps-map-monsters-describes-spawn-packs-and") }}</p>
+<div class="divider"></div>
+<p>{{ phrase("docs.articles.data-monster.spawn_boundaries") }}</p>
+<div class="code">function monster_spawn_areas(type) {
+	var areas = [];
+	for (var map in G.maps) {
+		for (var pack of G.maps[map].monsters || []) {
+			if (pack.type !== type) continue;
+			var boundaries = pack.boundaries || (pack.boundary ? [[map].concat(pack.boundary)] : []);
+			for (var b of boundaries) areas.push({ map: b[0], x1: b[1], y1: b[2], x2: b[3], y2: b[4] });
+		}
+	}
+	return areas;
+}
+
+show_json(monster_spawn_areas("goo"));</div>

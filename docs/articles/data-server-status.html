@@ -1,0 +1,100 @@
+<p>{{ phrase_html("docs.articles.data-server-status.server-status") }}</p>
+
+<p>{{ phrase_html("docs.articles.data-server-status.server-status-is-the-live-read-only-view") }}</p>
+
+<div class="code">show_json(server.status);</div>
+
+<p>{{ phrase("docs.articles.data-server-status.the-object-is-updated-for-the-server-you") }}</p>
+
+<p>{{ phrase_html("docs.articles.data-server-status.static-definitions-and-live-state") }}</p>
+
+<div class="code">G.events.franky       // Static event definition
+server.status.franky  // Franky's current state on this server</div>
+
+<p>{{ phrase_html("docs.articles.data-server-status.g-events-describes-how-an-event-is-configured") }}</p>
+
+<p>{{ phrase_html("docs.articles.data-server-status.reading-an-event") }}</p>
+
+<div class="code">var franky = server.status.franky;
+
+if (franky && !get_nearest_monster({ type: "franky" })) {
+	join("franky");
+}</div>
+
+<p>{{ phrase_html("docs.articles.data-server-status.read-server-status-again-after-waiting-or-completing") }}</p>
+
+<div class="code">var franky = await wait_for(function () {
+	// This reads the newest status on every poll.
+	return server.status.franky;
+}, 60000);</div>
+
+<p>{{ phrase_html("docs.articles.data-server-status.special-monster-entries") }}</p>
+
+<p>{{ phrase("docs.articles.data-server-status.live-bosses-commonly-expose-the-following-fields-event") }}</p>
+
+<div class="code">{
+	<span data-status-field="live">live</span>: true,
+	<span data-status-field="map">map</span>: "level2w",
+	<span data-status-field="x">x</span>: 120,
+	<span data-status-field="y">y</span>: -240,
+	<span data-status-field="hp">hp</span>: 750000,
+	<span data-status-field="max_hp">max_hp</span>: 1000000,
+	<span data-status-field="target">target</span>: "Wizard",
+	<span data-status-field="end">end</span>: new Date()
+}</div>
+
+<p>{{ phrase_html("docs.articles.data-server-status.live-reports-whether-the-monster-is-currently-present") }}</p>
+
+<p>{{ phrase_html("docs.articles.data-server-status.a-scheduled-special-monster-can-instead-publish-spawn") }}</p>
+
+<p>{{ phrase_html("docs.articles.data-server-status.event-specific-entries") }}</p>
+
+<div class="code">server.status.goobrawl.end
+
+server.status.abtesting.<span data-status-field="signup_end">signup_end</span>
+server.status.abtesting.<span data-status-field="A">A</span>
+server.status.abtesting.<span data-status-field="B">B</span></div>
+
+<p>{{ phrase("docs.articles.data-server-status.event-objects-can-expose-timers-signup-windows-scores") }}</p>
+
+<p>{{ phrase_html("docs.articles.data-server-status.anniversary-visits") }}</p>
+<div class="code">show_json(server.status.anniversary);
+// active: the celebration is running
+// live: a player is currently featured
+// round, expires: round ID and deadline (Unix milliseconds)
+// id, target, map, x, y: featured player's ID, name and location
+// next: the next scheduled selection (Unix milliseconds)</div>
+<p>{{ phrase_html("docs.articles.data-server-status.participation-requires-a-matching-unexpired-character-s-anniversary") }}</p>
+
+<p>{{ phrase_html("docs.articles.data-server-status.schedule") }}</p>
+
+<div class="code">server.status.<span data-status-field="schedule">schedule</span> = {
+	<span data-status-field="time_offset">time_offset</span>: 0,
+	<span data-status-field="dailies">dailies</span>: [13, 20],
+	<span data-status-field="nightlies">nightlies</span>: [23],
+	<span data-status-field="night">night</span>: false
+};</div>
+
+<p>{{ phrase_html("docs.articles.data-server-status.schedule-contains-server-clock-information-used-by-daily") }}</p>
+
+<p>{{ phrase_html("docs.articles.data-server-status.seasonal-and-temporary-state") }}</p>
+
+<div class="code">server.status.holidayseason
+server.status.halloween
+server.status.lunarnewyear
+server.status.valentines
+server.status.egghunt
+
+server.status.<span data-status-field="blessed_by">blessed_by</span>
+server.status.<span data-status-field="blessed_minutes">blessed_minutes</span></div>
+
+<p>{{ phrase("docs.articles.data-server-status.seasonal-entries-are-usually-truthy-while-their-season") }}</p>
+
+<p>{{ phrase_html("docs.articles.data-server-status.compatibility") }}</p>
+
+<p>{{ phrase_html("docs.articles.data-server-status.parent-s-is-the-existing-low-level-form") }}</p>
+
+<div class="code">server.status.franky // Preferred
+parent.S.franky       // Compatible legacy access</div>
+
+<p>{{ phrase("docs.articles.data-server-status.do-not-add-remove-or-modify-status-fields") }}</p>

@@ -1,0 +1,87 @@
+<div class="title mt10">{{ phrase("docs.guide.items.item-markings") }}</div> <div class="mb10"></div>
+<div>{{ phrase_html("docs.guide.items.left-bottom-corner-indicates-the-item-level") }}</div>
+<div>{{ phrase_html("docs.guide.items.the-color-changes-with-higher-levels") }}</div>
+<div>{{ phrase_html("docs.guide.items.right-bottom-corner-indicates-the-item-quantity") }}</div>
+<div>{{ phrase_html("docs.guide.items.hp-mp-potions-have-special-quantity-colouring") }}</div>
+<div>{{ phrase_html("docs.guide.items.m-items-received-from-the-merchant-s-luck") }}</div>
+<div>{{ phrase_html("docs.guide.items.pvp-marked-item-can-be-dropped-on-death") }}</div>
+<div>{{ phrase_html("docs.guide.items.a-want-to-sell-item-listing") }}</div>
+<div>{{ phrase_html("docs.guide.items.a-want-to-buy-item-listing") }}</div>
+<div>{{ phrase_html("docs.guide.items.a-giveaway-item") }}</div>
+<div>{{ phrase_html("docs.guide.items.x-locked-items-can-t-be-unintentionally-sold") }}</div>
+<div>{{ phrase_html("docs.guide.items.s-sealed-items-begin-a-two-day-unlocking") }}</div>
+<div>{{ phrase_html("docs.guide.items.u-indicates-an-unlocking-item") }}</div>
+
+<div class="mt10">{{ phrase("docs.guide.items.self_damage") }}</div>
+<div class="mt10">{{ phrase("docs.items.stunned_use") }}</div>
+
+<div class="divider"></div>
+<div class="title mt15">{{ phrase("docs.guide.items.item-upgrades") }}</div> <div class="mb5"></div>
+<div>{{ phrase_html("docs.guide.items.upgradable-equipment-starts-at-0-its-own-data") }}</div>
+<div>{{ phrase("interface.item.scroll_consumed") }}</div>
+
+<div style='line-height: 50px; margin-top: 10px'><span class='eitemup0'></span> + <span class='eitemscr0'></span> => <span class='eitemup1'></span></div>
+
+<div class="divider"></div>
+<div class="title mt15">{{ phrase("docs.guide.items.item-compounds") }}</div> <div class="mb5"></div>
+<div>{{ phrase("docs.guide.items.3-accessories-can-be-combined-for-a-chance") }}</div>
+<div>{{ phrase("interface.item.scroll_consumed") }}</div>
+
+<div class='mt10'>{{ phrase_html("docs.guide.items.see-matching-rules-scroll-grades-offerings-grace-and") }}</div>
+
+<div style='line-height: 50px; margin-top: 10px'><span class='eitemco0'></span> + <span class='eitemco0'></span> + <span class='eitemco0'></span> + <span class='eitemcscr0'></span> => <span class='eitemco1'></span></div>
+
+<div class="divider"></div>
+<div class="title mt15">{{ phrase("docs.guide.items.item-exchanges-and-quests") }}</div> <div class="mb5"></div>
+<div>{{ phrase("docs.guide.items.some-items-can-be-exchanged-for-random-rewards") }}</div>
+
+<div style='line-height: 50px; margin-top: 10px'>{{ phrase_html("docs.guide.items.or-or-or") }} </div>
+<div style='line-height: 50px; margin-top: 10px'>{{ phrase_html("docs.guide.items.or-or") }} </div>
+
+<style>
+	.title{
+		color: #406944;
+		font-size: 36px;
+		margin-top: 15px;
+	}
+	.divider{
+		margin-top: 15px;
+		height: 5px;
+		background-color: gray;
+		margin-left: -26px;
+		margin-right: -26px;
+	}
+</style>
+
+<script>
+	$(".eiteml").html(item_container({skin:G.items.blade.skin},{name:"blade",level:5}));
+	$(".eitemll").html(item_container({skin:G.items.harbringer.skin},{name:"harbringer",level:8}));
+	$(".eitemq").html(item_container({skin:G.items.seashell.skin},{name:"seashell",q:40}));
+	$(".eitemqp").html(item_container({skin:G.items.hpotx.skin},{name:"hpotx",q:88}));
+	$(".eitemm").html(item_container({skin:G.items.suckerpunch.skin},{name:"suckerpunch",m:true}));
+	$(".eitempvp").html(item_container({skin:G.items.gem1.skin},{name:"gem1",v:true,q:12}));
+	// Trade
+	$(".eitemsell").html(item_container({skin:G.items.woodensword.skin,trade_for_ui:true},{name:"woodensword",level:9}));
+	$(".eitembuy").html(item_container({skin:G.items.fury.skin,trade_for_ui:true},{name:"fury",b:true}));
+	$(".eitemga").html(item_container({skin:G.items.starkillers.skin,trade_for_ui:true},{name:"starkillers",giveaway:true}));
+	// Locking
+	$(".eitemlo").html(item_container({skin:G.items.wblade.skin},{name:"wblade",l:"l"}));
+	$(".eitemls").html(item_container({skin:G.items.xgloves.skin},{name:"xgloves",l:"s"}));
+	$(".eitemlu").html(item_container({skin:G.items.xpants.skin},{name:"xpants",l:"u"}));
+	// Upgrades
+	$(".eitemup0").html(item_container({skin:G.items.helmet.skin},{name:"helmet",level:0}));
+	$(".eitemup1").html(item_container({skin:G.items.helmet.skin},{name:"helmet",level:1}));
+	$(".eitemscr0").html(item_container({skin:G.items.scroll0.skin},{name:"scroll0"}));
+	// Compounds
+	$(".eitemco0").html(item_container({skin:G.items.hpamulet.skin},{name:"hpamulet",level:0}));
+	$(".eitemco1").html(item_container({skin:G.items.hpamulet.skin},{name:"hpamulet",level:1}));
+	$(".eitemcscr0").html(item_container({skin:G.items.cscroll0.skin},{name:"cscroll0"}));
+	// Exchanges
+	$(".eitemex0").html(item_container({skin:G.items.armorbox.skin},{name:"armorbox"}));
+	$(".eitemexo00").html(item_container({skin:G.items.gloves.skin},{name:"gloves"}));
+	$(".eitemexo01").html(item_container({skin:G.items.harmor.skin},{name:"harmor"}));
+	$(".eitemexo02").html(item_container({skin:G.items.xgloves.skin},{name:"xgloves"}));
+	$(".eitemex1").html(item_container({skin:G.items.leather.skin},{name:"leather",q:40}));
+	$(".eitemexo10").html(item_container({skin:G.items.cape.skin},{name:"cape"}));
+	$(".eitemexo11").html(item_container({skin:G.items.bcape.skin},{name:"bcape"}));
+</script>

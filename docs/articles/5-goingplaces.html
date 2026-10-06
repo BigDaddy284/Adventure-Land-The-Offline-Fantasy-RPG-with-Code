@@ -1,0 +1,27 @@
+<p>{{ phrase_html("docs.articles.5-goingplaces.the-simplest-way-to-move-your-character-is") }}</p>
+
+<div class='code'>move(100, -50); // Walk directly toward X: 100, Y: -50; returns a Promise</div>
+
+<p>{{ phrase_html("docs.articles.5-goingplaces.move-sends-one-direct-walking-segment-it-cannot") }}</p>
+
+<p>{{ phrase_html("docs.articles.5-goingplaces.smart-move-calculates-and-follows-a-route-its") }}</p>
+
+<div class='code'>smart_move(100, -50);
+smart_move({ x: 100, y: -50 });
+smart_move({ x: 100, y: -50, map: character.map });
+// These forms describe the same destination. Run one at a time.</div>
+
+<p>{{ phrase("docs.articles.5-goingplaces.named-destinations-can-be-map-names-monster-types") }}</p>
+
+<div class="code">async function travel_to_bank() {
+	try {
+		await smart_move("bank");
+		game_log("Arrived at the bank");
+	} catch (error) {
+		game_log("Travel failed: " + error.reason);
+	}
+}
+
+travel_to_bank();</div>
+
+<p>{{ phrase_html("docs.articles.5-goingplaces.starting-a-different-smart-route-interrupts-the-previous") }}</p>

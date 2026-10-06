@@ -1,0 +1,51 @@
+<div id="keymapguide" style="display:none">
+	<div style="font-size: 24px; color: #F4F4F4">
+		<div class="gamebutton gamebutton-large" style="border-color: #32A3B0">{{ phrase("pages.contents.keymap_guide.skillbar-and-keymap") }}</div> <div class="mb5"></div>
+
+		<div class="gamebutton gamebutton-small mr5 mt5 mb5">{{ phrase("pages.contents.keymap_guide.skillbar-and-configuration") }}</div>
+		<div class="gray">{{ phrase_html("pages.contents.keymap_guide.skillbar-is-the-small-vertical-bar-you-see") }}</div>
+		<div class="mr5 mt10 mb5" style="border-color: #32A3B0; font-size: 0px">
+			<span class='skb1'></span>
+			<span class='skb2'></span>
+			<span class='skb3'></span>
+			<span class='skb4'></span>
+			<span class='skb5'></span>
+			<span class='skbX'></span>
+			<span class='skbY'></span>
+		</div>
+		<div class="gray mb5 mt5">{{ phrase_html("pages.contents.keymap_guide.set-skillbar-1-2-3-4-5-x") }}</div>
+		<div class="gray mb5">{{ phrase_html("pages.contents.keymap_guide.set-skillbar-1-2-3-4-5-x-2") }}</div>
+
+		<div class="gamebutton gamebutton-small mr5 mt10 mb5">{{ phrase("pages.contents.keymap_guide.keymap-and-configuration") }}</div>
+		<div class="gray">{{ phrase_html("pages.contents.keymap_guide.keymap-is-for-mapping-keypresses-to-skills-abilities") }}</div>
+		<div class="gray mb5 mt10">{{ phrase_html("pages.contents.keymap_guide.map-key-1-use-hp") }}</div>
+		<div class="gray mb5">{{ phrase_html("pages.contents.keymap_guide.map-key-2-snippet-say-woohoo") }}</div>
+		<div class="gray mb5">{{ phrase_html("pages.contents.keymap_guide.map-key-x-supershot") }}</div>
+		<div class="gray mb5">{{ phrase_html("pages.contents.keymap_guide.unmap-key-x") }}</div>
+		<div class="gray mb5">{{ phrase_html("pages.contents.keymap_guide.reset-mappings-defaults-things") }}</div>
+		<div class="gray mb5 mt5 clickable" onclick="show_json(G.skills)">{{ phrase_html("pages.contents.keymap_guide.show-json-g-skills-click-to-run") }}</div>
+
+
+		<div class="gamebutton gamebutton-small mr5 mt10 mb5">{{ phrase("pages.contents.keymap_guide.mappable-keys") }}</div>
+		<div class="mr5 mt10 mb5 skbkeys">
+		</div>
+
+		<div class="gamebutton gamebutton-small mr5 mt10 mb5 clickable" onclick="show_snippet()">{{ phrase("pages.contents.keymap_guide.snippets") }}</div>
+		<div class="gray">{{ phrase_html("pages.contents.keymap_guide.snippets-are-small-code-pieces-that-are-either") }}</div>
+		<div class="gray mb5 mt10 clickable" onclick="show_snippet(snip_wl_code)">{{ phrase_html("pages.contents.keymap_guide.map-key-q-snippet-smart-move-winterland-click") }}</div>
+
+		<div class="gamebutton gamebutton-small mr5 mt10 mb5">{{ phrase("pages.contents.keymap_guide.mapping-items") }}</div>
+		<div class="gray">{{ phrase_html("pages.contents.keymap_guide.items-can-be-mapped-manually-to-keys-or") }}</div>
+		<div class="gray mb5 mt10">{{ phrase_html("pages.contents.keymap_guide.map-key-space") }}</div>
+
+		<div class="gamebutton gamebutton-small mr5 mt10 mb5">{{ phrase("pages.contents.keymap_guide.map-new-keys") }}</div>
+		<div class="gray">{{ phrase_html("pages.contents.keymap_guide.you-can-map-to-unmapped-keys-by-including") }}</div>
+		<div class="gray mb5 mt10">{{ phrase_html("pages.contents.keymap_guide.map-key-dot") }}</div>
+
+		<div class="gamebutton gamebutton-small mr5 mt10 mb5 clickable" onclick="show_snippet()">{{ phrase("pages.contents.keymap_guide.advanced-usages") }}</div>
+		<div class="gray">{{ phrase_html("pages.contents.keymap_guide.you-can-override-game-s-default-keymappings-add") }}</div>
+		<div class="gray mb5 mt10 clickable" onclick="show_snippet(snip_esc_code)">{{ phrase_html("pages.contents.keymap_guide.example-code-that-overrides-esc") }}</div>
+
+	</div>
+	<div class="oncreate" onclick="keymap_modal_logic();"></div>
+</div>

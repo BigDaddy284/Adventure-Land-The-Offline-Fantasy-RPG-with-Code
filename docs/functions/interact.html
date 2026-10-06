@@ -1,0 +1,19 @@
+<p><span class='dlabel'>interact(name, timeout_ms)</span></p>
+<p>{{ phrase("docs.functions.interact.starts-a-supported-named-server-interaction") }}</p>
+<p>{{ phrase_html("docs.functions.interact.returns-promise-monsterhunt-resolves-when-the-hunt-starts") }}</p>
+<p>{{ phrase_html("docs.functions.interact.promise-failures-unless-a-function-specific-note-says") }}</p>
+<p>{{ phrase_html("docs.functions.interact.notes-the-tree-and-lever-still-use-the") }}</p>
+<p>{{ phrase_html("docs.functions.interact.example") }}</p>
+<div class='code'>async function example() {
+	await interact("monsterhunt");
+	await interact("newyear_tree");
+	await interact("the_lever");
+}
+example();</div>
+
+<p></p>
+<div class="divider"></div>
+<p><span class="dlabel">interact("cavalry")</span></p>
+<p>{{ phrase("docs.cavalry.code") }}</p>
+<p><span class="clickable dlabel" onclick="open_guide('cavalry', get_guide_url('cavalry'))">Cavalry</span></p>
+<span class='redlabel'>{{ phrase("docs.reference.source_code") }}</span>

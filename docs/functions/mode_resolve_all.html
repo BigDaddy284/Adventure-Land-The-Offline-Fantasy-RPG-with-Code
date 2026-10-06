@@ -1,0 +1,12 @@
+<p><span class='dlabel'>mode_resolve_all()</span></p>
+<p>{{ phrase("docs.functions.mode_resolve_all.makes-code-action-failures-go-to-then-instead") }}</p>
+<p>{{ phrase_html("docs.functions.mode_resolve_all.returns-nothing") }}</p>
+<p>{{ phrase_html("docs.functions.mode_resolve_all.notes-call-once-near-startup-successful-results-have") }}</p>
+<p>{{ phrase_html("docs.functions.mode_resolve_all.example") }}</p>
+<div class='code'>mode_resolve_all();
+attack(target).then(function (data) {
+	if (data.failed) game_log(data.reason);
+});</div>
+
+<p></p>
+<span class='redlabel'>{{ phrase("docs.reference.source_code") }}</span>

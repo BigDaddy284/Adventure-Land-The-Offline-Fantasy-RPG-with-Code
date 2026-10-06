@@ -1,0 +1,108 @@
+<p class="tutlead">{{ phrase("docs.tutorial.move.roads-doors-transporters-and-a-little-curiosity-connect") }}</p>
+<div><span class="tutorial-travel" data-type="npc" data-target="transporter"></span> <span class="tutorial-travel" data-type="npc" data-target="fancypots"></span></div>
+
+<div class="tutlinks">
+	<div
+		class="gamebutton gamebutton-small"
+		onclick="
+			btc(event);
+			open_guide('travel-and-instances', get_guide_url('travel-and-instances'));
+		"
+	>
+		{{ phrase("docs.tutorial.move.travel-guide") }}
+	</div>
+	<div
+		class="gamebutton gamebutton-small"
+		onclick="
+			btc(event);
+			open_article('data-npc', '/docs/code/npc/reference');
+		"
+	>
+		{{ phrase("docs.tutorial.move.npc-reference") }}
+	</div>
+</div>
+
+{% for task in tutorial_data("move").tasks %} {% if loop.first %}
+<div class="tutdivider"></div>
+{% endif %}
+<div class="tuttaskrow"><span class="tuttask tuttask{{task}}">o</span> <span class="tuttaskname">{{task_name(task)}}</span> <span class="tuttaskd tuttaskd{{task}}">{{ phrase("docs.tutorial.move.done") }}</span></div>
+{% endfor %}
+
+<div class="tutpath manual">
+	<div class="tutpath-title">{{ phrase("docs.tutorial.move.manual") }}</div>
+	<p>{{ phrase_html("docs.tutorial.move.use-travel-for-a-long-journey-nearby-doors") }}</p>
+	<p>{{ phrase_html("docs.tutorial.move.when-an-info-button-appears-nearby-open-it") }}</p>
+</div>
+
+<div class="tutpath codepath">
+	<div class="tutpath-title">{{ phrase("docs.tutorial.move.optional-code") }}</div>
+	<!-- prettier-ignore -->
+	<div class="code">async function visit_potions() {
+	var destination = find_npc("fancypots");
+	if (!destination) throw {reason: "npc_not_found"};
+	await smart_move(destination);
+	game_log("The potion merchant is nearby.");
+}
+
+visit_potions().catch(function (error) {
+	show_json(error);
+});</div>
+	<p>{{ phrase("docs.tutorial.move.for-banks-shops-doors-and-special-npcs-use") }}</p>
+	<p>
+		{{ phrase_html("docs.tutorial.move.smart-move-find-npc-use-nearest-door-transport") }}
+	</p>
+</div>
+
+<style>
+	.tutlead {
+		color: #2b9ec9;
+		font-size: 34px;
+	}
+	.tutdivider {
+		border-top: 5px solid gray;
+		margin: 14px -24px 8px;
+	}
+	.tuttaskrow {
+		line-height: 44px;
+	}
+	.tuttask {
+		color: #4a4a4a;
+		font-size: 64px;
+		vertical-align: middle;
+	}
+	.tuttaskname {
+		color: #dc4c6e;
+		vertical-align: middle;
+	}
+	.tuttaskd {
+		color: #85c76b;
+		display: none;
+		vertical-align: middle;
+	}
+	.tutpath {
+		border: 4px solid #777;
+		margin: 12px 0;
+		padding: 10px 14px;
+		text-align: left;
+	}
+	.tutpath.manual {
+		border-color: #5e9f6e;
+	}
+	.tutpath.codepath {
+		border-color: #c58b3d;
+	}
+	.tutpath-title {
+		color: #555;
+		font-size: 24px;
+	}
+	.manual .tutpath-title {
+		color: #387649;
+	}
+	.codepath .tutpath-title {
+		color: #9a6328;
+	}
+	.tutlinks {
+		text-align: center;
+	}
+</style>
+<script>render_tutorial_items();</script>

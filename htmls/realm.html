@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="{{domain.language or 'en'}}">
+	<head>
+		{% include "htmls/language.html" %}
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="robots" content="noindex, nofollow" />
+		<title>{{ domain.title }}</title>
+		<link rel="apple-touch-icon-precomposed" href="/images/favicon.png" />
+		<link rel="icon" href="/images/favicon.png" />
+		<link href="/css/common.css?v={{ domain.v }}" rel="stylesheet" />
+		<link href="/css/realm.css?v={{ domain.v }}" rel="stylesheet" />
+		<script src="/data.js?v={{ domain.v }}&amp;cache=1"></script>
+	</head>
+	<body>
+		<main class="realm-shell">
+			<header class="realm-header">
+				<div>
+					<p class="realm-kicker">{{ phrase("pages.realm.adventure-land-world-reference") }}</p>
+					<h1>{{ phrase("pages.realm.realm-atlas") }}</h1>
+					<p class="realm-intro">{{ phrase("pages.realm.every-live-map-passage-monster-npc-citizen-and") }}</p>
+				</div>
+				<nav class="realm-nav" aria-label="{{ phrase("pages.realm.label-realm-atlas-sections") }}">
+					{{ phrase_html("pages.realm.connections-maps-monsters-game") }}
+				</nav>
+			</header>
+
+			<section class="realm-summary" aria-label="{{ phrase("pages.realm.label-realm-totals") }}">
+				<div>{{ phrase_html("pages.realm.maps") }}</div>
+				<div>{{ phrase_html("pages.realm.monsters") }}</div>
+				<div>{{ phrase_html("pages.realm.npcs-and-citizens") }}</div>
+				<div>{{ phrase_html("pages.realm.spawn-zones") }}</div>
+				<div>{{ phrase_html("pages.realm.connections") }}</div>
+			</section>
+
+			<section id="connections" class="realm-section" aria-labelledby="connections-title">
+				<div class="section-heading">
+					<div>
+						<p class="section-number">01</p>
+						<h2 id="connections-title">{{ phrase("pages.realm.realm-connections") }}</h2>
+					</div>
+					<p>{{ phrase("pages.realm.passages-are-mapped-from-doors-transport-routes-join") }}</p>
+				</div>
+				<div class="graph-legend" aria-label="{{ phrase("pages.realm.label-connection-legend") }}">
+					{{ phrase_html("pages.realm.passage-one-way-passage-transporter-route-outside-underground") }}
+				</div>
+				<div class="realm-graph-frame">
+					{{ phrase_html("pages.realm.adventure-land-map-connections-a-selectable-graph-of") }}
+				</div>
+			</section>
+
+			<section id="maps" class="realm-section" aria-labelledby="maps-title">
+				<div class="section-heading">
+					<div>
+						<p class="section-number">02</p>
+						<h2 id="maps-title">{{ phrase("pages.realm.map-survey") }}</h2>
+					</div>
+					<p>{{ phrase("pages.realm.map-tiles-are-rendered-from-the-current-geometry") }}</p>
+				</div>
+				<div class="map-legend" aria-label="{{ phrase("pages.realm.label-map-annotation-legend") }}">
+					{{ phrase_html("pages.realm.monster-zone-doorway-arrival-npc-citizen-transporter-drag") }}
+				</div>
+
+				<article id="map-focus" class="map-focus" aria-live="polite">
+					<div class="map-focus-heading">
+						<div>
+							<p id="focus-map-id" class="map-id"></p>
+							<h3 id="focus-map-name">{{ phrase("pages.realm.loading-maps") }}</h3>
+							<p id="focus-map-access" class="map-access"></p>
+						</div>
+						<div class="map-focus-controls">
+							<div class="map-layers" aria-label="{{ phrase("pages.realm.label-map-annotation-layers") }}">
+								{{ phrase_html("pages.realm.monsters-doors-and-arrivals-npcs-and-citizens") }}
+							</div>
+							<div class="map-zoom" aria-label="{{ phrase("pages.realm.label-map-zoom-controls") }}">
+								<button id="map-zoom-out" type="button" aria-label="{{ phrase("pages.realm.label-zoom-map-out") }}">−</button>
+								<span id="map-scale">—</span>
+								<button id="map-zoom-in" type="button" aria-label="{{ phrase("pages.realm.label-zoom-map-in") }}">+</button>
+							</div>
+						</div>
+					</div>
+					<div class="map-focus-layout">
+						<div id="focus-map-viewport" class="map-canvas-viewport">
+							<canvas id="focus-map-canvas" aria-label="{{ phrase("pages.realm.label-selected-map-with-world-annotations") }}"></canvas>
+							<p id="focus-map-empty" class="map-empty" hidden>{{ phrase("pages.realm.map-geometry-is-not-available-in-the-current") }}</p>
+						</div>
+						<aside class="annotation-panel" aria-label="{{ phrase("pages.realm.label-selected-map-annotations") }}">
+							<section class="annotation-group" aria-labelledby="connection-panel-title">
+								<h3 id="connection-panel-title">{{ phrase("pages.realm.doors-and-arrivals") }}</h3>
+								<div id="focus-connection-list" class="annotation-list"></div>
+							</section>
+							<section class="annotation-group" aria-labelledby="npc-panel-title">
+								<h3 id="npc-panel-title">{{ phrase("pages.realm.npcs-and-citizens-2") }}</h3>
+								<div id="focus-npc-list" class="annotation-list"></div>
+							</section>
+							<section class="annotation-group" aria-labelledby="zone-panel-title">
+								<h3 id="zone-panel-title">{{ phrase("pages.realm.monster-zones") }}</h3>
+								<div id="focus-zone-list" class="annotation-list"></div>
+							</section>
+						</aside>
+					</div>
+				</article>
+
+				<div class="catalog-toolbar">
+					<label for="map-search">{{ phrase("pages.realm.find-a-map") }}</label>
+					<input id="map-search" type="search" placeholder="{{ phrase("pages.realm.label-name-id-monster-npc-or-access") }}" autocomplete="off" />
+					<span id="map-result-count" aria-live="polite"></span>
+				</div>
+				<div id="map-grid" class="map-grid"></div>
+			</section>
+
+			<section id="bestiary" class="realm-section" aria-labelledby="bestiary-title">
+				<div class="section-heading">
+					<div>
+						<p class="section-number">03</p>
+						<h2 id="bestiary-title">{{ phrase("pages.realm.realm-bestiary") }}</h2>
+					</div>
+					<p>{{ phrase("pages.realm.every-monster-definition-is-shown-including-rare-and") }}</p>
+				</div>
+				<div class="catalog-toolbar">
+					<label for="monster-search">{{ phrase("pages.realm.find-a-monster") }}</label>
+					<input id="monster-search" type="search" placeholder="{{ phrase("pages.realm.label-name-id-or-map") }}" autocomplete="off" />
+					<span id="monster-result-count" aria-live="polite"></span>
+				</div>
+				<div id="monster-grid" class="monster-grid"></div>
+			</section>
+		</main>
+		<script src="/js/realm.js?v={{ domain.v }}"></script>
+	</body>
+</html>

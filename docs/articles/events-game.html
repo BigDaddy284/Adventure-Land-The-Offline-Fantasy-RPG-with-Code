@@ -1,0 +1,214 @@
+<p>{{ phrase_html("docs.articles.events-game.game-events") }}</p>
+
+<p>{{ phrase("docs.articles.events-game.game-events-describe-ambient-or-server-wide-activity") }}</p>
+
+<div class="code">var listener = game.on("level_up", function (data, event) {
+	game_log(data.name + " is now level " + data.level);
+});
+
+game.once("event", function (data) {
+	game_log("Event: " + data.name);
+});
+
+game.all(function (event, data) {
+	game_log(event + ": " + JSON.stringify(data));
+});
+
+game.remove(listener);</div>
+
+<p>{{ phrase_html("docs.articles.events-game.game-on-event-callback-and-game-once-event") }}</p>
+
+<p>{{ phrase_html("docs.articles.events-game.wait-for-event-game-event-timeout-filter-is") }}</p>
+
+<p><span class="dlabel" data-event="event">event</span></p>
+
+<div class="code">{
+	name: "snowman",
+	map: "winterland", // Optional
+	x: 12,              // Optional
+	y: 88,              // Optional
+}</div>
+
+<p>{{ phrase("docs.articles.events-game.server-event-announcements-use-this-event-the-event") }}</p>
+
+<p><span class="dlabel" data-event="action">action</span></p>
+
+<div class="code">{
+	source: "attack",
+	actor: "AttackerID",
+	target: "TargetID",
+	damage: 1390,       // Or heal
+	projectile: "momentum",
+	eta: 50,
+	pid: "abcd1234",
+}</div>
+
+<p>{{ phrase_html("docs.articles.events-game.emitted-when-a-visible-action-launches-the-actor") }}</p>
+
+<p><span class="dlabel" data-event="hit">hit</span></p>
+
+<div class="code">{
+	source: "attack",
+	actor: "AttackerID",
+	target: "TargetID",
+	damage: 1390,       // Or heal
+	crit: false,
+	kill: false,
+	evade: false,
+	miss: false,
+	avoid: false,
+	reflect: 0,
+	dreturn: 0,
+	condition: "curse",
+	trigger: "sugarrush",
+	stacked: [],
+	mobbing: 0,
+	unintentional: false,
+	aoe: false,
+}</div>
+
+<p>{{ phrase("docs.articles.events-game.emitted-for-resolved-visible-combat-optional-false-zero") }}</p>
+
+<p>{{ phrase_html("docs.articles.events-game.trade-and-sale") }}</p>
+
+<div class="code">// trade
+{
+	seller: "SellerName",
+	buyer: "BuyerName",
+	item: { name: "staff", level: 9 },
+	num: 12,
+	slot: "trade8",
+}
+
+// sale: the same shape, emitted locally when your character is the seller</div>
+
+<p>{{ phrase_html("docs.articles.events-game.swap") }}</p>
+
+<div class="code">{
+	seller: "MerchantName",
+	buyer: "BuyerName",
+	item: { name: "wand", level: 7 },
+	received: { name: "staff", level: 8 },
+	slot: "trade3",
+	num: 5,
+	snum: 12,
+}</div>
+
+<p>{{ phrase("docs.articles.events-game.swap-is-emitted-when-a-trade-offer-completes") }}</p>
+
+<p>{{ phrase_html("docs.articles.events-game.buy-sell-sbuy-and-fbuy") }}</p>
+
+<div class="code">{
+	name: "CharacterName",
+	item: { name: "pants", level: 0 },
+}</div>
+
+<p>{{ phrase_html("docs.articles.events-game.buy-and-sell-are-ordinary-npc-activity-sbuy") }}</p>
+
+<p>{{ phrase_html("docs.articles.events-game.item-sent-gold-sent-and-cx-sent") }}</p>
+
+<div class="code">// item_sent
+{
+	sender: "SenderName",
+	receiver: "ReceiverName",
+	item: { name: "hpot0", q: 10 },
+	num: 12,
+	fnum: 0,
+}
+
+// gold_sent
+{
+	sender: "SenderName",
+	receiver: "ReceiverName",
+	gold: 100,
+}
+
+// cx_sent
+{
+	sender: "SenderName",
+	receiver: "ReceiverName",
+	cx: "hat999",
+}</div>
+
+<p>{{ phrase("docs.articles.events-game.these-are-visible-ambient-transfer-events-your-own") }}</p>
+
+<p>{{ phrase_html("docs.articles.events-game.level-up-and-death") }}</p>
+
+<div class="code">// level_up
+{
+	name: "CharacterName",
+	level: 72,
+}
+
+// death
+{
+	id: "CharacterNameOrMonsterID",
+}</div>
+
+<p><span class="dlabel" data-event="chat">chat</span></p>
+
+<div class="code">{
+	from: "CharacterNameOrOwnerID",
+	message: "Hello",
+}</div>
+
+<p>{{ phrase_html("docs.articles.events-game.public-chat-text-is-untrusted-use-safe-log") }}</p>
+
+<p><span class="dlabel" data-event="new_map">new_map</span></p>
+
+<div class="code">{
+	name: "main",
+	in: "main",
+}</div>
+
+<p>{{ phrase("docs.articles.events-game.this-mirrors-the-character-event-after-your-client") }}</p>
+
+<p><span class="dlabel" data-event="mluck">mluck</span></p>
+
+<div class="code">{
+	name: "MerchantName",
+	item: { name: "staff", level: 0 },
+	num: 12,
+}</div>
+
+<p><span class="dlabel" data-event="api_response">api_response</span></p>
+
+<div class="code">{
+	type: "servers_and_characters",
+	servers: [],
+	characters: [],
+}</div>
+
+<p>{{ phrase_html("docs.articles.events-game.emitted-for-asynchronous-api-information-delivered-to-the") }}</p>
+
+<p>{{ phrase_html("docs.articles.events-game.pvp-list-and-ccreport") }}</p>
+
+<p>{{ phrase_html("docs.articles.events-game.pvp-list-carries-the-current-pvp-list-when") }}</p>
+
+<p>{{ phrase_html("docs.articles.events-game.dynamic-events") }}</p>
+
+<p>{{ phrase_html("docs.articles.events-game.some-server-ui-and-response-messages-declare-their") }}</p>
+
+<div class="code"><span data-event="event">event</span>
+<span data-event="action">action</span>
+<span data-event="hit">hit</span>
+<span data-event="trade">trade</span>
+<span data-event="sale">sale</span>
+<span data-event="swap">swap</span>
+<span data-event="buy">buy</span>
+<span data-event="sell">sell</span>
+<span data-event="sbuy">sbuy</span>
+<span data-event="fbuy">fbuy</span>
+<span data-event="item_sent">item_sent</span>
+<span data-event="gold_sent">gold_sent</span>
+<span data-event="cx_sent">cx_sent</span>
+<span data-event="level_up">level_up</span>
+<span data-event="death">death</span>
+<span data-event="chat">chat</span>
+<span data-event="new_map">new_map</span>
+<span data-event="mluck">mluck</span>
+<span data-event="api_response">api_response</span>
+<span data-event="pvp_list">pvp_list</span>
+<span data-event="ccreport">ccreport</span></div>
+
+<p>{{ phrase("docs.articles.events-game.dynamic-payloads-can-gain-fields-over-time-read") }}</p>

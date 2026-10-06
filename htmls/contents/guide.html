@@ -1,0 +1,167 @@
+<div id="gameguide" style="display: none">
+	{#
+	<div class="gamebutton gamebutton-small" style="position: absolute; top: 5px; right: 5px">Updated April 27th</div>
+	#}
+	<div style="font-size: 24px">
+		<div class="gamebutton gamebutton-large">{{ phrase("pages.contents.guide.key-mappings") }}</div>
+		<div class="mb5"></div>
+		<div class="gamebutton gamebutton-small mr5 mt5">{{ phrase("pages.contents.guide.mouse-left-click") }}</div>
+		<div class="gamebutton gamebutton-small mr5 mt5" style="border-color: #4ab48e">{{ phrase("pages.contents.guide.move") }}</div>
+		<div class="gamebutton gamebutton-small mr5 mt5" style="border-color: #11a3b9">{{ phrase("pages.contents.guide.target") }}</div>
+		<div class="mb2"></div>
+		<div class="gamebutton gamebutton-small mr5 mt5">{{ phrase("pages.contents.guide.mouse-right-click") }}</div>
+		<div class="gamebutton gamebutton-small mr5 mt5" style="border-color: #b61b00">{{ phrase("pages.contents.guide.attack") }}</div>
+		<div class="gamebutton gamebutton-small mr5 mt5" style="border-color: #d6723d">{{ phrase("pages.contents.guide.interact") }}</div>
+		<div class="gamebutton gamebutton-small mr5 mt5" style="border-color: #0b86cb">{{ phrase("pages.contents.guide.equip") }}</div>
+		<div class="gamebutton gamebutton-small mr5 mt5" style="border-color: #6c2b65">{{ phrase("pages.contents.guide.enter") }}</div>
+		<div class="mb2"></div>
+		<div class="gamebutton gamebutton-small mr5 mt5">{{ phrase("pages.contents.guide.keyboard-1") }}</div>
+		<div class="gamebutton gamebutton-small mr5 mt5">{{ phrase("pages.contents.guide.heal") }}</div>
+		<div class="gamebutton gamebutton-small mr5 mt5">{{ phrase("pages.contents.guide.use-hp-potion") }}</div>
+		<div class="mb2"></div>
+		<div class="gamebutton gamebutton-small mr5 mt5">{{ phrase("pages.contents.guide.keyboard-2") }}</div>
+		<div class="gamebutton gamebutton-small mr5 mt5">{{ phrase("pages.contents.guide.mana") }}</div>
+		<div class="gamebutton gamebutton-small mr5 mt5">{{ phrase("pages.contents.guide.use-mp-potion") }}</div>
+		<div class="mb2"></div>
+		<div class="gamebutton gamebutton-small mr5 mt5">{{ phrase("pages.contents.guide.keyboard-i") }}</div>
+		<div class="gamebutton gamebutton-small mr5 mt5">{{ phrase("pages.contents.guide.inventory") }}</div>
+		<div class="mb2"></div>
+		<div class="gamebutton gamebutton-small mr5 mt5">{{ phrase("pages.contents.guide.keyboard-c") }}</div>
+		<div class="gamebutton gamebutton-small mr5 mt5">{{ phrase("pages.contents.guide.target-your-character") }}</div>
+		<div class="mb2"></div>
+		<div class="gamebutton gamebutton-small mr5 mt5">{{ phrase("pages.contents.guide.keyboard-f") }}</div>
+		<div class="gamebutton gamebutton-small mr5 mt5">{{ phrase("pages.contents.guide.activate-nearest-npc-door") }}</div>
+		<div class="mb2"></div>
+		<div class="gamebutton gamebutton-small mr5 mt5">{{ phrase("pages.contents.guide.keyboard-r") }}</div>
+		<div class="gamebutton gamebutton-small mr5 mt5">{{ phrase("pages.contents.guide.use-main-skill") }}</div>
+		<div class="mb2"></div>
+		<div class="gamebutton gamebutton-small mr5 mt5">{{ phrase("pages.contents.guide.keyboard-n") }}</div>
+		<div class="gamebutton gamebutton-small mr5 mt5">{{ phrase("pages.contents.guide.show-names-toggle") }}</div>
+		<div class="mb2"></div>
+		<div class="gamebutton gamebutton-small mr5 mt5">{{ phrase("pages.contents.guide.keyboard") }}</div>
+		<div class="gamebutton gamebutton-small mr5 mt5">{{ phrase("pages.contents.guide.toggle-code") }}</div>
+		<div class="mb2"></div>
+		<div class="gamebutton gamebutton-small mr5 mt5">{{ phrase("pages.contents.guide.keyboard-esc") }}</div>
+		<div class="gamebutton gamebutton-small mr5 mt5">{{ phrase("pages.contents.guide.close") }}</div>
+		<div class="gamebutton gamebutton-small mr5 mt5">{{ phrase("pages.contents.guide.dismiss") }}</div>
+		<div class="mb2"></div>
+		<div class="gamebutton gamebutton-large mt15">{{ phrase("pages.contents.guide.items-inventory") }}</div>
+		<div class="mb5"></div>
+		<div class="gray">
+			{{ phrase_html("pages.contents.guide.right-click-to-equip-and-un-equip-items") }}
+		</div>
+		<div class="gamebutton gamebutton-large mt15">{{ phrase("pages.contents.guide.bank") }}</div>
+		<div class="mb5"></div>
+		<div class="gray">{{ phrase_html("pages.contents.guide.the-bank-is-for-storing-items-and-gold") }}</div>
+		<div class="gamebutton gamebutton-large mt15">{{ phrase("pages.contents.guide.targeting-top-left-corner") }}</div>
+		<div class="mb5"></div>
+		<div class="gray">
+			{{ phrase_html("pages.contents.guide.left-click-to-target-monsters-and-players-press") }}
+		</div>
+		<div class="gamebutton gamebutton-large mt15">{{ phrase("pages.contents.guide.upgrades") }}</div>
+		<div class="mb5"></div>
+		<div class="gray mb5">
+			{{ phrase_html("pages.contents.guide.find-the-npc-that-offers-upgrades-and-compounds") }}
+		</div>
+		<div class="gamebutton gamebutton-large mt15">{{ phrase("pages.contents.guide.compounds") }}</div>
+		<div class="mb5"></div>
+		<div class="gray mb5">
+			{{ phrase_html("pages.contents.guide.for-accessories-reaching-a-higher-level-is-more") }}
+		</div>
+		<div class="gray mb">
+			{{ phrase_html("pages.contents.guide.you-can-use-primordial-shard-s-increase-the") }}
+		</div>
+		<div class="gamebutton gamebutton-large mt15">{{ phrase("pages.contents.guide.communities-links") }}</div>
+		<div class="mb5"></div>
+		<div class="gray mb5">
+			{{ phrase_html("pages.contents.guide.discord-discord-is-our-most-active-community-ideal") }}
+		</div>
+		<div class="gray mb5">
+			{{ phrase_html("pages.contents.guide.github-our-official-github-houses-the-runner-functions") }}
+		</div>
+		<div class="gray mb5">
+			{{ phrase_html("pages.contents.guide.reddit-you-can-use-reddit-to-share-things") }}
+		</div>
+		<div class="gray mb5">
+			{{ phrase_html("pages.contents.guide.unofficial-starter-guide") }}
+		</div>
+		<div class="gray mb5">
+			{{ phrase_html("pages.contents.guide.nexusnull-s-unofficial-but-awesome-documentation") }}
+		</div>
+		<div class="gamebutton gamebutton-large mt15">CODE</div>
+		<div class="mb5"></div>
+		<div class="gray mb5">
+			{{ phrase_html("pages.contents.guide.you-don-t-have-to-be-a-coder") }}
+		</div>
+		<div class="gamebutton gamebutton-large mt15">{{ phrase("pages.contents.guide.attributes") }}</div>
+		<div class="mb5"></div>
+		<div class="gray mb">
+			<span style="color: #f4f4f4">{{ phrase("pages.contents.guide.strength") }}</span> {{ phrase("pages.contents.guide.increases-hp-armor") }}
+			<!--Increases the attack of warriors.-->
+		</div>
+		<div class="gray mb">
+			<span style="color: #f4f4f4">{{ phrase("pages.contents.guide.intelligence") }}</span> {{ phrase("pages.contents.guide.increases-mp-resistance") }}
+			<!--Increases the attack of mages.-->
+		</div>
+		<div class="gray mb">{{ phrase_html("pages.contents.guide.dexterity-increases-the-attack-speed-run-speed") }}</div>
+		<div class="gray mb">{{ phrase_html("pages.contents.guide.vitality-increases-hp-proportional-to-level") }}</div>
+		<div class="gray mb">{{ phrase_html("pages.contents.guide.armor-100-armor-reduces-incoming-physical-damage-by") }}</div>
+		<div class="gray mb">{{ phrase_html("pages.contents.guide.resistance-100-resistance-reduces-incoming-magical-damage-by") }}</div>
+		<div class="gray mb">{{ phrase_html("pages.contents.guide.damage-proportionally-increases-the-attack") }}</div>
+		<div class="gray mb">{{ phrase_html("pages.contents.guide.range-increases-the-attack-range") }}</div>
+		<div class="gray mb">{{ phrase_html("pages.contents.guide.speed-increases-the-run-speed") }}</div>
+		<div class="gray mb">{{ phrase_html("pages.contents.guide.stat-becomes-a-main-attribute-with-a-scroll") }}</div>
+		<div class="gray mb">{{ phrase_html("pages.contents.guide.evasion-evade-physical-attacks") }}</div>
+		<div class="gray mb">{{ phrase_html("pages.contents.guide.reflection-reflect-magical-attacks-back") }}</div>
+		<div class="gray mb">{{ phrase_html("pages.contents.guide.a-piercing-pierce-through-armor") }}</div>
+		<div class="gray mb">{{ phrase_html("pages.contents.guide.r-piercing-pierce-through-resistance") }}</div>
+		<div class="gray mb">{{ phrase_html("pages.contents.guide.damage-return-returns-melee-damage") }}</div>
+		<div class="gamebutton gamebutton-large mt15">{{ phrase("pages.contents.guide.abilities") }}</div>
+		<div class="mb5"></div>
+		<div class="gray">{{ phrase_html("pages.contents.guide.abilities-are-currently-in-development-you-can-use") }}</div>
+		<div class="gray mb">{{ phrase_html("pages.contents.guide.mage-s-mana-burst-converts-approximately-half-of") }}</div>
+		<div class="gray mb">{{ phrase_html("pages.contents.guide.warrior-s-charge-increases-speed-for-approximately-3") }}</div>
+		<div class="gray mb">{{ phrase_html("pages.contents.guide.warrior-s-taunt-taunts-the-enemy-with-a") }}</div>
+		<div class="gray mb">{{ phrase_html("pages.contents.guide.rogue-s-invis-goes-invisible-and-deals-1") }}</div>
+		<div class="gray mb">{{ phrase_html("pages.contents.guide.rogue-s-poisonous-touch-poison-reduces-healing-and") }}</div>
+		<div class="gray mb">{{ phrase_html("pages.contents.guide.ranger-s-supershot-has-an-extreme-range-deals") }}</div>
+		<div class="gray mb">{{ phrase_html("pages.contents.guide.priest-s-curse-slows-down-the-enemy-amplifies") }}</div>
+		<div class="gamebutton gamebutton-large mt15">{{ phrase("pages.contents.guide.limits") }}</div>
+		<div class="mb5"></div>
+		<div class="gray">
+			{{ phrase_html("pages.contents.guide.you-can-play-the-game-with-3-characters") }}
+		</div>
+		<div class="gamebutton gamebutton-large mt15">{{ phrase("pages.contents.guide.servers") }}</div>
+		<div class="mb5"></div>
+		<div class="gray">
+			{{ phrase_html("pages.contents.guide.you-can-connect-to-any-server-you-want") }}
+		</div>
+		<div class="gamebutton gamebutton-large mt15">{{ phrase("pages.contents.guide.chat-commands") }}</div>
+		<div class="mb5"></div>
+		<div class="gray">{{ phrase_html("pages.contents.guide.list") }}</div>
+		<div class="gamebutton gamebutton-large mt15">{{ phrase("pages.contents.guide.rules") }}</div>
+		<div class="mb5"></div>
+		<div class="gray">{{ phrase_html("pages.contents.guide.no-swearing-bullying-or-offensive-nicknames") }}</div>
+		<div class="gray">{{ phrase_html("pages.contents.guide.each-person-is-allowed-to-have-a-single") }}</div>
+		<div class="gray">{{ phrase_html("pages.contents.guide.abuse-of-the-limits-is-strictly-forbidden") }}</div>
+		<div class="gray">{{ phrase_html("pages.contents.guide.it-s-forbidden-to-use-code-for-violating") }}</div>
+		<div class="gray">{{ phrase_html("pages.contents.guide.it-s-forbidden-to-automate-the-game-with") }}</div>
+		<div class="gray">{{ phrase_html("pages.contents.guide.it-s-forbidden-to-buy-or-sell-items") }}</div>
+		<div class="gray">{{ phrase_html("pages.contents.guide.violation-of-the-above-rules-might-lead-to") }}</div>
+		<div class="gray">{{ phrase_html("pages.contents.guide.if-anyone-is-breaking-the-rules-just-email") }}</div>
+		<div class="gamebutton gamebutton-large mt15">{{ phrase("pages.contents.guide.notes-tips") }}</div>
+		<div class="mb5"></div>
+		{#
+		<div class="gray"><span style="color: #f4f4f4">&gt;</span> Adventure Land is best played on Chrome.</div>
+		#}
+		<div class="gray">{{ phrase_html("pages.contents.guide.chat-isn-t-global-so-stay-close-during") }}</div>
+		<div class="gray">{{ phrase_html("pages.contents.guide.there-are-rewards-for-good-suggestions-or-unknown") }}</div>
+		<div class="gray">{{ phrase_html("pages.contents.guide.be-careful-in-pvp-it-s-not-for") }}</div>
+		<div class="gray">{{ phrase_html("pages.contents.guide.please-please-be-kind-to-each-other") }}</div>
+		<div class="gamebutton gamebutton-large mt15">{{ phrase("pages.contents.guide.about-the-game") }}</div>
+		<div class="mb5"></div>
+		<div class="gray">
+			{{ phrase_html("pages.contents.guide.the-game-is-in-active-development-there-are") }}
+		</div>
+	</div>
+</div>

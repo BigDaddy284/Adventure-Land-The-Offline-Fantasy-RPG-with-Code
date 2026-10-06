@@ -1,0 +1,14 @@
+<p><span class='dlabel'>get_secondhands(timeout_ms)</span></p>
+<p>{{ phrase("docs.functions.get_secondhands.retrieves-ponty-s-current-recovered-item-listings") }}</p>
+<p>{{ phrase_html("docs.functions.get_secondhands.returns-promise-resolving-with-success-true-items-it") }}</p>
+<p>{{ phrase_html("docs.functions.get_secondhands.promise-failures-unless-a-function-specific-note-says") }}</p>
+<p>{{ phrase_html("docs.functions.get_secondhands.notes-items-are-ordered-as-shown-in-ponty") }}</p>
+<p>{{ phrase_html("docs.functions.get_secondhands.example") }}</p>
+<div class='code'>async function example() {
+	var listings = await get_secondhands();
+	show_json(listings.items);
+}
+example();</div>
+
+<p></p>
+<span class='redlabel'>{{ phrase("docs.reference.source_code") }}</span>

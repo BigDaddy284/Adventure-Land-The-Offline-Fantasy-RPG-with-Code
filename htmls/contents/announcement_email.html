@@ -1,0 +1,161 @@
+<table style="width:100%; height: 100%; background-color: black; color: white; font-size: 16px; line-height: 24px; min-height: 400px" border="0" cellpadding="0" cellspacing="0">
+	<tr style="text-align: center">
+		<td style="vertical-align: middle; font-family: 'Palatino Linotype', 'Book Antiqua','Palatino','Times New Roman','Times';">
+			<div style="max-width: 600px; padding: 20px; display: inline-block; text-align: left;">
+				{% if purpose == "halloween" %}
+					<p style="color: #E86E2C">{{ phrase("pages.contents.announcement_email.hi-adventurer") }}</p>
+					<p>{{ phrase("pages.contents.announcement_email.wizard-here-i-develop-the-game-since-the") }}</p>
+
+					<p>{{ phrase("pages.contents.announcement_email.oragon-in-game-and-jayson-in-real-life") }}</p>
+
+					<p>{{ phrase("pages.contents.announcement_email.onto-the-subject-of-this-email-the-halloween") }}</p>
+
+					<p>{{ phrase("pages.contents.announcement_email.check-it-out-it-has-some-new-halloween") }}</p>
+
+					<p>{{ phrase("pages.contents.announcement_email.anyway-while-we-work-on-the-game-spend") }}</p>
+
+					<p style="color: #E86E2C">
+						{{ phrase_html("pages.contents.announcement_email.yours-sincerely-wizard-http-adventure-land") }}
+					</p>
+
+					{{ phrase("pages.contents.announcement_email.ps-to-use-the-preview-ultimate-class-abilities") }}
+				{% elif purpose == "halloween2" %}
+					<p style="color: #E86E2C">{{ phrase("pages.contents.announcement_email.hi-adventurer") }}</p>
+					<p>{{ phrase("pages.contents.announcement_email.what-s-new-we-have-a-new-map") }}</p>
+
+					<p>{{ phrase("pages.contents.announcement_email.be-really-careful-in-spooky-town-unlike-our") }}</p>
+
+					<p>{{ phrase("pages.contents.announcement_email.our-halloween-inspired-event-starts-today-and-it") }}</p>
+
+					<p>{{ phrase("pages.contents.announcement_email.note-you-can-now-play-with-2-characters") }}</p>
+
+					<p style="color: #E86E2C">
+						{{ phrase_html("pages.contents.announcement_email.yours-sincerely-wizard-http-adventure-land") }}
+					</p>
+				{% elif purpose == "xmas" %}
+					<p style="color: #C82F17">{{ phrase("pages.contents.announcement_email.hi-adventurer") }}</p>
+
+					<p>{{ phrase("pages.contents.announcement_email.the-new-zone-winterland-and-the-xmas-event") }}</p>
+
+					<p>{{ phrase_html("pages.contents.announcement_email.additionally-adventure-land-is-on-steam-greenlight-would") }}</p>
+
+					<p style="color: #C82F17">
+						{{ phrase_html("pages.contents.announcement_email.happy-new-year-wizard-http-adventure-land") }}
+					</p>
+
+					{{ phrase("pages.contents.announcement_email.ps-increased-the-ornament-drops") }}<br />
+					{{ phrase("pages.contents.announcement_email.ps-2-join-us-on-discord-if-you") }}
+				{% elif purpose == "xmas2" %}
+					<p style="color: #C82F17">{{ phrase("pages.contents.announcement_email.hi-adventurer") }}</p>
+
+					<p>{{ phrase("pages.contents.announcement_email.our-xmas-event-is-live-xmas-drops-are") }}</p>
+
+					<p>{{ phrase("pages.contents.announcement_email.there-are-various-new-xmas-themed-items-ornament") }}</p>
+
+					<p>{{ phrase("pages.contents.announcement_email.make-sure-to-visit-our-xmas-tree-outside") }}</p>
+
+					<p>{{ phrase("pages.contents.announcement_email.we-would-love-to-see-you-among-us") }}</p>
+
+					<p style="color: #C82F17">
+						{{ phrase_html("pages.contents.announcement_email.happy-new-year-wizard-http-adventure-land") }}
+					</p>
+
+					{{ phrase("pages.contents.announcement_email.ps-you-can-freely-use-3-characters-simultaneously") }}<br />
+					{{ phrase("pages.contents.announcement_email.ps-2-we-re-releasing-on-steam-before") }}<br />
+					{{ phrase_html("pages.contents.announcement_email.holiday_code_example") }}
+
+					<p style="color: gray; font-size: 12px">{{ phrase_html("pages.contents.announcement_email.turn-emails-on-off") }}</p>
+				{% elif purpose == "xmas3" %}
+					<p style="color: #C82F17">{{ phrase("pages.contents.announcement_email.hi-adventurer") }}</p>
+
+					<p>{{ phrase("pages.contents.announcement_email.our-holiday-season-event-is-live-holiday-season") }}</p>
+
+					<p>{{ phrase("pages.contents.announcement_email.if-you-haven-t-visited-the-game-in") }}</p>
+
+					<p>{{ phrase("pages.contents.announcement_email.make-sure-to-visit-our-holiday-tree-outside") }}</p>
+
+					<p>{{ phrase("pages.contents.announcement_email.we-would-love-to-see-you-among-us") }}</p>
+
+					<p style="color: #C82F17">
+						{{ phrase_html("pages.contents.announcement_email.happy-new-year-wizard-https-adventure-land") }}
+					</p>
+
+					<p style="color: gray; font-size: 12px">{{ phrase_html("pages.contents.announcement_email.turn-emails-on-off-you-have-to-login") }}</p>
+				{% elif purpose == "cvalentines" %}
+					<p style="color: #832212">{{ phrase("pages.contents.announcement_email.hi-adventurer") }}</p>
+
+					<p>{{ phrase("pages.contents.announcement_email.red-envelope-s-are-global-drops-they-drop") }}</p>
+
+					<p>{{ phrase("pages.contents.announcement_email.the-love-goo-is-back-too-for-the") }}</p>
+
+					<p style="color: #832212">
+						{{ phrase_html("pages.contents.announcement_email.wish-you-wealth-and-prosperity-wizard-http-adventure") }}
+					</p>
+
+					<p style="color: gray; font-size: 12px">{{ phrase_html("pages.contents.announcement_email.turn-emails-on-off") }}</p>
+				{% elif purpose == "easter" %}
+					<p style="color: #DC6896">{{ phrase("pages.contents.announcement_email.hi-adventurer") }}</p>
+					<p>{{ phrase("pages.contents.announcement_email.our-easter-event-is-live-chase-the-wabbit") }}</p>
+
+					<p>{{ phrase_html("pages.contents.announcement_email.additionally-many-players-requested-access-to-game-s", {"_id": user._id}) }}</p>
+
+					<p style="color: #78CFEF">
+						{{ phrase_html("pages.contents.announcement_email.yours-sincerely-wizard-http-adventure-land-2") }}
+					</p>
+
+					{{ phrase("pages.contents.announcement_email.ps-there-is-a-new-npc-near-the") }}<br />
+					{{ phrase("pages.contents.announcement_email.ps-2-just-reply-to-this-email-if") }}
+
+					<p style="color: gray; font-size: 12px">{{ phrase_html("pages.contents.announcement_email.turn-emails-on-off") }}</p>
+				{% elif purpose == "easter2" %}
+					<p style="color: #DC6896">{{ phrase("pages.contents.announcement_email.hi-adventurer") }}</p>
+
+					<p>{{ phrase("pages.contents.announcement_email.our-easter-event-is-live-chase-the-wabbit") }}</p>
+
+					<p>{{ phrase("pages.contents.announcement_email.defeating-the-wabbit-grants-you-100-luck-for") }}</p>
+
+					<p style="color: #78CFEF">
+						{{ phrase_html("pages.contents.announcement_email.yours-sincerely-wizard-http-adventure-land-3") }}
+					</p>
+
+					{{ phrase("pages.contents.announcement_email.ps-there-s-a-new-interface-counts-down") }}
+
+					<p style="color: gray; font-size: 12px">{{ phrase_html("pages.contents.announcement_email.turn-emails-on-off") }}</p>
+				{% elif purpose == "anniversary" %}
+					<p style="color: #41AFDE">{{ phrase("pages.contents.announcement_email.hi-adventurer") }}</p>
+					<p>{{ phrase("pages.contents.announcement_email.our-anniversary-event-is-live-it-s-a") }}</p>
+
+					<p>{{ phrase("pages.contents.announcement_email.as-another-suggestion-farm-ice-roamer-s-big") }}</p>
+
+					<p style="color: #ED2E2B">
+						{{ phrase_html("pages.contents.announcement_email.yours-sincerely-wizard-http-adventure-land-4") }}
+					</p>
+
+					<p style="color: gray; font-size: 12px">{{ phrase_html("pages.contents.announcement_email.turn-emails-on-off") }}</p>
+				{% elif purpose == "halloween3" %}
+					<p style="color: #E86E2C">{{ phrase("pages.contents.announcement_email.hi-adventurer") }}</p>
+					<p>{{ phrase("pages.contents.announcement_email.what-s-new-we-have-a-new-boss") }}</p>
+
+					<p>{{ phrase("pages.contents.announcement_email.there-are-a-lot-of-small-recent-changes") }}</p>
+
+					<p>{{ phrase("pages.contents.announcement_email.we-re-also-getting-close-to-a-steam") }}</p>
+
+					<p style="color: #E86E2C">
+						{{ phrase_html("pages.contents.announcement_email.happy-halloween-yours-sincerely-wizard-http-adventure-land") }}
+					</p>
+				{% elif purpose == "halloween4" %}
+					<p style="color: #E86E2C">{{ phrase("pages.contents.announcement_email.hi-adventurer") }}</p>
+
+					<p>{{ phrase("pages.contents.announcement_email.it-s-been-a-long-time-a-lot") }}</p>
+
+					<p>{{ phrase("pages.contents.announcement_email.come-take-a-walk-in-mainland-if-you") }}</p>
+
+					<p style="color: #E86E2C">
+						{{ phrase_html("pages.contents.announcement_email.happy-halloween-yours-sincerely-wizard-http-adventure-land") }}
+					</p>
+				{% endif %}
+			</div>
+			<!--<img src="http://adventure.land/img/therogue.png" />-->
+		</td>
+	</tr>
+</table>

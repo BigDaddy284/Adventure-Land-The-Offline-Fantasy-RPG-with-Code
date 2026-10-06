@@ -1,0 +1,56 @@
+<p>{{ phrase_html("docs.articles.x.sub-architecture.game-and-code-architecture") }}</p>
+
+<p>{{ phrase("docs.articles.x.sub-architecture.each-character-has-two-cooperating-browser-contexts") }}</p>
+
+<div class="code">Game frame
+  Owns the server socket, live entities, map state, rendering, CODE editor, and account API calls
+
+CODE frame (/runner)
+  Loads the public CODE functions, event listeners, compatibility helpers, and your code</div>
+
+<p>{{ phrase("docs.articles.x.sub-architecture.the-code-frame-is-deliberately-separate-restarting-code") }}</p>
+
+<p>{{ phrase_html("docs.articles.x.sub-architecture.how-an-action-travels") }}</p>
+
+<div class="code">Your code
+  -> public function such as attack(target)
+  -> game frame registers the pending response
+  -> socket request reaches the game server
+  -> socket response reaches the game frame
+  -> the matching Promise fulfills or rejects in your CODE frame</div>
+
+<p>{{ phrase("docs.articles.x.sub-architecture.the-response-is-registered-before-the-request-is") }}</p>
+
+<p>{{ phrase_html("docs.articles.x.sub-architecture.live-data") }}</p>
+
+<p>{{ phrase_html("docs.articles.x.sub-architecture.character-nearby-entities-returned-by-functions-such-as") }}</p>
+
+<p>{{ phrase_html("docs.articles.x.sub-architecture.g-contains-game-definitions-such-as-items-skills") }}</p>
+
+<p>{{ phrase_html("docs.articles.x.sub-architecture.events") }}</p>
+
+<div class="code">character.on("loot", function (data) {
+	show_json(data);
+});
+
+game.on("hit", function (data) {
+	// World event: may describe another entity.
+});</div>
+
+<p>{{ phrase_html("docs.articles.x.sub-architecture.socket-data-is-normalized-by-the-game-frame") }}</p>
+
+<p>{{ phrase_html("docs.articles.x.sub-architecture.account-api") }}</p>
+
+<p>{{ phrase_html("docs.articles.x.sub-architecture.parent-api-call-sends-an-http-request-to") }}</p>
+
+<p>{{ phrase_html("docs.articles.x.sub-architecture.multiple-characters") }}</p>
+
+<p>{{ phrase_html("docs.articles.x.sub-architecture.start-character-opens-another-owned-character-with-its") }}</p>
+
+<p>{{ phrase_html("docs.articles.x.sub-architecture.persistence-boundaries") }}</p>
+
+<div class="code">set("local-plan", { monster: "goo" }); // Browser-local JSON value
+pset("raw-key", "raw value");            // Platform persistent string
+upload_code(12, "helpers", source);        // Account-backed code slot; returns a Promise</div>
+
+<p>{{ phrase_html("docs.articles.x.sub-architecture.choose-storage-deliberately-ordinary-variables-last-only-for") }}</p>

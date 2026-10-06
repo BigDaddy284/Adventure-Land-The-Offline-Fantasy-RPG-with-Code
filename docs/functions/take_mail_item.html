@@ -1,0 +1,14 @@
+<p><span class='dlabel'>take_mail_item(mail_id, timeout_ms)</span></p>
+<p>{{ phrase("docs.functions.take_mail_item.takes-an-attachment-from-an-in-game-mail") }}</p>
+<p>{{ phrase("docs.mail.ownership") }}</p>
+<p>{{ phrase_html("docs.functions.take_mail_item.returns-promise-resolving-with-the-mail-item-taken") }}</p>
+<p>{{ phrase_html("docs.functions.take_mail_item.promise-failures-unless-a-function-specific-note-says") }}</p>
+<p>{{ phrase_html("docs.functions.take_mail_item.notes-the-timeout-defaults-to-15-000ms-a") }}</p>
+<p>{{ phrase_html("docs.functions.take_mail_item.example") }}</p>
+<div class='code'>async function example() {
+	await take_mail_item("ML_your_mail_id");
+}
+example();</div>
+
+<p></p>
+<span class='redlabel'>{{ phrase("docs.reference.source_code") }}</span>

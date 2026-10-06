@@ -1,0 +1,136 @@
+<div class="anniversary-guide" style="width:600px;max-width:100%;font-size:24px;line-height:1.3">
+	<div style="font-size:32px;color:#8B642E">{{ phrase("docs.guide.event-anniversary.10-years-of-adventure") }}</div>
+	<p>{{ phrase("interface.anniversary.offseason_crafting") }}</p>
+	<p>{{ phrase_html("docs.guide.event-anniversary.every-30-minutes-a-player-is-featured-on") }}</p>
+	<div class="anniversary-guide-divider"></div>
+	<div style="color:#8B642E">{{ phrase("docs.guide.event-anniversary.how-to-kiss") }}</div>
+	<p>{{ phrase_html("docs.guide.event-anniversary.1-equip-the-emote-open-skills-drag-i") }}</p>
+	<p>{{ phrase_html("docs.guide.event-anniversary.2-select-the-player-close-skills-use-their") }}</p>
+	<p>{{ phrase_html("docs.guide.event-anniversary.3-kiss-get-within-80-range-then-click") }}</p>
+	<p>{{ phrase("docs.guide.event-anniversary.hop-sickness-or-realm-fatigue-prevents-anniversary-visits") }}</p>
+	<p>{{ phrase_html("docs.guide.event-anniversary.your-visit-is-used-up-you-and-the") }}</p>
+	<p>{{ phrase_html("docs.guide.event-anniversary.the-visitor-may-also-receive-an-i-kiss") }}</p>
+	<p>{{ phrase("docs.guide.banking.overflow_items") }}</p>
+	<div class="anniversary-visit-drops"></div>
+	<div class="anniversary-guide-divider"></div>
+	<div class="anniversary-guide-items"></div>
+	<p>{{ phrase("docs.guide.event-anniversary.all-your-characters-share-one-slice-flavor-kisses") }}</p>
+	<div style="display:flex;align-items:center;gap:10px"><span class="anniversary-guide-mira"></span><div>{{ phrase_html("docs.guide.event-anniversary.mira-mainland-64-88-cake-combine-six-different") }}</div></div>
+	<p>{{ phrase("docs.guide.event-anniversary.use-xyn-s-normal-exchange-slot-to-open") }}</p>
+	<p>{{ phrase("docs.guide.event-anniversary.the-guestbook-and-keepsake-pendant-combine-at-the") }}</p>
+	<div class="anniversary-guide-divider"></div>
+	<div style="color:#8B642E">{{ phrase("docs.guide.event-anniversary.cake-drops-one-prize") }}</div>
+		<div class="anniversary-cake-drops" style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));margin-top:6px"></div>
+		<div style="margin-top:6px">{{ phrase("docs.guide.event-anniversary.also-receive") }}</div>
+		<div class="anniversary-cake-bonuses" style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr))"></div>
+	<div class="anniversary-guide-divider"></div>
+	<div style="color:#8B642E">{{ phrase("docs.guide.event-anniversary.gift-drops-one-prize") }}</div>
+		<div class="anniversary-gift-drops" style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));margin-top:6px"></div>
+	<div class="anniversary-guide-divider"></div>
+	<div style="color:#8B642E">{{ phrase("docs.guide.event-anniversary.event-details") }}</div>
+		<p>{{ phrase("docs.guide.event-anniversary.reachable-non-afk-players-are-chosen-with-newer") }}</p>
+		<p>{{ phrase("docs.guide.event-anniversary.if-the-featured-player-disconnects-or-becomes-unreachable") }}</p>
+		<p>{{ phrase_html("docs.guide.event-anniversary.monsters-also-drop-gifts-and-your-account-s") }}</p>
+		<p>{{ phrase("docs.guide.event-anniversary.crafting-needs-the-listed-unlocked-ingredients-gold-and") }}</p>
+		<p>{{ phrase("docs.guide.event-anniversary.need-drapes-for-a-recipe-mummies-and-ghosts") }}</p>
+		<p>{{ phrase("docs.guide.event-anniversary.make-a-wish-s-jar-costs-one-cake") }}</p>
+	<div class="anniversary-guide-divider"></div>
+	<div style="color:#8B642E">{{ phrase("docs.guide.event-anniversary.code-find-and-kiss") }}</div>
+	<p>{{ phrase_html("docs.guide.event-anniversary.uses-server-status-anniversary-and-your-visit-condition") }}</p>
+	<p>{{ phrase("docs.guide.event-anniversary.kiss-feedback") }}</p>
+<div class="code">async function visit_featured_player() {
+	var round = server.status.anniversary;
+	var ticket = character.s.anniversary_visit;
+	var status = character.anniversary;
+	if (status &amp;&amp; status.realm === server.region + " " + server.id &amp;&amp;
+		round &amp;&amp; status.round === round.round &amp;&amp; status.reason !== "ready") return show_json(status);
+	if (character.s.hopsickness || character.s.realmfatigue ||
+		!round || !round.active || !round.live || !ticket ||
+		ticket.ms &lt;= 0 || ticket.round !== round.round ||
+		ticket.realm !== server.region + " " + server.id ||
+		Date.now() >= ticket.expires || Date.now() >= round.expires) {
+		return show_json(status || { reason: "no_visit" });
+	}
+	if (round.available === false) return show_json({ reason: "target_unavailable", target: round.target });
+
+	await smart_move({ map: round.map, x: round.x, y: round.y });
+	var current = server.status.anniversary;
+	ticket = character.s.anniversary_visit;
+	if (character.s.hopsickness || character.s.realmfatigue ||
+		!current || !current.active || !current.live || current.available === false || current.round !== round.round ||
+		current.id !== round.id || !ticket || ticket.ms &lt;= 0 ||
+		Date.now() >= ticket.expires || Date.now() >= current.expires) return;
+
+	var player = get_player(current.target);
+	if (!player || distance(character, player) > 80) {
+		return show_json({ reason: "distance", target: current.target });
+	}
+	var result = await use_skill("ikissyou", player);
+	if (result.rewarded === false) show_json(result);
+	// A rewarded visit grants character.s.anniversary_kiss: +10 Frequency and +6 Output for 20 minutes.
+}
+
+visit_featured_player().catch(show_json);</div>
+	<div class="anniversary-guide-divider"></div>
+	<div style="color:#8B642E">{{ phrase("docs.guide.event-anniversary.code-craft-with-mira") }}</div>
+	<p>{{ phrase("docs.guide.event-anniversary.bring-the-ingredients-and-gold-required-quantities-must") }}</p>
+<div class="code">async function craft_anniversary_recipe(recipe) {
+	var event = server.status.anniversary;
+
+	await smart_move(event &amp;&amp; event.active ? "anniversary_baker" : "craftsman");
+	var result = await auto_craft(recipe);
+	show_json(result);
+}
+
+// One of each slice + 100,000 gold:
+craft_anniversary_recipe("sixcake").catch(show_json);
+
+// Inspect other recipes before spending your cakes:
+// show_json(G.craft.homecomingcape);
+// craft_anniversary_recipe("homecomingcape").catch(show_json);
+
+// One cake + 250,000 gold; the result is a CX Jar:
+// craft_anniversary_recipe("makeawishjar").catch(show_json);</div>
+	<p>{{ phrase_html("docs.guide.event-anniversary.inspect-ingredients-with-show-json-g-craft-find") }}</p>
+	<p>{{ phrase("docs.guide.event-anniversary.to-combine-guestbooks-or-pendants-visit-the-compound") }}</p>
+<div class="code">// Preview only; nothing is spent:
+compound(0,1,2,3,null,true).then(show_json).catch(show_json);
+// To attempt the compound, consuming the three copies and scroll:
+// compound(0,1,2,3).then(show_json).catch(show_json);</div>
+	<div class="anniversary-guide-divider"></div>
+	<div style="color:#8B642E">{{ phrase("docs.guide.event-anniversary.code-open-a-cake-or-gift") }}</div>
+	<p>{{ phrase("docs.guide.event-anniversary.opens-one-item-leave-inventory-room-and-do") }}</p>
+<div class="code">async function open_anniversary_reward(name) {
+	await smart_move("exchange");
+	var slot = locate_item(name);
+	if (slot === -1) return game_log("No " + name + " in your inventory");
+	if (character.items[slot].l || character.q.exchange) return;
+
+	await exchange(slot);
+	game_log("Exchange complete. Check your inventory and cosmetics.");
+}
+
+open_anniversary_reward("sixcake").catch(show_json);
+// To open an Anniversary Gift instead:
+// open_anniversary_reward("anniversarygift").catch(show_json);</div>
+	<p>{{ phrase("docs.guide.event-anniversary.check-inventory-gold-and-cosmetics-for-your-rewards") }}</p>
+	<p>{{ phrase_html("docs.guide.event-anniversary.code-reference-smart-move-auto-craft-exchange-compound") }}</p>
+</div>
+<style>
+	.anniversary-guide-divider{height:4px;background:#A2A2A2;margin:16px -26px 12px}
+</style>
+<script>
+	var anniversary_icons = "";
+	["slice_strawberry", "slice_citrus", "slice_honey", "slice_mint", "slice_blueberry", "slice_nightberry", "sixcake", "anniversarygift"].forEach(function (name) {
+		anniversary_icons += item_container({skin:G.items[name].skin,size:40,draggable:false,onclick:"pcs(event);render_item_info('"+name+"',0)"},{name:name});
+	});
+	$(".anniversary-guide-items").html(anniversary_icons);
+	var mira = G.npcs.anniversary_baker;
+	$(".anniversary-guide-mira").html(sprite(mira.skin,{cx:clone(mira.cx || {}),width:54,height:72,scale:2}));
+	var kiss_drops = G.drops.anniversary_kiss || [];
+	var kiss_total = kiss_drops.reduce(function(total,drop) { return total + drop[0]; },0);
+	$(".anniversary-visit-drops").html(kiss_drops.filter(function(drop) { return drop[1] != "empty"; }).map(function(drop) { return render_drop(drop,1/kiss_total,"#858B8E"); }).join(""));
+	$(".anniversary-cake-drops").html(render_drop([1,"open","sixcake"],1,"#858B8E"));
+	$(".anniversary-cake-bonuses").html(G.drops.sixcake_bonus.map(function(drop) { return render_drop(drop,1,"#858B8E"); }).join(""));
+	$(".anniversary-gift-drops").html(render_drop([1,"open","anniversarygift"],1,"#858B8E"));
+</script>

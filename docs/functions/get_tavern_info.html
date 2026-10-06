@@ -1,0 +1,13 @@
+<p><span class='dlabel'>get_tavern_info(timeout_ms)</span></p>
+<p>{{ phrase("docs.functions.get_tavern_info.retrieves-the-tavern-s-current-house-edge-and") }}</p>
+<p>{{ phrase_html("docs.functions.get_tavern_info.returns-promise-resolving-with-edge-as-a-percentage") }}</p>
+<p>{{ phrase_html("docs.functions.get_tavern_info.promise-failures-unless-a-function-specific-note-says") }}</p>
+<p>{{ phrase_html("docs.functions.get_tavern_info.notes-multiple-calls-can-run-at-the-same") }}</p>
+<p>{{ phrase_html("docs.functions.get_tavern_info.example") }}</p>
+<div class='code'>async function example() {
+	show_json(await get_tavern_info());
+}
+example();</div>
+
+<p></p>
+<span class='redlabel'>{{ phrase("docs.reference.source_code") }}</span>

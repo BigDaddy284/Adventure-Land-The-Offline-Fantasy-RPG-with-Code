@@ -1,0 +1,111 @@
+<div class="guide-kicker">{{ phrase("docs.guide.shops-and-selling.the-simple-economy") }}</div>
+<div class="guide-title">{{ phrase("docs.guide.shops-and-selling.shops-selling") }}</div>
+<p>{{ phrase("docs.guide.shops-and-selling.npc-merchants-keep-dependable-stock-at-fixed-prices") }}</p>
+
+<div class="guide-showcase" style="border-color: #c49a38">
+	<div class="guide-showcase-art"><span class="shop-ernis"></span><span class="shop-hpot"></span><span class="shop-mpot"></span></div>
+	<div class="guide-showcase-copy">{{ phrase_html("docs.guide.shops-and-selling.ernis-keeps-adventurers-moving-health-and-mana-potions") }}</div>
+</div>
+
+<div class="divider"></div>
+<div class="title mt15">{{ phrase("docs.guide.shops-and-selling.buying") }}</div>
+<div class="guide-card-grid">
+	<div class="guide-card">{{ phrase_html("docs.guide.shops-and-selling.1-find-the-right-merchant-a-merchant-can") }}</div>
+	<div class="guide-card">{{ phrase_html("docs.guide.shops-and-selling.2-inspect-one-item-read-its-price-currency") }}</div>
+	<div class="guide-card">{{ phrase_html("docs.guide.shops-and-selling.3-keep-free-space-a-compatible-stack-can") }}</div>
+	<div class="guide-card">{{ phrase_html("docs.guide.shops-and-selling.4-choose-currency-when-needed-buy-uses-the") }}</div>
+</div>
+
+<div class="divider"></div>
+<div class="title mt15">{{ phrase("docs.guide.shops-and-selling.selling") }}</div>
+<p>{{ phrase("docs.guide.shops-and-selling.open-a-nearby-merchant-and-right-click-the") }}</p>
+<div class="guide-note">{{ phrase("docs.guide.shops-and-selling.code-sales-do-not-open-a-confirmation-verify") }}</div>
+
+<div class="divider"></div>
+<div class="title mt15">CODE</div>
+<!-- prettier-ignore -->
+<div class="code" id="shop-restock-code">function potion_stock(stat) {
+	return character.items.reduce((total, item) =&gt; {
+		var def = item &amp;&amp; G.items[item.name];
+		if (!def || def.type !== "pot" || item.l || item.b || item.r) return total;
+		return total + (def.gives.some(give =&gt; give[0] === stat &amp;&amp; give[1] &gt; 0) ? item.q || 1 : 0);
+	}, 0);
+}
+async function restock() {
+	var hp_needed = Math.max(0, 1000 - potion_stock("hp"));
+	var mp_needed = Math.max(0, 1000 - potion_stock("mp"));
+	if (hp_needed) await buy_with_gold("hpot0", hp_needed);
+	if (mp_needed) await buy_with_gold("mpot0", mp_needed);
+	show_json({ hp: potion_stock("hp"), mp: potion_stock("mp") });
+}
+restock().catch(show_json);</div>
+<p>{{ phrase("docs.guide.shops-and-selling.without-a-computer-stand-near-a-merchant-who") }}</p>
+<!-- prettier-ignore -->
+<div class="code">async function sell_one_plain_item(slot, expected_name) {
+	var item = character.items[slot];
+	if (!item || item.name !== expected_name) return;
+	if (item.l || item.p || item.stat_type || item.level) {
+		return game_log("Refusing to sell a modified item");
+	}
+	await sell(slot, 1);
+}
+
+// Deliberately names both the slot and expected item.
+// sell_one_plain_item(0, "coat").catch(show_json);</div>
+<p>{{ phrase_html("docs.guide.shops-and-selling.references-buy-buy-with-gold-buy-with-shells") }}</p>
+
+<div class="guide-related">{{ phrase_html("docs.guide.shops-and-selling.player-stands-ponty-s-changing-stock-and-ron") }}</div>
+
+<script>
+	if (!window.no_graphics && !window.no_html) {
+		$(".shop-ernis").html(sprite(G.npcs.fancypots.skin, { height: 62 }));
+		$(".shop-hpot").html(item_container({ skin: G.items.hpot0.skin }, { name: "hpot0", q: 100 }));
+		$(".shop-mpot").html(item_container({ skin: G.items.mpot0.skin }, { name: "mpot0", q: 100 }));
+	}
+</script>
+
+<style>
+	.guide-kicker {
+		color: #9a762d;
+		font-size: 18px;
+		font-weight: bold;
+		letter-spacing: 2px;
+	}
+	.guide-title {
+		color: #6e571f;
+		font-size: 44px;
+		line-height: 48px;
+		margin: 2px 0 12px;
+	}
+	.title {
+		color: #6e571f;
+		font-size: 36px;
+		margin-top: 15px;
+	}
+	.divider {
+		margin-top: 15px;
+		height: 5px;
+		background-color: #a2a2a2;
+		margin-left: -26px;
+		margin-right: -26px;
+	}
+	.guide-note {
+		border-left: 6px solid #b18a32;
+		background: #f2e9cd;
+		padding: 10px 14px;
+		margin: 12px 0;
+	}
+	.guide-related {
+		border-top: 2px dotted #aaa;
+		margin-top: 18px;
+		padding-top: 10px;
+		color: #666;
+	}
+	.guide-related span {
+		color: #7c621e;
+		cursor: pointer;
+		text-decoration: underline;
+	}
+</style>
+
+<p>{{ phrase_html("docs.guide.shops-and-selling.merrit-s-visits-keep-an-open-stocked-stand") }}</p>

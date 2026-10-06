@@ -1,0 +1,94 @@
+<div class="guide-kicker">{{ phrase("docs.guide.compounding.item-progression") }}</div>
+<div class="guide-title">{{ phrase("docs.guide.compounding.compounding") }}</div>
+<p>{{ phrase("docs.guide.compounding.accessories-and-other-compoundable-items-grow-by-combining") }}</p>
+
+<div class="guide-place">
+	<div class="spcompound"></div>
+	<div>{{ phrase_html("docs.guide.compounding.cue-and-the-shrine-of-combinations-use-the") }}</div>
+</div>
+
+<div class="guide-process">
+	<div class="process-item ecompound0"></div><span>+</span>
+	<div class="process-item ecompound1"></div><span>+</span>
+	<div class="process-item ecompound2"></div><span>+</span>
+	<div class="process-item ecscroll0"></div><span class="process-arrow">→</span>
+	<div class="process-item ecompoundresult"></div>
+</div>
+<div class="guide-process-caption">{{ phrase("docs.guide.compounding.three-matching-0-accessories-and-one-compatible-scroll") }}</div>
+
+<div class="divider"></div>
+<div class="title mt15">{{ phrase("docs.guide.compounding.one-attempt") }}</div>
+<p>{{ phrase("docs.guide.compounding.visit-a-compound-shrine-place-three-matching-items") }}</p>
+<p>{{ phrase("docs.guide.compounding.a-success-consumes-three-items-and-returns-one") }}</p>
+
+<div class="guide-grid">
+	<div>{{ phrase_html("docs.guide.compounding.1-match-name-and-level-three-1-rings") }}</div>
+	<div>{{ phrase_html("docs.guide.compounding.2-match-the-scroll-use-a-compound-scroll") }}</div>
+	<div>{{ phrase_html("docs.guide.compounding.3-count-the-copies-one-guaranteed-n-needs") }}</div>
+	<div>{{ phrase_html("docs.guide.compounding.4-check-every-slot-the-first-selected-item") }}</div>
+</div>
+
+<div class="divider"></div>
+<div class="title mt15">{{ phrase("docs.guide.compounding.scroll-grades") }}</div>
+<p>{{ phrase("docs.guide.compounding.match-the-scroll-to-the-item-s-current") }}</p>
+<div class="guide-scrolls">
+	<div>{{ phrase_html("docs.guide.compounding.normal-compound-scroll") }}</div>
+	<div>{{ phrase_html("docs.guide.compounding.high-high-compound-scroll") }}</div>
+	<div>{{ phrase_html("docs.guide.compounding.rare-rare-compound-scroll") }}</div>
+	<div>{{ phrase_html("docs.guide.compounding.legendary-legendary-compound-scroll") }}</div>
+</div>
+<div class="guide-note">{{ phrase("docs.guide.compounding.exalted-is-the-end-of-the-item-s") }}</div>
+
+<div class="divider"></div>
+<div class="title mt15">{{ phrase("docs.guide.compounding.offerings-grace") }}</div>
+<p>{{ phrase("docs.guide.compounding.an-offering-can-improve-the-chance-its-grade") }}</p>
+<div class="guide-offerings">
+	<div>{{ phrase_html("docs.guide.compounding.primling-an-offering-for-upgrade-and-compound-attempts") }}</div>
+	<div>{{ phrase_html("docs.guide.compounding.primordial-essence-a-stronger-offering-preview-its-exact") }}</div>
+</div>
+<p>{{ phrase("docs.guide.compounding.previous-attempts-can-contribute-grace-the-shrine-includes") }}</p>
+<div class="guide-note">{{ phrase("docs.guide.compounding.a-compoundable-item-becomes-exalted-at-the-end") }}</div>
+
+<div class="divider"></div>
+<div class="title mt15">CODE</div>
+<p>{{ phrase_html("docs.guide.compounding.compound-accepts-four-inventory-positions-an-optional-offering") }}</p>
+<div class="code">async function compound_three(name, level, minimum_chance) {
+	var copies = [];
+	for (var i = 0; i &lt; character.items.length; i++) {
+		var item = character.items[i];
+		if (item && item.name === name && (item.level || 0) === level) copies.push(i);
+	}
+	var scroll = locate_item("cscroll0");
+	if (copies.length &lt; 3 || scroll === -1) return;
+
+	var preview = await compound(copies[0], copies[1], copies[2], scroll, null, true);
+	game_log("Chance: " + (preview.chance * 100).toFixed(2) + "%");
+	if (preview.chance &lt; minimum_chance) return;
+
+	var result = await compound(copies[0], copies[1], copies[2], scroll);
+	game_log(result.success ? "Compound complete" : "Compound failed");
+}
+
+compound_three("ringsj", 0, 0.9).catch(show_json);</div>
+<p>{{ phrase_html("docs.guide.compounding.useful-references-locate-item-item-grade-item-properties") }}</p>
+<div class="guide-note">{{ phrase_html("docs.guide.compounding.if-compound-rejects-no-compound-started-if-it") }}</div>
+
+<div class="guide-related">{{ phrase_html("docs.guide.compounding.see-also-items-and-grades-upgrading-crafting-and") }}</div>
+
+<script>
+	$(".spcompound").html(sprite(G.npcs.newupgrade.skin, { height: 62 }));
+	[".ecompound0", ".ecompound1", ".ecompound2"].forEach(function (selector) {
+		$(selector).html(item_container({ skin: G.items.ringsj.skin }, { name: "ringsj", level: 0 }));
+	});
+	$(".ecompoundresult").html(item_container({ skin: G.items.ringsj.skin }, { name: "ringsj", level: 1 }));
+	$(".ecscroll0").html(item_container({ skin: G.items.cscroll0.skin }, { name: "cscroll0" }));
+	["cscroll0", "cscroll1", "cscroll2", "cscroll3"].forEach(function (name, grade) {
+		$(".ecscroll-grade" + grade).html(item_container({ skin: G.items[name].skin }, { name: name }));
+	});
+	$(".eprimling").html(item_container({ skin: G.items.offeringp.skin }, { name: "offeringp" }));
+	$(".eprimordial").html(item_container({ skin: G.items.offering.skin }, { name: "offering" }));
+</script>
+
+<style>
+	.guide-kicker{color:#79559A;font-size:18px;font-weight:bold;letter-spacing:2px}.guide-title{color:#5F3E83;font-size:44px;line-height:48px;margin:2px 0 12px}.title{color:#5F3E83;font-size:36px;margin-top:15px}.divider{margin-top:15px;height:5px;background-color:#A2A2A2;margin-left:-26px;margin-right:-26px}.guide-note{border-left:6px solid #79559A;background:#ECE4F3;padding:10px 14px;margin:12px 0}.guide-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:12px 0}.guide-grid>div{border:3px solid #B4A5C2;padding:10px}.guide-step{background:#5F3E83;color:white;display:inline-block;margin-right:7px;min-width:25px;text-align:center}.guide-place{display:flex;align-items:center;gap:14px;border:3px solid #B4A5C2;background:#F4EFF7;padding:10px 14px;margin:12px 0}.spcompound{min-width:60px;text-align:center}.guide-process{display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap;border:4px solid #79559A;background:#19151D;padding:12px;color:white;font-size:30px}.process-item{min-width:46px}.process-arrow{color:#D9B7F1;font-size:42px}.guide-process-caption{text-align:center;color:#666;margin:7px 0 14px}.guide-scrolls{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:12px 0}.guide-scrolls>div,.guide-offerings>div{border:3px solid #B4A5C2;padding:10px;text-align:center}.guide-scrolls span{display:block;min-height:46px;margin-bottom:5px}.guide-offerings{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:12px 0}.guide-offerings>div{display:grid;grid-template-columns:62px 1fr;align-items:center;text-align:left}.guide-offerings span{grid-row:1/3}.guide-related{border-top:2px dotted #AAA;margin-top:18px;padding-top:10px;color:#666}.guide-related span{color:#66408A;cursor:pointer;text-decoration:underline}@media(max-width:700px){.guide-grid{grid-template-columns:1fr}.guide-scrolls{grid-template-columns:1fr 1fr}}
+</style>

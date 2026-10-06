@@ -1,0 +1,14 @@
+<p><span class='dlabel'>accept_duel_challenge(name, timeout_ms)</span></p>
+<p>{{ phrase("docs.functions.accept_duel_challenge.accepts-a-live-duel-challenge-from-the-named") }}</p>
+<p>{{ phrase_html("docs.functions.accept_duel_challenge.returns-promise-resolving-after-the-duel-room-is") }}</p>
+<p>{{ phrase_html("docs.functions.accept_duel_challenge.promise-failures-unless-a-function-specific-note-says") }}</p>
+<p>{{ phrase_html("docs.functions.accept_duel_challenge.notes-pass-a-character-name-or-character-object") }}</p>
+<p>{{ phrase_html("docs.functions.accept_duel_challenge.example") }}</p>
+<div class='code'>async function example() {
+	var duel = await accept_duel_challenge("ChallengerName");
+	game_log("Duel: " + duel.id);
+}
+example();</div>
+
+<p></p>
+<span class='redlabel'>{{ phrase("docs.reference.source_code") }}</span>

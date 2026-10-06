@@ -1,0 +1,916 @@
+var fs = require("fs"),
+	path = require("path");
+var keys = require("./secretsandconfig/keys");
+var options = require("./secretsandconfig/options");
+var { get_seo_paths } = require("./seo_paths.js");
+var localization = require("./languages");
+var phrase = localization.phrase,
+	phrase_html = localization.phrase_html;
+
+eval("" + fs.readFileSync(path.resolve(__dirname, "common/init.js")));
+reinit_from_options();
+
+var web_assets = require("./web_assets").create_web_assets({ root: __dirname, read_data: get_browser_data, local: Local });
+app.all("/data.js", web_assets.serve_data);
+app.use("/sounds", express.static("./sounds", { maxAge: "30d" }));
+app.get("/phrases/:language.js", localization.serve);
+app.use(
+	localization.middleware(function (req) {
+		return get_user(req);
+	}),
+);
+
+// Override MongoDB connection from common/init.js with keys.mongodb_uri
+if (keys.mongodb_uri) {
+	client = new MongoClient(keys.mongodb_uri, keys.mongodb_config);
+	client.connect();
+	db = client.db(keys.mongodb_name);
+}
+
+eval("" + fs.readFileSync(path.resolve(__dirname, "version.js")));
+var update_notes = require("./update_notes.js");
+var latest_steam_news = require("./steam_news.js").create_news_loader();
+if (Local) {
+	const filePath = path.join(__dirname, "version.js");
+	let lines = fs.readFileSync(filePath, "utf-8").split("\n");
+	lines[0] = lines[0].replace(/Version\s*=\s*(\d+);/, (match, p1) => {
+		const newVersion = parseInt(p1, 10) + 1;
+		return `Version = ${newVersion};`;
+	});
+	fs.writeFileSync(filePath, lines.join("\n"), "utf-8");
+}
+
+eval("" + fs.readFileSync(path.resolve(__dirname, "common/js/common_functions.js")));
+eval("" + fs.readFileSync(path.resolve(__dirname, "common/mongodb_functions.js")));
+eval("" + fs.readFileSync(path.resolve(__dirname, "common/handlers.js")));
+
+// Stub post-init functions so models.js can reference them (full definitions in adventure_functions.js)
+function post_get_init_user(entity) {}
+function post_get_init_character(entity) {}
+
+eval("" + fs.readFileSync(path.resolve(__dirname, "models.js")));
+
+// /design — order follows Python config.py import order (dependencies must load first)
+eval("" + fs.readFileSync(path.resolve(__dirname, "design/projectiles.js")));
+eval("" + fs.readFileSync(path.resolve(__dirname, "design/animations.js"))); // needs projectiles
+eval("" + fs.readFileSync(path.resolve(__dirname, "design/achievements.js")));
+eval("" + fs.readFileSync(path.resolve(__dirname, "design/game_design.js")));
+eval("" + fs.readFileSync(path.resolve(__dirname, "design/games.js")));
+eval("" + fs.readFileSync(path.resolve(__dirname, "design/conditions.js")));
+eval("" + fs.readFileSync(path.resolve(__dirname, "design/sprites.js")));
+eval("" + fs.readFileSync(path.resolve(__dirname, "design/dimensions.js")));
+eval("" + fs.readFileSync(path.resolve(__dirname, "design/monsters.js")));
+eval("" + fs.readFileSync(path.resolve(__dirname, "design/maps.js")));
+eval("" + fs.readFileSync(path.resolve(__dirname, "design/npcs.js")));
+eval("" + fs.readFileSync(path.resolve(__dirname, "design/multipliers.js")));
+eval("" + fs.readFileSync(path.resolve(__dirname, "design/items.js")));
+eval("" + fs.readFileSync(path.resolve(__dirname, "design/classes.js")));
+eval("" + fs.readFileSync(path.resolve(__dirname, "design/levels.js")));
+eval("" + fs.readFileSync(path.resolve(__dirname, "design/upgrades.js")));
+eval("" + fs.readFileSync(path.resolve(__dirname, "design/drops.js"))); // needs items
+eval("" + fs.readFileSync(path.resolve(__dirname, "design/skills.js"))); // needs conditions
+eval("" + fs.readFileSync(path.resolve(__dirname, "design/events.js")));
+eval("" + fs.readFileSync(path.resolve(__dirname, "design/recipes.js")));
+eval("" + fs.readFileSync(path.resolve(__dirname, "design/titles.js")));
+eval("" + fs.readFileSync(path.resolve(__dirname, "design/tokens.js")));
+eval("" + fs.readFileSync(path.resolve(__dirname, "design/cosmetics.js")));
+eval("" + fs.readFileSync(path.resolve(__dirname, "design/precomputed_images.js")));
+
+// docs
+eval("" + fs.readFileSync(path.resolve(__dirname, "docs/directory.js")));
+
+eval("" + fs.readFileSync(path.resolve(__dirname, "adventure_functions.js")));
+eval("" + fs.readFileSync(path.resolve(__dirname, "filters.js")));
+eval("" + fs.readFileSync(path.resolve(__dirname, "api.js")));
+eval("" + fs.readFileSync(path.resolve(__dirname, "mainframe.js")));
+eval("" + fs.readFileSync(path.resolve(__dirname, "admin_bots.js")));
+eval("" + fs.readFileSync(path.resolve(__dirname, "mcp_api.js")));
+eval("" + fs.readFileSync(path.resolve(__dirname, "crons.js")));
+eval("" + fs.readFileSync(path.resolve(__dirname, "common/admin.js")));
+eval("" + fs.readFileSync(path.resolve(__dirname, "admin_dashboard.js")));
+
+// Stripe
+try {
+	var stripe = require("stripe")(Dev ? keys.stripe_test_api_key : keys.stripe_api_key);
+} catch (e) {
+	console.error("Stripe not loaded", e.message);
+}
+
+// ==================== ROUTES ====================
+
+// Auth callbacks bypass common's development URL logger: OpenID queries contain credentials.
+var steam_auth_app = express.Router();
+steam_auth_app.use(express.urlencoded({ extended: false, limit: "4kb" }));
+steam_auth_app.use(express.json({ limit: "4kb" }));
+steam_auth_app.use(cookieParser());
+steam_auth_app.use(localization.middleware((req) => get_user(req)));
+
+var steam_signup = require("./steam_signup").create_steam_signup({
+	key: () => keys.steam_publisher_web_apikey,
+	get_user,
+	purify_email,
+	local_origin: Local ? options.base_url : null,
+	signup(args, grant) {
+		args.res.infs = [];
+		return signup_or_login_api(args, grant);
+	},
+	async render(req, res, form) {
+		var domain = await get_domain(req);
+		res.send(nunjucks.render("htmls/steam_signup.html", { domain, ...form }));
+	},
+});
+steam_auth_app.get("/steam-signup", steam_signup.page);
+steam_auth_app.post("/steam-signup/start", steam_signup.start);
+steam_auth_app.get("/steam-signup/callback", steam_signup.callback);
+steam_auth_app.post("/steam-signup/complete", steam_signup.complete);
+
+var steam_signin = require("./steam_signin").create_steam_signin({
+	client,
+	collection: db.collection("steam_auth"),
+	users: db.collection("user"),
+	get_user,
+	get_new_auth,
+	get_steam_id: get_steam_login_id,
+	set_enabled: set_steam_login,
+	auth_cookie: options.cookie_key,
+	local_origin: Local ? options.base_url : null,
+	preference(req, user) {
+		return localization.explicit_cookie(req) || !localization.initialized(user) ? localization.preference_fields(req, user) : {};
+	},
+	async finish_login(req, res, user, auth) {
+		localization.bind_user(req, user);
+		var domain = await get_domain(req, user);
+		set_cookie(res, options.cookie_key, get_id(user) + "-" + auth, domain.domain);
+	},
+	async render(req, res, form) {
+		var domain = await get_domain(req);
+		res.send(nunjucks.render("htmls/steam_signin.html", { domain, ...form }));
+	},
+});
+steam_auth_app.get("/steam-signin", steam_signin.page);
+steam_auth_app.post("/steam-signin/start", steam_signin.start);
+steam_auth_app.get("/steam-signin/callback", steam_signin.callback);
+steam_auth_app.get("/steam-signin/accounts", steam_signin.accounts);
+steam_auth_app.post("/steam-signin/accounts", steam_signin.accounts);
+steam_auth_app.post("/steam-signin/complete", steam_signin.complete);
+steam_auth_app.post("/steam-signin/cancel", steam_signin.cancel);
+
+// Main page / Selection
+app.get("/", async (req, res, next) => {
+	var user = await get_user(req),
+		domain = await get_domain(req, user);
+	domain.login_mode = req.query.login === "1";
+	await render_selection(req, res, user, domain);
+});
+
+// External Hub page; the in-game COM panel is separate.
+app.get("/comm", (req, res) => res.redirect(301, "/hub" + req.originalUrl.slice(req.path.length)));
+app.get("/hub", async (req, res, next) => {
+	var user = await get_user(req),
+		domain = await get_domain(req, user);
+	var servers = await get_browser_servers(req);
+	var total = 0,
+		characters = [],
+		data = null;
+	for (var i = 0; i < servers.length; i++) total += gf(servers[i], "players", 0);
+	if (user) {
+		characters = await get_characters(user);
+		domain.characters = characters_to_client(characters);
+		data = await get_user_data(user);
+	}
+	domain.servers = servers_to_client(domain, servers);
+	domain.characters = domain.characters || [];
+	var server = select_server(req, user, servers, characters);
+	res.set("Cache-Control", "no-store");
+	res.status(200).send(
+		nunjucks.render("htmls/comm.html", {
+			domain: domain,
+			user: user,
+			user_data: data,
+			server: server,
+			servers: servers,
+			total: total,
+			characters: characters,
+		}),
+	);
+});
+
+// Mainframe character control
+app.get("/mainframe", async (req, res) => {
+	var user = await get_user(req),
+		domain = await get_domain(req, user);
+	domain.title = phrase("server.page.adventure_land_mainframe");
+	return res
+		.status(200)
+		.set("Cache-Control", "no-store")
+		.send(nunjucks.render("htmls/mainframe.html", { domain: domain, user: user }));
+});
+
+function get_vscode_extension_info() {
+	var extension_dir = path.resolve(__dirname, "utility/vscode-adventureland");
+	var info = {
+		id: "adventureland.adventure-land-code-sync",
+		name: "Adventure Land CODE Sync",
+		version: "0.2.0",
+		file: "adventure-land-code-sync-0.2.0.vsix",
+		marketplace_url: "https://marketplace.visualstudio.com/items?itemName=adventureland.adventure-land-code-sync",
+		marketplace_available: false,
+		vscode_url: "vscode:extension/adventureland.adventure-land-code-sync",
+		download_url: "",
+		download_available: false,
+	};
+	try {
+		var pkg = JSON.parse(fs.readFileSync(path.join(extension_dir, "package.json"), "utf8"));
+		info.name = pkg.displayName || info.name;
+		info.version = pkg.version || info.version;
+		info.id = (pkg.publisher || "adventureland") + "." + (pkg.name || "adventure-land-code-sync");
+		info.file = (pkg.name || "adventure-land-code-sync") + "-" + info.version + ".vsix";
+		info.marketplace_url = "https://marketplace.visualstudio.com/items?itemName=" + info.id;
+		info.vscode_url = "vscode:extension/" + info.id;
+	} catch (e) {}
+	var vsix_path = path.join(extension_dir, info.file);
+	if (fs.existsSync(vsix_path)) {
+		info.download_url = "/vscode/" + info.file;
+		info.download_available = true;
+		info.vsix_path = vsix_path;
+	}
+	return info;
+}
+
+app.get("/codes", async (req, res) => {
+	return res.redirect(302, "/vscode");
+});
+
+app.get("/vscode", async (req, res) => {
+	var user = await get_user(req),
+		domain = await get_domain(req, user);
+	domain.title = phrase("server.page.adventure_land_for_vs_code");
+	return res
+		.status(200)
+		.set("Cache-Control", "no-store")
+		.send(nunjucks.render("htmls/vscode.html", { domain: domain, user: user, extension: get_vscode_extension_info() }));
+});
+
+app.get("/vscode/:file", async (req, res, next) => {
+	var extension = get_vscode_extension_info();
+	if (!extension.download_available || req.params.file !== extension.file) return next();
+	return res.download(extension.vsix_path, extension.file);
+});
+
+// Character profile page
+app.get("/character/:name", async (req, res, next) => {
+	var user = await get_user(req),
+		domain = await get_domain(req, user);
+	var character = await get_character(req.params.name);
+	if (!character) return res.status(200).send(nunjucks.render("htmls/simple_message.html", { domain: domain, message: phrase("server.page.not_found") }));
+	if (!user) {
+		var ref = character.private ? req.params.name : character.owner;
+		set_cookie(res, "referrer", ref, domain.domain);
+		var ip = await get_ip_info(req);
+		ip.referrer = ref;
+		await put_ip_info(ip);
+	}
+	domain.title = character.info.name || character.name;
+	res.status(200).send(nunjucks.render("htmls/character.html", { domain: domain, character: character }));
+});
+
+// All characters listing
+app.get("/characters", async (req, res, next) => {
+	var user = await get_user(req),
+		domain = await get_domain(req, user);
+	var characters = await db.collection("character").find({}).sort({ level: -1 }).limit(500).toArray();
+	domain.title = phrase("server.page.characters");
+	res.status(200).send(nunjucks.render("htmls/player.html", { domain: domain, characters: characters }));
+});
+
+// Player profile page
+app.get("/player/:name", async (req, res, next) => {
+	var user = await get_user(req),
+		domain = await get_domain(req, user);
+	var character = await get_character(req.params.name);
+	if (!character) return res.status(200).send(nunjucks.render("htmls/simple_message.html", { domain: domain, message: phrase("server.page.not_found") }));
+	var player = await get(character.owner);
+	if (!player) return res.status(200).send(nunjucks.render("htmls/simple_message.html", { domain: domain, message: phrase("server.page.not_found") }));
+	if (!user) {
+		var ref = character.private ? req.params.name : get_id(player);
+		set_cookie(res, "referrer", ref, domain.domain);
+		var ip = await get_ip_info(req);
+		ip.referrer = ref;
+		await put_ip_info(ip);
+	}
+	domain.title = player.name;
+	var characters = [];
+	var entities;
+	if (character.private) {
+		entities = [character];
+		domain.title = character.info.name || character.name;
+	} else {
+		entities = await db
+			.collection("character")
+			.find({ owner: character.owner, private: { $ne: true } })
+			.toArray();
+	}
+	if (!entities.length) {
+		entities = [character];
+		domain.title = character.info.name || character.name;
+	}
+	var player_chars = gf(player, "characters", []);
+	for (var i = 0; i < player_chars.length; i++) {
+		for (var j = 0; j < entities.length; j++) {
+			if (simplify_name(entities[j].name) === simplify_name(player_chars[i].name)) {
+				characters.push(entities[j]);
+			}
+		}
+	}
+	res.status(200).send(nunjucks.render("htmls/player.html", { domain: domain, characters: characters }));
+});
+
+// Merchants listing
+app.get("/merchants", async (req, res, next) => {
+	var user = await get_user(req),
+		domain = await get_domain(req, user);
+	domain.title = phrase("server.page.all_online_merchants");
+	var entities = await db.collection("character").find({ online: true, type: "merchant" }).toArray();
+	res.status(200).send(nunjucks.render("htmls/player.html", { domain: domain, characters: entities, merchants: true }));
+});
+
+// Character + server selection (enter game)
+app.get("/character/:name/in/:region/:sname", async (req, res, next) => {
+	if (redirect_inactive_server(req, res)) return;
+	var user = await get_user(req);
+	var domain = await get_domain(req, user),
+		level = 80;
+	var servers = await get_browser_servers(req);
+	if ((req.get("host") || "").toLowerCase().split(":")[0] === "cloudflare.adventure.land" && !servers.some((server) => server.region === req.params.region && server.name === req.params.sname))
+		return res.redirect("/");
+	var code = req.query.code;
+	if (code) domain.explicit_slot = code;
+	var user_chars = gf(user, "characters", []);
+	for (var i = 0; i < user_chars.length; i++) {
+		if (simplify_name(user_chars[i].name) === simplify_name(req.params.name)) {
+			domain.character_name = user_chars[i].name;
+			domain.url_character = user_chars[i].id;
+			level = user_chars[i].level;
+		}
+	}
+	for (var i = 0; i < servers.length; i++) {
+		if (servers[i].region === req.params.region && servers[i].name === req.params.sname) {
+			domain.url_address = servers[i].address;
+			domain.url_path = servers[i].path;
+		}
+	}
+	await render_selection(req, res, user, domain, level);
+});
+
+// Server selection
+app.get("/server/:region/:sname", async (req, res, next) => {
+	if (redirect_inactive_server(req, res)) return;
+	var user = await get_user(req);
+	var domain = await get_domain(req, user);
+	var servers = await get_browser_servers(req);
+	var S = null;
+	for (var i = 0; i < servers.length; i++) {
+		if (servers[i].region === req.params.region && servers[i].name === req.params.sname) S = servers[i];
+	}
+	await render_selection(req, res, user, domain, 80, S);
+});
+
+// Email verification
+app.get("/ev/:uid/:v", async (req, res, next) => {
+	var domain = await get_domain(req);
+	var user = await get(normalize_user_id(req.params.uid));
+	var message = phrase("server.page.verification_failed");
+	if (user && !gf(user, "verified")) {
+		if (gf(user, "everification") === req.params.v) {
+			var R = await tx(
+				async () => {
+					R.element = await tx_get(A.user);
+					R.element.info.verified = true;
+					await tx_save(R.element);
+				},
+				{ user: user },
+			);
+			if (!R.failed) message = phrase("server.page.verification_complete");
+		}
+	} else if (user) {
+		message = phrase("server.page.verification_already");
+	}
+	res.status(200).send(nunjucks.render("htmls/simple_message.html", { domain: domain, message: message }));
+});
+
+// Password reset page
+app.get("/reset/:uid/:key", async (req, res, next) => {
+	var domain = await get_domain(req);
+	var user = await get(normalize_user_id(req.params.uid));
+	if (user && gf(user, "password_key", "123") === req.params.key) {
+		res.status(200).send(nunjucks.render("htmls/contents/password_reset.html", { domain: domain, user: user, id: req.params.uid, key: req.params.key }));
+	} else {
+		res.status(200).send(nunjucks.render("htmls/simple_message.html", { domain: domain, message: phrase("server.page.invalid_password_reset_url") }));
+	}
+});
+
+// User code serving
+app.all("/code.js", async (req, res, next) => {
+	var user = await get_user(req),
+		domain = await get_domain(req, user);
+	var name = req.query.name || req.body.name;
+	if (user) {
+		var data = await get_user_data(user);
+		var code_list = gf(data, "code_list", {});
+		var slot = find_code_slot(code_list, name);
+		if (slot !== null) {
+			var code = await get("IE_USERCODE-" + get_id(user) + "-" + slot);
+			if (code)
+				return res
+					.status(200)
+					.set("Content-Type", "application/javascript")
+					.send("" + code.info.code);
+		}
+	}
+	if (req.query.xrequire)
+		res
+			.status(200)
+			.set("Content-Type", "application/javascript")
+			.send("throw(" + JSON.stringify(phrase("server.code.xrequire_not_found")) + ")");
+	else
+		res
+			.status(200)
+			.set("Content-Type", "application/javascript")
+			.send("game_log(" + JSON.stringify(phrase("server.code.load_not_found")) + ",colors.code_error)");
+});
+
+// Called at startup and in the background, never for a cached data.js request.
+async function get_browser_data() {
+	var geometry = {},
+		ids = Object.keys(maps).filter((id) => !maps[id].ignore);
+	var records = await Promise.all(ids.map((id) => get("MP_" + maps[id].key)));
+	ids.forEach((id, index) => {
+		if (records[index]) geometry[id] = records[index].info.data;
+	});
+	return {
+		version: Version,
+		achievements: achievements,
+		animations: animations,
+		monsters: monsters,
+		sprites: sprites,
+		maps: maps,
+		geometry: geometry,
+		npcs: npcs,
+		tilesets: tilesets,
+		imagesets: imagesets,
+		items: items,
+		sets: sets,
+		craft: craft,
+		titles: titles,
+		tokens: tokens,
+		dismantle: dismantle,
+		conditions: conditions,
+		cosmetics: cosmetics,
+		projectiles: projectiles,
+		classes: classes,
+		dimensions: dimensions,
+		levels: levels,
+		upgrades: upgrades,
+		compounds: compounds,
+		monster_gold: monster_gold,
+		positions: positions,
+		skills: skills,
+		games: games,
+		events: events,
+		images: precomputed.images,
+		multipliers: multipliers,
+		docs: docs,
+		drops: drops,
+	};
+}
+
+// Shells / Payment page
+app.get("/shells", async (req, res, next) => {
+	var user = await get_user(req),
+		domain = await get_domain(req, user);
+	var servers = await get_browser_servers(req);
+	var server = select_server(req, user, servers);
+	domain.stripe_enabled = true;
+	res.status(200).send(nunjucks.render("htmls/payments.html", { domain: domain, user: user, server: server, extra_shells: extra_shells }));
+});
+
+app.get("/steam-purchase", async (req, res, next) => {
+	var domain = await get_domain(req);
+	res.set("Cache-Control", "no-store");
+	res.set("X-Robots-Tag", "noindex, nofollow");
+	res.status(200).send(nunjucks.render("htmls/steam_purchase.html", { domain: domain }));
+});
+
+app.get("/steam-purchase-status", async (req, res, next) => {
+	var order_id = "" + (req.query.order_id || ""),
+		return_token = "" + (req.query.token || "");
+	res.set("Cache-Control", "no-store");
+	if (!/^[0-9]{1,20}$/.test(order_id) || !/^[a-f0-9]{48}$/.test(return_token)) return res.status(404).send({ state: "invalid" });
+
+	var purchase = await db.collection(STEAM_PURCHASE_COLLECTION).findOne({ _id: order_id, return_token: return_token });
+	if (!purchase) return res.status(404).send({ state: "invalid" });
+	if (purchase.state === "delivered") return res.status(200).send({ state: "complete", shells: purchase.shells });
+	if (["declined", "init_failed", "checkout_unavailable", "failed"].indexOf(purchase.state) !== -1) return res.status(200).send({ state: "failed" });
+	return res.status(200).send({ state: "processing" });
+});
+
+// Resort Map Editor - GET
+app.get("/map/:name/:suffix?", async (req, res, next) => {
+	var name = req.params.name;
+	if (!name) return res.status(404).send("");
+	name = name.split("/")[0];
+	var user = await get_user(req),
+		domain = await get_domain(req, user);
+	if (security_threat(req, domain)) return res.status(403).send("security_threat");
+	if (!user || (!name.startsWith(get_id(user) + "_") && !gf(user, "map_editor"))) return res.status(403).send("");
+	var number = name.split("_")[1];
+	if (["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"].indexOf(number) === -1) return res.status(400).send("");
+	var map = await get("MP_" + name);
+	var mtilesets = JSON.parse(JSON.stringify(tilesets));
+	if (!mtilesets.this_map) mtilesets.this_map = { file: "/images/tiles/map/resort_default.png" };
+	if (!mtilesets.this_map_a) mtilesets.this_map_a = { file: "/images/tiles/map/resort_default_a.png" };
+	res.status(200).send(nunjucks.render("utility/htmls/map_editor.html", { domain: domain, name: name, map: map, tilesets: mtilesets, community: 1, resort: 1 }));
+});
+
+// Resort Map Editor - POST
+app.post("/map/:name/:suffix?", async (req, res, next) => {
+	var data = req.body.data;
+	var name = req.params.name;
+	if (!name) return res.status(404).send("");
+	name = name.split("/")[0];
+	var user = await get_user(req),
+		domain = await get_domain(req, user);
+	if (!user || !name.startsWith(get_id(user) + "_")) return res.status(403).send("");
+	var number = name.slice((get_id(user) + "_").length);
+	if (!/^(?:[1-9]|10)$/.test(number)) return res.status(400).send("");
+	var map = await get("MP_" + name);
+	if (!map) map = { _id: "MP_" + name, created: new Date(), info: {}, blobs: ["info"] };
+	if (typeof data === "string") data = JSON.parse(data);
+	map.info.data = data;
+	process_map(map);
+	map.player = true;
+	map.updated = new Date();
+	await save(map);
+	res.status(200).send("" + to_pretty_num(JSON.stringify(map.info.data).length));
+});
+
+// Community map viewer (public, read-only) — mirrors Flask /communitymaps/<name> GET.
+// No POST handler intentionally: writes are not exposed here.
+app.get("/communitymaps/:name", async (req, res, next) => {
+	var name = req.params.name;
+	if (!name) return res.status(404).send(phrase("server.page.no_map"));
+	name = name.split("/")[0];
+	var user = await get_user(req),
+		domain = await get_domain(req, user);
+	var map = await get("MP_" + name);
+	res.status(200).send(
+		nunjucks.render("utility/htmls/map_editor.html", {
+			domain: domain,
+			name: "main",
+			map: map,
+			tilesets: tilesets,
+			community: 1,
+		}),
+	);
+});
+
+// Artist / admin map editor — mirrors Flask /editmap and /editmap/<name>.
+// Requires user with map_editor flag or admin.
+app.get("/editmap", async (req, res, next) => {
+	res.redirect("/editmap/main");
+});
+
+app.get("/editmap/:name", async (req, res, next) => {
+	var name = req.params.name;
+	if (!name) return res.status(404).send(phrase("server.page.no_map"));
+	name = name.split("/")[0];
+	var user = await get_user(req),
+		domain = await get_domain(req, user);
+	if (!user || (!gf(user, "map_editor") && !is_admin(user))) return res.status(403).send(phrase("server.page.not_permitted"));
+	var map = await get("MP_" + name);
+	res.status(200).send(
+		nunjucks.render("utility/htmls/map_editor.html", {
+			domain: domain,
+			name: name,
+			map: map,
+			tilesets: tilesets,
+			community: 1,
+		}),
+	);
+});
+
+app.post("/editmap/:name", async (req, res, next) => {
+	var data = req.body.data;
+	var name = req.params.name;
+	if (!name) return res.status(404).send(phrase("server.page.no_map"));
+	name = name.split("/")[0];
+	var user = await get_user(req);
+	if (!user || (!gf(user, "map_editor") && !is_admin(user))) return res.status(403).send(phrase("server.page.not_permitted"));
+	var map = await get("MP_" + name);
+	if (!map) map = { _id: "MP_" + name, created: new Date(), info: {}, blobs: ["info"] };
+	if (typeof data === "string") data = JSON.parse(data);
+	map.info.data = data;
+	process_map(map);
+	map.updated = new Date();
+	await save(map);
+	// Mirror Flask copy_map(name, "test"): push saved data to MP_test for in-game testing.
+	// Intentionally bypasses copy_map_api's in-use guard — this is the artist test loop.
+	var test_map = await get("MP_test");
+	if (!test_map) test_map = { _id: "MP_test", name: "test", created: new Date(), info: {}, blobs: ["info"] };
+	test_map.info = JSON.parse(JSON.stringify(map.info));
+	test_map.updated = new Date();
+	await save(test_map);
+	res.status(200).send("" + to_pretty_num(JSON.stringify(map.info.data).length));
+});
+
+// Maps listing
+app.get("/maps/:order?", async (req, res, next) => {
+	var domain = await get_domain(req);
+	var order = req.params.order || "";
+	var url = Dev ? domain.base_url + "/editmap" : domain.base_url + "/communitymaps";
+	var html = "<style> html{background-color:gray}</style>";
+	var query = order === "key" ? {} : {};
+	var sort = order === "key" ? { _id: 1 } : { updated: -1 };
+	var maps_list = await db.collection("map").find(query).sort(sort).limit(5000).toArray();
+	for (var i = 0; i < maps_list.length; i++) {
+		var m = maps_list[i];
+		html +=
+			"<div style='margin-bottom: 2px'><a href='" +
+			url +
+			"/" +
+			get_id(m).replace("MP_", "") +
+			"' target='_blank' style='color: white; font-weight: bold; text-decoration:none'>" +
+			get_id(m).replace("MP_", "") +
+			"</a></div>";
+	}
+	res.status(200).send(html);
+});
+
+// Community sprite-sheet selector (public — mirrors Flask /communityselector)
+// Renders only imagesets pre-defined in design/sprites.js — no filesystem access,
+// no user-controlled paths reach nunjucks or any IO.
+app.get("/communityselector", async (req, res, next) => {
+	var user = await get_user(req),
+		domain = await get_domain(req, user);
+	res.status(200).send(nunjucks.render("utility/htmls/imagesets/select-imageset.html", { domain: domain, imagesets: imagesets }));
+});
+
+app.get("/communityselector/:name", async (req, res, next) => {
+	var name = req.params.name;
+	if (!name) return res.status(404).send("");
+	name = name.split("/")[0];
+	if (!Object.prototype.hasOwnProperty.call(imagesets, name)) return res.status(404).send("");
+	var imageset = imagesets[name];
+	var size = imageset.size,
+		width = imageset.columns * size,
+		height = imageset.rows * size,
+		xs = [],
+		ys = [];
+	for (var i = 0; i < imageset.columns; i++) xs.push(i);
+	for (var j = 0; j < imageset.rows; j++) ys.push(j);
+	var user = await get_user(req),
+		domain = await get_domain(req, user);
+	res.status(200).send(
+		nunjucks.render("utility/htmls/imagesets/selector.html", {
+			domain: domain,
+			name: name,
+			file: imageset.file,
+			size: size,
+			width: width,
+			height: height,
+			xs: xs,
+			ys: ys,
+			scale: 3,
+		}),
+	);
+});
+
+// Static pages
+app.get("/privacy", async (req, res, next) => {
+	var user = await get_user(req),
+		domain = await get_domain(req, user);
+	res.status(200).send(nunjucks.render("htmls/page.html", { domain: domain, user: user, content: "privacy" }));
+});
+app.get("/terms", async (req, res, next) => {
+	var user = await get_user(req),
+		domain = await get_domain(req, user);
+	res.status(200).send(nunjucks.render("htmls/page.html", { domain: domain, user: user, content: "terms" }));
+});
+app.get("/contact", async (req, res, next) => {
+	var user = await get_user(req),
+		domain = await get_domain(req, user);
+	res.status(200).send(nunjucks.render("htmls/page.html", { domain: domain, user: user, content: "contact" }));
+});
+app.get("/credits", async (req, res, next) => {
+	var user = await get_user(req),
+		domain = await get_domain(req, user);
+	res.status(200).send(nunjucks.render("htmls/page.html", { domain: domain, user: user, content: "credits" }));
+});
+
+// Docs
+app.get("/docs/:path0?/:path1?/:path2?/:path3?", async (req, res, next) => {
+	var user = await get_user(req),
+		domain = await get_domain(req, user);
+	var p = [req.params.path0, req.params.path1, req.params.path2, req.params.path3];
+	set_docs_seo(domain, p);
+	res.status(200).send(nunjucks.render("htmls/docs.html", { domain: domain, user: user, content: "docs", dpath: p, extras: true }));
+});
+
+app.get("/robots.txt", function (req, res) {
+	res.type("text/plain").send("User-agent: *\nAllow: /\nSitemap: " + SEO_ORIGIN + "/sitemap.xml\n");
+});
+
+app.get("/sitemap.xml", function (req, res) {
+	var guide_articles = fs
+		.readdirSync(path.resolve(__dirname, "docs/guide"))
+		.filter(function (file) {
+			return file.endsWith(".html");
+		})
+		.map(function (file) {
+			return file.slice(0, -5);
+		});
+	var code_articles = fs
+		.readdirSync(path.resolve(__dirname, "docs/articles"))
+		.filter(function (file) {
+			return file.endsWith(".html");
+		})
+		.map(function (file) {
+			return file.slice(0, -5);
+		});
+	var paths = get_seo_paths({ docs: docs, guide_articles: guide_articles, code_articles: code_articles, items: items, monsters: monsters });
+	var urls = paths
+		.map(function (seo_path) {
+			return "\t<url><loc>" + SEO_ORIGIN + seo_path + "</loc></url>";
+		})
+		.join("\n");
+	res.type("application/xml").send('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + urls + "\n</urlset>\n");
+});
+
+// Runner, executor, logs pages
+app.get("/runner", async (req, res, next) => {
+	var domain = await get_domain(req);
+	res.status(200).send(nunjucks.render("htmls/runner.html", { domain: domain }));
+});
+app.get("/executor", async (req, res, next) => {
+	var domain = await get_domain(req);
+	res.status(200).send(nunjucks.render("htmls/executor.html", { domain: domain }));
+});
+app.get("/logs", async (req, res, next) => {
+	var user = await get_user(req),
+		domain = await get_domain(req, user);
+	res.status(200).send(nunjucks.render("htmls/logs.html", { domain: domain, user: user }));
+});
+app.get("/linux", async (req, res, next) => {
+	var user = await get_user(req),
+		domain = await get_domain(req, user);
+	res.status(200).send(nunjucks.render("htmls/linux.html", { domain: domain, user: user }));
+});
+app.get("/macos", async (req, res, next) => {
+	var user = await get_user(req),
+		domain = await get_domain(req, user);
+	res.status(200).send(nunjucks.render("htmls/macos.html", { domain: domain, user: user }));
+});
+// The web archive lists a release's changes as text: one line per group with names, for players without the game open.
+function release_archive_groups(release) {
+	var order = ["map", "monster", "npc", "event", "item", "set", "craft", "dismantle", "drop", "skill", "condition", "cx", "title", "token", "class", "achievement", "game", "table", "guide", "doc", "code", "fixed", "improved"],
+		sections = { item: items, craft: items, dismantle: items, token: items, monster: monsters, map: maps, npc: npcs, event: events, skill: skills, condition: conditions, set: sets, class: classes, achievement: achievements },
+		groups = {};
+	function name(ref) {
+		var at = ref.indexOf(":"),
+			type = ref.slice(0, at),
+			id = ref.slice(at + 1),
+			def = sections[type] && sections[type][id],
+			key = { npc: "name", event: "name", skill: "name", condition: "name", set: "name", class: "name", achievement: "name", guide: "title", article: "title" }[type],
+			phrase_id = type == "guide" ? "interaction." + id + ".title" : type == "article" ? "directory.guide." + id + ".title" : type + "." + id + "." + key;
+		if (key && phrase(phrase_id) !== phrase_id) return phrase(phrase_id);
+		if (type == "guide" && docs.interactions[id]) return docs.interactions[id].title;
+		if (type == "code") return id + "()";
+		return (def && def.name) || id;
+	}
+	(release.changes || []).forEach(function (entry) {
+		var ref = entry.new || entry.changed || entry.removed,
+			type = entry.fixed ? "fixed" : entry.improved ? "improved" : ref.slice(0, ref.indexOf(":")),
+			group = type == "article" ? "guide" : type,
+			line = ref ? name(ref) + (entry.new ? "" : " (" + phrase("client.update_notes.tag." + (entry.changed ? "changed" : "removed")) + ")") : entry.text;
+		(groups[group] = groups[group] || []).push(line);
+	});
+	return order
+		.filter(function (group) {
+			return groups[group];
+		})
+		.map(function (group) {
+			return { label: phrase("client.update_notes.group." + group), lines: groups[group] };
+		});
+}
+
+app.get("/allnotes", async (req, res, next) => {
+	var user = await get_user(req),
+		domain = await get_domain(req, user),
+		notes = localization.translate_notes(update_notes, domain.language).map(function (note) {
+			if (note.title !== undefined) note.groups = release_archive_groups(note);
+			return note;
+		});
+	res.status(200).send(nunjucks.render("htmls/allnotes.html", { domain: domain, user: user, update_notes: notes }));
+});
+app.get("/update-notes", function (req, res) {
+	var page_size = 20,
+		offset = Math.max(0, parseInt(req.query.offset, 10) || 0),
+		notes = localization.translate_notes(update_notes.slice(offset, offset + page_size));
+	res.status(200).send({ notes: notes, more: offset + notes.length < update_notes.length });
+});
+app.get("/steam-news", async function (req, res) {
+	var post = await latest_steam_news();
+	res.set("Cache-Control", "public, max-age=60");
+	res.status(post ? 200 : 503).send(post || { error: phrase("server.page.steam_news_unavailable") });
+});
+app.get("/roadmap", async (req, res, next) => {
+	var user = await get_user(req),
+		domain = await get_domain(req, user);
+	res.status(200).send(nunjucks.render("htmls/roadmap.html", { domain: domain, user: user }));
+});
+app.get("/realm/:map?", async (req, res, next) => {
+	if (req.params.map && (!Object.prototype.hasOwnProperty.call(maps, req.params.map) || maps[req.params.map].ignore)) return next();
+	var user = await get_user(req),
+		domain = await get_domain(req, user);
+	domain.title = phrase("server.page.realm_atlas_adventure_land");
+	res.set("Cache-Control", "no-store");
+	res.set("X-Robots-Tag", "noindex, nofollow");
+	res.status(200).send(nunjucks.render("htmls/realm.html", { domain: domain, user: user }));
+});
+app.get("/drm-free", async (req, res, next) => {
+	var user = await get_user(req),
+		domain = await get_domain(req, user);
+	res.status(200).send(nunjucks.render("htmls/drmfree.html", { domain: domain, user: user }));
+});
+app.get("/it-is-what-it-is", async (req, res, next) => {
+	var user = await get_user(req),
+		domain = await get_domain(req, user);
+	res.status(200).send(nunjucks.render("htmls/disclaimers.html", { domain: domain, user: user }));
+});
+
+// Dev rearm
+app.get("/rearm", async (req, res, next) => {
+	if (!Dev) return res.status(403).send("");
+	// Free all servers and unlock all
+	await db.collection("server").updateMany({}, { $set: { online: false } });
+	await db.collection("character").updateMany({ online: true }, { $set: { online: false, server: "" } });
+	res.status(200).send("done!");
+});
+
+// Referrer redirect
+app.get("/r/:ref", async (req, res, next) => {
+	var referrer = await get(normalize_user_id(req.params.ref));
+	if (referrer) {
+		var domain = await get_domain(req);
+		set_cookie(res, "referrer", get_id(referrer), domain.domain);
+		var ip = await get_ip_info(req);
+		ip.referrer = get_id(referrer);
+		await put_ip_info(ip);
+	}
+	res.redirect("/");
+});
+
+// ==================== API (backward compat for /api with method in body) ====================
+
+app.all("/api", async (req, res, next) => {
+	var method = req.body.method || req.query.method;
+	if (method) {
+		req.params.method = method;
+		var args = req.body.arguments || req.query.arguments;
+		if (args && typeof args === "string") {
+			try {
+				req.body = JSON.parse(args);
+			} catch (e) {}
+		}
+		return handle_api_call(req, res, next);
+	}
+	res.status(400).send({ failed: true, reason: "no_method" });
+});
+
+// ==================== START ====================
+
+const PORT = process.env.PORT || options.port;
+// Serve cached public text before common's static mounts without modifying shared initialization.
+const http_app = express();
+http_app.enable("trust proxy");
+http_app.use(web_assets.serve_static);
+http_app.use((req, res, next) => {
+	if (!/^\/steam-sign(?:in|up)(?:\/|$)/.test(req.url.split("?")[0])) return next();
+	steam_auth_app(req, res, (error) => res.status(error ? (error.status === 413 ? 413 : 503) : 404).end());
+});
+http_app.use(app);
+web_assets.start();
+const http_server = http_app.listen(PORT, () => {
+	console.log(`\x1b[32mAdventure Land\x1b[0m listening on port ${PORT}`);
+});
+http_server.on("close", web_assets.stop);
+
+process.on("uncaughtException", function (err) {
+	console.error("#EXC Caught exception:", err);
+});
+
+process.on("unhandledRejection", function (err) {
+	console.error("#EXC Unhandled rejection:", err);
+});
+
+module.exports = http_app;

@@ -1,0 +1,14 @@
+<p><span class='dlabel'>play_slots(timeout_ms)</span></p>
+<p>{{ phrase("docs.functions.play_slots.spends-1-000-000-gold-at-the-tavern") }}</p>
+<p>{{ phrase_html("docs.functions.play_slots.returns-promise-resolving-after-the-spin-with-won") }}</p>
+<p>{{ phrase_html("docs.functions.play_slots.promise-failures-unless-a-function-specific-note-says") }}</p>
+<p>{{ phrase_html("docs.functions.play_slots.notes-a-second-code-spin-is-rejected-while") }}</p>
+<p>{{ phrase_html("docs.functions.play_slots.example") }}</p>
+<div class='code'>async function example() {
+	var spin = await play_slots();
+	game_log(spin.won ? "Jackpot!" : "No luck.");
+}
+example();</div>
+
+<p></p>
+<span class='redlabel'>{{ phrase("docs.reference.source_code") }}</span>

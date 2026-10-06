@@ -1,0 +1,117 @@
+<p class="tutlead">{{ phrase("docs.tutorial.crafting-exchanges.crafting-follows-a-recipe-exchanges-trade-a-known") }}</p>
+
+<div class="tutlinks">
+	<div
+		class="gamebutton gamebutton-small"
+		onclick="
+			btc(event);
+			open_guide('crafting', get_guide_url('crafting'));
+		"
+	>
+		{{ phrase("docs.tutorial.crafting-exchanges.crafting-dismantling") }}
+	</div>
+	<div
+		class="gamebutton gamebutton-small"
+		onclick="
+			btc(event);
+			open_guide('exchanges-and-quests', get_guide_url('exchanges-and-quests'));
+		"
+	>
+		{{ phrase("docs.tutorial.crafting-exchanges.exchanges-quests") }}
+	</div>
+</div>
+
+{% for task in tutorial_data("crafting-exchanges").tasks %} {% if loop.first %}
+<div class="tutdivider"></div>
+{% endif %}
+<div class="tuttaskrow"><span class="tuttask tuttask{{task}}">o</span> <span class="tuttaskname">{{task_name(task)}}</span> <span class="tuttaskd tuttaskd{{task}}">{{ phrase("docs.tutorial.crafting-exchanges.done") }}</span></div>
+{% endfor %}
+
+<div class="tutpath manual">
+	<div class="tutpath-title">{{ phrase("docs.tutorial.crafting-exchanges.manual") }}</div>
+	<p>{{ phrase_html("docs.tutorial.crafting-exchanges.open-guide-all-recipes-a-recipe-names-every") }}</p>
+	<p style="display:flex;align-items:center;gap:16px"><span class="tutorial-npc" data-npc="craftsman"></span><span>Leo · Mainland<br>(92, 670)</span></p>
+<div><span class="tutorial-travel" data-type="npc" data-target="craftsman"></span></div>
+	<p>{{ phrase("docs.tutorial.crafting-exchanges.exchangeable-items-show-their-required-quantity-xyn-handles") }}</p>
+	<p style="display:flex;align-items:center;gap:16px"><span class="tutorial-npc" data-npc="exchange"></span><span>Xyn · Mainland<br>(-25, -478)</span><span class="tutorial-item" data-item="seashell"></span></p>
+<div><span class="tutorial-travel" data-type="npc" data-target="exchange"></span></div>
+	</div>
+
+<div class="tutpath codepath">
+	<div class="tutpath-title">{{ phrase("docs.tutorial.crafting-exchanges.optional-code") }}</div>
+	<!-- prettier-ignore -->
+	<div class="code">show_json(G.craft);
+
+var exchange_num = character.items.findIndex(function (item) {
+	return item &amp;&amp; G.items[item.name].e;
+});
+
+if (exchange_num !== -1) {
+	game_log("Exchangeable: " + character.items[exchange_num].name);
+}</div>
+	<p>
+		{{ phrase_html("docs.tutorial.crafting-exchanges.when-the-ingredients-are-ready-auto-craft-name") }}
+	</p>
+	<p>
+		{{ phrase_html("docs.tutorial.crafting-exchanges.auto-craft-craft-dismantle-exchange") }}
+	</p>
+</div>
+
+<p class="tuttip">{{ phrase_html("docs.tutorial.crafting-exchanges.careful-crafting-dismantling-and-exchanging-consume-their-inputs") }}</p>
+
+<style>
+	.tutlead {
+		color: #2b9ec9;
+		font-size: 34px;
+	}
+	.tutdivider {
+		border-top: 5px solid gray;
+		margin: 14px -24px 8px;
+	}
+	.tuttaskrow {
+		line-height: 44px;
+	}
+	.tuttask {
+		color: #4a4a4a;
+		font-size: 64px;
+		vertical-align: middle;
+	}
+	.tuttaskname {
+		color: #dc4c6e;
+		vertical-align: middle;
+	}
+	.tuttaskd {
+		color: #85c76b;
+		display: none;
+		vertical-align: middle;
+	}
+	.tutpath {
+		border: 4px solid #777;
+		margin: 12px 0;
+		padding: 10px 14px;
+		text-align: left;
+	}
+	.tutpath.manual {
+		border-color: #5e9f6e;
+	}
+	.tutpath.codepath {
+		border-color: #c58b3d;
+	}
+	.tutpath-title {
+		color: #555;
+		font-size: 24px;
+	}
+	.manual .tutpath-title {
+		color: #387649;
+	}
+	.codepath .tutpath-title {
+		color: #9a6328;
+	}
+	.tuttip {
+		color: #555;
+	}
+	.tutlinks {
+		text-align: center;
+	}
+</style>
+<script>render_tutorial_items();</script>

@@ -1,0 +1,111 @@
+<p>{{ phrase_html("docs.articles.7-using-skills.in-code-skills-are-referenced-by-their-keys") }}</p>
+<p>{{ phrase_html("docs.articles.7-using-skills.one-example-is-supershot-you-can-check-out") }}</p>
+
+<div class='code'>
+async function use_supershot() {
+	var target = get_nearest_monster();
+	if (!target) return;
+	if (!is_in_range(target, "supershot")) return;
+	if (is_on_cooldown("supershot")) return;
+
+	try {
+		var result = await use_skill("supershot", target);
+		game_log("Supershot accepted");
+		return result;
+	} catch (error) {
+		game_log("Supershot failed: " + error.reason);
+	}
+}
+
+use_supershot();
+</div>
+
+<p>{{ phrase_html("docs.articles.7-using-skills.use-skill-returns-one-promise-for-the-server") }}</p>
+
+<div class="code">use_skill("invis");
+use_skill("mluck", get_player("LuckyCharacter"));</div>
+
+<p>{{ phrase_html("docs.articles.7-using-skills.reference-functions-use-skill-is-in-range-is") }}</p>
+
+<p>{{ phrase("docs.articles.7-using-skills.shared-cooldowns-regeneration-and-potions") }}</p>
+<p>{{ phrase_html("docs.articles.7-using-skills.regen-hp-regen-mp-use-hp-and-use") }}</p>
+<p>{{ phrase_html("docs.articles.7-using-skills.the-action-you-use-determines-the-wait-after") }}</p>
+<p>{{ phrase_html("docs.articles.7-using-skills.in-g-skills-share-names-the-skill-whose") }}</p>
+<p>{{ phrase_html("docs.functions.use_skill.regeneration_output") }}</p>
+<div class="code" id="regeneration-output">show_json({
+	hp: G.skills.regen_hp.output,
+	mp: G.skills.regen_mp.output
+});</div>
+<div class="code">async function regenerate_once() {
+	// Choose one resource to restore. HP and MP cannot regenerate together.
+	var skill;
+	if (character.hp &lt; character.max_hp) skill = "regen_hp";
+	else if (character.mp &lt; character.max_mp) skill = "regen_mp";
+	else return;
+	if (is_on_cooldown(skill)) return;
+
+	try {
+		await use_skill(skill);
+	} catch (error) {
+		game_log("Regeneration failed: " + error.reason);
+	}
+}
+
+regenerate_once();</div>
+<p>{{ phrase("docs.articles.7-using-skills.this-example-needs-no-potions-and-restores-one") }}</p>
+
+<p>{{ phrase("docs.articles.7-using-skills.special-usage-paladin-aura") }}</p>
+<p>{{ phrase_html("docs.articles.7-using-skills.to-select-an-aura-directly-pass-its-state") }}</p>
+
+<p>{{ phrase("docs.articles.7-using-skills.special-usage-3-shot") }}</p>
+
+<div class='code'>
+async function use_three_shot() {
+	var targets = [];
+	for (var id in parent.entities)
+		if (parent.entities[id].type == "monster" &amp;&amp; is_in_range(parent.entities[id], "3shot") &amp;&amp; targets.length &lt; 3)
+			targets.push(parent.entities[id]);
+
+	await use_skill("3shot", targets);
+}
+
+use_three_shot();
+</div>
+
+<p>{{ phrase("docs.articles.7-using-skills.special-usage-controlled-burst") }}</p>
+
+<div class='code'>
+async function use_controlled_burst() {
+	var targets = [];
+	for (var id in parent.entities)
+		if (parent.entities[id].type == "monster" &amp;&amp; is_in_range(parent.entities[id], "cburst"))
+			targets.push([parent.entities[id], 100]);
+
+	await use_skill("cburst", targets);
+}
+
+use_controlled_burst();
+</div>
+
+
+<p>{{ phrase("docs.articles.7-using-skills.special-usage-blink") }}</p>
+
+<div class='code'>use_skill("blink", [character.x + 10, character.y + 10]);</div>
+
+<p>{{ phrase("docs.articles.7-using-skills.multi-target-skills-still-return-one-promise-not") }}</p>
+
+<p>{{ phrase_html("docs.articles.7-using-skills.pickpocket-fishing-and-mining-are-timed-actions-their") }}</p>
+
+<div class='code'>async function fish_once() {
+	try {
+		var result = await use_skill("fishing");
+		if (result.found === false) game_log("Nothing caught this time");
+		else game_log("Caught something");
+	} catch (error) {
+		game_log("Fishing failed: " + error.reason);
+	}
+}
+
+fish_once();</div>
+
+<p>{{ phrase_html("docs.articles.7-using-skills.for-these-timed-actions-use-skill-waits-for") }}</p>

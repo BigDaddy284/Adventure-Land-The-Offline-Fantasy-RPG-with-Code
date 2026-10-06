@@ -1,0 +1,47 @@
+<p>
+	{{ phrase("docs.functions.equip_batch.arguments") }}
+	<div>{{ phrase_html("docs.functions.equip_batch.array-an-array-of-equip-definitions") }}</div>
+</p>
+<p>
+	{{ phrase("docs.functions.equip_batch.returns") }}
+	<div>{{ phrase_html("docs.functions.equip_batch.promise") }}</div>
+</p>
+
+<p>{{ phrase("docs.functions.equip_batch.example-usages") }}</p>
+
+<div class='code'>
+equip_batch([{ num: 0, slot: "chest" }, { num: 1, slot: "orb" }]);
+equip_batch([{ num: 0, slot: "chest" }, { num: 1, slot: "orb" }]).then(
+	function(data){
+		game_log("Yes!"); // Not all items may have been equipped. All this means is that you send the correct layout of data.
+	}, 
+    function(data) {
+    	game_log("equip_batch failed: " + data.reason);
+	},
+);
+</div>
+
+<p>{{ phrase("docs.functions.equip_batch.promise-reference") }}</p>
+
+<span class='dlabel'>{{ phrase("docs.reference.fulfilled") }}</span>
+<div class='code'>
+{
+	place: "equip_batch",
+    response: "data",
+    slots: [{ num: 0, slot: "chest" }, "no_item"] // Note that even though equipping the orb failed, we still received a success response.
+}
+</div>
+<div style='margin-bottom: 10px'></div>
+
+<span class='dlabel'>{{ phrase("docs.reference.rejected") }}</span>
+<div class='code'>
+{
+	place: "equip_batch",
+    failed: true,
+    response: "invalid",
+    reason: "invalid", // You didn't send an array.
+}
+</div>
+
+<p></p>
+<span class='redlabel'>{{ phrase("docs.reference.source_code") }}</span>

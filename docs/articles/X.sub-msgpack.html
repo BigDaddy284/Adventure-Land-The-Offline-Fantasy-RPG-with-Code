@@ -1,0 +1,87 @@
+<p>{{ phrase_html("docs.articles.x.sub-msgpack.messagepack-socket-transport") }}</p>
+
+<p>{{ phrase("docs.articles.x.sub-msgpack.custom-clients-can-use-an-optional-messagepack-socket") }}</p>
+
+<p>{{ phrase("docs.articles.x.sub-msgpack.this-transport-is-for-standalone-clients-and-integrations") }}</p>
+
+<p>{{ phrase("docs.articles.x.sub-msgpack.each-server-directory-entry-provides-two-paths") }}</p>
+
+<div class="code">server.path          // Normal Socket.IO transport
+server.msgpack_path  // Optional MessagePack transport</div>
+
+<p>{{ phrase("docs.articles.x.sub-msgpack.external-clients-can-retrieve-the-current-server-directory") }}</p>
+
+<div class="code">https://adventure.land/api/get_servers</div>
+
+<p>{{ phrase_html("docs.articles.x.sub-msgpack.select-one-response-entry-and-use-it-as") }}</p>
+
+<p>{{ phrase_html("docs.articles.x.sub-msgpack.the-messagepack-path-is-a-separate-endpoint-a") }}</p>
+
+<p>{{ phrase_html("docs.articles.x.sub-msgpack.browser-client") }}</p>
+
+<p>{{ phrase_html("docs.articles.x.sub-msgpack.the-parser-is-specific-to-adventure-land-s") }}</p>
+
+<div class="code">&lt;script src="https://adventure.land/js/socket.io/4.2.0/socket.io.min.js"&gt;&lt;/script&gt;
+&lt;script src="https://adventure.land/js/socket.io-msgpack-parser.min.js"&gt;&lt;/script&gt;
+
+&lt;script&gt;
+var options = {
+	path: server.path,
+	transports: ["websocket"]
+};
+
+if (server.msgpack_path) {
+	options.path = server.msgpack_path;
+	options.parser = ALMsgpackParser;
+}
+
+var socket = io("https://" + server.address, options);
+&lt;/script&gt;</div>
+
+<p>{{ phrase("docs.articles.x.sub-msgpack.the-fallback-is-intentional-a-custom-client-can") }}</p>
+
+<p>{{ phrase_html("docs.articles.x.sub-msgpack.node-js-client") }}</p>
+
+<p>{{ phrase("docs.articles.x.sub-msgpack.download-the-same-parser-beside-your-external-client") }}</p>
+
+<div class="code">curl -fsSLo socket.io-msgpack-parser.min.js https://adventure.land/js/socket.io-msgpack-parser.min.js</div>
+
+<div class="code">const { io } = require("socket.io-client");
+const msgpackParser = require("./socket.io-msgpack-parser.min.js");
+
+function connectToServer(server) {
+	const options = {
+		path: server.path,
+		transports: ["websocket"]
+	};
+
+	if (server.msgpack_path) {
+		options.path = server.msgpack_path;
+		options.parser = msgpackParser;
+	}
+
+	return io("https://" + server.address, options);
+}</div>
+
+<p>{{ phrase("docs.articles.x.sub-msgpack.use-the-parser-file-shipped-by-adventure-land") }}</p>
+
+<p>{{ phrase_html("docs.articles.x.sub-msgpack.format-and-limits") }}</p>
+
+<p>{{ phrase("docs.articles.x.sub-msgpack.each-socket-io-packet-is-one-positional-messagepack") }}</p>
+
+<div class="code">[0] or [0, data]  // Connect
+[1]               // Disconnect
+[2, data]         // Event
+[2, id, data]     // Event with acknowledgement
+[3, id, data]     // Acknowledgement
+[4, data]         // Connection error</div>
+
+<p>{{ phrase_html("docs.articles.x.sub-msgpack.the-root-namespace-is-implicit-and-packet-field") }}</p>
+
+<p>{{ phrase("docs.articles.x.sub-msgpack.most-game-events-use-less-bandwidth-because-messagepack") }}</p>
+
+<p>{{ phrase("docs.articles.x.sub-msgpack.payloads-follow-json-behavior-use-strings-finite-numbers") }}</p>
+
+<p>{{ phrase("docs.articles.x.sub-msgpack.the-optional-endpoint-is-websocket-only-and-accepts") }}</p>
+
+<p>{{ phrase_html("docs.articles.x.sub-msgpack.thanks-to-ariaharper-for-the-analysis-suggestion-and") }}</p>

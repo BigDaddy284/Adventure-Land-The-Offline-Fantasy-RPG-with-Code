@@ -1,0 +1,33 @@
+<div style='width: 600px'>
+	<p style='font-size: 32px; color: #8A203A; text-decoration: underline dotted #B30B1A'>{{ phrase("docs.guide.event-goobrawl.goo-brawl-event") }}</p>
+
+	<p>
+		{{ phrase_html("docs.guide.event-goobrawl.goo-brawl-features-a-zen-island-where-you") }}
+	</p>
+
+	<p>
+		{{ phrase_html("docs.guide.event-goobrawl.a-very-rare-rainbow-goo-occasionally-spawns-too") }}
+	</p>
+
+
+	<div style='margin-bottom: 24x'></div>
+
+	<div class='gamebutton' onclick="btc(event); join('goobrawl'); hide_modal();">{{ phrase("docs.guide.event-goobrawl.join-the-event") }}</div>
+
+
+	<script>
+		$(".spgoo").html(sprite("goo4",{width:65,height:65,scale:2}));
+		$(".sprgoo").html(sprite("rgoo",{width:65,height:65,scale:2}));
+	</script>
+
+
+<p style='font-size: 32px; color: #216D25; text-decoration: underline dotted #B30B1A; margin-bottom: 10px'>{{ phrase("docs.guide.event-goobrawl.snippets") }}</p>
+
+<div class='code'>
+	if(server.status.goobrawl && character.map!="goobrawl")
+		join('goobrawl'); // Takes you there
+	// Regular goo's have "goo" ID's - they are buffed up
+	// Rainbow goo is "rgoo"
+</div>
+
+</div>

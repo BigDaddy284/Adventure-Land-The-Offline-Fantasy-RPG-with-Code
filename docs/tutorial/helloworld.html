@@ -1,0 +1,77 @@
+<p class="tutlead">{{ phrase("docs.tutorial.helloworld.welcome-to-adventure-land") }}</p>
+
+<p>{{ phrase("docs.tutorial.helloworld.you-can-play-every-part-of-the-game") }}</p>
+<p>{{ phrase("docs.tutorial.helloworld.earlier_actions", {button: phrase("interface.tutorial.continue")}) }}</p>
+
+<div class="tutpath manual">
+	<div class="tutpath-title">{{ phrase("docs.tutorial.helloworld.manual") }}</div>
+	<p>{{ phrase("docs.tutorial.helloworld.move-fight-trade-explore-and-meet-other-adventurers") }}</p>
+</div>
+
+<div class="tutpath codepath">
+	<div class="tutpath-title">{{ phrase("docs.tutorial.helloworld.optional-code") }}</div>
+	<p>{{ phrase("docs.tutorial.helloworld.each-practical-lesson-includes-a-small-code-equivalent") }}</p>
+</div>
+
+<p class="tuttip">{{ phrase_html("docs.tutorial.helloworld.tip-you-can-reopen-this-lesson-from-the") }}</p>
+
+<div class="tutlinks">
+	<div
+		class="gamebutton gamebutton-small"
+		onclick="
+			btc(event);
+			open_guide('basics', '/docs/guide/basics');
+		"
+	>
+		{{ phrase("docs.tutorial.helloworld.basic-controls") }}
+	</div>
+	<div
+		class="gamebutton gamebutton-small"
+		onclick="
+			btc(event);
+			render_code_docs();
+		"
+	>
+		{{ phrase("docs.tutorial.helloworld.code-docs") }}
+	</div>
+</div>
+
+<style>
+	.tutlead {
+		color: #2b9ec9;
+		font-size: 38px;
+		margin-bottom: 10px;
+	}
+	.tutpath {
+		border: 4px solid #777;
+		margin: 12px 0;
+		padding: 10px 14px;
+		text-align: left;
+	}
+	.tutpath p {
+		margin: 8px 0 2px;
+	}
+	.tutpath.manual {
+		border-color: #5e9f6e;
+	}
+	.tutpath.codepath {
+		border-color: #c58b3d;
+	}
+	.tutpath-title {
+		font-size: 24px;
+		color: #555;
+	}
+	.manual .tutpath-title {
+		color: #387649;
+	}
+	.codepath .tutpath-title {
+		color: #9a6328;
+	}
+	.tuttip {
+		color: #555;
+	}
+	.tutlinks {
+		margin-top: 12px;
+		text-align: center;
+	}
+</style>

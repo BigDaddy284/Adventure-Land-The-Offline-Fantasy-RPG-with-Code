@@ -1,0 +1,83 @@
+<div class="guide-kicker">{{ phrase("docs.guide.banking.account-storage") }}</div>
+<div class="guide-title">The Bank</div>
+<p>{{ phrase("docs.guide.banking.the-bank-holds-gold-and-items-for-your") }}</p>
+
+<div class="guide-showcase" style="border-color:#4C83AA">
+	<div class="guide-showcase-art"><span class="bank-rich"></span><span class="bank-gabrielle"></span></div>
+	<div class="guide-showcase-copy">{{ phrase_html("docs.guide.banking.gold-and-items-use-different-tellers-mr-rich") }}</div>
+</div>
+
+<div class="guide-cards">
+	<div>{{ phrase_html("docs.guide.banking.g-mr-rich-deposit-carried-gold-or-withdraw") }}</div>
+	<div>{{ phrase_html("docs.guide.banking.42-one-teller-one-pack-every-item-teller") }}</div>
+	<div>{{ phrase_html("docs.guide.banking.3-three-floors-the-bank-basement-and-underground") }}</div>
+</div>
+
+<div class="divider"></div>
+<div class="title mt15">{{ phrase("docs.guide.banking.storing-items") }}</div>
+<div class="guide-flow" style="border-color:#4C83AA" data-guide-visual="bank-storage">
+	<div class="guide-flow-node">{{ phrase_html("docs.guide.banking.inventory-stack") }}</div>
+	<div class="guide-flow-arrow">→</div>
+	<div class="guide-flow-node">{{ phrase_html("docs.guide.banking.open-teller") }}</div>
+	<div class="guide-flow-arrow">→</div>
+	<div class="guide-flow-node">{{ phrase_html("docs.guide.banking.shared-bank-pack") }}</div>
+</div>
+<p>{{ phrase("docs.guide.banking.open-an-item-teller-then-drag-an-inventory") }}</p>
+<p>{{ phrase("docs.guide.banking.overflow_items") }}</p>
+<p>{{ phrase("docs.guide.banking.items-cannot-be-equipped-sold-upgraded-or-sent") }}</p>
+<div class="guide-note">{{ phrase("docs.guide.banking.leave-at-least-one-inventory-space-before-retrieving") }}</div>
+
+<div class="divider"></div>
+<div class="title mt15">{{ phrase("docs.guide.banking.opening-more-space") }}</div>
+<p>{{ phrase("docs.guide.banking.walk-up-to-a-closed-teller-to-see") }}</p>
+<p>{{ phrase("docs.guide.banking.the-bank-key-opens-the-basement-the-underground") }}</p>
+<p>{{ phrase("docs.guide.banking.key_pack") }}</p>
+<div class="guide-card-grid">
+	<div class="guide-card">{{ phrase_html("docs.guide.banking.basement-key-unlocks-the-door-from-the-bank") }}</div>
+	<div class="guide-card">{{ phrase_html("docs.guide.banking.underground-key-unlocks-the-deeper-underground-floor") }}</div>
+	<div class="guide-card">{{ phrase_html("docs.guide.banking.diamond-key-opens-the-next-unopened-item-teller") }}</div>
+	<div class="guide-card">{{ phrase_html("docs.guide.banking.gold-or-shells-a-closed-teller-shows-its") }}</div>
+</div>
+
+<div class="divider"></div>
+<div class="title mt15">CODE</div>
+<p>{{ phrase_html("docs.guide.banking.character-bank-exists-while-you-are-inside-the") }}</p>
+<p>{{ phrase("docs.functions.bank_store.explicit_destination") }}</p>
+<div class="code">async function bank_trip() {
+	await smart_move("bank");
+
+	// Gold is shared by every character on the account.
+	await bank_deposit(100000);
+
+	// No pack: prefer an existing stack, then the first free slot.
+	var potions = locate_item("hpot0");
+	if (potions !== -1) await bank_store(potions);
+
+	for (var i = character.isize; i < character.items.length; i++) {
+		if (character.items[i]) await bank_store(i);
+	}
+
+	// Explicit pack and positions:
+	// await bank_store(0, "items0", 5);
+	// await bank_retrieve("items0", 5);
+	// await bank_swap("items0", 5, 6);
+}
+
+bank_trip().catch(show_json);</div>
+<p>{{ phrase_html("docs.guide.banking.open-a-closed-teller-through-code-with-open") }}</p>
+<p>{{ phrase_html("docs.guide.banking.references-bank-deposit-bank-withdraw-bank-store-bank") }}</p>
+
+<div class="guide-related">{{ phrase_html("docs.guide.banking.related-items-item-maintenance-travel") }}</div>
+
+<script>
+	$(".bank-rich").html(sprite(G.npcs.goldnpc.skin, { height: 58 }));
+	$(".bank-gabrielle").html(sprite(G.npcs.items0.skin, { height: 58 }));
+	$(".bank-potions").html(item_container({ skin: G.items.hpot0.skin }, { name: "hpot0", q: 100 }));
+	$(".bank-bkey").html(item_container({ skin: G.items.bkey.skin }, { name: "bkey" }));
+	$(".bank-ukey").html(item_container({ skin: G.items.ukey.skin }, { name: "ukey" }));
+	$(".bank-dkey").html(item_container({ skin: G.items.dkey.skin }, { name: "dkey" }));
+</script>
+
+<style>
+	.guide-kicker{color:#3F7196;font-size:18px;font-weight:bold;letter-spacing:2px}.guide-title{color:#356F9B;font-size:44px;line-height:48px;margin:2px 0 12px}.title{color:#386D91;font-size:36px;margin-top:15px}.divider{margin-top:15px;height:5px;background-color:#A2A2A2;margin-left:-26px;margin-right:-26px}.guide-cards{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin:12px 0}.guide-cards>div{border:3px solid #8EABC0;padding:10px}.guide-mark{background:#356F9B;color:white;display:inline-block;margin-right:7px;min-width:31px;text-align:center}.guide-note{border-left:6px solid #356F9B;background:#E3EDF4;padding:10px 14px;margin:12px 0}.guide-related{border-top:2px dotted #AAA;margin-top:18px;padding-top:10px;color:#666}.guide-related span{color:#356F9B;cursor:pointer;text-decoration:underline}@media(max-width:760px){.guide-cards{grid-template-columns:1fr}}
+</style>

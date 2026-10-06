@@ -1,0 +1,29 @@
+{
+	"$schema": "https://schemas.tauri.app/config/v2/capability.json",
+	"identifier": "default",
+	"description": "Default capability for all Adventure Land windows",
+	"windows": ["main", "sub-*", "loader"],
+	"remote": {
+		"urls": ["https://adventure.land/*", "https://*.adventure.land/*"]
+	},
+	"permissions": [
+		"allow-get-steam-auth",
+		"allow-refresh-steam-auth",
+		"allow-get-steam-purchase-authorization",
+		"allow-reload-game",
+		"allow-create-subwindow",
+		"allow-create-character-window",
+		"allow-enable-compatibility-mode",
+		"allow-open-external",
+		"allow-open-steam-checkout",
+		"allow-open-devtools",
+		"allow-toggle-fullscreen",
+		"allow-get-desktop-language",
+		"allow-get-bundled-images",
+		"core:webview:allow-internal-toggle-devtools",
+		{
+			"identifier": "opener:allow-open-url",
+			"allow": [{ "url": "https://*" }, { "url": "mailto:*" }]
+		}
+	]
+}

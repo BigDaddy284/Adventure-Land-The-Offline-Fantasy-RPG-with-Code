@@ -1,0 +1,215 @@
+<style>
+.api-guide {
+	--api-blue: #238DB9;
+	--api-blue-dark: #116A91;
+	--api-blue-pale: #D8EDF5;
+	font-size: 30px;
+	line-height: 1.45;
+	text-align: left;
+}
+.api-guide p {
+	margin: 0 0 28px;
+}
+.api-guide > p > .dlabel:only-child {
+	background: var(--api-blue);
+	color: white;
+	font-size: 31px;
+	line-height: 1.15;
+	margin: 18px 0 0;
+	padding: 5px 10px 7px;
+}
+.api-guide > p:first-of-type > .dlabel:only-child {
+	font-size: 37px;
+	margin-top: 0;
+	padding: 7px 12px 9px;
+}
+.api-guide a,
+.api-guide a:link,
+.api-guide a:visited,
+.api-guide a:hover,
+.api-guide a:focus,
+.api-guide a:active {
+	color: var(--api-blue-dark);
+	text-decoration-color: var(--api-blue);
+}
+.api-guide .dlabel {
+	background: var(--api-blue-pale);
+	color: var(--api-blue-dark);
+	font-size: 0.86em;
+	line-height: 1.15;
+	margin: 0;
+	max-width: 100%;
+	overflow-wrap: anywhere;
+	padding: 3px 7px 5px;
+	vertical-align: baseline;
+}
+.api-guide ol {
+	margin: 0 0 32px;
+	padding-left: 52px;
+}
+.api-guide li {
+	font-size: 29px;
+	line-height: 1.45;
+	margin: 7px 0;
+	padding-left: 5px;
+}
+.api-guide table {
+	border-collapse: collapse;
+	font-size: 27px;
+	line-height: 1.4;
+	margin: 4px 0 32px;
+	table-layout: fixed;
+	text-align: left;
+	width: 100%;
+}
+.api-guide th {
+	border-bottom: 3px solid var(--api-blue);
+	color: var(--api-blue-dark);
+	font-size: 28px;
+	padding: 8px 12px 10px;
+}
+.api-guide td {
+	border-bottom: 1px solid #A9CFDE;
+	padding: 10px 12px;
+	vertical-align: top;
+}
+.api-guide td:first-child {
+	color: var(--api-blue-dark);
+	overflow-wrap: anywhere;
+	width: 31%;
+}
+.api-guide th:nth-child(2),
+.api-guide td:nth-child(2) {
+	width: 30%;
+}
+.api-guide .api-example {
+	background: var(--api-blue-pale);
+	border-left: 5px solid var(--api-blue);
+	box-sizing: border-box;
+	color: #073B50;
+	font-family: pixel;
+	font-size: 25px;
+	line-height: 1.45;
+	margin: 4px 0 32px;
+	overflow-x: auto;
+	padding: 18px 20px;
+	text-align: left;
+	white-space: pre;
+}
+@media (max-width: 760px) {
+	.api-guide,
+	.api-guide li {
+		font-size: 27px;
+	}
+	.api-guide table,
+	.api-guide th {
+		font-size: 24px;
+	}
+}
+</style>
+
+<div class="api-guide">
+<p>{{ phrase_html("docs.articles.adventure-api.adventure-land-json-api") }}</p>
+
+<p>{{ phrase("docs.articles.adventure-api.the-json-api-gives-your-programs-structured-access") }}</p>
+
+<p>{{ phrase_html("docs.articles.adventure-api.create-a-token") }}</p>
+
+<ol>
+<li>{{ phrase_html("docs.articles.adventure-api.sign-in-at-adventure-land") }}</li>
+<li>{{ phrase_html("docs.articles.adventure-api.open-mainframe") }}</li>
+<li>{{ phrase_html("docs.articles.adventure-api.find-connect-an-ai") }}</li>
+<li>{{ phrase_html("docs.articles.adventure-api.press-create-token-later-press-reveal-token-whenever") }}</li>
+<li>{{ phrase("docs.articles.adventure-api.creating-another-token-rotates-it-and-invalidates-the") }}</li>
+</ol>
+
+<p>{{ phrase("docs.articles.adventure-api.treat-the-token-like-a-password-it-controls") }}</p>
+
+<p>{{ phrase_html("docs.articles.adventure-api.call-a-method") }}</p>
+
+<p>{{ phrase_html("docs.articles.adventure-api.send-json-with-a-post-request-to-https") }}</p>
+
+<pre class="api-example">curl https://adventure.land/mcp_api/get_servers \
+  -H 'Content-Type: application/json' \
+  -d '{"token":"YOUR_TOKEN"}'</pre>
+
+<p>{{ phrase_html("docs.articles.adventure-api.open-get-https-adventure-land-mcp-api-for") }}</p>
+
+<p>{{ phrase_html("docs.articles.adventure-api.game-and-documentation") }}</p>
+
+<table style="width:100%; text-align:left; border-spacing:12px 7px">
+<tr><th>{{ phrase("docs.articles.adventure-api.method") }}</th><th>{{ phrase("docs.articles.adventure-api.arguments") }}</th><th>{{ phrase("docs.articles.adventure-api.result") }}</th></tr>
+<tr><td>{{ phrase("docs.articles.adventure-api.get-api-info") }}</td><td>{{ phrase("docs.articles.adventure-api.none") }}</td><td>{{ phrase("docs.articles.adventure-api.endpoints-versions-methods-and-schemas") }}</td></tr>
+<tr><td>get_servers</td><td>{{ phrase("docs.articles.adventure-api.none") }}</td><td>{{ phrase("docs.articles.adventure-api.live-realms-population-paths-and-status") }}</td></tr>
+<tr><td>{{ phrase("docs.articles.adventure-api.get-game-data") }}</td><td>{{ phrase("docs.articles.adventure-api.section-name") }}</td><td>{{ phrase("docs.articles.adventure-api.sections-a-complete-section-or-one-exact-definition") }}</td></tr>
+<tr><td>{{ phrase("docs.articles.adventure-api.search-game-data") }}</td><td>{{ phrase("docs.articles.adventure-api.query-match-section-limit") }}</td><td>{{ phrase("docs.articles.adventure-api.ranked-matches-across-keys-descriptions-stats-ingredients-drops") }}</td></tr>
+<tr><td>{{ phrase("docs.articles.adventure-api.list-docs") }}</td><td>{{ phrase("docs.articles.adventure-api.query") }}</td><td>{{ phrase("docs.articles.adventure-api.guide-article-names-titles-sections-and-keywords") }}</td></tr>
+<tr><td>{{ phrase("docs.articles.adventure-api.get-doc") }}</td><td>{{ phrase("docs.articles.adventure-api.name") }}</td><td>{{ phrase("docs.articles.adventure-api.one-exact-guide-article-as-plain-text") }}</td></tr>
+<tr><td>{{ phrase("docs.articles.adventure-api.list-code-methods") }}</td><td>{{ phrase("docs.articles.adventure-api.query-limit") }}</td><td>{{ phrase("docs.articles.adventure-api.the-public-code-method-directory-or-a-semantic") }}</td></tr>
+<tr><td>{{ phrase("docs.articles.adventure-api.get-code-method") }}</td><td>{{ phrase("docs.articles.adventure-api.name") }}</td><td>{{ phrase("docs.articles.adventure-api.one-exact-code-contract-examples-failures-and-shipped") }}</td></tr>
+</table>
+
+<p>{{ phrase_html("docs.articles.adventure-api.use-search-game-data-to-find-a-record") }}</p>
+
+<p>{{ phrase_html("docs.articles.adventure-api.search-accepts-up-to-500-characters-and-32") }}</p>
+
+<pre class="api-example">POST /mcp_api/search_game_data
+{"token":"YOUR_TOKEN","query":"fire resistance","limit":10}
+
+POST /mcp_api/search_game_data
+{"token":"YOUR_TOKEN","query":"ikissyou anniversary_visit paladin_aura","match":"any"}
+
+POST /mcp_api/get_game_data
+{"token":"YOUR_TOKEN","section":"items","name":"fireblade"}</pre>
+
+<p>{{ phrase_html("docs.articles.adventure-api.owned-items-and-progression") }}</p>
+
+<table style="width:100%; text-align:left; border-spacing:12px 7px">
+<tr><th>{{ phrase("docs.articles.adventure-api.method") }}</th><th>{{ phrase("docs.articles.adventure-api.arguments") }}</th><th>{{ phrase("docs.articles.adventure-api.result") }}</th></tr>
+<tr><td>{{ phrase("docs.articles.adventure-api.get-bank") }}</td><td>{{ phrase("docs.articles.adventure-api.none") }}</td><td>{{ phrase("docs.articles.adventure-api.every-owned-bank-pack-and-the-shared-bank") }}</td></tr>
+<tr><td>{{ phrase("docs.articles.adventure-api.plan-character-progression") }}</td><td>{{ phrase("docs.articles.adventure-api.character-objective") }}</td><td>{{ phrase("docs.articles.adventure-api.the-character-s-current-progression-context-enduring-objectives") }}</td></tr>
+</table>
+
+<p>{{ phrase_html("docs.articles.adventure-api.the-progression-focus-can-be-balanced-farming-damage") }}</p>
+
+<pre class="api-example">POST /mcp_api/plan_character_progression
+{"token":"YOUR_TOKEN","character":"Merlin","objective":"balanced_farming"}</pre>
+
+<p>{{ phrase_html("docs.articles.adventure-api.saved-code") }}</p>
+
+<table style="width:100%; text-align:left; border-spacing:12px 7px">
+<tr><th>{{ phrase("docs.articles.adventure-api.method") }}</th><th>{{ phrase("docs.articles.adventure-api.arguments") }}</th><th>{{ phrase("docs.articles.adventure-api.result") }}</th></tr>
+<tr><td>{{ phrase("docs.articles.adventure-api.list-codes") }}</td><td>{{ phrase("docs.articles.adventure-api.none") }}</td><td>{{ phrase("docs.articles.adventure-api.slot-name-and-version-without-source") }}</td></tr>
+<tr><td>{{ phrase("docs.articles.adventure-api.get-code") }}</td><td>{{ phrase("docs.articles.adventure-api.slot") }}</td><td>{{ phrase("docs.articles.adventure-api.one-owned-code-slot-with-source") }}</td></tr>
+<tr><td>{{ phrase("docs.articles.adventure-api.save-code") }}</td><td>{{ phrase("docs.articles.adventure-api.slot-code-name") }}</td><td>{{ phrase("docs.articles.adventure-api.creates-or-replaces-one-owned-slot") }}</td></tr>
+<tr><td>{{ phrase("docs.articles.adventure-api.delete-code") }}</td><td>{{ phrase("docs.articles.adventure-api.slot") }}</td><td>{{ phrase("docs.articles.adventure-api.deletes-one-owned-slot") }}</td></tr>
+</table>
+
+<p><span class="dlabel">Mainframe</span></p>
+
+<table style="width:100%; text-align:left; border-spacing:12px 7px">
+<tr><th>{{ phrase("docs.articles.adventure-api.method") }}</th><th>{{ phrase("docs.articles.adventure-api.arguments") }}</th><th>{{ phrase("docs.articles.adventure-api.result") }}</th></tr>
+<tr><td>{{ phrase("docs.articles.adventure-api.mainframe-get-dashboard") }}</td><td>{{ phrase("docs.articles.adventure-api.none") }}</td><td>{{ phrase("docs.articles.adventure-api.characters-access-windows-runtime-state-code-slots-and") }}</td></tr>
+<tr><td>{{ phrase("docs.articles.adventure-api.mainframe-list-characters") }}</td><td>{{ phrase("docs.articles.adventure-api.none") }}</td><td>{{ phrase("docs.articles.adventure-api.owned-characters-access-assignments-and-runtime-state") }}</td></tr>
+<tr><td>{{ phrase("docs.articles.adventure-api.mainframe-get-character") }}</td><td>{{ phrase("docs.articles.adventure-api.character") }}</td><td>{{ phrase("docs.articles.adventure-api.one-owned-character-s-saved-profile-plus-live") }}</td></tr>
+<tr><td>{{ phrase("docs.articles.adventure-api.mainframe-link-character") }}</td><td>{{ phrase("docs.articles.adventure-api.character-request-id-code-slot-server") }}</td><td>{{ phrase_html("docs.articles.adventure-api.prepays-when-needed-queues-one-dedicated-durable-assignment") }}</td></tr>
+<tr><td>{{ phrase("docs.articles.adventure-api.mainframe-disconnect-character") }}</td><td>{{ phrase("docs.articles.adventure-api.character") }}</td><td>{{ phrase("docs.articles.adventure-api.explicitly-stops-the-assignment-and-future-renewals-without") }}</td></tr>
+<tr><td>{{ phrase("docs.articles.adventure-api.mainframe-get-logs") }}</td><td>{{ phrase("docs.articles.adventure-api.character-limit") }}</td><td>{{ phrase("docs.articles.adventure-api.up-to-100-recent-code-log-records-retained") }}</td></tr>
+<tr><td>{{ phrase("docs.articles.adventure-api.mainframe-get-events") }}</td><td>{{ phrase("docs.articles.adventure-api.character-limit") }}</td><td>{{ phrase("docs.articles.adventure-api.up-to-100-starts-renewals-server-changes-stops") }}</td></tr>
+</table>
+
+<p>{{ phrase_html("docs.articles.adventure-api.direct-links-use-separate-machines-and-prepaid-windows") }}</p>
+
+<p>{{ phrase_html("docs.articles.adventure-api.results-and-errors") }}</p>
+
+<p>{{ phrase_html("docs.articles.adventure-api.successful-results-contain-success-true-method-failures-use") }}</p>
+
+<pre class="api-example">{
+  "failed": true,
+  "reason": "not_enough_shells"
+}</pre>
+
+<p>{{ phrase("docs.articles.adventure-api.unknown-and-missing-arguments-fail-closed-a-token") }}</p>
+
+<p>{{ phrase_html("docs.articles.adventure-api.the-live-discovery-response-lists-the-current-request") }}</p>
+</div>

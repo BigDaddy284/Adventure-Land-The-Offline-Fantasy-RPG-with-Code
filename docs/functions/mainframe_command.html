@@ -1,0 +1,14 @@
+<p><span class='dlabel'>mainframe_command(command, timeout_ms)</span></p>
+<p>{{ phrase("docs.functions.mainframe_command.runs-one-command-through-the-in-world-cyberland") }}</p>
+<p>{{ phrase_html("docs.functions.mainframe_command.returns-promise-resolving-with-command-reply-and-authorized") }}</p>
+<p>{{ phrase_html("docs.functions.mainframe_command.promise-failures-unless-a-function-specific-note-says") }}</p>
+<p>{{ phrase_html("docs.functions.mainframe_command.notes-this-controls-the-in-world-terminal-not") }}</p>
+<p>{{ phrase_html("docs.functions.mainframe_command.example") }}</p>
+<div class='code'>async function example() {
+	var response = await mainframe_command("hello");
+	game_log(response.reply);
+}
+example();</div>
+
+<p></p>
+<span class='redlabel'>{{ phrase("docs.reference.source_code") }}</span>

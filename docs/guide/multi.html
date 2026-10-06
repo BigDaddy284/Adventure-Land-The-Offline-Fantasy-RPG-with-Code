@@ -1,0 +1,59 @@
+<div class="multi-guide">
+<div class="title mt10">{{ phrase("docs.guide.multi.run-more-than-one-character") }}</div> <div class="mb10"></div>
+<div>{{ phrase("docs.guide.multi.adventure-land-supports-browser-windows-child-character-frames") }}</div>
+<div class="divider"></div>
+
+<div class="title mt10">{{ phrase("docs.guide.multi.browser-windows") }}</div> <div class="mb10"></div>
+<div>{{ phrase_html("docs.guide.multi.open-another-game-client-from-character-selection-with") }}</div>
+<div class="divider"></div>
+
+<div class="title mt10">{{ phrase("docs.guide.multi.launch-through-com") }}</div> <div class="mb10"></div>
+<div>{{ phrase_html("docs.guide.multi.open-com-select-characters-and-press-deploy-to") }}</div>
+<div class="divider"></div>
+
+<div class="title mt10">Mainframe</div> <div class="mb10"></div>
+<div>{{ phrase_html("docs.guide.multi.mainframe-runs-owned-characters-without-keeping-a-browser") }}</div>
+<div class="divider"></div>
+
+<div class="title mt10">{{ phrase("docs.guide.multi.child-characters") }}</div> <div class="mb10"></div>
+<div>{{ phrase_html("docs.guide.multi.type-start-charactername-in-chat-or-use-code") }}</div>
+<div class='code'>
+start_character("CHARACTERNAME");
+
+send_cm("CHARACTERNAME", {command: "follow"});
+
+character.on("cm", function (message) {
+	if (message.name !== "CHARACTERNAME") return;
+	log(message.message);
+});
+</div>
+
+<div class="divider"></div>
+
+<div class="title mt10">{{ phrase("docs.guide.multi.observe-and-coordinate") }}</div> <div class="mb10"></div>
+<div>{{ phrase_html("docs.guide.multi.use-com-or-comm-to-observe-connected-characters") }}</div>
+</div>
+
+<style>
+	.multi-guide .title{
+		color: #238DB9;
+		font-size: 36px;
+		margin-top: 15px;
+	}
+	.multi-guide a,
+	.multi-guide a:link,
+	.multi-guide a:visited,
+	.multi-guide a:hover,
+	.multi-guide a:focus,
+	.multi-guide a:active{
+		color: #116A91;
+		text-decoration-color: #238DB9;
+	}
+	.multi-guide .divider{
+		margin-top: 15px;
+		height: 5px;
+		background-color: gray;
+		margin-left: -26px;
+		margin-right: -26px;
+	}
+</style>

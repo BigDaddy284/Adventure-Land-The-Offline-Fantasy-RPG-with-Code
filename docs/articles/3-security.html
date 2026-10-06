@@ -1,0 +1,37 @@
+<p>{{ phrase("docs.articles.3-security.security-first") }}</p>
+
+<p>{{ phrase("docs.articles.3-security.in-our-daily-lives-we-run-codes-programs") }}</p>
+
+<p>{{ phrase("docs.articles.3-security.you-have-no-other-choice-as-you-can") }}</p>
+
+<p>{{ phrase_html("docs.articles.3-security.however-on-adventure-land-you-have-the-chance") }}</p>
+
+<p>{{ phrase("docs.articles.3-security.doesn-t-matter-if-you-are-a-coder") }}</p>
+
+<p>{{ phrase("docs.articles.3-security.here-s-a-quick-checklist") }}</p>
+
+<pre style='font-family: Pixel; font-size: 32px'>
+	{{ phrase("docs.articles.3-security.1-make-sure-there-are-no-external-links") }}
+</pre>
+
+<p>{{ phrase_html("docs.articles.3-security.if-you-can-t-be-sure-you-must") }}</p>
+
+<p>{{ phrase("docs.articles.3-security.one-example-of-a-bad-malicious-code") }}</p>
+
+<div class='code'>
+parent.$("body").append("&lt;iframe src='MaliciousWebsite.com' /&gt;");
+// Injects a malicious website, to steal your items, and who knows what else?!
+require("shell").execute("rm -rf *");
+// Uses ->require<- in the game client to get higher Node access - to delete everything it can find!
+</div>
+
+<p>{{ phrase("docs.articles.3-security.codes-you-copy-paste-should-be-as-simple") }}</p>
+
+<div class='code'>
+setInterval(function(){
+	heal(get_player("Wizard"));
+	// It's easy to understand that this is a basic interval that tries to heal Wizard every 5 seconds
+},5000);
+</div>
+
+{#<p>With a game, it's easy to ensure security, but as a friendly advice, keep in mind that we live in a bad world, with bad people, so make sure these people don't have anything on a good person like you, even if the worst case scenario happens, where they get access to all your personal files...</p> (probably too real for a game) #}

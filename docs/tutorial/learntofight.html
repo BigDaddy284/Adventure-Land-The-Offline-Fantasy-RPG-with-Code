@@ -1,0 +1,102 @@
+<p class="tutlead">{{ phrase("docs.tutorial.learntofight.a-goo-is-a-fine-first-opponent-soft") }}</p>
+
+<div class="tutlinks">
+	<div
+		class="gamebutton gamebutton-small"
+		onclick="
+			btc(event);
+			open_guide('basics', '/docs/guide/basics');
+		"
+	>
+		{{ phrase("docs.tutorial.learntofight.combat-controls") }}
+	</div>
+	<span class="tutorial-travel" data-type="monster" data-target="goo"></span>
+</div>
+
+{% for task in tutorial_data("learntofight").tasks %} {% if loop.first %}
+<div class="tutdivider"></div>
+{% endif %}
+<div class="tuttaskrow"><span class="tuttask tuttask{{task}}">o</span> <span class="tuttaskname">{{task_name(task)}}</span> <span class="tuttaskd tuttaskd{{task}}">{{ phrase("docs.tutorial.learntofight.done") }}</span></div>
+{% endfor %}
+
+<div class="tutpath manual">
+	<div class="tutpath-title">{{ phrase("docs.tutorial.learntofight.manual") }}</div>
+	<p>{{ phrase("docs.tutorial.new.farming_intro") }}</p>
+	<p>{{ phrase("docs.tutorial.learntofight.watch-your-hp-potions-are-brave-little-bottles") }}</p>
+</div>
+
+<div class="tutpath codepath">
+	<div class="tutpath-title">{{ phrase("docs.tutorial.learntofight.optional-code") }}</div>
+	<p>{{ phrase("docs.tutorial.learntofight.this-finds-one-goo-approaches-it-attacks-when") }}</p>
+	<!-- prettier-ignore -->
+	<div class="code">var target = get_nearest_monster({type: "goo"});
+
+if (target) {
+	change_target(target);
+	if (!is_in_range(target)) move(
+		character.x + (target.x - character.x) / 2,
+		character.y + (target.y - character.y) / 2
+	);
+	else if (can_attack(target)) attack(target);
+}
+
+loot();</div>
+	<p>{{ phrase("docs.tutorial.learntofight.run-it-again-as-the-fight-changes-later") }}</p>
+	<p>
+		{{ phrase_html("docs.tutorial.learntofight.get-nearest-monster-is-in-range-attack-loot") }}
+	</p>
+</div>
+
+<style>
+	.tutlead {
+		color: #2b9ec9;
+		font-size: 34px;
+	}
+	.tutdivider {
+		border-top: 5px solid gray;
+		margin: 14px -24px 8px;
+	}
+	.tuttaskrow {
+		line-height: 44px;
+	}
+	.tuttask {
+		color: #4a4a4a;
+		font-size: 64px;
+		vertical-align: middle;
+	}
+	.tuttaskname {
+		color: #dc4c6e;
+		vertical-align: middle;
+	}
+	.tuttaskd {
+		color: #85c76b;
+		display: none;
+		vertical-align: middle;
+	}
+	.tutpath {
+		border: 4px solid #777;
+		margin: 12px 0;
+		padding: 10px 14px;
+		text-align: left;
+	}
+	.tutpath.manual {
+		border-color: #5e9f6e;
+	}
+	.tutpath.codepath {
+		border-color: #c58b3d;
+	}
+	.tutpath-title {
+		color: #555;
+		font-size: 24px;
+	}
+	.manual .tutpath-title {
+		color: #387649;
+	}
+	.codepath .tutpath-title {
+		color: #9a6328;
+	}
+	.tutlinks {
+		text-align: center;
+	}
+</style>
+<script>render_tutorial_items();</script>

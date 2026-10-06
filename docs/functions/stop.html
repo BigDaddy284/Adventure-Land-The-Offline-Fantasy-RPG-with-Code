@@ -1,0 +1,14 @@
+<p><span class='dlabel'>stop(action, second)</span></p>
+<p>{{ phrase("docs.functions.stop.stops-movement-or-cancels-a-supported-ongoing-action") }}</p>
+<p>{{ phrase_html("docs.functions.stop.returns-promise-resolving-when-the-stop-is-accepted") }}</p>
+<p>{{ phrase_html("docs.functions.stop.promise-failures-unless-a-function-specific-note-says") }}</p>
+<p>{{ phrase_html("docs.functions.stop.notes-actions-are-move-smart-invis-teleport-town") }}</p>
+<p>{{ phrase_html("docs.functions.stop.example") }}</p>
+<div class='code'>async function example() {
+	await stop("town");
+	await stop("smart");
+}
+example();</div>
+
+<p></p>
+<span class='redlabel'>{{ phrase("docs.reference.source_code") }}</span>

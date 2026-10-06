@@ -1,0 +1,54 @@
+<p>{{ phrase_html("docs.articles.data-npc.npc-objects") }}</p>
+
+<p>{{ phrase_html("docs.articles.data-npc.adventure-land-has-two-useful-npc-data-layers") }}</p>
+
+<div class="code">show_json(G.npcs.newupgrade);
+show_json(find_npc("newupgrade"));
+show_json(get_nearest_npc());</div>
+
+<p>{{ phrase_html("docs.articles.data-npc.g-npcs-is-indexed-by-stable-npc-ids") }}</p>
+
+<div class="code">{
+    name: "Cue",
+    role: "newupgrade",
+    skin: "newupgrade",
+    says: "+1"
+}</div>
+
+<p>{{ phrase("docs.articles.data-npc.common-definition-fields") }}</p>
+
+<div data-npc-field="name">{{ phrase_html("docs.articles.data-npc.name-player-facing-name") }}</div>
+<div data-npc-field="role">{{ phrase_html("docs.articles.data-npc.role-the-service-or-interaction-family-used-by") }}</div>
+<div data-npc-field="skin">{{ phrase_html("docs.articles.data-npc.skin-sprite-or-appearance-key") }}</div>
+<div data-npc-field="says">{{ phrase_html("docs.articles.data-npc.says-short-overhead-line-sometimes-selected-from-an") }}</div>
+<div data-npc-field="interaction">{{ phrase_html("docs.articles.data-npc.interaction-longer-dialogue-shown-when-the-npc-has") }}</div>
+<div data-npc-field="items">{{ phrase_html("docs.articles.data-npc.items-item-ids-sold-by-a-merchant") }}</div>
+<div data-npc-field="quest">{{ phrase_html("docs.articles.data-npc.quest-collection-or-quest-interaction-key") }}</div>
+<div data-npc-field="side_interaction">{{ phrase_html("docs.articles.data-npc.side-interaction-contextual-dialogue-displayed-beside-a-specialist") }}</div>
+
+<p>{{ phrase_html("docs.articles.data-npc.map-placement-lives-in-g-maps-map-npcs") }}</p>
+
+<div class="code">var cue = find_npc("newupgrade");
+if (cue) await smart_move(cue);</div>
+
+<p>{{ phrase_html("docs.articles.data-npc.find-npc-id-searches-static-map-placements-and") }}</p>
+
+<p>{{ phrase("docs.articles.data-npc.a-visible-npc-entity-is-a-pixi-backed") }}</p>
+
+<div data-npc-field="id">{{ phrase_html("docs.articles.data-npc.id-live-entity-id") }}</div>
+<div data-npc-field="npc">{{ phrase_html("docs.articles.data-npc.npc-stable-key-into-g-npcs") }}</div>
+<div data-npc-field="type">{{ phrase_html("docs.articles.data-npc.type-normally-npc") }}</div>
+<div data-npc-field="map">{{ phrase_html("docs.articles.data-npc.map-current-map") }}</div>
+<div data-npc-field="x">{{ phrase_html("docs.articles.data-npc.x-and-y-current-coordinates") }}</div>
+
+<div class="code">var npc = get_nearest_npc();
+if (npc) {
+    game_log(npc.npc + " / " + npc.role);
+    game_log("Distance: " + distance(character, npc));
+}</div>
+
+<p>{{ phrase_html("docs.articles.data-npc.get-nearest-npc-only-searches-npcs-currently-rendered") }}</p>
+
+<p>{{ phrase_html("docs.articles.data-npc.npc-services-still-enforce-distance-inventory-currency-and") }}</p>
+
+<p>{{ phrase_html("docs.articles.data-npc.merrit-s-visits-keep-an-open-stocked-stand") }}</p>

@@ -1,0 +1,14 @@
+<p><span class='dlabel'>buy_lost_and_found(rid, timeout_ms)</span></p>
+<p>{{ phrase("docs.functions.buy_lost_and_found.buys-one-current-lost-and-found-listing") }}</p>
+<p>{{ phrase_html("docs.functions.buy_lost_and_found.returns-promise-resolving-after-the-item-reaches-your") }}</p>
+<p>{{ phrase_html("docs.functions.buy_lost_and_found.promise-failures-unless-a-function-specific-note-says") }}</p>
+<p>{{ phrase_html("docs.functions.buy_lost_and_found.notes-pass-the-listing-object-returned-by-get") }}</p>
+<p>{{ phrase_html("docs.functions.buy_lost_and_found.example") }}</p>
+<div class='code'>async function example() {
+	var listings = await get_lost_and_found();
+	if (listings.items.length) await buy_lost_and_found(listings.items[0]);
+}
+example();</div>
+
+<p></p>
+<span class='redlabel'>{{ phrase("docs.reference.source_code") }}</span>

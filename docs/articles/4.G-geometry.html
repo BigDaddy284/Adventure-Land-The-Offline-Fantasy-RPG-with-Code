@@ -1,0 +1,35 @@
+<p>{{ phrase_html("docs.articles.4.g-geometry.practical-geometry") }}</p>
+
+<p>{{ phrase_html("docs.articles.4.g-geometry.monster-combat-bounds") }}</p>
+
+<p>{{ phrase_html("docs.articles.4.g-geometry.use-distance-a-b-for-gameplay-range-checks") }}</p>
+
+<div class="code">async function attack_nearest_in_range() {
+	var target = get_nearest_monster();
+	if (target) {
+		game_log("Range: " + distance(character, target));
+		if (is_in_range(target, "attack")) await attack(target);
+	}
+}
+
+attack_nearest_in_range();</div>
+
+<p>{{ phrase("docs.articles.4.g-geometry.use-ordinary-euclidean-distance-when-you-specifically-need") }}</p>
+
+<div class="code">function point_distance(a, b) {
+	var dx = b.x - a.x;
+	var dy = b.y - a.y;
+	return Math.sqrt(dx * dx + dy * dy);
+}</div>
+
+<p>{{ phrase_html("docs.articles.4.g-geometry.the-direction-from-a-to-b-in-radians") }}</p>
+
+<div class="code">function point_at_distance(a, b, units) {
+	var angle = Math.atan2(b.y - a.y, b.x - a.x);
+	return {
+		x: a.x + Math.cos(angle) * units,
+		y: a.y + Math.sin(angle) * units
+	};
+}</div>
+
+<p>{{ phrase_html("docs.articles.4.g-geometry.geometry-alone-does-not-prove-a-route-is") }}</p>

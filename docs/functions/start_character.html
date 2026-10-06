@@ -1,0 +1,15 @@
+<p><span class='dlabel'>start_character(name, code_slot_or_name)</span></p>
+<p>{{ phrase("docs.functions.start_character.starts-another-character-from-your-account-in-code") }}</p>
+<p>{{ phrase_html("docs.functions.start_character.returns-promise-resolving-when-the-character-is-running") }}</p>
+<p>{{ phrase_html("docs.functions.start_character.promise-failures-unless-a-function-specific-note-says") }}</p>
+<p>{{ phrase_html("docs.functions.start_character.notes-repeated-calls-for-the-same-local-character") }}</p>
+<p>{{ phrase_html("docs.functions.start_character.mainframe-the-first-child-call-changes-the-caller") }}</p>
+<p>{{ phrase_html("docs.functions.start_character.at-the-next-renewal-one-shell-or-free") }}</p>
+<p>{{ phrase_html("docs.functions.start_character.example") }}</p>
+<div class='code'>async function example() {
+	await start_character("Merchant", "merchant_code");
+}
+example();</div>
+
+<p></p>
+<span class='redlabel'>{{ phrase("docs.reference.source_code") }}</span>

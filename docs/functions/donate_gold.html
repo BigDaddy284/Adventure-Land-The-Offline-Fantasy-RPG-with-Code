@@ -1,0 +1,13 @@
+<p><span class='dlabel'>donate_gold(gold, timeout_ms)</span></p>
+<p>{{ phrase("docs.functions.donate_gold.donates-gold-to-the-lost-and-found-reserve") }}</p>
+<p>{{ phrase_html("docs.functions.donate_gold.returns-promise-resolving-with-the-donated-amount-current") }}</p>
+<p>{{ phrase_html("docs.functions.donate_gold.promise-failures-unless-a-function-specific-note-says") }}</p>
+<p>{{ phrase_html("docs.functions.donate_gold.notes-donations-of-at-least-1-000-000") }}</p>
+<p>{{ phrase_html("docs.functions.donate_gold.example") }}</p>
+<div class='code'>async function example() {
+	await donate_gold(1000000);
+}
+example();</div>
+
+<p></p>
+<span class='redlabel'>{{ phrase("docs.reference.source_code") }}</span>

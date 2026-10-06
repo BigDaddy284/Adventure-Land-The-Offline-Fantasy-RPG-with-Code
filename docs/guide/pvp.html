@@ -1,0 +1,72 @@
+<div class="guide-kicker">{{ phrase("docs.guide.pvp.combat") }}</div>
+<div class="guide-title">{{ phrase("docs.guide.pvp.pvp-duels") }}</div>
+<p>{{ phrase("docs.guide.pvp.there-are-three-different-fights-between-adventurers-open") }}</p>
+
+<div class="guide-showcase" style="border-color:#C3443D">
+	<div class="guide-showcase-art"><span class="pvp-ace"></span><span class="pvp-marked"></span><span class="pvp-token"></span></div>
+	<div class="guide-showcase-copy">{{ phrase_html("docs.guide.pvp.know-what-can-be-lost-open-pvp-can") }}</div>
+</div>
+
+<div class="guide-cards">
+	<div>{{ phrase_html("docs.guide.pvp.open-pvp-on-a-pvp-server-or-an") }}</div>
+	<div>{{ phrase_html("docs.guide.pvp.safe-pvp-some-pve-server-arenas-allow-fighting") }}</div>
+	<div>{{ phrase_html("docs.guide.pvp.duels-a-private-duel-moves-both-leaders-and") }}</div>
+</div>
+
+<div class="divider"></div>
+<div class="title mt15">{{ phrase("docs.guide.pvp.before-entering") }}</div>
+<p>{{ phrase_html("docs.guide.pvp.in-pvp-reports-whether-your-character-is-presently") }}</p>
+<p>{{ phrase_html("docs.guide.pvp.a-safe-room-can-still-exist-on-a") }}</p>
+<div class="guide-note">{{ phrase("docs.guide.pvp.the-pvp-board-records-the-realm-s-latest") }}</div>
+
+<div class="divider"></div>
+<div class="title mt15">{{ phrase("docs.guide.pvp.starting-a-duel") }}</div>
+<div class="guide-flow" style="border-color:#C3443D" data-guide-visual="duel">
+	<div class="guide-flow-node">{{ phrase_html("docs.guide.pvp.p1-leader-challenges") }}</div>
+	<div class="guide-flow-arrow">→</div>
+	<div class="guide-flow-node">{{ phrase_html("docs.guide.pvp.p2-leader-accepts") }}</div>
+	<div class="guide-flow-arrow">→</div>
+	<div class="guide-flow-node">{{ phrase_html("docs.guide.pvp.vs-parties-enter-duelland") }}</div>
+</div>
+<ol>
+	<li>{{ phrase("docs.guide.pvp.both-leaders-must-be-online-outside-pvp-and") }}</li>
+	<li>{{ phrase("docs.guide.pvp.challenge-the-other-leader-they-accept-while-the") }}</li>
+	<li>{{ phrase("docs.guide.pvp.the-two-leaders-enter-immediately-online-party-members") }}</li>
+	<li>{{ phrase("docs.guide.pvp.party-members-enter-before-the-duel-begins-each") }}</li>
+</ol>
+<p>{{ phrase_html("docs.guide.pvp.manually-use-challenge-charactername-then-accept-the-incoming") }}</p>
+
+<div class="divider"></div>
+<div class="title mt15">CODE</div>
+<p>{{ phrase("docs.guide.pvp.the-duel-functions-settle-only-after-the-server") }}</p>
+<div class="code">character.on("challenge", function (name) {
+	game_log(name + " challenged you");
+});
+
+character.on("duel", function (duel) {
+	// Invited party members can join before the fight starts.
+	enter_duel(duel.id).catch(show_json);
+});
+
+async function challenge(name) {
+	await send_duel_challenge(name);
+	game_log("Challenge delivered to " + name);
+}
+
+async function recent_pvp() {
+	var history = await get_pvp_history();
+	show_json(history.list); // [winner, defeated]
+}</div>
+<p>{{ phrase_html("docs.guide.pvp.the-receiving-leader-uses-accept-duel-challenge-see") }}</p>
+
+<div class="guide-related">{{ phrase_html("docs.guide.pvp.related-items-travel-instances") }}</div>
+
+<script>
+	$(".pvp-ace").html(sprite(G.npcs.pvp.skin, { height: 58 }));
+	$(".pvp-marked").html(item_container({ skin: G.items.gem1.skin }, { name: "gem1", v: true, q: 12 }));
+	$(".pvp-token").html(item_container({ skin: G.items.pvptoken.skin }, { name: "pvptoken" }));
+</script>
+
+<style>
+	.guide-kicker{color:#A33A35;font-size:18px;font-weight:bold;letter-spacing:2px}.guide-title{color:#C3443D;font-size:44px;line-height:48px;margin:2px 0 12px}.title{color:#9E3E39;font-size:36px;margin-top:15px}.divider{margin-top:15px;height:5px;background-color:#A2A2A2;margin-left:-26px;margin-right:-26px}.guide-cards{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin:12px 0}.guide-cards>div{border:3px solid #C18B87;padding:10px}.guide-pvp{color:#E66E5C;font-weight:bold}.guide-note{border-left:6px solid #C3443D;background:#F3E1DE;padding:10px 14px;margin:12px 0}.guide-related{border-top:2px dotted #AAA;margin-top:18px;padding-top:10px;color:#666}.guide-related span{color:#A33A35;cursor:pointer;text-decoration:underline}.pvp-side,.pvp-duel{display:inline-flex;align-items:center;justify-content:center;min-width:46px;height:42px;border:3px solid #E17068;background:#2D1412;color:#FFB2AC}.pvp-duel{border-color:#E1B14F;color:#FFE2A2}@media(max-width:760px){.guide-cards{grid-template-columns:1fr}}
+</style>

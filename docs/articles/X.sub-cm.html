@@ -1,0 +1,37 @@
+<p>{{ phrase_html("docs.articles.x.sub-cm.code-messages") }}</p>
+
+<p>{{ phrase("docs.articles.x.sub-cm.code-messages-or-cms-send-json-serializable-data") }}</p>
+
+<div class="code">async function send_orders() {
+	try {
+		var result = await send_cm(["Wizard", "Protector"], {
+			task: "move",
+			map: character.map,
+			x: character.x,
+			y: character.y
+		});
+		game_log("Delivered to: " + result.receivers.join(", "));
+	} catch (error) {
+		// Locally delivered names remain listed if server delivery failed.
+		game_log("CM failed: " + error.reason);
+	}
+}
+
+send_orders();</div>
+
+<p>{{ phrase_html("docs.articles.x.sub-cm.send-cm-returns-one-promise-it-fulfills-with") }}</p>
+
+<p>{{ phrase("docs.articles.x.sub-cm.receive-messages-through-the-character-event") }}</p>
+
+<div class="code">character.on("cm", function (data) {
+	if (data.name != "Wizard") {
+		safe_log("Ignored CM from " + data.name);
+		return;
+	}
+
+	show_json(data.message);
+});</div>
+
+<p>{{ phrase_html("docs.articles.x.sub-cm.the-payload-is-name-message-treat-every-incoming") }}</p>
+
+<p>{{ phrase_html("docs.articles.x.sub-cm.messages-must-survive-json-stringify-do-not-send") }}</p>

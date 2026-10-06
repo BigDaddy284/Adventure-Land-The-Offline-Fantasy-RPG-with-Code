@@ -1,0 +1,72 @@
+<p>{{ phrase_html("docs.articles.6-items101.items-are-defined-in-g-items-each-entry") }}</p>
+
+<div class="code">
+"fclaw":{
+	"type": "weapon",
+	"wtype": "fist",
+	"skin": "fclaw",
+	"attack": 14,
+	"range": 5,
+	"ability": "freeze",
+	"attr0": 0.2,
+	"int": 8,
+	"upgrade":{
+		"attack": 4,
+		"range": 1.5,
+		"attr0": 0.1,
+	},
+	"name": "Frozen Claw",
+	"g": 72000,
+	"a": true,
+	"grades": [0,7],
+}
+</div>
+
+<p>{{ phrase_html("docs.articles.6-items101.its-type-is-weapon-and-its-weapon-type") }}</p>
+
+<p>{{ phrase_html("docs.articles.6-items101.grades-contains-the-upgrade-levels-where-the-item") }}</p>
+
+<p>{{ phrase_html("docs.articles.6-items101.character-items-is-the-live-inventory-array-an") }}</p>
+
+<div class="code">
+{
+	"name": "fclaw",
+	"level": 8,
+}
+</div>
+
+<p>{{ phrase_html("docs.articles.6-items101.inventory-slots-can-be-null-do-not-assume") }}</p>
+
+<div class="code">for (var slot = 0; slot &lt; character.items.length; slot++) {
+	var item = character.items[slot];
+	if (!item) continue;
+
+	var definition = G.items[item.name];
+	game_log(slot + ": " + definition.name + " +" + (item.level || 0));
+}</div>
+
+<p>{{ phrase_html("docs.articles.6-items101.g-items-is-definition-data-not-proof-that") }}</p>
+
+<p>{{ phrase_html("docs.articles.6-items101.finding-and-counting") }}</p>
+
+<div class="code">var scroll_slot = locate_item("scroll0");
+var scroll_count = item_quantity("scroll0");
+
+if (scroll_slot !== -1) {
+	show_json(character.items[scroll_slot]);
+	show_json(G.items[character.items[scroll_slot].name]);
+}</div>
+
+<p>{{ phrase_html("docs.articles.6-items101.use-locate-item-to-find-a-matching-slot") }}</p>
+
+<p>{{ phrase_html("docs.articles.6-items101.changing-items") }}</p>
+
+<p>{{ phrase_html("docs.articles.6-items101.actions-such-as-buy-sell-equip-upgrade-compound") }}</p>
+
+<div class="code">async function equip_first(name) {
+	var slot = locate_item(name);
+	if (slot === -1) throw { failed: true, reason: "not_owned", name: name };
+	return await equip(slot);
+}</div>
+
+<p>{{ phrase("docs.articles.6-items101.inventory-indexes-can-change-after-an-action-locate") }}</p>

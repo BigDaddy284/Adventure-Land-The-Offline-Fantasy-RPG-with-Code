@@ -1,0 +1,99 @@
+<p>{{ phrase_html("docs.articles.code-globals.code-globals") }}</p>
+
+<p>{{ phrase("docs.articles.code-globals.these-objects-are-supplied-to-every-character-code") }}</p>
+
+<p><span class="dlabel" data-global="character">character</span></p>
+
+<p>{{ phrase("docs.articles.code-globals.your-live-character-proxy-stats-inventory-equipment-conditions") }}</p>
+
+<p><span class="dlabel" data-global="G">G</span></p>
+
+<p>{{ phrase("docs.articles.code-globals.static-and-server-supplied-game-definitions-common-collections") }}</p>
+
+<div class="code">G.items       // Item definitions
+G.skills      // Skill definitions
+G.conditions  // Condition definitions
+G.classes     // Class definitions
+G.monsters    // Base monster definitions
+G.maps        // Maps, NPCs, doors, spawns, and monster packs
+G.npcs        // NPC definitions
+G.events      // Joinable and announced event definitions
+G.craft       // Craft recipes
+G.tokens      // Token exchange tables
+G.projectiles // Projectile definitions</div>
+
+<p>{{ phrase("docs.articles.code-globals.definitions-describe-inputs-to-runtime-behavior-they-do") }}</p>
+
+<p><span class="dlabel" data-global="server">server</span></p>
+
+<div class="code">{
+	mode: "normal", // normal, hardcore, or test
+	pvp: false,
+	region: "EU",
+	id: "I",
+}</div>
+
+<p>{{ phrase_html("docs.articles.code-globals.server-pvp-describes-the-server-use-in-pvp") }}</p>
+
+<div class="code">server.status // Live server-wide events, schedules, and temporary effects</div>
+
+<p>{{ phrase_html("docs.articles.code-globals.server-status-always-reads-the-newest-server-state") }}</p>
+
+<p><span class="dlabel" data-global="game">game</span></p>
+
+<div class="code">{
+	platform: "web", // web, electron, or tauri
+	graphics: true,
+	html: true,
+}</div>
+
+<p>{{ phrase_html("docs.articles.code-globals.game-platform-is-web-in-a-browser-electron") }}</p>
+
+<p><span class="dlabel" data-global="smart">smart</span></p>
+
+<div class="code">smart.moving          // A smart route is active
+smart.map              // Destination map
+smart.x                 // Destination x
+smart.y                 // Destination y
+smart.plot              // Current planned path
+smart.edge = 20         // Arrival tolerance
+smart.use_town = false  // Allow town in path search
+smart.prune.smooth      // Smooth redundant points
+smart.prune.map         // Prune routes that leave the destination map</div>
+
+<p>{{ phrase_html("docs.articles.code-globals.smart-exposes-the-current-smart-move-state-and") }}</p>
+
+<hr />
+
+<p><span class="dlabel" data-global="code_settings">code_settings</span></p>
+
+<p>{{ phrase("docs.code_settings.scope") }}</p>
+
+<div class="code">code_settings.log_cm = false;
+code_settings.log_smart_move = false;
+code_settings.show_smart_move_text = false;</div>
+
+<p>{{ phrase_html("docs.code_settings.cm") }}</p>
+<p>{{ phrase_html("docs.code_settings.smart_move") }}</p>
+<p>{{ phrase("docs.code_settings.errors") }}</p>
+
+<hr />
+
+<p><span class="dlabel" data-global="safeties">safeties</span></p>
+
+<p>{{ phrase_html("docs.articles.code-globals.boolean-request-burst-safeguards-used-by-chat-loot") }}</p>
+
+<p><span class="dlabel" data-global="parent">parent</span></p>
+
+<p>{{ phrase_html("docs.articles.code-globals.the-containing-game-window-it-exposes-low-level") }}</p>
+
+<p>{{ phrase_html("docs.articles.code-globals.nearby-runtime-collections") }}</p>
+
+<div class="code">parent.entities // Visible characters, monsters, and citizen NPCs by ID
+server.status   // Live server status, safer to keep reading than parent.S
+get_chests()    // Visible chests by ID
+get_party()     // Cached party data
+get_servers()   // Cached server directory
+get_characters()// Cached account character summaries</div>
+
+<p>{{ phrase_html("docs.articles.code-globals.visible-entity-references-stop-updating-after-they-leave") }}</p>

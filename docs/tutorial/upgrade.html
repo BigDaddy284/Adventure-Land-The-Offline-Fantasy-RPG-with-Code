@@ -1,0 +1,119 @@
+<p class="tutlead">{{ phrase("docs.tutorial.upgrade.upgrading-makes-weapons-and-armor-stronger-a-failed") }}</p>
+<div><span class="tutorial-travel" data-type="npc" data-target="basics"></span></div>
+
+<div class="tutlinks">
+	<div
+		class="gamebutton gamebutton-small"
+		onclick="
+			btc(event);
+			open_guide('upgrading', get_guide_url('upgrading'));
+		"
+	>
+		{{ phrase("docs.tutorial.upgrade.complete-upgrading-guide") }}
+	</div>
+</div>
+
+{% for task in tutorial_data("upgrade").tasks %} {% if loop.first %}
+<div class="tutdivider"></div>
+{% endif %}
+<div class="tuttaskrow"><span class="tuttask tuttask{{task}}">o</span> <span class="tuttaskname">{{task_name(task)}}</span> <span class="tuttaskd tuttaskd{{task}}">{{ phrase("docs.tutorial.upgrade.done") }}</span></div>
+{% endfor %}
+
+<div class="tutpath manual">
+	<div class="tutpath-title">{{ phrase("docs.tutorial.upgrade.manual") }}</div>
+	<p>{{ phrase("docs.tutorial.upgrade.buy-one-basic-upgrade-scroll-take-a-cheap") }}</p>
+	<p style="display:flex;align-items:center;gap:16px;flex-wrap:wrap"><span class="tutorial-npc" data-npc="scrolls"></span><span>Lucas · Mainland<br>(-464, -96)</span><span class="tutorial-item" data-item="scroll0"></span><span class="tutorial-npc" data-npc="newupgrade"></span><span>Cue · Mainland<br>(-207, -220)</span></p>
+<div><span class="tutorial-travel" data-type="npc" data-target="scrolls"></span> <span class="tutorial-travel" data-type="npc" data-target="newupgrade"></span></div>
+	<p>
+		{{ phrase("docs.tutorial.upgrade.the-item-s-current-grade-decides-which-scroll") }}
+	</p>
+</div>
+
+<div class="tutpath codepath">
+	<div class="tutpath-title">{{ phrase("docs.tutorial.upgrade.optional-code") }}</div>
+	<p>{{ phrase_html("docs.tutorial.upgrade.this-selects-a-normal-grade-upgradeable-item-it") }}</p>
+	<!-- prettier-ignore -->
+	<div class="code">async function upgrade_once() {
+	await smart_move(find_npc("newupgrade"));
+
+	var item_num = character.items.findIndex(function (item) {
+		return item &amp;&amp; G.items[item.name].upgrade &amp;&amp; item_grade(item) === 0;
+	});
+	var scroll_num = locate_item("scroll0");
+	if (item_num === -1 || scroll_num === -1) throw {reason: "missing_item_or_scroll"};
+
+	var preview = await upgrade(item_num, scroll_num, null, true);
+	game_log("Upgrade chance: " + (preview.chance * 100).toFixed(2) + "%");
+
+	var CONFIRM_UPGRADE = false;
+	if (!CONFIRM_UPGRADE) throw {reason: "read_the_chance_then_confirm"};
+	await upgrade(item_num, scroll_num);
+}
+
+upgrade_once().catch(function (error) {
+	show_json(error);
+});</div>
+	<p>{{ phrase_html("docs.tutorial.upgrade.calculation-mode-consumes-nothing-read-its-chance-then") }}</p>
+	<p>
+		{{ phrase_html("docs.tutorial.upgrade.upgrade-item-grade-lock-item") }}
+	</p>
+</div>
+
+<p class="tuttip">{{ phrase_html("docs.tutorial.upgrade.stat-scrolls-eligible-armor-can-receive-str-int") }}</p>
+
+<style>
+	.tutlead {
+		color: #2b9ec9;
+		font-size: 34px;
+	}
+	.tutdivider {
+		border-top: 5px solid gray;
+		margin: 14px -24px 8px;
+	}
+	.tuttaskrow {
+		line-height: 44px;
+	}
+	.tuttask {
+		color: #4a4a4a;
+		font-size: 64px;
+		vertical-align: middle;
+	}
+	.tuttaskname {
+		color: #dc4c6e;
+		vertical-align: middle;
+	}
+	.tuttaskd {
+		color: #85c76b;
+		display: none;
+		vertical-align: middle;
+	}
+	.tutpath {
+		border: 4px solid #777;
+		margin: 12px 0;
+		padding: 10px 14px;
+		text-align: left;
+	}
+	.tutpath.manual {
+		border-color: #5e9f6e;
+	}
+	.tutpath.codepath {
+		border-color: #c58b3d;
+	}
+	.tutpath-title {
+		color: #555;
+		font-size: 24px;
+	}
+	.manual .tutpath-title {
+		color: #387649;
+	}
+	.codepath .tutpath-title {
+		color: #9a6328;
+	}
+	.tuttip {
+		color: #555;
+	}
+	.tutlinks {
+		text-align: center;
+	}
+</style>
+<script>render_tutorial_items();</script>

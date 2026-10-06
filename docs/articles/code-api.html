@@ -1,0 +1,150 @@
+<p>{{ phrase_html("docs.articles.code-api.the-code-runtime") }}</p>
+
+<p>{{ phrase("docs.articles.code-api.your-code-runs-inside-its-character-s-code") }}</p>
+
+<p>{{ phrase_html("docs.articles.code-api.core-globals") }}</p>
+
+<div class="code">character // Your live character proxy
+G         // Game definitions: items, skills, maps, monsters, recipes, and more
+server    // { mode, pvp, region, id }
+game      // { platform, graphics, html }
+smart     // Current smart_move state and pathfinding options
+safeties  // Request-burst safeguards; true by default</div>
+
+<p>{{ phrase_html("docs.articles.code-api.promises") }}</p>
+
+<p>{{ phrase("docs.articles.code-api.server-actions-return-native-promises-the-response-listener") }}</p>
+
+<div class="code">async function attack_once(target) {
+	try {
+		var result = await use_skill("attack", target);
+		game_log("Attack accepted: " + result.damage);
+	} catch (error) {
+		game_log("Attack failed: " + error.reason);
+	}
+}</div>
+
+<p>{{ phrase_html("docs.articles.code-api.by-default-successful-actions-fulfill-and-failures-reject") }}</p>
+
+<div class="code">mode_resolve_all();
+
+attack(target).then(function (result) {
+	if (result.failed) game_log(result.reason);
+});</div>
+
+<p>{{ phrase_html("docs.articles.code-api.calls-that-wait-for-the-same-kind-of") }}</p>
+
+<p>{{ phrase_html("docs.articles.code-api.functions-that-wait-for-completion") }}</p>
+
+<p>{{ phrase("docs.articles.code-api.most-actions-finish-when-the-server-accepts-or") }}</p>
+
+<div class="code">async function run_sequence() {
+	await start_character("Merchant", "merchant_code"); // CODE runner is active
+	await smart_move("bank");                         // Destination reached
+	await transport("main", 0);                      // Destination map loaded
+	await town();                                     // Town channel completed
+	await exchange(0);                                // Reward slot updated
+	await accept_friend_request("Wizard");            // Friendship created
+	await send_mail("Merchant", "Route", "Meet at the bank"); // Mail stored
+	await take_mail_item("ML_your_mail_id");             // Attachment in inventory
+	await buy_with_shells("computer", 1);             // Account and inventory updated
+	await bless_server();                              // Server blessing active
+	await unfriend("FormerFriend");                    // Both accounts updated
+	await wait_for(function () { return get_player("Wizard"); }, 5000);
+	await wait_for_event(character, "new_map", 5000);
+}
+run_sequence();</div>
+
+<p>{{ phrase("docs.articles.code-api.these-functions-reject-on-interruption-disconnection-or-their") }}</p>
+
+<p>{{ phrase_html("docs.articles.code-api.events-and-callbacks") }}</p>
+
+<p>{{ phrase_html("docs.articles.code-api.use-character-on-character-once-character-all-character") }}</p>
+
+<p>{{ phrase_html("docs.code_settings.cm") }}</p>
+
+<div class="code">code_settings.log_cm = false;
+character.on("cm", function (data) {
+	safe_log(data.name + ": " + JSON.stringify(data.message));
+});
+
+game.on("game_event", function (event) {
+	show_json(event);
+});</div>
+
+<p>{{ phrase_html("docs.articles.code-api.compatibility") }}</p>
+
+<p>{{ phrase_html("docs.articles.code-api.established-names-and-call-forms-remain-in-place") }}</p>
+
+<p>{{ phrase_html("docs.articles.code-api.persistence-and-shared-code") }}</p>
+
+<div class="code">set("farm", { monster: "goo", kills: 12 });
+var farm = get("farm");
+
+pset("route", "winterland");
+var route = pget("route");
+
+load_code("globals");
+var helpers = require_code("helpers");</div>
+
+<p>{{ phrase_html("docs.articles.code-api.get-set-store-json-serializable-browser-local-values") }}</p>
+
+<p>{{ phrase_html("docs.articles.code-api.both-loaders-execute-the-file-again-on-every") }}</p>
+
+<p>{{ phrase_html("docs.articles.code-api.low-level-socket-access") }}</p>
+
+<p>{{ phrase_html("docs.articles.code-api.get-socket-is-available-for-listening-to-low") }}</p>
+
+<p>{{ phrase_html("docs.articles.code-api.mainframe-execution") }}</p>
+
+<p>{{ phrase_html("docs.articles.code-api.mainframe-runs-the-same-public-code-model-without") }}</p>
+
+<p>{{ phrase("docs.articles.code-api.a-code-log-proves-that-javascript-reached-the") }}</p>
+
+<p>{{ phrase_html("docs.articles.code-api.long-running-loops") }}</p>
+
+<p>{{ phrase_html("docs.articles.code-api.use-short-scheduled-passes-and-one-lock-for") }}</p>
+
+<div class="code">var combat_working = false;
+
+setInterval(async function () {
+	if (combat_working) return;
+	combat_working = true;
+	try {
+		if (character.rip) return await respawn();
+		var target = get_nearest_monster({ type: "goo" });
+		if (!target) return;
+		if (!is_in_range(target)) await xmove(target.x, target.y);
+		else if (can_attack(target)) await attack(target);
+	} catch (error) {
+		game_log("combat: " + (error.reason || error.message || error));
+	} finally {
+		combat_working = false;
+	}
+}, 250);</div>
+
+<p>{{ phrase("docs.articles.code-api.a-synchronous-infinite-loop-blocks-heartbeats-and-is") }}</p>
+
+<p>{{ phrase_html("docs.articles.code-api.definitions-observations-and-entities") }}</p>
+
+<p>{{ phrase_html("docs.articles.code-api.g-describes-what-can-exist-it-does-not") }}</p>
+
+<p>{{ phrase("docs.articles.code-api.never-keep-a-nearby-entity-object-across-an") }}</p>
+
+<p>{{ phrase_html("docs.articles.code-api.restart-and-persistence") }}</p>
+
+<p>{{ phrase_html("docs.articles.code-api.top-level-javascript-variables-reset-when-the-character") }}</p>
+
+<p>{{ phrase("docs.articles.code-api.a-running-mainframe-assignment-persists-through-adventure-land") }}</p>
+
+<p>{{ phrase_html("docs.articles.code-api.before-saving-code") }}</p>
+
+<ol>
+<li>{{ phrase("docs.articles.code-api.inspect-the-character-class-equipment-inventory-server-party") }}</li>
+<li>{{ phrase("docs.articles.code-api.read-the-exact-contracts-for-every-public-function") }}</li>
+<li>{{ phrase("docs.articles.code-api.read-exact-skill-monster-item-map-drop-and") }}</li>
+<li>{{ phrase("docs.articles.code-api.give-combat-movement-support-inventory-and-merchant-work") }}</li>
+<li>{{ phrase("docs.articles.code-api.handle-death-rejected-promises-missing-targets-cooldowns-route") }}</li>
+<li>{{ phrase("docs.articles.code-api.keep-irreversible-sales-purchases-exchanges-mail-upgrades-compounds") }}</li>
+<li>{{ phrase("docs.articles.code-api.use-code-logs-sparingly-for-decisions-and-errors") }}</li>
+</ol>
