@@ -1,3 +1,14 @@
+{% if domain.single_player %}
+<p>This privacy policy explains how your data is used and stored by {{ domain.name }}.</p>
+
+<p>Everything stays on your own PC. Your account, characters, items and settings are kept in the game's local database inside the game folder, and nothing is sent to anyone.</p>
+
+<p>There are no analytics, no tracking and no payments. The built-in account is only reachable from this PC, and its email address isn't real.</p>
+
+<p>Cookies are only used to keep you logged in and to remember your settings in the game window.</p>
+
+<p>The only time the game goes online is when you choose to: links to adventure.land and the source code, and the update script that downloads new game code.</p>
+{% else %}
 <p>{{ phrase("pages.contents.privacy.this-privacy-policy-explains-how-your-data-is") }}</p>
 
 <p>{{ phrase("pages.contents.privacy.adventure-land-uses-cookies-for-authentication-and-settings") }}</p>
@@ -19,3 +30,4 @@
 <p>{{ phrase("pages.contents.privacy.for-any-questions-hello-adventure-land") }}</p>
 
 <p>{{ phrase("pages.contents.privacy.last-edit-04-12-18") }}</p>
+{% endif %}

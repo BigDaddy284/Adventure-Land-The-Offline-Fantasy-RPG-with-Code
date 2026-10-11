@@ -24,6 +24,9 @@ const BLOCKED_METHODS = [
 	"steam_payment_finish",
 	"transfer_character", // moves a character to another account
 	"password_reminder", // emails a password reminder
+	"change_email", // the built-in account has no real email
+	"change_password", // would stop the automatic login
+	"logout_everywhere",
 ];
 
 function block_paths(req, res, next) {

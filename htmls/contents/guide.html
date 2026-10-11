@@ -73,9 +73,11 @@
 		</div>
 		<div class="gamebutton gamebutton-large mt15">{{ phrase("pages.contents.guide.communities-links") }}</div>
 		<div class="mb5"></div>
+		{% if not domain.single_player %}
 		<div class="gray mb5">
 			{{ phrase_html("pages.contents.guide.discord-discord-is-our-most-active-community-ideal") }}
 		</div>
+		{% endif %}
 		<div class="gray mb5">
 			{{ phrase_html("pages.contents.guide.github-our-official-github-houses-the-runner-functions") }}
 		</div>

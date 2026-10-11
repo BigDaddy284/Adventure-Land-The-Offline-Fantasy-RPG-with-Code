@@ -1156,7 +1156,7 @@ function release_view_html(release) {
 	});
 	html += "<div class='release-divider'></div><div class='update-notes-footer release-footer'>";
 	html += "<div class='gamebutton' onclick='hide_modal(); if (!$(\".update-notes-list\").length) show_update_notes()'>" + phrase.html("client.add_update_notes.all_update_notes") + "</div>";
-	if (release.steam) html += " <a class='gamebutton eexternal' href='" + html_escape(release.steam) + "' target='_blank' rel='noopener noreferrer'>" + phrase.html("services.steam_news.read-on-steam") + "</a>";
+	if (release.steam && !window.single_player_mode) html += " <a class='gamebutton eexternal' href='" + html_escape(release.steam) + "' target='_blank' rel='noopener noreferrer'>" + phrase.html("services.steam_news.read-on-steam") + "</a>";
 	return html + "</div></div>";
 }
 

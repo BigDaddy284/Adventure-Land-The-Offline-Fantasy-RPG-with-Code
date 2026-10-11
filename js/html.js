@@ -4424,10 +4424,11 @@ function render_useful_links() {
 		phrase.html("interface.useful_links.adventure_land_s_github") +
 		"</a>";
 	html += '<div class="mt4 blockbutton" style="text-align: left; margin-bottom: 4px">' + phrase.html("interface.useful_links.todo_create_a_gallery_of_player_s_github_repos") + "</div>";
-	html +=
-		"<a class='gamebutton eexternal' style='display: block; margin-bottom: 4px; border-color: #4B95B2' target='_blank' href='https://discord.gg/X3QyCJd'>" +
-		phrase.html("interface.useful_links.code_beginner_on_discord") +
-		"</a>";
+	if (!window.single_player_mode)
+		html +=
+			"<a class='gamebutton eexternal' style='display: block; margin-bottom: 4px; border-color: #4B95B2' target='_blank' href='https://discord.gg/X3QyCJd'>" +
+			phrase.html("interface.useful_links.code_beginner_on_discord") +
+			"</a>";
 
 	html += "</div>";
 	show_modal(html, { wrap: false, url: "/docs/code/links" });

@@ -58,7 +58,7 @@
 		<script src="/js/tavern_slots.js?v={{domain.v}}"></script>
 		<script src="/js/tavern_poker.js?v={{domain.v}}"></script>
 		<link href="/css/merrit_stand_notice.css?v={{domain.v}}" rel="stylesheet" type="text/css"/>
-		{% if not domain.no_html %}<script src="/js/steam_news.js?v={{domain.v}}"></script><link href="/css/steam_news.css?v={{domain.v}}" rel="stylesheet" type="text/css"/>{% endif %}
+		{% if not domain.no_html and not domain.single_player %}<script src="/js/steam_news.js?v={{domain.v}}"></script><link href="/css/steam_news.css?v={{domain.v}}" rel="stylesheet" type="text/css"/>{% endif %}
 		<script src="/js/payments.js?v={{domain.v}}"></script>
 		<script src="/js/keyboard.js?v={{domain.v}}"></script>
 		<script src="/data.js?v={{domain.v}}&amp;cache=1"></script>
@@ -156,9 +156,11 @@
 					</div>
 				</div>
 				<div id="event-announcements" class="enableclicks" style="display:none" aria-label="{{ phrase("pages.index.label-live-server-events") }}"></div>
+				{% if not domain.single_player %}
 				<div id="steam-news-banner" class="enableclicks" hidden>
 					{{ phrase_html("pages.index.news-from-steam-latest-update") }}
 				</div>
+				{% endif %}
 				<div id="gamelog" class="noscroll cbold enableclicks"></div>
 			</div>
 			<div id="bottomrightcodecorner" class="codeui disableclicks bpclicks">

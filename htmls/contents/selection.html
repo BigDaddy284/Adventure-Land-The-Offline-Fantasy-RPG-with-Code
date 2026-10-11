@@ -98,6 +98,7 @@
 			{% endif %}
 			<div style="margin-top: 10px"></div>
 		</div>
+		{% if not domain.single_player %}
 		<div class="accountui onback-hide hidden">
 			<div class="textbutton mt5" style="color: #75b38c">{{user.info.email}}</div>
 			{% if not user.info.dont_send_emails %}
@@ -135,6 +136,7 @@
 				{{ phrase_html("pages.contents.selection.change") }}
 			</div>
 		</div>
+		{% endif %}
 		<div class="sortui onback-hide hidden">
 			<div class="whiteheader mb2">{{ phrase("pages.contents.selection.list") }}</div>
 			<textarea class="selectioninput scharacters" style="width: 320px; height: 160px">{% for c in user.info.characters%}{{c.name}}{%if not loop.last%},{%endif%}{%endfor%}</textarea>
@@ -198,6 +200,7 @@
 			<div class="textbutton mt5" onclick="if(bc(this)) return; api_call_l('delete_map',{name:$('.dmapn').val()},{disable:$(this)});">{{ phrase_html("pages.contents.selection.delete") }}</div>
 		</div>
 		{% endif %}
+		{% if not domain.single_player %}
 		<div class="recruitui onback-hide hidden">
 			<div style="font-size: 24px; margin-top: 5px">
 				<div style="/*text-align:left;*/ margin-bottom: 10px; padding: 10px">
@@ -223,6 +226,7 @@
 				</div>
 			</div>
 		</div>
+		{% endif %}
 		<div class="privacyui onback-hide hidden">
 			<div class="whiteheader mb2">{{ phrase("pages.contents.selection.name") }}</div>
 			<input class="selectioninput pcharactername" type="text" />
@@ -253,21 +257,26 @@
 	</div>
 </div>
 <div id="topui" class="menu">
+	{% if domain.single_player %}{% include "htmls/contents/singleplayer_credits.html" %}{% endif %}
 	<div class="largeborder" style="padding-left: 15px; padding-right: 15px">
+		{% if not domain.single_player %}
 		<div class="textbutton" onclick="pcs(); $('.menu').hide(); $('.accountui').show(); resize()">
 			{{ phrase("pages.contents.selection.email-and-account") }}{% if not user.info.verified%} <span style="color: #e25268">{{ phrase("pages.contents.selection.vrfy") }}</span>{%endif%}
 		</div>
+		{% endif %}
 		<!-- {% if domain.recording_mode%}hello@adventure.land{%else%}{{user.info.email}}{%endif%} -->
-		<div class="mt5 textbutton" onclick="pcs(); $('.menu').hide(); $('.editui').show(); resize()">{{ phrase("pages.contents.selection.character-ops") }}</div>
+		<div class="{% if not domain.single_player %}mt5 {% endif %}textbutton" onclick="pcs(); $('.menu').hide(); $('.editui').show(); resize()">{{ phrase("pages.contents.selection.character-ops") }}</div>
 		{% if user.info.map_editor and not domain.recording_mode %}
 		<div class="mt5 textbutton" onclick="pcs(); $('.menu').hide(); $('.mapui').show(); resize()">{{ phrase("pages.contents.selection.edit-maps") }}</div>
 		{% endif %} {% if user.info.sales %}
 		<div class="mt5 textbutton">{{ phrase_html("pages.contents.selection.sales-bonus", {"sales_bonus": user.info.sales_bonus or 0}) }}</div>
 		{% endif %}
+		{% if not domain.single_player %}
 		<div class="mt5 textbutton" onclick="pcs(); $('.menu').hide(); $('.recruitui').show(); resize()">
 			{{ phrase("pages.contents.selection.share-and-recruit") }} <span style="color: gray">[</span>{% if not user.info.referred %}<span style="color: #e25268">0</span>{% else %}<span style="color: #7dc677">{{user.info.referred}}</span
 			>{% endif %}<span style="color: gray">]</span>
 		</div>
+		{% endif %}
 		<!--  <span style="color: #FC395C">LIVE!</span> -->
 		{%if domain.electron %}
 		<!-- user.info.characters|length>1 and -->
@@ -283,7 +292,6 @@
 		{%endif%}
 		<div class="mt5 textbutton logout" onclick="if(bc(this)) return; api_call_l('logout',{},{disable:$(this)}).then(function(result){if(!result.failed) location.reload();})">{{ phrase("pages.contents.selection.logout") }}</div>
 	</div>
-	{% if domain.single_player %}{% include "htmls/contents/credits.html" %}{% endif %}
 	<div class="largeborder" style="padding-left: 15px; padding-right: 15px; margin-top: 8px; font-size: 24px">
 		<div style="border-bottom: 2px dashed gray; color: #e7e7e7; display: inline-block; margin-bottom: 6px">{{ phrase("pages.contents.selection.in-game") }}</div>
 		<div class="enableclicks">
@@ -363,7 +371,7 @@
 {% include "htmls/contents/selection_features.html" %}
 <script>
 	// setTimeout(function(){ $("#features").html($("#features").html()) },0); /* just in case */
-	{% if domain.section=="email" %}
+	{% if domain.section=="email" and not domain.single_player %}
 		$(function(){
 			$('.menu').hide(); $('.accountui').show(); resize();
 		});

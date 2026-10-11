@@ -1507,7 +1507,7 @@ function init_socket(args) {
 		add_log(phrase.html("game.welcome"));
 		add_log(phrase.html("game.no_live_server_found"), "red");
 		add_log(phrase.html("game.please_check_again_in_2_3_minutes"));
-		add_log(phrase.html("game.spend_this_time_in_our_discord_chat_room"), colors.code_blue);
+		if (!window.single_player_mode) add_log(phrase.html("game.spend_this_time_in_our_discord_chat_room"), colors.code_blue);
 		add_update_notes();
 		return;
 	}

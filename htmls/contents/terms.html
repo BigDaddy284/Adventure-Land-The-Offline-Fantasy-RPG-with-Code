@@ -1,3 +1,12 @@
+{% if domain.single_player %}
+<p>Welcome to {{ domain.name }}! It's just you and your characters here, so there are no rules to follow.</p>
+
+<p>Code your characters, bend the settings, make yourself absurdly rich, or break the game in creative ways. Nobody gets upset, nobody gets banned, and every bug you find is a feature now.</p>
+
+<p>The one thing to keep in mind comes from Adventure Land, the game {{ domain.name }} is built on: don't sell its code, and keep the credit to adventure.land.</p>
+
+<p>Have fun!</p>
+{% else %}
 <p>{{ phrase("pages.contents.terms.there-s-one-non-breakable-main-rule-you") }}</p>
 
 <p>{{ phrase("pages.contents.terms.the-secondary-rule-is-to-not-abuse-the") }}</p>
@@ -11,3 +20,4 @@
 <p>{{ phrase("pages.contents.terms.breaking-the-rules-usually-result-in-temporary-bans") }}</p>
 
 <p>{{ phrase("pages.contents.terms.have-fun") }}</p>
+{% endif %}

@@ -12,7 +12,7 @@
 					{% include "htmls/contents/terms.html" %}
 				{% elif content=="credits"%}
 					{% include "htmls/contents/credits.html" %}
-				{% elif content=="contact"%}
+				{% elif content=="contact" and not domain.single_player %}
 					{{ phrase("pages.page.you-can-always-email-me-at-hello-adventure") }} <a class="eexternal" href="https://discord.gg/44yUVeU" target="_blank" style="border-color: #3386CF">{{ phrase("pages.page.discord") }}</a> {{ phrase("pages.page.you-can-pm-wizard-on-discord-for-faster") }}
 				{%endif%}
 			</div>
