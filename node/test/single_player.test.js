@@ -126,3 +126,10 @@ test("settings missing from an older settings.txt are found with their notes", (
 	]);
 	assert.deepEqual(single_player.missing_settings("sell_multiplier = 3\r\nstarting_gold = 5\r\n", example), []);
 });
+
+test("Merrit's visit timer comes from the settings and his settle wait is removed", () => {
+	const G = { skills: {}, npcs: { citizen22: { market: { hour_ms: 3600000, settle_ms: 120000 } } } };
+	single_player.create({ merrit_visit_minutes: 5 }).apply_game_data(G);
+	assert.equal(G.npcs.citizen22.market.hour_ms, 5 * 60 * 1000);
+	assert.equal(G.npcs.citizen22.market.settle_ms, 0);
+});

@@ -3,6 +3,10 @@ var market_patron_sessions = new WeakMap();
 var market_patron_placements = new WeakMap();
 var market_patron_placement_order = 0;
 var market_patron_account_next = new Map();
+// Single player: Merrit's visit timer is per character, so every merchant's stall gets its own visits
+function market_patron_key(player) {
+	return typeof single_player == "object" ? player.owner + ":" + player.name : player.owner;
+}
 function market_patron_config() {
 	return G.npcs.citizen22.market;
 }
@@ -55,7 +59,7 @@ function market_patron_status(player, now, members) {
 	);
 	if (result.session) market_patron_sessions.set(player, result.session);
 	else market_patron_sessions.delete(player);
-	var next = market_patron_account_next.get(player.owner) || 0;
+	var next = market_patron_account_next.get(market_patron_key(player)) || 0;
 	if (next > now) result.reasons.push({ code: "cooldown", remaining_ms: next - now });
 	if (!can_add_item(player, { name: "marketparcel", q: 1 })) result.reasons.push({ code: "inventory" });
 	result.next_at = Math.max(next, result.ready_at || 0);
@@ -75,7 +79,8 @@ async function market_patron_info(player) {
 	try {
 		var owner = await get(player.owner),
 			latest = owner && owner.info && owner.info.merrit;
-		if (latest) market_patron_account_next.set(player.owner, latest.at + market_patron_config().hour_ms);
+		if (typeof single_player == "object") latest = (player.p && player.p.merrit_receipt) || null;
+		if (latest) market_patron_account_next.set(market_patron_key(player), latest.at + market_patron_config().hour_ms);
 		if (players[player.socket.id] === player)
 			player.socket.emit(
 				"merrit_status",
@@ -144,7 +149,7 @@ async function market_patron_grant(npc, player) {
 				entity.info.secret !== A.secret
 			)
 				ex("not_in_game");
-			var last = owner.info.merrit,
+			var last = A.per_character ? entity.merrit_receipt : owner.info.merrit,
 				now = Date.now();
 			if (last && now - last.at < A.hour) {
 				R.next = last.at + A.hour;
@@ -185,6 +190,7 @@ async function market_patron_grant(npc, player) {
 			id: id,
 			roll: roll,
 			hour: config.hour_ms,
+			per_character: typeof single_player == "object",
 			prepare: prepare,
 			sync: sync_entity,
 			chance: (balance) => market_patron_rules.shellChance(balance, config),
@@ -199,8 +205,9 @@ async function market_patron_grant(npc, player) {
 			if (persisted && persisted.merrit_receipt && persisted.merrit_receipt.id === id)
 				result = { receipt: persisted.merrit_receipt, cash: owner.cash };
 			else {
-				if (owner && owner.info.merrit)
-					market_patron_account_next.set(player.owner, owner.info.merrit.at + config.hour_ms);
+				var latest =
+					typeof single_player == "object" ? persisted && persisted.merrit_receipt : owner && owner.info.merrit;
+				if (latest) market_patron_account_next.set(market_patron_key(player), latest.at + config.hour_ms);
 				delete player.merrit_grant;
 				return;
 			}
@@ -219,7 +226,8 @@ function market_patron_finish(player, receipt, cash) {
 	add_item(player, { name: "marketparcel", q: 1 }, { announce: false });
 	player.p.merrit_receipt = receipt;
 	market_patron_sessions.delete(player);
-	market_patron_account_next.set(player.owner, receipt.at + market_patron_config().hour_ms);
+	market_patron_account_next.set(market_patron_key(player), receipt.at + market_patron_config().hour_ms);
+	if (typeof single_player == "object" && single_player.settings.merrit_buys_stall) single_player_merrit_buyout(player);
 	if (receipt.shells) {
 		player.cash = cash;
 		add_event(player, "ishells", ["cashflow"], { info: { amount: 1, reason: "merrit", receipt: receipt.id } });

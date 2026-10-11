@@ -111,3 +111,15 @@ tools_break = no
 
 # Gold every new character starts with.
 starting_gold = 10000000
+
+
+# ---------- Merrit (market square visitor) ----------
+
+# Merrit brings a parcel to each merchant's open stall on the
+# market square every this many minutes (each merchant has their
+# own timer). Normal game: 60, shared by the whole account.
+merrit_visit_minutes = 60
+
+# On each visit Merrit buys everything for sale on the stall at
+# the price you set. Only the stall is emptied, never the bag.
+merrit_buys_stall = yes

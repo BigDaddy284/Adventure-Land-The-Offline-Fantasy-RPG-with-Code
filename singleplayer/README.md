@@ -1,6 +1,6 @@
 # Adventure Land: single player on Windows
 
-This copy of [Adventure Land](https://adventure.land) runs entirely on your own PC. It adds one settings file (`settings.txt`) that controls shop prices, Ponty's stock, upgrade and compound luck, HP and MP usage, drop rates, holiday events, fishing and mining, starting gold and how many characters you can play at once.
+This copy of [Adventure Land](https://adventure.land) runs entirely on your own PC. It adds one settings file (`settings.txt`) that controls shop prices, Ponty's stock, upgrade and compound luck, HP and MP usage, drop rates, holiday events, fishing and mining, starting gold, Merrit's market visits and how many characters you can play at once.
 
 ## Install once
 

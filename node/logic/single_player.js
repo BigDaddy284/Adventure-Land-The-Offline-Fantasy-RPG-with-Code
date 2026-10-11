@@ -36,6 +36,8 @@ const DEFAULTS = {
 	fishing_mining_cooldown: true,
 	tools_break: true,
 	starting_gold: 0,
+	merrit_visit_minutes: 60,
+	merrit_buys_stall: false,
 };
 
 function parse(text) {
@@ -138,6 +140,11 @@ function create(settings) {
 				["fishing", "mining"].forEach(function (name) {
 					if (G.skills && G.skills[name]) G.skills[name].reuse_cooldown = 0;
 				});
+			const merrit = G.npcs && G.npcs.citizen22 && G.npcs.citizen22.market;
+			if (merrit) {
+				merrit.hour_ms = settings.merrit_visit_minutes * 60 * 1000;
+				merrit.settle_ms = 0; // no wait after the stall opens
+			}
 			return G;
 		},
 		apply_options(options) {

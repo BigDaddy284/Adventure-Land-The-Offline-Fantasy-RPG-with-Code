@@ -15810,6 +15810,27 @@ function single_player_ponty_restock() {
 	server_log("Ponty restocked with " + stock.length + " items");
 }
 
+// Single player: Merrit buys everything for sale on the stall at its asking price. Inventory is never touched.
+function single_player_merrit_buyout(player) {
+	var total = 0;
+	get_trade_slots(player).forEach(function (slot) {
+		var item = player.slots[slot];
+		if (!item || item.name == "placeholder" || !G.items[item.name] || item.b || item.giveaway || item.want) return;
+		if (!Number.isFinite(item.price) || item.price <= 0) return;
+		var price = item.price * (item.q || 1);
+		add_to_trade_history(player, "sell", "Merrit", cache_item(item, true), price);
+		player.slots[slot] = player.cslots[slot] = null;
+		total += price;
+	});
+	if (!total) return;
+	player.gold += total;
+	player.socket.emit(
+		"game_log",
+		localization.message("server.game_log.received_gold", { amount: String(to_pretty_num(total)) }),
+	);
+	resend(player, "reopen+u+cid");
+}
+
 function start_single_player_ponty() {
 	var minutes = single_player.settings.ponty_restock_minutes;
 	if (!minutes) return;
