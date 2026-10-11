@@ -54,7 +54,8 @@ env.addFilter("get_online_character", function (domain, key) {
 		var character = domain.characters[i];
 		if (!character.online) continue;
 		if (character.type == "merchant") {
-			keys["merchant"] = character;
+			if (keys["merchant"]) keys["merchant2"] = keys["merchant2"] || character; // Single player: a second merchant
+			else keys["merchant"] = character;
 		} else {
 			keys[order] = character;
 			order++;

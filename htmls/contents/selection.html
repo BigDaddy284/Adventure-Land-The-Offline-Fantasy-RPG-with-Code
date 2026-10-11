@@ -302,6 +302,16 @@
 	</div>
 	<div class="largeborder" style="padding-left: 15px; padding-right: 15px; margin-top: 8px; font-size: 24px">
 		<div style="border-bottom: 2px dashed gray; color: #e7e7e7; display: inline-block; margin-bottom: 6px">{{ phrase("pages.contents.selection.in-game") }}</div>
+		{% if domain.single_player %}{# Single player: room for 8 characters and 2 merchants #}
+		{% for row in [[1,"> 1st Character:"],[2,"> 2nd Character:"],[3,"> 3rd Character:"],[4,"> 4th Character:"],[5,"> 5th Character:"],[6,"> 6th Character:"],[7,"> 7th Character:"],[8,"> 8th Character:"],["merchant","> 1st Merchant:"],["merchant2","> 2nd Merchant:"]] %}
+		<div class="enableclicks">
+			{{ row[1] }}
+			<span class="characterr{{ row[0] }}"
+				>{% if domain|get_online_character(row[0]) %}<span style="color: green">{{(domain|get_online_character(row[0])).name}}</span>{% else %}<span style="color: orange">{{ phrase("pages.contents.selection.offline") }}</span>{% endif %}</span
+			>
+		</div>
+		{% endfor %}
+		{% else %}
 		<div class="enableclicks">
 			{{ phrase("pages.contents.selection.1st-character") }}
 			<span class="characterr1"
@@ -327,6 +337,7 @@
 				endif %}</span
 			>
 		</div>
+		{% endif %}
 	</div>
 	{% include "htmls/contents/account_help.html" %}
 </div>

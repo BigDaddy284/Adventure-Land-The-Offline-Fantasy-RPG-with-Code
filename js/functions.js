@@ -6568,17 +6568,21 @@ function update_servers_and_characters() {
 	if (inside == "selection") update_login_server();
 	var keys = { 1: null, 2: null, 3: null, merchant: null },
 		order = 1,
-		c_count = 0;
+		c_count = 0,
+		single = typeof single_player_mode != "undefined" && single_player_mode, // Single player: 8 characters and 2 merchants
+		slots = single ? [1, 2, 3, 4, 5, 6, 7, 8, "merchant", "merchant2"] : [1, 2, 3, "merchant"];
 	X.characters.forEach(function (character) {
 		if (character.online) $(".characterav" + character.name).html("<span style=\"color: #F3A05D\">" + phrase.html("client.update_servers_and_characters.i") + "</span>");
 		else $(".characterav" + character.name).html("<span style=\"color: #A4FA64\">" + phrase.html("client.update_servers_and_characters.a") + "</span>");
 
 		if (!character.online) return;
 
-		if (character.type == "merchant") keys.merchant = character;
-		else if (order <= 3) (keys[order] = character), (order += 1);
+		if (character.type == "merchant") {
+			if (single && keys.merchant) keys.merchant2 = keys.merchant2 || character;
+			else keys.merchant = character;
+		} else if (order <= (single ? 8 : 3)) (keys[order] = character), (order += 1);
 	});
-	[1, 2, 3, "merchant"].forEach(function (key) {
+	slots.forEach(function (key) {
 		if (!keys[key]) $(".characterr" + key).html("<span style='color: orange'>" + phrase.html("client.update_servers_and_characters.offline") + "</span>");
 		else $(".characterr" + key).html("<span style='color: green'>" + keys[key].name + "</span>"), (c_count += 1);
 	});
