@@ -223,7 +223,7 @@ function create_catalog_loader(directory, domains) {
 				result[id] = entries[id];
 			}
 		}
-		return result;
+		return single_player_text ? single_player_text.apply(language, result) : result;
 	}
 	return function catalog(language) {
 		if (!supported(language)) throw new Error("Unsupported language");
@@ -234,6 +234,13 @@ function create_catalog_loader(directory, domains) {
 		return cache[language];
 	};
 }
+
+// Single player: the game's name and a few lines are changed as the text loads (singleplayer/text.js)
+var single_player_text = null;
+try {
+	// (not under the test runner, whose checks expect the original text)
+	if (!process.env.NODE_TEST_CONTEXT && require("../secretsandconfig/options").single_player) single_player_text = require("../singleplayer/text");
+} catch (e) {}
 
 var catalog = create_catalog_loader(__dirname);
 var browser_catalog = create_catalog_loader(__dirname, browser_domains);

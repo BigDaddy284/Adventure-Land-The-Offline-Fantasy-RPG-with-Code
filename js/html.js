@@ -8584,3 +8584,24 @@ function merrit_shell_odds_html() {
 	}
 	return html;
 }
+
+// Single player: the chat box can be minimized to its header and opened again; the choice is remembered
+function toggle_chat_minimized(minimized) {
+	if (minimized === undefined) minimized = $("#chatbody").is(":visible");
+	if (minimized) $("#chatbody").hide();
+	else $("#chatbody").show();
+	$("#chatminimize").html(minimized ? "+" : "-").attr("title", minimized ? "Open chat" : "Minimize chat");
+	try {
+		localStorage.setItem("single_player_chat_minimized", minimized ? "1" : "");
+	} catch (e) {}
+}
+
+if (typeof $ != "undefined" && typeof window != "undefined")
+	$(function () {
+		if (!window.single_player_mode || !$("#chatminimize").length) return;
+		var minimized = false;
+		try {
+			minimized = !!localStorage.getItem("single_player_chat_minimized");
+		} catch (e) {}
+		if (minimized) toggle_chat_minimized(true);
+	});
