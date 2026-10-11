@@ -2632,7 +2632,8 @@ function event_loop() {
 			}
 		});
 
-		if (!events.holidayseason && events.snowman && !monster_c.snowman) {
+		// Single player: the Snowman is one of the event monsters switched on its own below
+		if (typeof single_player != "object" && !events.holidayseason && events.snowman && !monster_c.snowman) {
 			if (!timers.snowman) {
 				timers.snowman = future_s(events.snowman * 60);
 			} else if (timers.snowman && c > timers.snowman) {
@@ -2653,7 +2654,8 @@ function event_loop() {
 			["egghunt", "wabbit", true],
 		];
 		eventmap.forEach(function (s) {
-			if (events[s[0]] && !monster_c[s[1]]) {
+			var on = typeof single_player == "object" ? single_player.monster_on(s[1]) : events[s[0]]; // Single player: each monster has its own switch
+			if (on && !monster_c[s[1]]) {
 				if (!timers[s[1]]) {
 					if (timers[s[1]] !== 0) {
 						timers[s[1]] = future_s(120);

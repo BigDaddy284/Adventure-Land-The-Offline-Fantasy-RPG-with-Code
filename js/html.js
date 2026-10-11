@@ -6415,6 +6415,17 @@ var single_player_events = [
 	["halloween", "Halloween"],
 	["egghunt", "Egg Hunt"],
 ];
+var single_player_monsters = [
+	["grinch", "Grinch"],
+	["snowman", "Snowman"],
+	["mrpumpkin", "Mr Pumpkin"],
+	["mrgreen", "Mr Green"],
+	["slenderman", "Slenderman"],
+	["dragold", "Dragold"],
+	["pinkgoo", "Love Goo"],
+	["wabbit", "Wabbit"],
+];
+var single_player_event_state = null;
 
 function single_player_events_button() {
 	var html = "<div style='display: block; margin: 0 0 6px 5px'><div class='enableclicks' title='Holiday events' style='background-color: black; border: 5px solid gray; padding: 2px; display: inline-block'>";
@@ -6422,24 +6433,42 @@ function single_player_events_button() {
 	return html + "</div></div>";
 }
 
+function single_player_toggle_row(name, label, on) {
+	var html = "<div style='display: flex; justify-content: space-between; align-items: center; font-size: 28px; margin: 6px 12px'><span>" + label + "</span>";
+	return html + "<div class='gamebutton' style='width: 70px; text-align: center; color: " + (on ? "#5DE376" : "gray") + "' onclick='toggle_single_player_event(\"" + name + "\"," + !on + ")'>" + (on ? "ON" : "OFF") + "</div></div>";
+}
+
 function open_single_player_events() {
-	var html = "<div style='font-size: 40px; text-align: center; margin-bottom: 12px'>Holiday Events</div>";
+	if (!single_player_event_state) return socket.emit("single_player_event", {}); // asks for the switches, then opens
+	var state = single_player_event_state,
+		html = "<div class='single-player-events'><div style='font-size: 40px; text-align: center; margin-bottom: 6px'>Holiday Events</div>";
+	html += "<div style='font-size: 20px; color: gray; margin: 0 12px 6px'>Holidays: their drops and event icons</div>";
 	single_player_events.forEach(function (event) {
-		var on = !!S[event[0]];
-		html += "<div style='display: flex; justify-content: space-between; align-items: center; font-size: 32px; margin: 8px 12px'><span>" + event[1] + "</span>";
-		html += "<div class='gamebutton' style='width: 70px; text-align: center; color: " + (on ? "#5DE376" : "gray") + "' onclick='toggle_single_player_event(\"" + event[0] + "\"," + !on + ")'>" + (on ? "ON" : "OFF") + "</div></div>";
+		html += single_player_toggle_row(event[0], event[1], state.events[event[0]]);
 	});
-	html += "<div style='font-size: 22px; color: gray; margin: 12px'>Changes apply straight away and are saved in settings.txt. Event monsters already out stay until they're defeated.</div>";
+	html += "<div style='font-size: 20px; color: gray; margin: 14px 12px 6px'>Event monsters, each on their own</div>";
+	single_player_monsters.forEach(function (monster) {
+		html += single_player_toggle_row(monster[0], monster[1], state.monsters[monster[0]]);
+	});
+	html += "<div style='font-size: 20px; color: gray; margin: 12px'>Changes apply straight away and are saved in settings.txt. A monster that's already out stays until it's defeated.</div></div>";
+	if ($(".single-player-events").length) hide_modal();
 	show_modal(html, { wwidth: 460 });
 }
 
 function toggle_single_player_event(name, on) {
-	socket.emit("single_player_event", { name: name, on: on });
-	if (on) S[name] = true;
-	else delete S[name];
-	hide_modal();
-	open_single_player_events();
+	socket.emit("single_player_event", { name: name, on: on }); // the server replies with the new switches, which redraws the menu
+}
+
+// The server's reply to the menu: the current switches
+function on_single_player_events(state) {
+	var was_waiting = !single_player_event_state || $(".single-player-events").length;
+	single_player_event_state = state;
+	Object.keys(state.events).forEach(function (name) {
+		if (state.events[name]) S[name] = true;
+		else delete S[name];
+	});
 	render_server();
+	if (was_waiting) open_single_player_events();
 }
 
 function skill_click(slot) {
@@ -8417,7 +8446,7 @@ function load_class_info(name, look) {
 		phrase.definition("class", name, "description", G.classes[name].description) +
 		"</span></div>";
 
-	$("#features").removeClass("upcoming-features").css({ height: 208, maxWidth: 320, fontSize: 24, overflowY: "auto" }).html(html);
+	$("#features").removeClass("upcoming-features").css({ height: 208, maxWidth: 320, fontSize: 24, overflowY: "auto", display: "" }).html(html);
 	// $(".salesui").css("bottom",208+36);
 }
 

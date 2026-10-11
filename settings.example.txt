@@ -83,7 +83,8 @@ drop_everything = no
 # ---------- Holiday events ----------
 # You can also switch these while playing: the candy cane button
 # above the skill bar opens the Holiday Events menu, and your
-# choices are saved here.
+# choices are saved here. The holidays control their drops
+# and event icons; the event monsters are switched separately.
 # yes = always on. They were designed to run one at a time, so if
 # something looks odd, turn some of them off.
 
@@ -92,6 +93,17 @@ lunar_new_year = yes
 valentines = yes
 halloween = yes
 egg_hunt = yes
+
+# Event monsters, each switched on its own (they spawn even when
+# their holiday is off). yes = spawns, no = never spawns.
+monster_grinch = yes
+monster_snowman = yes
+monster_mrpumpkin = yes
+monster_mrgreen = yes
+monster_slenderman = yes
+monster_dragold = yes
+monster_pinkgoo = yes
+monster_wabbit = yes
 
 
 # ---------- Multiple characters ----------

@@ -84,9 +84,11 @@
 		<a class="mt4 blockbutton cancela" href="/" onclick='hide_modal(); show_alert(phrase.html("page.signing_out"))'>{{ phrase("pages.contents.settings.sign-out-to-main-menu") }}</a>
 	{% endif %}
 
+	{% if not domain.single_player %}
 	<div class="mt4 blockbutton" style="text-align: left">
 		{{ phrase_html("pages.contents.settings.note-feel-free-to-email-hello-adventure-land") }}
 	</div>
+	{% endif %}
 	<div class="mt4 blockbutton restartneeded hidden" style="text-align: left">
 		{{ phrase("pages.contents.settings.you-need-to-refresh-the-game-for-changes") }}
 	</div>

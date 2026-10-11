@@ -32,6 +32,14 @@ const DEFAULTS = {
 	valentines: false,
 	halloween: false,
 	egg_hunt: false,
+	monster_mrpumpkin: true,
+	monster_mrgreen: true,
+	monster_slenderman: true,
+	monster_grinch: true,
+	monster_snowman: true,
+	monster_dragold: true,
+	monster_pinkgoo: true,
+	monster_wabbit: true,
 	max_characters_online: 3,
 	fishing_mining_cooldown: true,
 	tools_break: true,
@@ -118,6 +126,9 @@ const EVENT_SETTINGS = {
 	egghunt: "egg_hunt",
 };
 
+// Event monsters that can be switched on and off one by one
+const EVENT_MONSTERS = ["mrpumpkin", "mrgreen", "slenderman", "grinch", "snowman", "dragold", "pinkgoo", "wabbit"];
+
 function set_event(events, name, on) {
 	events[name] = name == "egghunt" ? (on ? 60 : 0) : !!on; // Egg hunt: minutes between bunnies
 	if (name == "holidayseason") events.snowman = on ? 60 : 20 * 60; // Snowman every hour in season, the game's normal 20 hours otherwise
@@ -155,13 +166,29 @@ function create(settings) {
 		apply_events(events) {
 			Object.keys(EVENT_SETTINGS).forEach((name) => set_event(events, name, settings[EVENT_SETTINGS[name]]));
 		},
-		// Turns a holiday event on or off while the game runs, and saves the choice to settings.txt
+		// Turns a holiday event or an event monster on or off while the game runs, and saves the choice to settings.txt.
+		// Returns "event", "monster", or false for an unknown name.
 		toggle_event(events, name, on) {
-			if (!Object.prototype.hasOwnProperty.call(EVENT_SETTINGS, name)) return false;
-			set_event(events, name, on);
-			settings[EVENT_SETTINGS[name]] = !!on;
-			if (fs.existsSync(SETTINGS_FILE)) save_setting(SETTINGS_FILE, EVENT_SETTINGS[name], on ? "yes" : "no");
-			return true;
+			let key, kind;
+			if (Object.prototype.hasOwnProperty.call(EVENT_SETTINGS, name)) {
+				set_event(events, name, on);
+				((key = EVENT_SETTINGS[name]), (kind = "event"));
+			} else if (EVENT_MONSTERS.includes(name)) ((key = "monster_" + name), (kind = "monster"));
+			else return false;
+			settings[key] = !!on;
+			if (fs.existsSync(SETTINGS_FILE)) save_setting(SETTINGS_FILE, key, on ? "yes" : "no");
+			return kind;
+		},
+		// Whether an event monster spawns: each one is switched on its own, whatever its holiday is doing
+		monster_on(name) {
+			return !!settings["monster_" + name];
+		},
+		// What the holiday events menu shows
+		event_state() {
+			const state = { events: {}, monsters: {} };
+			Object.keys(EVENT_SETTINGS).forEach((name) => (state.events[name] = !!settings[EVENT_SETTINGS[name]]));
+			EVENT_MONSTERS.forEach((name) => (state.monsters[name] = !!settings["monster_" + name]));
+			return state;
 		},
 		// Changes to the game data (G) the server and website build from the design files
 		apply_game_data(G) {
@@ -214,6 +241,7 @@ module.exports = {
 	missing_settings,
 	save_setting,
 	EVENT_SETTINGS,
+	EVENT_MONSTERS,
 	create: (values) => create(Object.assign({}, DEFAULTS, values)),
 	load: () => create(load()),
 };

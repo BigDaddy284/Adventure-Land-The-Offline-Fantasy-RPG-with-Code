@@ -15,6 +15,7 @@ const BLOCKED_PATHS = [
 	/^\/r\//,
 	/^\/sitemap\.xml$/,
 	/^\/internal\/bots\//,
+	/^\/(hub|comm)(\/|$)/, // multi-window hub for online play
 ];
 
 // API calls removed from the game's API list

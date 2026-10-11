@@ -1762,7 +1762,7 @@ function init_socket(args) {
 				"#B2D5DF",
 			);
 			$(".saferespawn").show();
-		} else add_log(phrase.html("game.welcome.development_note"), "gray");
+		} else if (!window.single_player_mode) add_log(phrase.html("game.welcome.development_note"), "gray");
 		if (data.blessed_by) {
 			add_chat("", phrase("game.this_server_has_been_blessed_by", { blessed_by: data.blessed_by }), "#8F70D8");
 		}
@@ -3113,6 +3113,7 @@ function init_socket(args) {
 		I = data;
 		render_map();
 	});
+	socket.on("single_player_events", on_single_player_events);
 	socket.on("server_info", function (data) {
 		S = data;
 		render_server();

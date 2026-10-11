@@ -1,3 +1,7 @@
+{% if domain.single_player %}
+<!-- Single player: no Upcoming teasers. The box stays (hidden) because the new character screen shows class info in it -->
+<div id="features" style="display: none"></div>
+{% else %}
 <div id="features" class="upcoming-features">
 	<span class="gamebutton ui-info upcoming-tag">{{ phrase("pages.contents.selection_features.upcoming") }}</span>
 	<div class="upcoming-cards noscroll"></div>
@@ -5,3 +9,4 @@
 <script>
 	$(function () { render_upcoming_content(); });
 </script>
+{% endif %}

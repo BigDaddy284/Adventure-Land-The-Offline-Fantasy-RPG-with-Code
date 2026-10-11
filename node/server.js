@@ -9011,11 +9011,14 @@ function init_socket_io(socket_server, server_index) {
 		// Single player: the holiday events menu turns events on and off while the game runs
 		socket.on("single_player_event", function (data) {
 			if (typeof single_player != "object" || !players[socket.id] || !data) return;
-			if (!single_player.toggle_event(events, data.name, !!data.on)) return;
-			if (data.on) E[data.name] = true;
-			else delete E[data.name];
-			broadcast_e();
-			reload_server(false, "events"); // rebuilds the drop tables, which include each event's drops
+			var kind = data.name && single_player.toggle_event(events, data.name, !!data.on);
+			if (kind == "event") {
+				if (data.on) E[data.name] = true;
+				else delete E[data.name];
+				broadcast_e();
+				reload_server(false, "events"); // rebuilds the drop tables, which include each event's drops
+			}
+			socket.emit("single_player_events", single_player.event_state()); // a request without a name just asks for the current state
 		});
 		socket.on("trade_buy", function (data) {
 			var player = players[socket.id];

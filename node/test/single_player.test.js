@@ -165,3 +165,17 @@ test("holiday events toggle while running, and the choice is written into settin
 	);
 	fs.unlinkSync(file);
 });
+
+test("event monsters switch on and off on their own, apart from their holiday", () => {
+	const sp = single_player.create({ holiday_season: false, monster_grinch: true, monster_snowman: false });
+	const events = {};
+	sp.apply_events(events);
+	assert.equal(sp.monster_on("grinch"), true);
+	assert.equal(sp.monster_on("snowman"), false);
+	assert.equal(sp.toggle_event(events, "snowman", true), "monster");
+	assert.equal(sp.monster_on("snowman"), true);
+	assert.equal(events.holidayseason, false);
+	assert.equal(sp.toggle_event(events, "holidayseason", true), "event");
+	assert.equal(sp.event_state().events.holidayseason, true);
+	assert.equal(sp.event_state().monsters.snowman, true);
+});
