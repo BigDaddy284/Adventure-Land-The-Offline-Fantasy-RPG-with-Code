@@ -89,9 +89,13 @@ eval("" + fs.readFileSync(path.resolve(__dirname, "crons.js")));
 eval("" + fs.readFileSync(path.resolve(__dirname, "common/admin.js")));
 eval("" + fs.readFileSync(path.resolve(__dirname, "admin_dashboard.js")));
 
+// Single player: no payments, Steam purchases or other online-only parts
+var single_player_web = options.single_player && require("./singleplayer/web");
+if (single_player_web) single_player_web.restrict_api(REF);
+
 // Stripe
 try {
-	var stripe = require("stripe")(Dev ? keys.stripe_test_api_key : keys.stripe_api_key);
+	if (!single_player_web) var stripe = require("stripe")(Dev ? keys.stripe_test_api_key : keys.stripe_api_key);
 } catch (e) {
 	console.error("Stripe not loaded", e.message);
 }
@@ -893,6 +897,7 @@ const PORT = process.env.PORT || options.port;
 // Serve cached public text before common's static mounts without modifying shared initialization.
 const http_app = express();
 http_app.enable("trust proxy");
+if (single_player_web) http_app.use(single_player_web.block_paths);
 http_app.use(web_assets.serve_static);
 http_app.use((req, res, next) => {
 	if (!/^\/steam-sign(?:in|up)(?:\/|$)/.test(req.url.split("?")[0])) return next();
@@ -900,7 +905,7 @@ http_app.use((req, res, next) => {
 });
 http_app.use(app);
 web_assets.start();
-const http_server = http_app.listen(PORT, () => {
+const http_server = http_app.listen(PORT, options.listen_ip, () => {
 	console.log(`\x1b[32mAdventure Land\x1b[0m listening on port ${PORT}`);
 });
 http_server.on("close", web_assets.stop);

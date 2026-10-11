@@ -278,6 +278,7 @@ function shells_click() {
 }
 
 function show_payments() {
+	if (["localhost", "127.0.0.1"].includes(location.hostname)) return show_alert("Payments are switched off in single player."); // Single player
 	show_modal($("#paymentshtml").html(), { wrap: false, opacity: 0.4 });
 	return;
 	var html = "";

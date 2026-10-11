@@ -2,22 +2,23 @@
 
 This copy of [Adventure Land](https://adventure.land) runs entirely on your own PC. It adds one settings file (`settings.txt`) that controls shop prices, Ponty's stock, upgrade and compound luck, HP and MP usage, drop rates, holiday events and how many characters you can play at once.
 
-## One-time setup
+## Install once
 
 1. Install **Node.js LTS** from https://nodejs.org (keep the default options).
 2. Install **Git** from https://git-scm.com/download/win (keep the default options).
-3. Install **MongoDB Community Server** from https://www.mongodb.com/try/download/community. Choose "Complete" and leave "Install MongoD as a Service" ticked, so the database starts with Windows. MongoDB Compass is optional.
+3. Install **MongoDB Community Server** from https://www.mongodb.com/try/download/community (choose "Complete"; MongoDB Compass is optional).
 4. Get this folder onto your PC, for example in `C:\AdventureLand`:
    ```
    git clone <your fork's URL> C:\AdventureLand
    ```
-5. Double-click `singleplayer\setup.bat`. It downloads the shared engine, installs packages, links the config and loads the maps into the database.
 
 ## Playing
 
-Double-click `singleplayer\start_game.bat`. Two black windows open (the website and the game server). Leave them open while you play. Your browser then opens http://localhost:8090. Sign up with any email and password; it all stays on your PC.
+Double-click **`Play.bat`**. It starts the database, then the website, then the game server, waiting for each one to be ready before starting the next, and then opens http://localhost:8090 in your browser. The first run also installs everything and loads the maps, so it takes a few minutes.
 
-To stop the game, close the two black windows.
+Sign up with any email and password. It all stays on your PC, and only your PC can connect.
+
+To stop everything, double-click **`Stop.bat`**.
 
 ## Playing several characters at once
 
@@ -33,13 +34,13 @@ If nothing opens, your browser blocked the pop-up. Click the blocked pop-up icon
 
 ## Settings
 
-Open `settings.txt` (in the main folder) with Notepad. Every line is explained inside it. After saving, close both black windows and run `start_game.bat` again.
+Open `settings.txt` (in the main folder) with Notepad. Every line is explained inside it. After saving, run `Stop.bat` and then `Play.bat`.
 
 If `settings.txt` is ever deleted, a fresh one is copied from `settings.example.txt` on the next start.
 
 ## Updating to the newest official version
 
-Close both server windows, then double-click `singleplayer\update_game.bat`. It pulls the latest official game code into your copy and keeps the single player changes and your `settings.txt`.
+Run `Stop.bat`, then double-click `singleplayer\update_game.bat`. It pulls the latest official game code into your copy and keeps the single player changes and your `settings.txt`.
 
 The single player changes are kept small on purpose, so updates almost always merge on their own. If the official update touched the same lines, the script stops and tells you; nothing is changed until that's sorted out.
 
@@ -50,7 +51,7 @@ All changes are marked with a `// Single player:` comment so they're easy to fin
 | Feature | Where |
 |---|---|
 | Settings file reader | `node/logic/single_player.js` |
-| Shop prices | `buy` handler in `node/server.js` |
+| Sell price multiplier | `sell` handler in `node/server.js` |
 | Ponty restock | `single_player_ponty_restock` in `node/server.js` |
 | Upgrade and compound chance | `upgrade` and `compound` handlers in `node/server.js` |
 | HP loss | main damage line and burn damage in `node/server.js` |
@@ -59,6 +60,14 @@ All changes are marked with a `// Single player:` comment so they're easy to fin
 | Holiday events, character limit | top of `node/server.js` |
 | New windows | `open_character_window` in `js/functions.js`, `js/runner_functions.js`, `js/html.js` |
 | Config for a local PC | `singleplayer/config/` |
+| Payments, Steam sign-in and purchases, AI/MCP access, referrals switched off | `singleplayer/web.js`, hooked in `main.js` |
+| Website and game server only reachable from this PC | `singleplayer/config/options.js` |
+
+## What was switched off
+
+This is a single player game with multiple characters, so these parts are switched off: Stripe and Steam payments and the shells shop, Steam sign-in, AI/MCP remote access, moving characters to other accounts, password reminder emails, referral links and the search engine sitemap. The website and game server also only accept connections from your own PC, so nobody else can join.
+
+They are switched off rather than deleted, which keeps official updates merging cleanly.
 
 ## License
 

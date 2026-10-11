@@ -8120,6 +8120,7 @@ function init_socket_io(socket_server, server_index) {
 			}
 			can_reach.name = player.name;
 			var value = calculate_item_value(item);
+			if (typeof single_player == "object") value = round(single_player.scale("sell", value)); // Single player: sell price
 			consume(player, data.num, quantity);
 			player.gold += value * quantity;
 			var new_item = cache_item(item);
@@ -8486,7 +8487,6 @@ function init_socket_io(socket_server, server_index) {
 			if (G.items[name].p2w) {
 				cost *= G.inflation;
 			}
-			if (typeof single_player == "object") cost = round(single_player.scale("shop", cost)); // Single player: shop price
 			if (player.gold < cost) {
 				return fail_response("buy_cost");
 			}

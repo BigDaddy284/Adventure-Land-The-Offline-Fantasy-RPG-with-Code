@@ -11,7 +11,7 @@ const SETTINGS_FILE = path.join(ROOT, "settings.txt");
 const EXAMPLE_FILE = path.join(ROOT, "settings.example.txt");
 
 const DEFAULTS = {
-	shop_price_percent: 100,
+	sell_multiplier: 1,
 	ponty_restock_minutes: 0,
 	ponty_item_count: 20,
 	ponty_min_grade: 1,
@@ -74,7 +74,6 @@ function load() {
 }
 
 const SCALES = {
-	shop: "shop_price_percent",
 	upgrade: "upgrade_success_percent",
 	compound: "compound_success_percent",
 	mp: "mp_usage_percent",
@@ -88,6 +87,7 @@ function create(settings) {
 		settings,
 		// Applies one percent setting to a value; success chances are capped at 100%
 		scale(kind, value) {
+			if (kind == "sell") return value * settings.sell_multiplier;
 			const result = value * (settings[SCALES[kind]] / 100);
 			return kind == "upgrade" || kind == "compound" ? Math.min(1, result) : result;
 		},

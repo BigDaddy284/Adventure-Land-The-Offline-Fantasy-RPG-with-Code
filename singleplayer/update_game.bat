@@ -1,6 +1,6 @@
 @echo off
 rem Adventure Land single player: pulls the latest official game code into your copy.
-rem Close both server windows before running this.
+rem Run Stop.bat first.
 setlocal
 cd /d "%~dp0.."
 git remote get-url upstream >nul 2>nul || git remote add upstream https://github.com/kaansoral/adventureland_mongodb.git
@@ -21,7 +21,7 @@ pushd node
 call npm install --no-audit --no-fund
 popd
 echo.
-echo Updated. Your settings.txt was not touched. Start the game with start_game.bat.
+echo Updated. Your settings.txt was not touched. Start the game with Play.bat.
 pause
 exit /b 0
 

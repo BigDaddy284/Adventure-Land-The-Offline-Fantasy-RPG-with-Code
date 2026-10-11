@@ -2,7 +2,7 @@
 #  Adventure Land - Single Player Settings
 # ============================================================
 #  Edit this file with Notepad, save it, then restart the game:
-#  close both black server windows and run singleplayer\start_game.bat.
+#  run Stop.bat, then Play.bat.
 #
 #  Format:  name = value
 #  Lines starting with # are notes and are ignored.
@@ -13,9 +13,10 @@
 
 # ---------- Shops ----------
 
-# Price of items bought from Gabriel (and every other NPC shop).
-# 100 = normal price, 50 = half price, 0 = free.
-shop_price_percent = 100
+# Gold Gabriel (and every other NPC shop) pays when you sell items
+# to him. This one is a multiplier, not a percent:
+# 1 = normal, 2 = double, 0.5 = half.
+sell_multiplier = 1
 
 
 # ---------- Ponty (second-hand shop in town) ----------
