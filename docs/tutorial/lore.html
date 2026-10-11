@@ -1,4 +1,5 @@
 <div class="tutorial-lore" data-page="1" data-language="{{domain.language}}">
+	{% if domain.single_player %}<div style="position:relative; width:fit-content">{% endif %}
 	<img
 		class="tutorial-lore-page"
 		src="/images/tutorial/lore/{{domain.language}}/page-01.jpg?v=native-20260909"
@@ -12,6 +13,8 @@
 		height="540"
 		style="display: block; width:100%; height:auto; padding-bottom:8px; background:#f4e9cd; image-rendering: crisp-edges; image-rendering: pixelated"
 	/>
+	{% if domain.single_player %}<div style="position:absolute; left:1.25%; top:0; margin-top:0.625%; width:15%; padding-top:1.771%; background:url(/images/singleplayer/lore-title.png) 0 0 / 100% 100% no-repeat; image-rendering: crisp-edges; image-rendering: pixelated; pointer-events:none"></div>
+	</div>{% endif %}
 	<div style="border-top:5px solid gray;padding:8px 20px 10px">
 		<p style="margin:0 0 8px;font-size:28px;line-height:28px">{{ phrase("docs.tutorial.new.lore_intro") }}</p>
 		<div style="display:grid; grid-template-columns:1fr 1fr 1fr; align-items:center; direction:ltr">
