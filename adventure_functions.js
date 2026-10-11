@@ -536,6 +536,7 @@ async function get_domain(req, user) {
 	};
 	domain.title = phrase("server.page.adventure_land_the_code_mmorpg");
 	domain.name = game_name;
+	if (options.single_player) ((domain.title = "Venture Land - The Code RPG"), (domain.name = "Venture Land")); // Single player: game name
 	domain.scale = 2;
 	domain.perfect_pixels = true;
 	domain.fast_mode = true;

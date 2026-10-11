@@ -7320,6 +7320,7 @@ function load_merchants(info) {
 }
 
 function load_servers_list(info) {
+	if (window.single_player_mode) return load_merchants(); // Single player: one server, nothing to switch to
 	friends_inside = "servers";
 	var html = "<div style='text-align:center'><div style='width:240px; display:inline-block'>";
 	html += "<table style='margin: 5px; text-align: left' class='sslist'>";
@@ -7690,7 +7691,8 @@ function render_com() {
 	//html+=" <div class='gamebutton fnearby' onclick='load_nearby()'>Nearby</div>";
 	//html+=" <div class='gamebutton fserver' onclick='load_server_list();'>Server</div>";
 	html += " <div class='gamebutton ffriends fserver fnearby' onclick='load_server_list();'>" + phrase.html("interface.com.comrades") + "</div>";
-	html += " <div class='gamebutton fservers' onclick='load_servers_list();'>" + phrase.html("interface.com.realm") + "</div>";
+	if (window.single_player_mode) html += " <div class='gamebutton fservers' onclick='load_merchants();'>" + phrase.html("interface.load_servers_list.all_merchants") + "</div>";
+	else html += " <div class='gamebutton fservers' onclick='load_servers_list();'>" + phrase.html("interface.com.realm") + "</div>";
 	html += " <div class='gamebutton fcharacters' onclick='load_character_list();'>" + phrase.html("interface.com.characters") + "<span class='ccount'>" + c_count + "</span>/4]</div>";
 	html += " <div class='gamebutton fmainframe' onclick='load_mainframe_list();'>" + "Mainframe" + "</div>";
 	html += " <div class='gamebutton fchat' onclick='load_chat();'>" + phrase.html("interface.com.chat") + "</div>";

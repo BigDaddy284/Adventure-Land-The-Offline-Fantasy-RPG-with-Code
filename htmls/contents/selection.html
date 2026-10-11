@@ -283,6 +283,7 @@
 		{%endif%}
 		<div class="mt5 textbutton logout" onclick="if(bc(this)) return; api_call_l('logout',{},{disable:$(this)}).then(function(result){if(!result.failed) location.reload();})">{{ phrase("pages.contents.selection.logout") }}</div>
 	</div>
+	{% if domain.single_player %}{% include "htmls/contents/credits.html" %}{% endif %}
 	<div class="largeborder" style="padding-left: 15px; padding-right: 15px; margin-top: 8px; font-size: 24px">
 		<div style="border-bottom: 2px dashed gray; color: #e7e7e7; display: inline-block; margin-bottom: 6px">{{ phrase("pages.contents.selection.in-game") }}</div>
 		<div class="enableclicks">
@@ -323,7 +324,7 @@
 			<div id="progressui" class="gamebutton loading" style="width: 40px; text-align: center" onclick="loader_click();">0%</div>
 		</div>
 	</div>
-	{% if servers %}
+	{% if servers and not domain.single_player %}
 	<div style="clear: both"></div>
 	<div
 		class="enableclicks"

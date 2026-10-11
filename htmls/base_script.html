@@ -30,6 +30,7 @@
 	var is_comm=false;
 	var no_eval=false;
 	var VERSION='{{domain.v}}';
+	var single_player_mode='{% if domain.single_player %}1{% endif %}';
 	var platform='{{domain.platform}}';
 	var engine_mode='{{domain.engine_mode}}';
 	var no_graphics='{%if domain.no_graphics %}1{% endif %}';

@@ -143,6 +143,7 @@ function get_active_characters() {
 
 function change_server(region, name) {
 	// change_server("EU","I") or change_server("ASIA","PVP") or change_server("US","III")
+	if (parent.single_player_mode) return game_log("There's only one server in single player");
 	parent.window.location.href = "/character/" + character.name + "/in/" + region + "/" + name + "/";
 }
 
