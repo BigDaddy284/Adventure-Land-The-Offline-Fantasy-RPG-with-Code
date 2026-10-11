@@ -1,15 +1,15 @@
-# Adventure Land: single player on Windows
+# Venture Land: single player Adventure Land on Windows
 
-This copy of [Adventure Land](https://adventure.land) runs entirely on your own PC. It adds one settings file (`settings.txt`) that controls shop prices, Ponty's stock, upgrade and compound luck, HP and MP usage, drop rates, holiday events, fishing and mining, starting gold, Merrit's market visits and how many characters you can play at once.
+Venture Land is a single player copy of [Adventure Land](https://adventure.land) that runs entirely on your own PC. It adds one settings file (`settings.txt`) that controls shop prices, Ponty's stock, upgrade and compound luck, HP and MP usage, drop rates, holiday events, fishing and mining, starting gold, Merrit's market visits and how many characters you can play at once.
 
 ## Install once
 
 1. Install **Node.js LTS** from https://nodejs.org (keep the default options).
 2. Install **Git** from https://git-scm.com/download/win (keep the default options).
 3. Install **MongoDB Community Server** from https://www.mongodb.com/try/download/community (choose "Complete"; MongoDB Compass is optional).
-4. Get this folder onto your PC, for example in `C:\AdventureLand`:
+4. Get this folder onto your PC, for example in `C:\VentureLand`:
    ```
-   git clone <your fork's URL> C:\AdventureLand
+   git clone <your fork's URL> C:\VentureLand
    ```
 
 ## Playing

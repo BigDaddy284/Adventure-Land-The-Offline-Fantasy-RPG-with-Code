@@ -1,9 +1,9 @@
 @echo off
-rem Adventure Land single player: starts the database, website and game server in order, then opens the game.
+rem Venture Land (single player Adventure Land): starts the database, website and game server in order, then opens the game.
 rem The first run also installs everything, which takes a few minutes.
 setlocal
 cd /d "%~dp0"
-title Adventure Land - Launcher
+title Venture Land - Launcher
 
 where node >nul 2>nul || (echo Node.js is missing. Install the LTS version from https://nodejs.org and run Play.bat again. & pause & exit /b 1)
 
@@ -13,6 +13,8 @@ if not exist common\ (
 	echo Downloading the shared engine...
 	git clone --depth 1 https://github.com/kaansoral/common_engine.git common || (pause & exit /b 1)
 )
+rem The config link is remade every start, so renaming or moving this folder never breaks it
+rmdir secretsandconfig 2>nul
 if not exist secretsandconfig\ mklink /J secretsandconfig singleplayer\config >nul
 if not exist settings.txt copy settings.example.txt settings.txt >nul
 if not exist node_modules\ (
@@ -43,7 +45,7 @@ exit /b 1
 :start_database
 if not exist singleplayer\data\ mkdir singleplayer\data
 echo Starting the database...
-start "Adventure Land - Database" /min "%MONGOD%" --dbpath "%~dp0singleplayer\data" --bind_ip 127.0.0.1 --port 27018 --replSet rs0
+start "Venture Land - Database" /min "%MONGOD%" --dbpath "%~dp0singleplayer\data" --bind_ip 127.0.0.1 --port 27018 --replSet rs0
 :database_running
 node singleplayer\wait_port.js 27018 60 database || (pause & exit /b 1)
 node singleplayer\init_db.js || (pause & exit /b 1)
@@ -57,12 +59,12 @@ if not errorlevel 1 (
 
 rem ---------- 2. Website ----------
 node singleplayer\wait_port.js 8090 1 website >nul 2>nul
-if errorlevel 1 start "Adventure Land - Website" /min cmd /k node main.js
+if errorlevel 1 start "Venture Land - Website" /min cmd /k node main.js
 node singleplayer\wait_port.js 8090 120 website || (pause & exit /b 1)
 
 rem ---------- 3. Game server ----------
 node singleplayer\wait_port.js 7192 1 "game server" >nul 2>nul
-if errorlevel 1 start "Adventure Land - Game Server" /min cmd /k "cd node && node server.js local"
+if errorlevel 1 start "Venture Land - Game Server" /min cmd /k "cd node && node server.js local"
 node singleplayer\wait_port.js 7192 180 "game server" || (pause & exit /b 1)
 
 rem ---------- 4. Play ----------

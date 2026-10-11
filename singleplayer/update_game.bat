@@ -1,5 +1,5 @@
 @echo off
-rem Adventure Land single player: pulls the latest official game code into your copy.
+rem Venture Land: pulls the latest official game code into your copy.
 rem Run Stop.bat first.
 setlocal
 cd /d "%~dp0.."
