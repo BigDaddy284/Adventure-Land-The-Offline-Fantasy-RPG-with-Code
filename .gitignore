@@ -54,3 +54,5 @@ Thumbs.db
 /settings.txt
 /singleplayer/data/
 /singleplayer/config/keys.local.json
+
+/logs/

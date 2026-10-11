@@ -17,17 +17,26 @@ Git isn't needed, because the shared engine already comes in the game folder.
 ## Playing
 
 1. Extract the zip somewhere, for example `C:\FantasyLand`.
-2. Double-click **`Play.bat`**.
+2. Double-click **`Fantasy Land.exe`**.
 
-Play.bat starts the database, then the website, then the game server, waiting for each one before starting the next. Then it opens the game in its own window. The very first start also installs the game's packages and loads the maps, so it takes a few minutes. After that it's quick.
+A small window shows the progress while it starts the database, the website and the game server, with no console windows. Then the game opens in its own window. The very first start also installs the game's packages and loads the maps, so it takes a few minutes. After that it's quick.
 
 You're logged in automatically. Everything stays on your PC, and only your PC can connect to the game.
 
+The first time you run `Fantasy Land.exe`, Windows may show "Windows protected your PC", because the file isn't digitally signed. Click "More info", then "Run anyway". Windows only asks once.
+
 ## Stopping
 
-Double-click **`Stop.bat`**. It closes the game window, waits a few seconds so your characters save, then stops the game server, the website and the database.
+Just close the game window. Fantasy Land.exe shows "Saving your characters..." while it waits for your characters to save and stops everything, then closes by itself. If you have several character windows open, it waits until you close the last one.
 
-Always use Stop.bat rather than just closing the windows, so the database shuts down cleanly.
+## Play.bat and Stop.bat
+
+These do the same job as `Fantasy Land.exe` with console windows you can see, which helps when something goes wrong:
+
+- **`Play.bat`** starts everything in order and opens the game.
+- **`Stop.bat`** closes the game window, waits a few seconds so your characters save, then stops the game server, the website and the database. Always use it rather than just closing the console windows, so the database shuts down cleanly.
+
+When the game is started with `Fantasy Land.exe`, the database, website and game server write their messages to the `logs` folder instead.
 
 ## Settings
 
@@ -70,7 +79,9 @@ Your `settings.txt` and saved characters are kept.
 
 ## Where things are
 
-- `Play.bat` and `Stop.bat`: start and stop the game.
+- `Fantasy Land.exe`: starts the game, and stops it when you close the game window. Its source is in `singleplayer\launcher`.
+- `Play.bat` and `Stop.bat`: start and stop the game with console windows.
+- `logs\`: messages from the database, website and game server when started by `Fantasy Land.exe`.
 - `settings.txt`: your settings. `settings.example.txt` holds the defaults.
 - `singleplayer\data`: your saved game (the database). Back this folder up to keep your characters safe, with the game stopped.
 - `singleplayer\`: the single-player config, launch helpers and text changes.
@@ -172,6 +183,7 @@ Fantasy Land started as a copy of the MongoDB port of [Adventure Land](https://g
 - **New starting looks:** 10 in all, 5 male and 5 female, each with a second skin tone. They show as extra look buttons (E to H) on the character creation screen when a class has them.
   - Male: Ironclad Veteran (warrior), Ashen Hood (rogue), Ember Sage (mage), Sunforged Templar (paladin) and Trailwise Trader (merchant).
   - Female: Frost Shieldmaiden (warrior), Greenwood Warden (ranger), Silver Oracle (priest), Tidecaller Witch (mage) and Crimson Knife (rogue).
+- **Fantasy Land.exe:** starts the game with no console windows. When you close the last game window, it saves and stops everything, then closes itself.
 - Rewrote this README.
 
 ## License

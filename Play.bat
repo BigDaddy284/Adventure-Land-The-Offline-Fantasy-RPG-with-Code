@@ -4,6 +4,9 @@ rem The first run also installs everything, which takes a few minutes.
 setlocal
 cd /d "%~dp0"
 title Fantasy Land - Launcher
+rem Fantasy Land.exe runs this with FL_LAUNCHER set: everything then starts without console windows,
+rem and their messages go to the logs folder instead.
+if not exist logs\ mkdir logs
 
 where node >nul 2>nul || (echo Node.js is missing. Install the LTS version from https://nodejs.org and run Play.bat again. & pause & exit /b 1)
 
@@ -44,7 +47,11 @@ exit /b 1
 :start_database
 if not exist singleplayer\data\ mkdir singleplayer\data
 echo Starting the database...
+if defined FL_LAUNCHER goto start_database_hidden
 start "Fantasy Land - Database" /min "%MONGOD%" --dbpath "%~dp0singleplayer\data" --bind_ip 127.0.0.1 --port 27018 --replSet rs0
+goto database_running
+:start_database_hidden
+start "" /b "%MONGOD%" --dbpath "%~dp0singleplayer\data" --bind_ip 127.0.0.1 --port 27018 --replSet rs0 --logpath "%~dp0logs\database.log" --logappend
 :database_running
 node singleplayer\wait_port.js 27018 60 database || (pause & exit /b 1)
 node singleplayer\init_db.js || (pause & exit /b 1)
@@ -57,16 +64,32 @@ if not errorlevel 1 (
 )
 
 rem ---------- 2. Website ----------
+echo Starting the website...
 node singleplayer\wait_port.js 8090 1 website >nul 2>nul
-if errorlevel 1 start "Fantasy Land - Website" /min cmd /k node main.js
+if not errorlevel 1 goto website_running
+if defined FL_LAUNCHER goto start_website_hidden
+start "Fantasy Land - Website" /min cmd /k node main.js
+goto website_running
+:start_website_hidden
+start "" /b cmd /c "node "%~dp0main.js" > "%~dp0logs\website.log" 2>&1"
+:website_running
 node singleplayer\wait_port.js 8090 120 website || (pause & exit /b 1)
 
 rem ---------- 3. Game server ----------
+echo Starting the game server...
 node singleplayer\wait_port.js 7192 1 "game server" >nul 2>nul
-if errorlevel 1 start "Fantasy Land - Game Server" /min cmd /k "cd node && node server.js local"
+if not errorlevel 1 goto game_server_running
+if defined FL_LAUNCHER goto start_game_server_hidden
+start "Fantasy Land - Game Server" /min cmd /k "cd node && node server.js local"
+goto game_server_running
+:start_game_server_hidden
+start "" /b cmd /c "cd node && node "%~dp0node\server.js" local > "%~dp0logs\game-server.log" 2>&1"
+:game_server_running
 node singleplayer\wait_port.js 7192 180 "game server" || (pause & exit /b 1)
 
 rem ---------- 4. Play ----------
+rem Fantasy Land.exe opens the game window itself, so it can tell when you close it
+if defined FL_LAUNCHER echo Opening the game...& exit /b 0
 rem Opens the game in its own resizable window (Edge app mode with its own profile, so Stop.bat can close it).
 echo Opening the game...
 start "" msedge --app=http://127.0.0.1:8090 --user-data-dir="%LOCALAPPDATA%\FantasyLandSinglePlayer" --no-first-run --window-size=1280,800 2>nul || start "" http://127.0.0.1:8090
