@@ -99,3 +99,9 @@ Fantasy Land started as a copy of the MongoDB port of [Adventure Land](https://g
 - **Logout:** the settings window has a Logout button in its top left, matching Close, that goes back to the title screen.
 - **Fantasy Land.exe:** has the title screen picture as its icon. It starts the game with no console windows. When you close the last game window, it saves and stops everything, then closes itself.
 - Rewrote this README.
+
+### v14
+- The title screen's Login button is half the size.
+- The "A derivative of Adventure Land" note moved to the bottom left, so the log box no longer covers it.
+- The log says "Click Login to get started." under the welcome while the title screen is showing.
+- Character select shows "Fantasy Land - The Code (NOMMO) RPG" where it used to show "Server: Americas I".

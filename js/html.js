@@ -8620,6 +8620,7 @@ function merrit_shell_odds_html() {
 // Single player: the log's welcome message, with a few tips on the character select screen
 function single_player_welcome() {
 	add_log("Welcome to Fantasy Land!", "#73BD6D");
+	if ($("#sp-login").is(":visible")) add_log("Click Login to get started.", "white");
 	if (window.character || (typeof inside != "undefined" && inside != "selection")) return;
 	[
 		"Click a Free Slot, or New, to create a character.",
