@@ -543,6 +543,7 @@ async function init_game() {
 			multipliers: multipliers,
 		};
 		server_log("Game Version: " + G.version, 1);
+		if (typeof single_player == "object") single_player.apply_game_data(G); // Single player: fishing/mining cooldown
 
 		// Build D (dynamics data) from design globals
 		D = {
@@ -725,6 +726,7 @@ async function reload_server(to_broadcast, change) {
 			images: precomputed.images,
 			multipliers: multipliers,
 		};
+		if (typeof single_player == "object") single_player.apply_game_data(G); // Single player: fishing/mining cooldown
 		D = {
 			upgrades: upgrades,
 			drops: drops,
@@ -15108,7 +15110,7 @@ function update_instance(instance) {
 						consume_skill(player, "fishing", true);
 						if (player.slots.mainhand) {
 							var prop = calculate_item_properties(player.slots.mainhand);
-							if (prop.breaks && Math.random() < max(0, prop.breaks / 100.0)) {
+							if (prop.breaks && !(typeof single_player == "object" && !single_player.settings.tools_break) && Math.random() < max(0, prop.breaks / 100.0)) {
 								player.cid++;
 								player.u = true;
 								player.cslots.mainhand = player.slots.mainhand = null;
@@ -15145,7 +15147,7 @@ function update_instance(instance) {
 						consume_skill(player, "mining", true);
 						if (player.slots.mainhand) {
 							var prop = calculate_item_properties(player.slots.mainhand);
-							if (prop.breaks && Math.random() < max(0, prop.breaks / 100.0)) {
+							if (prop.breaks && !(typeof single_player == "object" && !single_player.settings.tools_break) && Math.random() < max(0, prop.breaks / 100.0)) {
 								player.cid++;
 								player.u = true;
 								player.cslots.mainhand = player.slots.mainhand = null;

@@ -107,3 +107,22 @@ test("single player auto login signs into the built-in account once, then reload
 	assert.equal((await run("/?auto_login=1", null, { success: true })).next, true);
 	assert.equal((await run("/", null, { failed: true, reason: "exception" })).next, true);
 });
+
+test("fishing and mining cooldown can be switched off", () => {
+	const G = { skills: { fishing: { reuse_cooldown: 100 }, mining: { reuse_cooldown: 200 }, attack: { cooldown: 5 } } };
+	single_player.create({ fishing_mining_cooldown: true }).apply_game_data(G);
+	assert.equal(G.skills.fishing.reuse_cooldown, 100);
+	single_player.create({ fishing_mining_cooldown: false }).apply_game_data(G);
+	assert.equal(G.skills.fishing.reuse_cooldown, 0);
+	assert.equal(G.skills.mining.reuse_cooldown, 0);
+	assert.equal(G.skills.attack.cooldown, 5);
+});
+
+test("settings missing from an older settings.txt are found with their notes", () => {
+	const example =
+		"# Shops\nsell_multiplier = 1\n\n# Gold for new characters\n# (only new ones)\nstarting_gold = 10000000\n";
+	assert.deepEqual(single_player.missing_settings("sell_multiplier = 3\n", example), [
+		"# Gold for new characters\r\n# (only new ones)\r\nstarting_gold = 10000000",
+	]);
+	assert.deepEqual(single_player.missing_settings("sell_multiplier = 3\r\nstarting_gold = 5\r\n", example), []);
+});

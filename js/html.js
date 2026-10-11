@@ -730,6 +730,27 @@ function render_event_announcements() {
 	else banner.hide();
 }
 
+// Show/hide button for the event and info buttons strip; the choice is remembered in this browser
+var serverinfo_collapsed = false;
+try {
+	serverinfo_collapsed = localStorage.getItem("serverinfo_collapsed") == "1";
+} catch (e) {}
+
+function serverinfo_toggle_html(html) {
+	var button = "<div class='gamebutton' title='Show or hide the event buttons' style='padding:6px 8px;font-size:24px;line-height:18px' onclick='pcs(event);toggle_serverinfo()'>";
+	button += "<div style='height:24px;line-height:24px'>" + (serverinfo_collapsed ? "&#9664;" : "&#9654;") + "</div>";
+	button += "<div style='color:#CFD1D1;margin-top:1px'>" + (serverinfo_collapsed ? "EVENTS" : "HIDE") + "</div></div>";
+	return serverinfo_collapsed ? button : button + html;
+}
+
+function toggle_serverinfo() {
+	serverinfo_collapsed = !serverinfo_collapsed;
+	try {
+		localStorage.setItem("serverinfo_collapsed", serverinfo_collapsed ? "1" : "0");
+	} catch (e) {}
+	render_server();
+}
+
 function render_server() {
 	render_event_announcements();
 	var html = "",
@@ -886,6 +907,7 @@ function render_server() {
 		html += "<div style='color:#CFD1D1;margin-top:1px'>" + phrase.html("cave.info_button") + "</div></div>";
 		content = true;
 	}
+	if (content && typeof serverinfo_toggle_html == "function") html = serverinfo_toggle_html(html); // Show/hide button
 	$("#serverinfo").html(html);
 	if (!content) $("#serverinfo").hide();
 	else $("#serverinfo").css("display", "flex");

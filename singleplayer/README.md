@@ -1,6 +1,6 @@
 # Adventure Land: single player on Windows
 
-This copy of [Adventure Land](https://adventure.land) runs entirely on your own PC. It adds one settings file (`settings.txt`) that controls shop prices, Ponty's stock, upgrade and compound luck, HP and MP usage, drop rates, holiday events and how many characters you can play at once.
+This copy of [Adventure Land](https://adventure.land) runs entirely on your own PC. It adds one settings file (`settings.txt`) that controls shop prices, Ponty's stock, upgrade and compound luck, HP and MP usage, drop rates, holiday events, fishing and mining, starting gold and how many characters you can play at once.
 
 ## Install once
 
@@ -38,7 +38,11 @@ If nothing opens, your browser blocked the pop-up. Click the blocked pop-up icon
 
 Open `settings.txt` (in the main folder) with Notepad. Every line is explained inside it. After saving, run `Stop.bat` and then `Play.bat`.
 
-If `settings.txt` is ever deleted, a fresh one is copied from `settings.example.txt` on the next start.
+If `settings.txt` is ever deleted, a fresh one is copied from `settings.example.txt` on the next start. When an update adds new settings, they are added to the end of your `settings.txt` on the next start, and your own values are kept.
+
+`starting_gold` only applies to characters created after you change it.
+
+The row of event buttons at the top right has a show/hide button on its left.
 
 ## Updating to the newest official version
 

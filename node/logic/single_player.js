@@ -33,6 +33,9 @@ const DEFAULTS = {
 	halloween: false,
 	egg_hunt: false,
 	max_characters_online: 3,
+	fishing_mining_cooldown: true,
+	tools_break: true,
+	starting_gold: 0,
 };
 
 function parse(text) {
@@ -63,8 +66,39 @@ function parse(text) {
 	return values;
 }
 
+// Settings in example_text that text doesn't mention yet, each with the notes written above it
+function missing_settings(text, example_text) {
+	const present = new Set(
+		text
+			.split(/\r?\n/)
+			.map((line) => line.replace(/#.*$/, "").split("=")[0].trim().toLowerCase())
+			.filter((key) => key in DEFAULTS),
+	);
+	let notes = [];
+	const blocks = [];
+	example_text.split(/\r?\n/).forEach(function (line) {
+		const key = line.replace(/#.*$/, "").split("=")[0].trim().toLowerCase();
+		if (!line.trim()) notes = [];
+		else if (line.trim().startsWith("#")) notes.push(line);
+		else {
+			if (key in DEFAULTS && !present.has(key)) blocks.push(notes.concat(line).join("\r\n"));
+			notes = [];
+		}
+	});
+	return blocks;
+}
+
 function load() {
 	if (!fs.existsSync(SETTINGS_FILE) && fs.existsSync(EXAMPLE_FILE)) fs.copyFileSync(EXAMPLE_FILE, SETTINGS_FILE);
+	// Settings added by a newer version go to the end of an older settings.txt
+	if (fs.existsSync(SETTINGS_FILE) && fs.existsSync(EXAMPLE_FILE)) {
+		const blocks = missing_settings(fs.readFileSync(SETTINGS_FILE, "utf8"), fs.readFileSync(EXAMPLE_FILE, "utf8"));
+		if (blocks.length)
+			fs.appendFileSync(
+				SETTINGS_FILE,
+				"\r\n\r\n# ---------- Added by a game update ----------\r\n\r\n" + blocks.join("\r\n\r\n") + "\r\n",
+			);
+	}
 	let values = {};
 	if (fs.existsSync(SETTINGS_FILE)) values = parse(fs.readFileSync(SETTINGS_FILE, "utf8"));
 	const settings = Object.assign({}, DEFAULTS, values);
@@ -97,6 +131,14 @@ function create(settings) {
 			if (settings.valentines) events.valentines = true;
 			if (settings.halloween) events.halloween = true;
 			if (settings.egg_hunt && !events.egghunt) events.egghunt = 60;
+		},
+		// Changes to the game data (G) the server and website build from the design files
+		apply_game_data(G) {
+			if (!settings.fishing_mining_cooldown)
+				["fishing", "mining"].forEach(function (name) {
+					if (G.skills && G.skills[name]) G.skills[name].reuse_cooldown = 0;
+				});
+			return G;
 		},
 		apply_options(options) {
 			options.character_limit = Math.max(options.character_limit || 0, settings.max_characters_online);
@@ -133,6 +175,7 @@ function create(settings) {
 module.exports = {
 	DEFAULTS,
 	parse,
+	missing_settings,
 	create: (values) => create(Object.assign({}, DEFAULTS, values)),
 	load: () => create(load()),
 };

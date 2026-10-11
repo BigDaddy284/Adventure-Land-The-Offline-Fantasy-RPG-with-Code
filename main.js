@@ -2,6 +2,7 @@ var fs = require("fs"),
 	path = require("path");
 var keys = require("./secretsandconfig/keys");
 var options = require("./secretsandconfig/options");
+var single_player = options.single_player && require("./node/logic/single_player").load(); // Single player: settings.txt
 var { get_seo_paths } = require("./seo_paths.js");
 var localization = require("./languages");
 var phrase = localization.phrase,
@@ -10,7 +11,7 @@ var phrase = localization.phrase,
 eval("" + fs.readFileSync(path.resolve(__dirname, "common/init.js")));
 reinit_from_options();
 
-var web_assets = require("./web_assets").create_web_assets({ root: __dirname, read_data: get_browser_data, local: Local });
+var web_assets = require("./web_assets").create_web_assets({ root: __dirname, read_data: single_player ? async () => single_player.apply_game_data(await get_browser_data()) : get_browser_data, local: Local });
 app.all("/data.js", web_assets.serve_data);
 app.use("/sounds", express.static("./sounds", { maxAge: "30d" }));
 app.get("/phrases/:language.js", localization.serve);

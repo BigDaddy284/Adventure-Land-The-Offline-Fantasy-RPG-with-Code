@@ -95,3 +95,19 @@ egg_hunt = yes
 
 # How many of your characters can be logged in at the same time.
 max_characters_online = 10
+
+
+# ---------- Fishing and mining ----------
+
+# Wait between catches/finds. no = fish and mine again straight
+# away (each attempt still takes a few seconds).
+fishing_mining_cooldown = no
+
+# Can fishing rods and pickaxes break while you use them?
+tools_break = no
+
+
+# ---------- New characters ----------
+
+# Gold every new character starts with.
+starting_gold = 10000000
