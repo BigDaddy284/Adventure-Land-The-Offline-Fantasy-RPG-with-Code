@@ -17,7 +17,7 @@ servers = {
 		api_path: "/server.api/",
 		local_ip: "127.0.0.1", // Single player: only this PC can connect
 		local_port: 7192,
-		address: "localhost:7192",
+		address: "127.0.0.1:7192",
 		machine: "local",
 		db: "dev",
 		secure: false,

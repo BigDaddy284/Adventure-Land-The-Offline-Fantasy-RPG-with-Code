@@ -1,12 +1,28 @@
 const crypto = require("node:crypto");
 const path = require("node:path");
 
-// Generate random keys for development — override with real values in production
-const rk = (n) => crypto.randomBytes(n).toString("hex");
+// Single player: random keys are made once and saved in keys.local.json, so the website
+// and the game server (separate programs) share the same keys and they survive restarts.
+const fs = require("node:fs");
+const saved_file = path.join(__dirname, "keys.local.json");
+let saved = {};
+try {
+	saved = JSON.parse(fs.readFileSync(saved_file, "utf8"));
+} catch (e) {}
+let changed = false;
+let counter = 0;
+const rk = (n) => {
+	const name = "key" + counter++ + "_" + n;
+	if (!saved[name]) {
+		saved[name] = crypto.randomBytes(n).toString("hex");
+		changed = true;
+	}
+	return saved[name];
+};
 
 module.exports = {
 	server_keyword: rk(16),
-	mongodb_uri: "mongodb://localhost:27017/adventureland",
+	mongodb_uri: "mongodb://127.0.0.1:27017/adventureland",
 	mongodb_name: "adventureland",
 	mongodb_config: {}, // e.g. { tlsCAFile: path.resolve(__dirname, "your-ca.crt") }
 	stripe_test_api_key: "",
@@ -25,3 +41,5 @@ module.exports = {
 	apple_token: "",
 	steam_key: "",
 };
+
+if (changed) fs.writeFileSync(saved_file, JSON.stringify(saved, null, "\t"));

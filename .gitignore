@@ -53,3 +53,4 @@ Thumbs.db
 # Single player: your own settings (copied from settings.example.txt on first run)
 /settings.txt
 /singleplayer/data/
+/singleplayer/config/keys.local.json

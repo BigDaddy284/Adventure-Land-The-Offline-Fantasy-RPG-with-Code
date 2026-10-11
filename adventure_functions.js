@@ -597,6 +597,7 @@ async function get_domain(req, user) {
 	domain.no_graphics = false;
 	domain.border_mode = false;
 	domain.purchase_mode = true;
+	domain.single_player = !!options.single_player; // Single player: hides Steam and purchase links
 	domain.tutorial = true;
 	domain.proximity_guides = true;
 	domain.close_buttons = true;

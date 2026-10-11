@@ -430,7 +430,8 @@ async function init_game() {
 	try {
 		// Check if server already exists in MongoDB (following qwazy pattern)
 		Server = await get("SR_" + region + server_name);
-		if (Server && Server.online && msince(Server.updated) < 12) {
+		// Single player: a server closed with Stop.bat or the window's X still looks online, so skip this check
+		if (Server && Server.online && msince(Server.updated) < 12 && !options.single_player) {
 			return [console.log("Server Exists: " + "SR_" + region + server_name), process.exit()];
 		}
 		var data = {};
