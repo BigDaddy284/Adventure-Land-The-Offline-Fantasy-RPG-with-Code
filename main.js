@@ -66,6 +66,7 @@ eval("" + fs.readFileSync(path.resolve(__dirname, "design/npcs.js")));
 eval("" + fs.readFileSync(path.resolve(__dirname, "design/multipliers.js")));
 eval("" + fs.readFileSync(path.resolve(__dirname, "design/items.js")));
 eval("" + fs.readFileSync(path.resolve(__dirname, "design/classes.js")));
+if (single_player) require("./node/logic/single_player").add_looks(classes); // Single player: extra starting looks
 eval("" + fs.readFileSync(path.resolve(__dirname, "design/levels.js")));
 eval("" + fs.readFileSync(path.resolve(__dirname, "design/upgrades.js")));
 eval("" + fs.readFileSync(path.resolve(__dirname, "design/drops.js"))); // needs items

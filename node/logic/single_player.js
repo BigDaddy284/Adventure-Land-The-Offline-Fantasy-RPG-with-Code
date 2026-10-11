@@ -154,6 +154,56 @@ const SCALES = {
 	gold: "gold_drop_percent",
 };
 
+// Extra starting looks, added after each class's original four (so A to D stay the same)
+// Each design comes in its main skin tone and an alternate one
+const NEW_LOOKS = {
+	warrior: [
+		["marmor6g", { head: "makeup104", hair: "hairdo417", chin: "beard111" }], // Ironclad Veteran
+		["marmor6g", { head: "makeup117", hair: "hairdo417", chin: "beard111" }],
+		["marmor6c", { head: "fmakeup01", hair: "hairdo519" }], // Frost Shieldmaiden
+		["marmor6c", { head: "fmakeup03", hair: "hairdo519" }],
+	],
+	rogue: [
+		["sbody1d", { head: "makeup108", hair: "hairdo415", chin: "beard112" }], // Ashen Hood
+		["sbody1d", { head: "makeup117", hair: "hairdo415", chin: "beard112" }],
+		["sarmor1g", { head: "fmakeup01", hair: "hairdo600" }], // Crimson Knife
+		["sarmor1g", { head: "fmakeup03", hair: "hairdo600" }],
+	],
+	mage: [
+		["mbody1e", { head: "makeup117", hair: "hairdo111", chin: "beard104" }], // Ember Sage
+		["mbody1e", { head: "makeup105", hair: "hairdo111", chin: "beard104" }],
+		["mbody5h", { head: "fmakeup01", hair: "hairdo301", hat: "hat102" }], // Tidecaller Witch
+		["mbody5h", { head: "fmakeup03", hair: "hairdo301", hat: "hat102" }],
+	],
+	paladin: [
+		["mbody3c", { head: "makeup105", hair: "hairdo320" }], // Sunforged Templar
+		["mbody3c", { head: "makeup117", hair: "hairdo320" }],
+	],
+	merchant: [
+		["marmor11g", { head: "makeup104", hair: "hairdo105", hat: "hat213", chin: "beard109" }], // Trailwise Trader
+		["marmor11g", { head: "makeup117", hair: "hairdo105", hat: "hat213", chin: "beard109" }],
+	],
+	ranger: [
+		["marmor5c", { head: "fmakeup03", hair: "hairdo208", hat: "hat221" }], // Greenwood Warden
+		["marmor5c", { head: "fmakeup01", hair: "hairdo208", hat: "hat221" }],
+	],
+	priest: [
+		["mbody4g", { head: "nfmakeup06", hair: "hairdo602" }], // Silver Oracle
+		["mbody4g", { head: "fmakeup01", hair: "hairdo602" }],
+	],
+};
+
+// Adds the extra looks to the class definitions; safe to run more than once
+function add_looks(classes) {
+	for (const name of Object.keys(NEW_LOOKS)) {
+		const looks = classes && classes[name] && classes[name].looks;
+		if (!looks) continue;
+		const have = new Set(looks.map((look) => JSON.stringify(look)));
+		for (const look of NEW_LOOKS[name]) if (!have.has(JSON.stringify(look))) looks.push(JSON.parse(JSON.stringify(look)));
+	}
+	return classes;
+}
+
 function create(settings) {
 	return {
 		settings,
@@ -201,6 +251,7 @@ function create(settings) {
 				merrit.hour_ms = settings.merrit_visit_minutes * 60 * 1000;
 				merrit.settle_ms = 0; // no wait after the stall opens
 			}
+			add_looks(G.classes);
 			return G;
 		},
 		apply_options(options) {
@@ -242,6 +293,8 @@ module.exports = {
 	save_setting,
 	EVENT_SETTINGS,
 	EVENT_MONSTERS,
+	NEW_LOOKS,
+	add_looks,
 	create: (values) => create(Object.assign({}, DEFAULTS, values)),
 	load: () => create(load()),
 };

@@ -8408,6 +8408,17 @@ function load_class_info(name, look) {
 	if (!G.classes[name]) return;
 	look = nunv(look, nunv(window.thelooks, 0));
 	if (!G.classes[name].looks[look]) look = 0;
+	if (window.single_player_mode) {
+		// Single player: only show the extra look buttons this class has, and fall back to A when switching to a class with fewer
+		var count = G.classes[name].looks.length;
+		$(".lookextra").each(function () {
+			$(this).toggle(Number($(this).attr("data-look")) < count);
+		});
+		if (window.thelooks >= count) {
+			thelooks = look = 0;
+			$(".lookstype").removeClass("selected").first().addClass("selected");
+		}
+	}
 
 	//html+="<div style='float: left; margin-right: 10px; margin-top: -10px; width: 52px; height: 72px; overflow: hidden'><img style='margin-top: -"+(72*4)+"px; margin-left: -"+(52*4)+"px; width: 624px; height: 576px;' src='/images/tiles/characters/chara7.png'/></div>";
 	html +=
