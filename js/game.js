@@ -1590,8 +1590,11 @@ function init_socket(args) {
 		server_name = server_names[data.region] + " " + data.name;
 		update_login_server();
 		clear_game_logs();
-		add_log(phrase.html("game.welcome_to", { value: server_names[data.region], name: data.name }));
-		add_update_notes();
+		if (window.single_player_mode) single_player_welcome(); // Single player: a welcome and tips instead of the server name and update notes
+		else {
+			add_log(phrase.html("game.welcome_to", { value: server_names[data.region], name: data.name }));
+			add_update_notes();
+		}
 		if (!first_welcome) {
 			first_welcome = true;
 			if (is_electron && electron_is_main() && user_id) setTimeout(electron_code_sync_logic, 1);

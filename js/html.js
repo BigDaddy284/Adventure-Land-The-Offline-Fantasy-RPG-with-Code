@@ -688,6 +688,7 @@ function render_upcoming_content() {
 
 function render_event_announcements() {
 	if (no_html) return;
+	if (typeof single_player_mode != "undefined" && single_player_mode) return $("#event-announcements").hide(); // Single player: no event or update notices on character select
 	var banner = $("#event-announcements"),
 		keys = (character || (typeof inside != "undefined" && inside == "game") ? [] : Object.keys(G.events || {}))
 			.filter(function (key) {
@@ -8594,4 +8595,18 @@ function merrit_shell_odds_html() {
 		html += "<tr><td>" + s + (s === 10 ? phrase.html("interface.merrit_shell_odds_html.or_more") : "") + "</td><td>" + (chance * 100).toFixed(5).replace(/0+$/, "").replace(/\.$/, "") + "%</td></tr>";
 	}
 	return html;
+}
+
+// Single player: the log's welcome message, with a few tips on the character select screen
+function single_player_welcome() {
+	add_log("Welcome to Fantasy Land!", "#73BD6D");
+	if (window.character || (typeof inside != "undefined" && inside != "selection")) return;
+	[
+		"Click a Free Slot, or New, to create a character.",
+		"Click one of your characters to start playing.",
+		"In game, open more characters in their own windows from the Characters tab, or type /window Name in chat.",
+		"Prices, drop rates, holiday events and more can be changed in settings.txt in the game folder.",
+	].forEach(function (tip) {
+		add_log(tip, "gray");
+	});
 }
