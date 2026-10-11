@@ -21,6 +21,8 @@ Git isn't needed, because the shared engine already comes in the game folder.
 
 A small window shows the progress while it starts the database, the website and the game server, with no console windows. Then the game opens in its own window. It opens on the title screen: press Login (or Enter) to go to character select. The very first start also installs the game's packages and loads the maps, so it takes a few minutes. After that it's quick.
 
+On character select, click a Free Slot (or New) to create a character, then click a character to play. There are extra starting looks (Opt. E to H) for some classes. The Logout button at the top left of the Settings window takes you back to the title screen.
+
 You're logged in automatically. Everything stays on your PC, and only your PC can connect to the game.
 
 The first time you run `Fantasy Land.exe`, Windows may show "Windows protected your PC", because the file isn't digitally signed. Click "More info", then "Run anyway". Windows only asks once.
@@ -28,6 +30,8 @@ The first time you run `Fantasy Land.exe`, Windows may show "Windows protected y
 ## Stopping
 
 Just close the game window. Fantasy Land.exe shows "Saving your characters..." while it waits for your characters to save and stops everything, then closes by itself. If you have several character windows open, it waits until you close the last one.
+
+Don't end the game's processes in Task Manager, so your characters get a chance to save.
 
 ## Play.bat and Stop.bat
 
@@ -40,7 +44,7 @@ When the game is started with `Fantasy Land.exe`, the database, website and game
 
 ## Settings
 
-Open `settings.txt` in the game folder with Notepad. Every setting is explained inside it. Save the file, then run Stop.bat and Play.bat for the change to take effect. You can change:
+Open `settings.txt` in the game folder with Notepad. Every setting is explained inside it. Save the file, then close the game and start it again for the change to take effect. You can change:
 
 - shop sell prices
 - Ponty's restock and what he sells
@@ -71,11 +75,11 @@ Each of these opens a character in its own window:
 
 The game never updates itself. A new version comes as a new zip:
 
-1. Run `Stop.bat`.
+1. Close the game (or run `Stop.bat`).
 2. Extract the new zip over your game folder.
-3. Start with `Play.bat`.
+3. Start with `Fantasy Land.exe`.
 
-Your `settings.txt` and saved characters are kept.
+Your `settings.txt` and saved characters are kept. Extracting over the folder doesn't delete files that a newer version no longer uses, which is harmless.
 
 ## Where things are
 
@@ -178,7 +182,7 @@ Fantasy Land started as a copy of the MongoDB port of [Adventure Land](https://g
 - Removed the update script. The game never updates itself.
 - Changed the Privacy Policy to say the game never goes online by itself.
 
-### v13 (next build)
+### v13
 - The tutorial comic and the Cave of Many Dreams comic show "Fantasy Land", in every language.
 - **New starting looks:** 10 in all, 5 male and 5 female, each with a second skin tone. They show as extra look buttons (E to H) on the character creation screen when a class has them.
   - Male: Ironclad Veteran (warrior), Ashen Hood (rogue), Ember Sage (mage), Sunforged Templar (paladin) and Trailwise Trader (merchant).
@@ -186,6 +190,7 @@ Fantasy Land started as a copy of the MongoDB port of [Adventure Land](https://g
 - **Title screen:** the game now opens on a Fantasy Land title screen with a Login button that goes on to character select. A note in the corner reads "A derivative of Adventure Land, with thanks to Kaan Soral".
 - **Character select:** no seasonal event or update notices. The log says "Welcome to Fantasy Land!" with a few tips, instead of the server name and update notes.
 - **In Game list:** character select lists up to 8 characters, then a 1st and 2nd merchant.
+- `Stop.bat` also stops a game started by Fantasy Land.exe.
 - **Logout:** the settings window has a Logout button in its top left, matching Close, that goes back to the title screen.
 - **Fantasy Land.exe:** has the title screen picture as its icon. It starts the game with no console windows. When you close the last game window, it saves and stops everything, then closes itself.
 - Rewrote this README.
