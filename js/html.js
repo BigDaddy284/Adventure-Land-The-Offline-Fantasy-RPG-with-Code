@@ -111,6 +111,26 @@ function set_browser_zoom(value) {
 
 function show_settings() {
 	show_modal($(".basicsettings").html(), { wrap: false, styles: "width:600px", hideinbackground: true });
+	if (typeof single_player_mode != "undefined" && single_player_mode) add_single_player_logout($(".imodal:last"));
+}
+
+// Single player: a Logout button in the settings window's top left, matching its Close button, that goes back to the title screen
+function add_single_player_logout(modal) {
+	var close = modal.find(".ui-close").first();
+	if (!close.length || modal.find(".sp-logout").length) return;
+	var button = $("<button type='button' class='gamebutton ui-close ui-close-word sp-logout' onpointerdown='stpr(event)' onclick='btc(event); single_player_logout()'><span></span></button>");
+	button.find("span").text("LOGOUT");
+	button.css({ top: close.css("top"), left: close.css("right"), right: "auto", borderWidth: close.css("border-top-width") });
+	button[0].style.setProperty("display", "inline-flex", "important"); // stays even when close buttons are switched off
+	close.before(button);
+}
+
+function single_player_logout() {
+	try {
+		sessionStorage.removeItem("sp_login_seen");
+	} catch (e) {}
+	// Leaving the page disconnects the character, which saves it, the same as closing the window
+	location.href = "/";
 }
 
 function set_close_buttons(enabled) {
