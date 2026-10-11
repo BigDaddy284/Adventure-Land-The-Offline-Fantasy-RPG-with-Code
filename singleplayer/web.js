@@ -36,4 +36,29 @@ function restrict_api(REF) {
 	BLOCKED_METHODS.forEach((method) => delete REF[method]);
 }
 
-module.exports = { BLOCKED_PATHS, BLOCKED_METHODS, block_paths, restrict_api };
+// The one built-in account. Only reachable from this PC.
+const ACCOUNT = { email: "player@adventure.local", password: "singleplayer" };
+
+// Logs every page visit into the built-in account (creating it the first time), then reloads the page.
+// get_user(req) and signup_or_login(args) are the website's own functions.
+function auto_login({ get_user, signup_or_login }) {
+	return async function (req, res, next) {
+		// "auto_login" in the address means a login was just tried, so don't loop if the browser refused the cookie
+		if (req.method != "GET" || req.path.startsWith("/api") || req.query.auto_login) return next();
+		try {
+			if (await get_user(req)) return next();
+			res.infs = [];
+			const result = await signup_or_login({ req, res, email: ACCOUNT.email, password: ACCOUNT.password });
+			if (!result || result.failed) {
+				console.error("Single player auto login failed:", result && result.reason);
+				return next();
+			}
+			return res.redirect(req.originalUrl + (req.originalUrl.includes("?") ? "&" : "?") + "auto_login=1");
+		} catch (e) {
+			console.error("Single player auto login failed:", e);
+			next();
+		}
+	};
+}
+
+module.exports = { BLOCKED_PATHS, BLOCKED_METHODS, ACCOUNT, block_paths, restrict_api, auto_login };

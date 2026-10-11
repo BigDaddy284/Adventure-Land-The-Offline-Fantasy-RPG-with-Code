@@ -92,6 +92,7 @@ eval("" + fs.readFileSync(path.resolve(__dirname, "admin_dashboard.js")));
 // Single player: no payments, Steam purchases or other online-only parts
 var single_player_web = options.single_player && require("./singleplayer/web");
 if (single_player_web) single_player_web.restrict_api(REF);
+if (single_player_web) app.use(single_player_web.auto_login({ get_user, signup_or_login: (args) => signup_or_login_api(args) }));
 
 // Stripe
 try {

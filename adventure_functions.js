@@ -1650,14 +1650,14 @@ function set_cookie(res, name, value, domain_host) {
 	res.cookie(name, "" + value, {
 		maxAge: 86400 * 365 * 5 * 1000,
 		path: "/",
-		domain: "." + domain_host,
+		domain: options.single_player ? undefined : "." + domain_host, // Single player: browsers reject ".127.0.0.1"
 		secure: secure_cookies,
 		sameSite: "lax",
 	});
 }
 
 function delete_cookie(res, name, domain_host) {
-	res.clearCookie(name, { path: "/", domain: "." + domain_host });
+	res.clearCookie(name, { path: "/", domain: options.single_player ? undefined : "." + domain_host });
 }
 
 async function delete_auth_cookies(req, res) {

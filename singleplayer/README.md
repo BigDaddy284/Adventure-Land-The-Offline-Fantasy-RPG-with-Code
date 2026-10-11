@@ -14,11 +14,13 @@ This copy of [Adventure Land](https://adventure.land) runs entirely on your own 
 
 ## Playing
 
-Double-click **`Play.bat`**. It starts the database, then the website, then the game server, waiting for each one to be ready before starting the next, and then opens http://localhost:8090 in your browser. The first run also installs everything and loads the maps, so it takes a few minutes.
+Double-click **`Play.bat`**. It starts the database, then the website, then the game server, waiting for each one to be ready before starting the next, and then opens the game in its own resizable window. The first run also installs everything and loads the maps, so it takes a few minutes.
 
-Sign up with any email and password. It all stays on your PC, and only your PC can connect.
+There's no sign-up: you're logged into one built-in account automatically. Everything stays on your PC, and only your PC can connect.
 
-To stop everything, double-click **`Stop.bat`**.
+To stop everything, including the game window, double-click **`Stop.bat`**.
+
+The game keeps its own database in `singleplayer\data` on port 27018, separate from any other MongoDB on your PC. It runs as a one-member replica set because the game saves accounts, characters and trades with database transactions.
 
 ## Playing several characters at once
 

@@ -22,7 +22,7 @@ const rk = (n) => {
 
 module.exports = {
 	server_keyword: rk(16),
-	mongodb_uri: "mongodb://127.0.0.1:27017/adventureland",
+	mongodb_uri: "mongodb://127.0.0.1:27018/adventureland?directConnection=true", // Single player: the game's own database, started by Play.bat
 	mongodb_name: "adventureland",
 	mongodb_config: {}, // e.g. { tlsCAFile: path.resolve(__dirname, "your-ca.crt") }
 	stripe_test_api_key: "",

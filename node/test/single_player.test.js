@@ -78,3 +78,32 @@ test("single player website blocks payments and online-only pages and API calls"
 	web.restrict_api(REF);
 	assert.deepEqual(Object.keys(REF), ["save_code"]);
 });
+
+test("single player auto login signs into the built-in account once, then reloads the page", async () => {
+	const web = require("../../singleplayer/web");
+	const run = async (req, user, result) => {
+		const out = { next: false, redirect: null, args: null };
+		const middleware = web.auto_login({
+			get_user: async () => user,
+			signup_or_login: async (args) => ((out.args = args), result),
+		});
+		await middleware(
+			{
+				method: "GET",
+				path: req.split("?")[0],
+				originalUrl: req,
+				query: req.includes("auto_login") ? { auto_login: "1" } : {},
+			},
+			{ redirect: (url) => (out.redirect = url) },
+			() => (out.next = true),
+		);
+		return out;
+	};
+	const fresh = await run("/", null, { success: true });
+	assert.equal(fresh.redirect, "/?auto_login=1");
+	assert.equal(fresh.args.email, web.ACCOUNT.email);
+	assert.equal(fresh.args.password, web.ACCOUNT.password);
+	assert.equal((await run("/", { _id: "US_x" }, { success: true })).next, true);
+	assert.equal((await run("/?auto_login=1", null, { success: true })).next, true);
+	assert.equal((await run("/", null, { failed: true, reason: "exception" })).next, true);
+});
