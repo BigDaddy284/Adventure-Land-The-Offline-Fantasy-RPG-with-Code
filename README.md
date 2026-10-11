@@ -1,200 +1,178 @@
-# Adventure Land - The Code MMORPG (MongoDB Edition)
+# Fantasy Land - The Code (NOMMO) RPG
 
-https://adventure.land
+Fantasy Land is a single-player version of Adventure Land, the MMORPG you can play by writing code. It runs entirely on your own Windows PC. There are no other players, no account to sign up for, and nothing to buy. You can play several characters at once, and one settings file lets you tune the game to suit you.
 
-A full Node.js + MongoDB port of [Adventure Land](https://github.com/kaansoral/adventureland), originally built on Python 2 / Google App Engine / Datastore. This version replaces all of that with Express, Socket.IO, and MongoDB.
+It's built on the MongoDB port of [Adventure Land](https://github.com/kaansoral/adventureland_mongodb) by Kaan Soral and the Adventure Land developers. All credit for the original game goes to them. See the Thanks page in the game.
 
-**Please consider supporting Adventure Land on Patreon: https://www.patreon.com/AdventureLand**
+## What you need to install
 
-## Repositories
+Install these once:
 
-This project is split across three repositories:
+1. **Node.js** (the LTS version) from https://nodejs.org. Keep the default options. It runs the game's website and game server.
+2. **MongoDB Community Server** from https://www.mongodb.com/try/download/community. Choose "Complete" and keep the default options. MongoDB Compass is optional. This is the database that saves your characters, items and settings.
+3. **Microsoft Edge.** It comes with Windows, and the game opens in its own Edge window.
 
-| Repository | Description |
-|---|---|
-| [adventureland_mongodb](https://github.com/kaansoral/adventureland_mongodb) | Main game — Express backend, game server, client assets |
-| [common_engine](https://github.com/kaansoral/common_engine) | Shared engine — Express init, MongoDB transactions, request handling, admin tools |
-| [adventureland_secretsandconfig](https://github.com/kaansoral/adventureland_secretsandconfig) | Config template — keys, options, server definitions (all values randomized/empty) |
+Git isn't needed, because the shared engine already comes in the game folder.
 
-## Quick Start
+## Playing
 
-### 1. Clone all three repositories
+1. Extract the zip somewhere, for example `C:\FantasyLand`.
+2. Double-click **`Play.bat`**.
 
-```sh
-# Main game
-git clone https://github.com/kaansoral/adventureland_mongodb.git adventureland
+Play.bat starts the database, then the website, then the game server, waiting for each one before starting the next. Then it opens the game in its own window. The very first start also installs the game's packages and loads the maps, so it takes a few minutes. After that it's quick.
 
-# Shared engine (symlinked as adventureland/common)
-git clone https://github.com/kaansoral/common_engine.git common
+You're logged in automatically. Everything stays on your PC, and only your PC can connect to the game.
 
-# Config template (symlinked as adventureland/secretsandconfig)
-git clone https://github.com/kaansoral/adventureland_secretsandconfig.git secretsandconfig
-```
+## Stopping
 
-### 2. Create symlinks
+Double-click **`Stop.bat`**. It closes the game window, waits a few seconds so your characters save, then stops the game server, the website and the database.
 
-```sh
-cd adventureland
-ln -s ../common common
-ln -s ../secretsandconfig secretsandconfig
-```
+Always use Stop.bat rather than just closing the windows, so the database shuts down cleanly.
 
-### 3. Install dependencies
+## Settings
 
-```sh
-# Main backend
-npm install
+Open `settings.txt` in the game folder with Notepad. Every setting is explained inside it. Save the file, then run Stop.bat and Play.bat for the change to take effect. You can change:
 
-# Game server
-cd node
-npm install
-cd ..
-```
+- shop sell prices
+- Ponty's restock and what he sells
+- upgrade and compound luck
+- HP loss and MP usage
+- drop and gold rates
+- holiday events and event monsters
+- how many characters can be online at once
+- fishing and mining wait times, and whether tools break
+- starting gold
+- Merrit's market visits
 
-### 4. Set up MongoDB
+If `settings.txt` is deleted, a fresh one is made on the next start. New settings from a newer version are added to the end of your file automatically, and your own values are kept.
 
-Install MongoDB locally or use a hosted instance. The default config in `secretsandconfig/keys.js` points to `127.0.0.1:27017` with no auth — this works out of the box with a default local MongoDB install.
+Holiday events can also be switched while you play. The candy cane button above the skill bar opens the Holiday Events menu.
 
-If your MongoDB requires authentication or TLS, edit `secretsandconfig/keys.js`:
+## Playing several characters at once
 
-```js
-mongodb_ip: "your-server-ip",
-mongodb_port: "27017",
-mongodb_user: "your-user",
-mongodb_password: "your-password",
-mongodb_name: "adventureland",
-mongodb_tls: true,                                          // set to true if using TLS
-mongodb_ca_file: path.resolve(__dirname, "your-ca.crt"),    // place your CA cert in secretsandconfig/
-```
+Each of these opens a character in its own window:
 
-### 5. Configure keys
+- **Characters list:** open the Characters tab and click **Deploy** next to an offline character.
+- **Chat:** type `/window CharacterName`. `/window` on its own opens the character select page.
+- **CODE:** call `open_character_window("CharacterName")`.
 
-Open `secretsandconfig/keys.js`. The keys auto-generate random values on each startup, which is fine for local development. For production, set fixed values:
+`max_characters_online` in `settings.txt` sets how many can be online together.
 
-- **`ACCESS_MASTER`** — Admin access key (used for server eval/render, admin tools)
-- **`SERVER_MASTER`** — Server-to-server authentication
-- **`BOT_MASTER`** — Bot authentication key
-- **Stripe keys** — Only needed if you want payments
-- **Steam/Discord/Apple keys** — Only needed for those platform integrations
-- **Amazon SES** — Only needed for sending emails (verification, password reset)
+## Updating to a new version
 
-### 6. Add a hosts entry (optional)
+The game never updates itself. A new version comes as a new zip:
 
-```sh
-# Add to /etc/hosts (or C:\Windows\System32\drivers\etc\hosts on Windows)
-127.0.0.1       adventure.test
-```
+1. Run `Stop.bat`.
+2. Extract the new zip over your game folder.
+3. Start with `Play.bat`.
 
-Then update `secretsandconfig/options.js`:
-```js
-base_url: "http://adventure.test",
-```
+Your `settings.txt` and saved characters are kept.
 
-Or just use `http://localhost` — the default config works without any hosts entry.
+## Where things are
 
-### 7. Seed the map data
+- `Play.bat` and `Stop.bat`: start and stop the game.
+- `settings.txt`: your settings. `settings.example.txt` holds the defaults.
+- `singleplayer\data`: your saved game (the database). Back this folder up to keep your characters safe, with the game stopped.
+- `singleplayer\`: the single-player config, launch helpers and text changes.
+- `node\logic\single_player.js`: reads `settings.txt` and applies it to the game.
 
-Before starting either server, follow [Seeding Game Data](#seeding-game-data) to load the bundled maps into a fresh local MongoDB database.
+The game's own database runs on port 27018, separate from any other MongoDB on your PC. The website uses port 8090 and the game server uses port 7192.
 
-### 8. Start the backend
+## Changes from the original game
 
-```sh
-node main.js
-```
+Fantasy Land started as a copy of the MongoDB port of [Adventure Land](https://github.com/kaansoral/adventureland_mongodb). These are the changes made since then, by version. Every code change is marked with a `// Single player:` comment so it's easy to find.
 
-The backend starts on port **8090** (configurable in `secretsandconfig/options.js`). Visit http://localhost:8090
+### v1
+- Added `settings.txt`, one plain text file of game settings.
+- **Shops:** a sell price multiplier for Gold Gabriel and the other NPC shops.
+- **Ponty:** restocks every few minutes with random high grade gear. The item count, grade and upgrade levels are all settings.
+- **Upgrading and compounding:** success chance settings.
+- **HP and MP:** settings for how much HP you lose and how much MP attacks and skills cost.
+- **Drops:** drop rate, gold rate and a "drop everything" setting.
+- **Holiday events:** they can be switched on all year.
+- **More characters:** a setting for how many can be online at once.
+- **Character windows:** each character can open in its own window with `/window Name`, `open_character_window("Name")` in CODE, or the Deploy link.
+- **One-click start and stop:**
+  - `Play.bat` installs everything on the first run, then starts the database, website and game server in order and opens the game.
+  - `Stop.bat` closes everything.
+- **Online parts off:**
+  - Payments and the shells shop, Steam sign-in and purchases, AI/MCP access, character transfers, reminder emails and referral pages are switched off.
+  - The website and game server only accept connections from this PC.
 
-### 9. Start the game server
+### v2
+- Fixed the game server refusing to start for 12 minutes after being closed without a clean shutdown. The game's keys are now made once and saved.
+- Uses 127.0.0.1 instead of localhost.
+- Hid the Steam and purchase links on the login page.
 
-```sh
-cd node
-node server.js local
-```
+### v3
+- **No sign-up:** the game logs you into one built-in account automatically.
+- **Own window:** the game opens in a resizable window of its own.
+- **Own database:** runs on port 27018, set up for the transactions the game needs to save accounts, characters and trades.
+- `Stop.bat` closes the game window and shuts the database down cleanly.
 
-The argument is a key from `servers` in `secretsandconfig/options.js`. The default `local` server runs on port **7192**.
+### v4
+- `Stop.bat` waits for characters to save before closing the game server.
+- The row of event buttons can be collapsed.
+- New settings:
+  - `fishing_mining_cooldown`: no wait between fishing and mining.
+  - `tools_break`: fishing rods and pickaxes never break.
+  - `starting_gold`: new characters start with 10 million gold.
+- Removed the email help line from the login screen.
 
-### Discord chat (optional)
+### v5
+- The browser always loads the newest game scripts after a restart, so an update never runs old cached code.
+- **Merrit:**
+  - `merrit_visit_minutes` sets how often he visits, with a separate timer for each merchant.
+  - No settle wait after a stall opens.
+  - He brings a parcel on every visit.
+  - With `merrit_buys_stall`, he buys everything on each merchant's stall at the listed price. You get the gold and the items leave the stall. Nothing in your bag is touched.
 
-The game server reuses `discord_token` from `secretsandconfig/keys.js` for event announcements and public chat. Public chat defaults to Adventure Land's `#game_chat` channel. To use another channel, set `discord_chat_channel` in `secretsandconfig/options.js` to its string ID and give the bot permission to view it and send messages. Use the same channel ID on every game server to combine their public chat. An empty string disables chat forwarding; event and join announcements keep their existing channels.
+### v6
+- Renamed the game to Venture Land.
+- Added a credits box to the character select screen.
+- Removed server selection.
 
-Messages include the realm and character name. Public chat is batched over ten seconds; party chat and private messages are excluded. The relay sends nothing back into the game and is disabled in development, test, and hardcore modes. It uses bounded memory, five-second request timeouts, and at most three attempts per batch. Messages expire after two minutes, so an outage or overload can drop chat. No extra Discord package or Gateway connection is needed.
+### v7
+- Renamed the zip and folder.
+- The game folder can be renamed or moved without breaking anything, because `Play.bat` remakes the config link on every start.
 
-## Seeding Game Data
+### v8
+- Renamed the game to **Fantasy Land - The Code (NOMMO) RPG**.
+- Merchants earn XP from Merrit's buyouts.
+- Added a **Holiday Events** menu, opened by the candy cane button above the skill bar. Events switch on and off while you play.
 
-Run [scripts/seed_mongodb.js](scripts/seed_mongodb.js) once before starting the backend or game server. It includes the 49 map geometry records needed by `design/maps.js` and inserts them into MongoDB's `map` collection. No SQLite dump, Python setup, or production access is needed.
+### v9
+- Removed Email/Account and Share/Recruit, along with their behind-the-scenes calls.
+- Reordered the character select screen to credits, then the menu, then In Game.
+- Removed the Discord links and the Steam news banner.
+- Wrote single-player Terms of Service and a Privacy Policy.
+- Restored the original Thanks and Attributions page.
 
-Items, monsters, NPCs, and other game definitions already live in `design/`. Accounts, characters, and server records are created as you use the game; the seed contains no player data.
+### v10
+- Every event monster has its own on/off switch, in `settings.txt` and in the Holiday Events menu.
+- Removed:
+  - the email note in Settings
+  - the Docs and Hub buttons and pages
+  - the Upcoming panel
+  - the "Game dynamics and drops aren't final" note
+- The Thanks page now thanks Adventure Land, Kaan Soral, the developers and the artists.
 
-Set `mongodb_name` in `secretsandconfig/keys.js` to a fresh database and point `mongodb_uri` at your local MongoDB instance. Keep both servers stopped while seeding. From the repository root, run:
+### v11
+- "Adventure Land" now reads "Fantasy Land" in the game's text, in every language. The Thanks page keeps the original name.
+- The Wizard has a new line, in every language: "I don't know who made this land, but it's fantastic!"
+- Removed the "email hello@adventure.land" help line from the loading screen, in every language.
+- The chat header shows only the map name.
 
-```sh
-# Check the local connection and confirm the database has no collections (read-only)
-node scripts/seed_mongodb.js --dry-run
+### v12
+- Removed the update script. The game never updates itself.
+- Changed the Privacy Policy to say the game never goes online by itself.
 
-# Insert the maps; replace adventureland with your exact mongodb_name
-node scripts/seed_mongodb.js --confirm adventureland
-```
-
-Running without arguments only prints help and does not connect to MongoDB. The script accepts a single local address (`127.0.0.1`, `localhost`, or `::1`), refuses remote, SRV, and proxy connections, and is disabled when `NODE_ENV=production`. Use an actual local MongoDB instance, never a tunnel to an existing database. For a hosted installation, seed locally first and transfer that fresh database using your own deployment process.
-
-The database must have **no collections**, even empty ones. The script requires the exact database name before inserting and refuses repeat runs. It never overwrites or deletes records. If insertion is interrupted, it may leave partial map data and will refuse another attempt; inspect the target and use a new empty database for a fresh seed.
-
-After seeding, start both servers using the Quick Start steps and sign up through the web UI.
-
-## Project Structure
-
-```
-adventureland/
-  main.js                  # Express backend (port 8090)
-  api.js                   # API endpoints (REF pattern)
-  adventure_functions.js   # Game functions (auth, characters, servers, etc.)
-  models.js                # MongoDB model definitions
-  crons.js                 # Scheduled tasks
-  filters.js               # Nunjucks template filters
-  update_notes.js          # Update posts shown in the game and at /allnotes
-  node/
-    server.js              # Game server (Socket.IO)
-    server_functions.js    # Game logic
-    precompute_bfs.js      # BFS pathfinding precomputation
-    precomputed_map_data.js # Generated BFS data
-  design/                  # Game data (items, monsters, maps, skills, etc.)
-  htmls/                   # Nunjucks templates
-  js/                      # Client-side JavaScript
-  css/                     # Stylesheets
-  images/                  # Game art and tilesets
-  sounds/                  # Sound effects and music
-  scripts/
-    seed_mongodb.js       # Bundled map geometry and guarded local database seeding
-    update_notes.js       # Release posts: sync, check and translate (see UPDATE_NOTES.md)
-  common -> ../common      # Symlink to common_engine
-  secretsandconfig -> ...  # Symlink to your config
-```
-
-## Making Yourself Admin
-
-With `Local: true` and `unsecure_admin: true` in options.js, visit:
-
-```
-http://localhost:8090/admin/make/user/admin
-```
-
-While logged in. This sets `user.admin = true` on your account, giving access to `/admin/executor` and `/admin/renderer`.
-
-With `Local: true` and `unsecure_admin: true`, all users are treated as admin automatically. This only works from localhost connections.
-
-## Contributing
-
-PRs are welcome! Please keep them **small and focused** — one fix or one feature per PR. Large PRs that touch many unrelated things are hard to review and likely to be rejected. If you're planning something big, open an issue or discuss it on Discord first.
-
-If your change adds or changes something players can see, add it to the pending update post with `node scripts/update_notes.js sync`. [UPDATE_NOTES.md](UPDATE_NOTES.md) explains the format.
-
-## Discussion
-
-Use the **#development** channel on Discord for questions and collaboration: https://discord.gg/hz25Kz9FsH
-
-## Code Formatting
-
-This project uses [Prettier](https://prettier.io/) for the game server (`node/` folder). If you use VSCode, install the recommended extensions — formatting happens automatically on save.
+### v13 (next build)
+- The tutorial comic and the Cave of Many Dreams comic show "Fantasy Land", in every language.
+- **New starting looks:** 10 in all, 5 male and 5 female, each with a second skin tone. They show as extra look buttons (E to H) on the character creation screen when a class has them.
+  - Male: Ironclad Veteran (warrior), Ashen Hood (rogue), Ember Sage (mage), Sunforged Templar (paladin) and Trailwise Trader (merchant).
+  - Female: Frost Shieldmaiden (warrior), Greenwood Warden (ranger), Silver Oracle (priest), Tidecaller Witch (mage) and Crimson Knife (rogue).
+- Rewrote this README.
 
 ## License
 
