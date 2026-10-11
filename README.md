@@ -86,6 +86,7 @@ Your `settings.txt` and saved characters are kept. Extracting over the folder do
 - `Fantasy Land.exe`: starts the game, and stops it when you close the game window. Its source is in `singleplayer\launcher`.
 - `Play.bat` and `Stop.bat`: start and stop the game with console windows.
 - `logs\`: messages from the database, website and game server when started by `Fantasy Land.exe`.
+- `CHANGELOG.md`: the changes below, on their own.
 - `settings.txt`: your settings. `settings.example.txt` holds the defaults.
 - `singleplayer\data`: your saved game (the database). Back this folder up to keep your characters safe, with the game stopped.
 - `singleplayer\`: the single-player config, launch helpers and text changes.
