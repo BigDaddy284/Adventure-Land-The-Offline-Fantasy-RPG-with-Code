@@ -44,11 +44,9 @@ If `settings.txt` is ever deleted, a fresh one is copied from `settings.example.
 
 The row of event buttons at the top right has a show/hide button on its left. The candy cane button above the skill bar turns holiday events on and off while you play.
 
-## Updating to the newest official version
+## Updates
 
-Run `Stop.bat`, then double-click `singleplayer\update_game.bat`. It pulls the latest official game code into your copy and keeps the single player changes and your `settings.txt`.
-
-The single player changes are kept small on purpose, so updates almost always merge on their own. If the official update touched the same lines, the script stops and tells you; nothing is changed until that's sorted out.
+The game never updates itself or downloads anything. New versions come as a new zip: run `Stop.bat`, extract it over this folder, then start with `Play.bat`. Your `settings.txt` and saved characters are kept.
 
 ## What was changed
 

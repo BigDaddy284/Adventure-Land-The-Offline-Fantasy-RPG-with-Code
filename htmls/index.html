@@ -127,14 +127,13 @@
 					class="coordsx">
 					0,0
 				</div>#}
-				<div style="background: black; padding: 3px 4px 3px 4px; width: 312px; border: 5px solid gray; font-size: 24px; line-height: 22px; margin-bottom: -6px; text-align: center; position: relative"
+				<div style="background: black; padding: 3px 4px 3px 4px; width: 312px; border: 5px solid gray; font-size: 24px; line-height: 22px; margin-bottom: -6px; text-align: center"
 					class="clickable" onclick="btc(event); $('.coords').toggle()">
 					<div class="coords hidden">0,0</div>
 					{% if domain.single_player %}<span class="mapname">{{ phrase("pages.index.town") }}</span>
-					<span id="chatminimize" class="clickable" style="position: absolute; right: 6px; top: 3px; color: #888" title="Minimize chat" onclick="btc(event); toggle_chat_minimized()">-</span>
 					{% else %}<span class='servername'>{{ phrase("pages.index.europas-i") }}</span> | <span class="mapname">{{ phrase("pages.index.town") }}</span>{% endif %}
 				</div>
-				<div style='position: relative' id="chatbody">
+				<div style='position: relative'>
 					<div style='border: 4px solid gray; background: black; position: absolute; top: 1px; right: -9px; font-size: 24px; line-height: 24px; padding-left: 6px; padding-right: 4px' class='timeui clickable' onclick="show_json(S,{name:'parent.S'})">12:24</div>
 					<div id="chatlog" class="noscroll cbold"></div>
 				</div>

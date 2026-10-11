@@ -27,7 +27,6 @@ if not exist node\node_modules\ (
 	call npm install --no-audit --no-fund || (popd & pause & exit /b 1)
 	popd
 )
-where git >nul 2>nul && (git remote get-url upstream >nul 2>nul || git remote add upstream https://github.com/kaansoral/adventureland_mongodb.git)
 
 rem ---------- 1. Database ----------
 rem The game keeps its own database on port 27018 (separate from any MongoDB service on 27017),
