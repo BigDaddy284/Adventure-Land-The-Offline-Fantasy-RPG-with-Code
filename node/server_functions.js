@@ -3381,6 +3381,7 @@ function consume_mp(player, mp, target) {
 		player.mp += mp * 2;
 		xy_emit(player, "ui", { id: player.id, type: "restore_mp", amount: mp * 2 });
 	} else {
+		if (typeof single_player == "object") mp = single_player.scale("mp", mp); // Single player: MP usage
 		player.mp -= (mp * (100 - (player.mp_reduction || 0))) / 100.0;
 	}
 	player.mp = parseInt(max(0, player.mp));

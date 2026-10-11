@@ -49,3 +49,6 @@ __pycache__/
 # System
 .DS_Store
 Thumbs.db
+
+# Single player: your own settings (copied from settings.example.txt on first run)
+/settings.txt

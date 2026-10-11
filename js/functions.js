@@ -2470,6 +2470,15 @@ function owned_character_name(name) {
 	return owned && owned.name;
 }
 
+// Single player: opens a character (or the character select page) in its own game window
+function open_character_window(name) {
+	var url = name ? "/character/" + name + "/in/" + server_region + "/" + server_identifier + "/" : base_url;
+	if (is_tauri) return tauri_create_subwindow(name ? url : undefined);
+	var opened = window.open(url, "al_window_" + (name || randomStr(6)), "width=" + $(window).width() + ",height=" + $(window).height());
+	if (!opened) add_chat("", "Your browser blocked the new window. Allow pop-ups for this site and try again.", "gray");
+	return opened;
+}
+
 function start_character_runner(name, code_slot_or_name) {
 	var owned = owned_character(name);
 	if (!owned) return rejecting_promise({ reason: "character_not_found" });
@@ -3566,12 +3575,15 @@ function say(message, code) {
 			add_chat("", "/stop teleport");
 			add_chat("", "/disconnect");
 			add_chat("", "/disconnect CHARACTERNAME");
-			if (is_electron || is_tauri) add_chat("", "/new_window");
+			add_chat("", "/new_window");
+			add_chat("", "/window CHARACTERNAME");
 			// add_chat("","/savecode /loadcode /runcode");
 		} else if (is_electron && (command == "new_window" || command == "window" || command == "newwindow")) {
 			window.open(base_url, "", { width: $(window).width(), height: $(window).height() });
-		} else if (is_tauri && (command == "new_window" || command == "window" || command == "newwindow")) {
+		} else if (is_tauri && (command == "new_window" || command == "newwindow" || (command == "window" && !rest.trim()))) {
 			tauri_create_subwindow();
+		} else if (command == "new_window" || command == "newwindow" || command == "window") {
+			open_character_window(rest.trim().split(" ")[0]); // Single player: /window NAME
 		} else if (command == "start") {
 			var args = rest.split(" "),
 				name = args.shift(),

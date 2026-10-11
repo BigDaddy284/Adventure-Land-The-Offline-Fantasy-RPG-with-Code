@@ -16,6 +16,8 @@ var server_key = process.argv[process.argv.length - 1];
 var server_def = options.servers[server_key];
 if (!server_def) throw new Error("Unknown server: " + server_key);
 if (server_def.inactive) throw new Error("Inactive server: " + server_key);
+var single_player = require("./logic/single_player").load(); // Single player: settings.txt
+single_player.apply_options(options);
 var region = server_def.region;
 var server_name = server_def.name;
 var Dev = options.Dev;
@@ -330,6 +332,8 @@ var dailies = ["crabxx", "goobrawl", "abtesting"];
 shuffle(dailies);
 var nightlies = ["icegolem", "franky"];
 shuffle(nightlies);
+single_player.apply_events(events); // Single player: holiday events always on
+if (single_player.settings.drop_everything) mode.drop_all = 1;
 if (events.holidayseason) {
 	events.snowman = 60;
 }
@@ -550,6 +554,7 @@ async function init_game() {
 
 		if (S) {
 			init_server_data(S);
+			start_single_player_ponty();
 		}
 		if (G) {
 			restore_generated_maps();
@@ -2276,6 +2281,7 @@ function drop_one_thing(player, items, args) {
 
 function roll_monster_drops(player, monster, drop, share, encouragement, rules) {
 	rules = rules || {};
+	if (typeof single_player == "object") share = single_player.scale("drop", share); // Single player: drop rate
 	var is_pvp = encouragement ? encouragement.pvp : is_in_pvp(player, 1);
 	var hp_mult = monster.max_hp / 1000;
 	var global_mult = monster.mult,
@@ -2414,6 +2420,11 @@ function drop_something(player, monster, share) {
 	}
 	if (monster.difficulty === 0) {
 		drop.gold = drop.egold = 0;
+	}
+	if (typeof single_player == "object") {
+		// Single player: gold drops
+		drop.gold = round(single_player.scale("gold", drop.gold));
+		if (drop.egold) drop.egold = round(single_player.scale("gold", drop.egold));
 	}
 	drop.x = monster.x;
 	drop.y = monster.y;
@@ -4249,6 +4260,8 @@ function complete_attack(attacker, target, info) {
 			def.guardian_mp = oath_transfer.mp_restored;
 		}
 		attack = cave_damage(attacker, target, info, attack);
+		if (typeof single_player == "object" && target.is_player && attack > 0 && attacker != target)
+			attack = round(single_player.scale("hp_loss", attack)); // Single player: HP loss
 		target.hp = min(target.hp - attack, target.max_hp); // both for damage and heal
 		var net = original - max(0, target.hp);
 		if (
@@ -7031,6 +7044,7 @@ function init_socket_io(socket_server, server_index) {
 				if (gameplay == "test") {
 					result = 0;
 				}
+				if (typeof single_player == "object") probability = single_player.scale("compound", probability); // Single player: compound chance
 
 				server_log(result + " < " + probability + " grace: " + grace);
 
@@ -7426,6 +7440,7 @@ function init_socket_io(socket_server, server_index) {
 					} else {
 						probability = min(probability, min(oprobability + 0.24, oprobability * 2));
 					}
+					if (typeof single_player == "object") probability = single_player.scale("upgrade", probability); // Single player: upgrade chance
 					server_log(result + " < " + probability + " grace: " + grace);
 
 					if (data.calculate) {
@@ -8471,6 +8486,7 @@ function init_socket_io(socket_server, server_index) {
 			if (G.items[name].p2w) {
 				cost *= G.inflation;
 			}
+			if (typeof single_player == "object") cost = round(single_player.scale("shop", cost)); // Single player: shop price
 			if (player.gold < cost) {
 				return fail_response("buy_cost");
 			}
@@ -14723,6 +14739,7 @@ function update_instance(instance) {
 					}
 					if (name == "burned") {
 						var damage = ceil(ref.intensity / 5);
+						if (typeof single_player == "object") damage = round(single_player.scale("hp_loss", damage)); // Single player: HP loss
 						disappearing_text(player.socket, player, "-" + damage, { color: "red", xy: 1 });
 						player.hp = max(0, player.hp - damage);
 						xy_emit(player, "hit", {
@@ -15768,6 +15785,34 @@ function bless_loop() {
 }
 
 setInterval(bless_loop, 60 * 1000);
+
+// Single player: Ponty restocks with random high grade items every ponty_restock_minutes
+function single_player_ponty_restock() {
+	var stock = single_player.ponty_stock(G, calculate_item_grade);
+	if (!single_player.settings.ponty_keep_sold_items) {
+		S.sold.length = 0;
+		csold.length = 0;
+	}
+	stock.forEach(function (entry) {
+		var item = create_new_item(entry.name, 1);
+		item.level = entry.level;
+		item.rid = randomStr(5);
+		S.sold.push(item);
+		csold.push(cache_item(item, true));
+	});
+	while (S.sold.length > 400) {
+		S.sold.shift();
+		csold.shift();
+	}
+	server_log("Ponty restocked with " + stock.length + " items");
+}
+
+function start_single_player_ponty() {
+	var minutes = single_player.settings.ponty_restock_minutes;
+	if (!minutes) return;
+	single_player_ponty_restock();
+	setInterval(single_player_ponty_restock, minutes * 60 * 1000);
+}
 
 var server_conditions = false;
 function game_loop() {

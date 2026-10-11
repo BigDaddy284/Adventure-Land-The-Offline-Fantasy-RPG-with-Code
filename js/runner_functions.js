@@ -117,6 +117,15 @@ function start_character(name, code_slot_or_name) {
 	return parent.start_character_runner(name, code_slot_or_name);
 }
 
+/**
+ * Single player: opens one of your characters in its own full game window
+ * Example: open_character_window("MyMage")
+ * @param  {string} name - Name of your character
+ */
+function open_character_window(name) {
+	return parent.open_character_window(name);
+}
+
 function stop_character(name) {
 	parent.stop_character_runner(name);
 }

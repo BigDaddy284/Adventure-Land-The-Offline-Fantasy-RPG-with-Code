@@ -7372,7 +7372,7 @@ function load_character_list() {
 					"/" +
 					server_identifier +
 					"/' target='_blank'" +
-					(is_tauri ? " onclick='tauri_create_subwindow(this.href); return false;'" : "") +
+					(is_tauri ? " onclick='tauri_create_subwindow(this.href); return false;'" : " onclick='open_character_window(\"" + player.name + "\"); return false;'") +
 					" class='cancela' style='color: #4C9BC8'>" +
 					phrase.html("interface.load_character_list.deploy") +
 					"</a>"));

@@ -1,0 +1,96 @@
+# ============================================================
+#  Adventure Land - Single Player Settings
+# ============================================================
+#  Edit this file with Notepad, save it, then restart the game:
+#  close both black server windows and run singleplayer\start_game.bat.
+#
+#  Format:  name = value
+#  Lines starting with # are notes and are ignored.
+#  Percent values: 100 = normal game, 50 = half, 200 = double.
+#  Yes/no values: yes or no.
+# ============================================================
+
+
+# ---------- Shops ----------
+
+# Price of items bought from Gabriel (and every other NPC shop).
+# 100 = normal price, 50 = half price, 0 = free.
+shop_price_percent = 100
+
+
+# ---------- Ponty (second-hand shop in town) ----------
+
+# Ponty throws out his stock and restocks with random high-tier
+# items every this many minutes. 0 = off (normal Ponty).
+ponty_restock_minutes = 5
+
+# How many random items Ponty puts on sale each restock.
+ponty_item_count = 20
+
+# Lowest item grade Ponty will stock, judged at the level he
+# stocks it: 0 = anything, 1 = high grade (the game's "high"
+# tier), 2 = rare, 3 = legendary.
+ponty_min_grade = 1
+
+# Level range of the gear Ponty stocks.
+# Upgradeable gear (weapons, armor) is upgraded to a random level
+# between these two numbers.
+ponty_upgrade_level_min = 6
+ponty_upgrade_level_max = 9
+# Compoundable gear (rings, earrings, amulets, ...).
+ponty_compound_level_min = 2
+ponty_compound_level_max = 4
+
+# Keep the items you sell to Ponty in his stock between restocks?
+ponty_keep_sold_items = no
+
+
+# ---------- Upgrading and compounding ----------
+
+# Multiplies the success chance. 100 = normal, 200 = twice as
+# likely, 1000 = almost never fails. The chance shown in the
+# upgrade/compound window already includes this.
+upgrade_success_percent = 100
+compound_success_percent = 100
+
+
+# ---------- HP and MP ----------
+
+# MP spent on attacks and skills. 50 = everything costs half MP,
+# 0 = attacks and skills cost no MP.
+mp_usage_percent = 100
+
+# Damage your characters take. 50 = you lose half as much HP,
+# 0 = you never lose HP from attacks.
+hp_loss_percent = 100
+
+
+# ---------- Drops ----------
+
+# Item drop chance from every monster, everywhere.
+# 100 = normal, 200 = twice as many drops, 0 = nothing drops.
+drop_rate_percent = 100
+
+# Gold dropped by monsters. 100 = normal.
+gold_drop_percent = 100
+
+# Every monster drops every item on its drop list on every kill.
+# Very silly. Overrides drop_rate_percent.
+drop_everything = no
+
+
+# ---------- Holiday events ----------
+# yes = always on. They were designed to run one at a time, so if
+# something looks odd, turn some of them off.
+
+holiday_season = yes
+lunar_new_year = yes
+valentines = yes
+halloween = yes
+egg_hunt = yes
+
+
+# ---------- Multiple characters ----------
+
+# How many of your characters can be logged in at the same time.
+max_characters_online = 10
