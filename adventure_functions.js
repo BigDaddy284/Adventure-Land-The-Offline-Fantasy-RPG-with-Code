@@ -513,10 +513,13 @@ function set_docs_seo(domain, path_parts) {
 			: "");
 }
 
+var single_player_started = Date.now();
+
 async function get_domain(req, user) {
 	var domain = await get_domain_common(req);
 	Object.assign(domain, localization.domain_fields(req, user));
 	domain.v = domain.Version = Version;
+	if (options.single_player) domain.v = Version + "." + single_player_started; // Single player: new script versions after every restart, so an update never runs old cached scripts
 	domain.electron = false;
 	domain.tauri = false;
 	domain.local = {
