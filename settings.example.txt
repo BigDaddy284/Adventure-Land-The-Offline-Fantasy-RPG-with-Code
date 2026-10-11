@@ -1,5 +1,5 @@
 # ============================================================
-#  Adventure Land - Single Player Settings
+#  Fantasy Land - The Code (NOMMO) RPG - Settings
 # ============================================================
 #  Edit this file with Notepad, save it, then restart the game:
 #  run Stop.bat, then Play.bat.
@@ -81,6 +81,9 @@ drop_everything = no
 
 
 # ---------- Holiday events ----------
+# You can also switch these while playing: the candy cane button
+# above the skill bar opens the Holiday Events menu, and your
+# choices are saved here.
 # yes = always on. They were designed to run one at a time, so if
 # something looks odd, turn some of them off.
 

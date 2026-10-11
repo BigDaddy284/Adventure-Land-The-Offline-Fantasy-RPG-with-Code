@@ -1,5 +1,6 @@
 const test = require("node:test");
 const assert = require("node:assert/strict");
+const os = require("node:os");
 const fs = require("node:fs");
 const path = require("node:path");
 const single_player = require("../logic/single_player");
@@ -35,7 +36,15 @@ test("events and character limits are switched on from settings", () => {
 	const sp = single_player.create({ holiday_season: true, halloween: true, egg_hunt: true, max_characters_online: 8 });
 	const events = { holidayseason: false, halloween: false, valentines: false, egghunt: 0 };
 	sp.apply_events(events);
-	assert.deepEqual(events, { holidayseason: true, halloween: true, valentines: false, egghunt: 60 });
+	assert.deepEqual(events, {
+		holidayseason: true,
+		snowman: 60,
+		lunarnewyear: false,
+		halloween: true,
+		valentines: false,
+		pinkgoo: 0,
+		egghunt: 60,
+	});
 	const options = { character_limit: 3, ip_limit: 3 };
 	sp.apply_options(options);
 	assert.deepEqual(options, { character_limit: 8, ip_limit: 8 });
@@ -132,4 +141,27 @@ test("Merrit's visit timer comes from the settings and his settle wait is remove
 	single_player.create({ merrit_visit_minutes: 5 }).apply_game_data(G);
 	assert.equal(G.npcs.citizen22.market.hour_ms, 5 * 60 * 1000);
 	assert.equal(G.npcs.citizen22.market.settle_ms, 0);
+});
+
+test("holiday events toggle while running, and the choice is written into settings.txt", () => {
+	const sp = single_player.create({ halloween: true });
+	const events = {};
+	sp.apply_events(events);
+	assert.equal(sp.toggle_event(events, "nonsense", true), false);
+	assert.equal(events.valentines, false);
+	sp.toggle_event(events, "valentines", true);
+	assert.equal(events.valentines, true);
+	assert.equal(events.pinkgoo, 60);
+	assert.equal(sp.settings.valentines, true);
+
+	const file = path.join(os.tmpdir(), "single_player_settings_" + process.pid + ".txt");
+	fs.writeFileSync(file, "# notes\r\nhalloween = yes\r\negg_hunt = yes   # trailing note\r\n");
+	single_player.save_setting(file, "halloween", "no");
+	single_player.save_setting(file, "egg_hunt", "no");
+	single_player.save_setting(file, "valentines", "yes");
+	assert.equal(
+		fs.readFileSync(file, "utf8"),
+		"# notes\r\nhalloween = no\r\negg_hunt = no # trailing note\r\nvalentines = yes\r\n",
+	);
+	fs.unlinkSync(file);
 });

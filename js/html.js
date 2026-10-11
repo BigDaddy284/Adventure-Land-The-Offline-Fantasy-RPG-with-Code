@@ -6400,9 +6400,45 @@ function render_skillbar(empty) {
 		i++;
 	});
 	html += "</div>";
+	if (typeof single_player_mode != "undefined" && single_player_mode) html = single_player_events_button() + html;
 	$("#skillbar").html(html).css("display", "inline-block");
 	restart_skill_tints();
 	// $("#topmid").show().html(html);
+}
+
+// Single player: holiday events menu, opened from the button above the skill bar
+var single_player_events = [
+	["holidayseason", "Holiday Season"],
+	["lunarnewyear", "Lunar New Year"],
+	["valentines", "Valentine's"],
+	["halloween", "Halloween"],
+	["egghunt", "Egg Hunt"],
+];
+
+function single_player_events_button() {
+	var html = "<div style='display: block; margin: 0 0 6px 5px'><div class='enableclicks' title='Holiday events' style='background-color: black; border: 5px solid gray; padding: 2px; display: inline-block'>";
+	html += item_container({ skin: G.items.candycane.skin, draggable: false, onclick: "open_single_player_events()" });
+	return html + "</div></div>";
+}
+
+function open_single_player_events() {
+	var html = "<div style='font-size: 40px; text-align: center; margin-bottom: 12px'>Holiday Events</div>";
+	single_player_events.forEach(function (event) {
+		var on = !!S[event[0]];
+		html += "<div style='display: flex; justify-content: space-between; align-items: center; font-size: 32px; margin: 8px 12px'><span>" + event[1] + "</span>";
+		html += "<div class='gamebutton' style='width: 70px; text-align: center; color: " + (on ? "#5DE376" : "gray") + "' onclick='toggle_single_player_event(\"" + event[0] + "\"," + !on + ")'>" + (on ? "ON" : "OFF") + "</div></div>";
+	});
+	html += "<div style='font-size: 22px; color: gray; margin: 12px'>Changes apply straight away and are saved in settings.txt. Event monsters already out stay until they're defeated.</div>";
+	show_modal(html, { wwidth: 460 });
+}
+
+function toggle_single_player_event(name, on) {
+	socket.emit("single_player_event", { name: name, on: on });
+	if (on) S[name] = true;
+	else delete S[name];
+	hide_modal();
+	open_single_player_events();
+	render_server();
 }
 
 function skill_click(slot) {

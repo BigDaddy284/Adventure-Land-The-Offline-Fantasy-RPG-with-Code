@@ -1,9 +1,9 @@
 @echo off
-rem Venture Land (single player Adventure Land): starts the database, website and game server in order, then opens the game.
+rem Fantasy Land (single player Adventure Land): starts the database, website and game server in order, then opens the game.
 rem The first run also installs everything, which takes a few minutes.
 setlocal
 cd /d "%~dp0"
-title Venture Land - Launcher
+title Fantasy Land - Launcher
 
 where node >nul 2>nul || (echo Node.js is missing. Install the LTS version from https://nodejs.org and run Play.bat again. & pause & exit /b 1)
 
@@ -45,7 +45,7 @@ exit /b 1
 :start_database
 if not exist singleplayer\data\ mkdir singleplayer\data
 echo Starting the database...
-start "Venture Land - Database" /min "%MONGOD%" --dbpath "%~dp0singleplayer\data" --bind_ip 127.0.0.1 --port 27018 --replSet rs0
+start "Fantasy Land - Database" /min "%MONGOD%" --dbpath "%~dp0singleplayer\data" --bind_ip 127.0.0.1 --port 27018 --replSet rs0
 :database_running
 node singleplayer\wait_port.js 27018 60 database || (pause & exit /b 1)
 node singleplayer\init_db.js || (pause & exit /b 1)
@@ -59,18 +59,18 @@ if not errorlevel 1 (
 
 rem ---------- 2. Website ----------
 node singleplayer\wait_port.js 8090 1 website >nul 2>nul
-if errorlevel 1 start "Venture Land - Website" /min cmd /k node main.js
+if errorlevel 1 start "Fantasy Land - Website" /min cmd /k node main.js
 node singleplayer\wait_port.js 8090 120 website || (pause & exit /b 1)
 
 rem ---------- 3. Game server ----------
 node singleplayer\wait_port.js 7192 1 "game server" >nul 2>nul
-if errorlevel 1 start "Venture Land - Game Server" /min cmd /k "cd node && node server.js local"
+if errorlevel 1 start "Fantasy Land - Game Server" /min cmd /k "cd node && node server.js local"
 node singleplayer\wait_port.js 7192 180 "game server" || (pause & exit /b 1)
 
 rem ---------- 4. Play ----------
 rem Opens the game in its own resizable window (Edge app mode with its own profile, so Stop.bat can close it).
 echo Opening the game...
-start "" msedge --app=http://127.0.0.1:8090 --user-data-dir="%LOCALAPPDATA%\AdventureLandSinglePlayer" --no-first-run --window-size=1280,800 2>nul || start "" http://127.0.0.1:8090
+start "" msedge --app=http://127.0.0.1:8090 --user-data-dir="%LOCALAPPDATA%\FantasyLandSinglePlayer" --no-first-run --window-size=1280,800 2>nul || start "" http://127.0.0.1:8090
 echo.
 echo Everything is running. Close the game window when you're done, then run Stop.bat.
 timeout /t 8 >nul

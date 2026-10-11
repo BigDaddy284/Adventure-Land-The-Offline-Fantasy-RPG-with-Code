@@ -109,6 +109,31 @@ function load() {
 	return settings;
 }
 
+// Holiday events (the game's names) and their settings.txt names
+const EVENT_SETTINGS = {
+	holidayseason: "holiday_season",
+	lunarnewyear: "lunar_new_year",
+	valentines: "valentines",
+	halloween: "halloween",
+	egghunt: "egg_hunt",
+};
+
+function set_event(events, name, on) {
+	events[name] = name == "egghunt" ? (on ? 60 : 0) : !!on; // Egg hunt: minutes between bunnies
+	if (name == "holidayseason") events.snowman = on ? 60 : 20 * 60; // Snowman every hour in season, the game's normal 20 hours otherwise
+	if (name == "valentines") events.pinkgoo = on ? 60 : 0;
+}
+
+// Changes one value in settings.txt, keeping the notes and the rest of the file as they are
+function save_setting(file, key, value) {
+	const text = fs.readFileSync(file, "utf8");
+	const pattern = new RegExp("^([ \\t]*" + key + "[ \\t]*=)([^#\\r\\n]*)", "m");
+	const updated = pattern.test(text)
+		? text.replace(pattern, (line, name, old) => name + " " + value + (/\s$/.test(old) && old.trim() ? " " : ""))
+		: text.replace(/\s*$/, "") + "\r\n" + key + " = " + value + "\r\n";
+	fs.writeFileSync(file, updated);
+}
+
 const SCALES = {
 	upgrade: "upgrade_success_percent",
 	compound: "compound_success_percent",
@@ -128,11 +153,15 @@ function create(settings) {
 			return kind == "upgrade" || kind == "compound" ? Math.min(1, result) : result;
 		},
 		apply_events(events) {
-			if (settings.holiday_season) events.holidayseason = true;
-			if (settings.lunar_new_year) events.lunarnewyear = true;
-			if (settings.valentines) events.valentines = true;
-			if (settings.halloween) events.halloween = true;
-			if (settings.egg_hunt && !events.egghunt) events.egghunt = 60;
+			Object.keys(EVENT_SETTINGS).forEach((name) => set_event(events, name, settings[EVENT_SETTINGS[name]]));
+		},
+		// Turns a holiday event on or off while the game runs, and saves the choice to settings.txt
+		toggle_event(events, name, on) {
+			if (!Object.prototype.hasOwnProperty.call(EVENT_SETTINGS, name)) return false;
+			set_event(events, name, on);
+			settings[EVENT_SETTINGS[name]] = !!on;
+			if (fs.existsSync(SETTINGS_FILE)) save_setting(SETTINGS_FILE, EVENT_SETTINGS[name], on ? "yes" : "no");
+			return true;
 		},
 		// Changes to the game data (G) the server and website build from the design files
 		apply_game_data(G) {
@@ -183,6 +212,8 @@ module.exports = {
 	DEFAULTS,
 	parse,
 	missing_settings,
+	save_setting,
+	EVENT_SETTINGS,
 	create: (values) => create(Object.assign({}, DEFAULTS, values)),
 	load: () => create(load()),
 };

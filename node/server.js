@@ -9008,6 +9008,15 @@ function init_socket_io(socket_server, server_index) {
 			resend(buyer, "reopen+u+cid");
 			success_response({});
 		});
+		// Single player: the holiday events menu turns events on and off while the game runs
+		socket.on("single_player_event", function (data) {
+			if (typeof single_player != "object" || !players[socket.id] || !data) return;
+			if (!single_player.toggle_event(events, data.name, !!data.on)) return;
+			if (data.on) E[data.name] = true;
+			else delete E[data.name];
+			broadcast_e();
+			reload_server(false, "events"); // rebuilds the drop tables, which include each event's drops
+		});
 		socket.on("trade_buy", function (data) {
 			var player = players[socket.id];
 			var seller = players[id_to_id[data.id]];
@@ -15824,6 +15833,9 @@ function single_player_merrit_buyout(player) {
 	});
 	if (!total) return;
 	player.gold += total;
+	// Merchant XP as if the sale went through a normal stall purchase, which earns XP from the sales tax
+	if (player.type == "merchant")
+		merchant_xp_logic(player, { name: "Merrit", owner: "merrit" }, total, total - round(total * (1 - (player.tax || 0))));
 	player.socket.emit(
 		"game_log",
 		localization.message("server.game_log.received_gold", { amount: String(to_pretty_num(total)) }),
