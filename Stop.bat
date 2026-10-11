@@ -2,6 +2,9 @@
 rem Adventure Land single player: closes the game window, game server, website and database started by Play.bat.
 rem Game window: only Edge processes using the game's own profile folder, so your normal Edge windows stay open.
 powershell -NoProfile -Command "Get-CimInstance Win32_Process -Filter \"Name='msedge.exe'\" | Where-Object { $_.CommandLine -like '*AdventureLandSinglePlayer*' } | ForEach-Object { Stop-Process -Id $_.ProcessId -Force -ErrorAction SilentlyContinue }" >nul 2>nul
+rem Give the game server a moment to save the characters that just disconnected
+echo Saving characters...
+timeout /t 8 /nobreak >nul
 taskkill /fi "WINDOWTITLE eq Adventure Land - Game Server*" /t /f >nul 2>nul
 taskkill /fi "WINDOWTITLE eq Adventure Land - Website*" /t /f >nul 2>nul
 rem The database gets a clean shutdown so it can save properly
