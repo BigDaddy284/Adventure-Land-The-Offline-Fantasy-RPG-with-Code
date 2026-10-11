@@ -1,0 +1,48 @@
+{# Single player: the title screen shown when the game opens; Login goes on to character select #}
+<div id="sp-login" onclick="if(event.target.id=='sp-login-button') sp_login()">
+	<div class="sp-login-art">
+		<div id="sp-login-button" class="sp-login-button" role="button" tabindex="0">Login</div>
+	</div>
+	<div class="sp-login-credit">A derivative of Adventure Land, with thanks to Kaan Soral</div>
+</div>
+<style>
+	#sp-login {
+		position: fixed; inset: 0; z-index: 100000; overflow: hidden;
+		background: #000 url(/images/singleplayer/login-title.png) center / cover no-repeat;
+		image-rendering: pixelated; font-family: var(--pixel-font, pixel); transition: opacity 0.4s;
+	}
+	/* Same size and place as the picture (it covers the window), so the button stays under the title box */
+	#sp-login .sp-login-art {
+		position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
+		width: max(100vw, 100vh * 1262 / 896); height: max(100vh, 100vw * 896 / 1262); container-type: size;
+	}
+	#sp-login .sp-login-button {
+		position: absolute; left: 36.93%; top: 69.64%; width: 26.15%; height: 13.39%; box-sizing: border-box;
+		display: flex; align-items: center; justify-content: center;
+		background: #000; border: 0.475cqw solid #8d8d8d; color: #fff; font-size: 8.7cqw; line-height: 1; cursor: pointer; outline: none;
+	}
+	#sp-login .sp-login-button:hover, #sp-login .sp-login-button:focus { border-color: #c8c8c8; color: #f3d77a; }
+	#sp-login .sp-login-credit {
+		position: absolute; right: 14px; bottom: 10px; padding: 4px 10px;
+		background: rgba(0, 0, 0, 0.75); border: 3px solid #8d8d8d; color: #e6e6e6; font-size: 24px; line-height: 24px;
+	}
+</style>
+<script>
+	// Once per game window: extra character windows and coming back to character select skip it
+	(function () {
+		var seen = false;
+		try { seen = !!sessionStorage.getItem("sp_login_seen"); } catch (e) {}
+		if (seen || window.opener || /^al_window_/.test(window.name)) document.getElementById("sp-login").style.display = "none";
+	})();
+	function sp_login() {
+		try { sessionStorage.setItem("sp_login_seen", "1"); } catch (e) {}
+		var screen = document.getElementById("sp-login");
+		if (!screen || screen.style.display == "none") return;
+		screen.style.opacity = 0;
+		setTimeout(function () { screen.style.display = "none"; }, 400);
+	}
+	document.addEventListener("keydown", function (event) {
+		var screen = document.getElementById("sp-login");
+		if (screen && screen.style.display != "none" && (event.key == "Enter" || event.key == " ")) { event.preventDefault(); sp_login(); }
+	});
+</script>

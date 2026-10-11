@@ -1,4 +1,5 @@
 <div id="pagewrapper">
+	{% if domain.single_player %}{% include "htmls/contents/singleplayer_login.html" %}{% endif %}
 	<script>
 		var chartype = "",
 			gendertype = "",

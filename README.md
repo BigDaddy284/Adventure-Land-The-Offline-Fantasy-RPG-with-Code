@@ -19,7 +19,7 @@ Git isn't needed, because the shared engine already comes in the game folder.
 1. Extract the zip somewhere, for example `C:\FantasyLand`.
 2. Double-click **`Fantasy Land.exe`**.
 
-A small window shows the progress while it starts the database, the website and the game server, with no console windows. Then the game opens in its own window. The very first start also installs the game's packages and loads the maps, so it takes a few minutes. After that it's quick.
+A small window shows the progress while it starts the database, the website and the game server, with no console windows. Then the game opens in its own window. It opens on the title screen: press Login (or Enter) to go to character select. The very first start also installs the game's packages and loads the maps, so it takes a few minutes. After that it's quick.
 
 You're logged in automatically. Everything stays on your PC, and only your PC can connect to the game.
 
@@ -183,7 +183,8 @@ Fantasy Land started as a copy of the MongoDB port of [Adventure Land](https://g
 - **New starting looks:** 10 in all, 5 male and 5 female, each with a second skin tone. They show as extra look buttons (E to H) on the character creation screen when a class has them.
   - Male: Ironclad Veteran (warrior), Ashen Hood (rogue), Ember Sage (mage), Sunforged Templar (paladin) and Trailwise Trader (merchant).
   - Female: Frost Shieldmaiden (warrior), Greenwood Warden (ranger), Silver Oracle (priest), Tidecaller Witch (mage) and Crimson Knife (rogue).
-- **Fantasy Land.exe:** starts the game with no console windows. When you close the last game window, it saves and stops everything, then closes itself.
+- **Title screen:** the game now opens on a Fantasy Land title screen with a Login button that goes on to character select. A note in the corner reads "A derivative of Adventure Land, with thanks to Kaan Soral".
+- **Fantasy Land.exe:** has the title screen picture as its icon. It starts the game with no console windows. When you close the last game window, it saves and stops everything, then closes itself.
 - Rewrote this README.
 
 ## License

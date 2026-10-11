@@ -4,6 +4,7 @@
 // and when the last game window closes, runs Stop.bat so the characters save and everything shuts down cleanly.
 //
 // Build (from this folder): GOOS=windows GOARCH=amd64 go build -ldflags "-H windowsgui -s -w" -o "../../Fantasy Land.exe"
+// The icon and file details come from rsrc_windows_amd64.syso, made from winres/ with: go-winres make --arch amd64
 package main
 
 import (
@@ -42,6 +43,7 @@ var (
 	pSendMessageW     = user32.NewProc("SendMessageW")
 	pMessageBoxW      = user32.NewProc("MessageBoxW")
 	pLoadCursorW      = user32.NewProc("LoadCursorW")
+	pLoadIconW        = user32.NewProc("LoadIconW")
 	pGetSystemMetrics = user32.NewProc("GetSystemMetrics")
 	pSetForeground    = user32.NewProc("SetForegroundWindow")
 	pDestroyWindow    = user32.NewProc("DestroyWindow")
@@ -133,7 +135,8 @@ func wndProc(hwnd, message, wparam, lparam uintptr) uintptr {
 func createWindow() {
 	instance, _, _ := pGetModuleHandleW.Call(0)
 	cursor, _, _ := pLoadCursorW.Call(0, 32512)
-	class := wndClassEx{WndProc: syscall.NewCallback(wndProc), Instance: instance, Cursor: cursor, Background: 16, ClassName: utf16("FantasyLandLauncher")}
+	icon, _, _ := pLoadIconW.Call(instance, 1) // the exe's own icon
+	class := wndClassEx{WndProc: syscall.NewCallback(wndProc), Instance: instance, Icon: icon, IconSm: icon, Cursor: cursor, Background: 16, ClassName: utf16("FantasyLandLauncher")}
 	class.Size = uint32(unsafe.Sizeof(class))
 	pRegisterClassExW.Call(uintptr(unsafe.Pointer(&class)))
 	const width, height = 460, 170
