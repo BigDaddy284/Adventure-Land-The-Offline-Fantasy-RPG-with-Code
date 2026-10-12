@@ -325,7 +325,7 @@ test("single player: Shells purchases, bank packs and blessings are paid in seas
 	const sp = require("../logic/single_player");
 	const pack = Object.keys(G.bank_packs).find((name) => G.bank_packs[name][2] == 600);
 	for (const [event, data, need, done] of [
-		["buy_with_cash", { name: "cosmo0", quantity: 1 }, 2409, (f) => f.items.some((item) => item.name == "cosmo0")],
+		["buy_with_cash", { name: "cosmo0", quantity: 1 }, 2410, (f) => f.items.some((item) => item.name == "cosmo0")],
 		["bless_server", {}, 10000, (f) => f.context.S.blessed_minutes > 0],
 		["bank", { operation: "unlock", shells: 1, pack }, 5000, (f) => Array.isArray(f.player.user[pack])],
 	]) {

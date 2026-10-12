@@ -661,7 +661,7 @@ async function rename_character_api(args) {
 	}
 	// Single player: paid in seashells from the renamed character's bag
 	var sp_rules = typeof options == "object" && options && options.single_player && require("./node/logic/single_player");
-	var seashells = sp_rules ? sp_rules.seashell_price(price) : 0;
+	var seashells = sp_rules ? sp_rules.rename_seashells(nname.length, price) : 0;
 	if (sp_rules) {
 		if (sp_rules.count_items(gf(character, "items", []), "seashell") < seashells) return { failed: true, reason: "not_enough_seashells" };
 		price = 0;
@@ -725,7 +725,7 @@ async function quote_name_api(args) {
 	}
 	if (typeof options == "object" && options && options.single_player)
 		// Single player: the price is in seashells, taken from that character's bag
-		args.res.infs.push({ type: "eval", code: "show_alert(" + JSON.stringify(phrase("server.api.sp_rename_quote", { amount: to_pretty_num(require("./node/logic/single_player").seashell_price(price)) })) + ")" });
+		args.res.infs.push({ type: "eval", code: "show_alert(" + JSON.stringify(phrase("server.api.sp_rename_quote", { amount: to_pretty_num(require("./node/logic/single_player").rename_seashells(nname.length, price)) })) + ")" });
 	else args.res.infs.push({ type: "eval", code: "show_alert('Costs " + to_pretty_num(price) + " shells')" });
 	return { success: true };
 }

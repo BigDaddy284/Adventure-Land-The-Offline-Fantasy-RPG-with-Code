@@ -8269,7 +8269,7 @@ function init_socket_io(socket_server, server_index) {
 			var seashells = 0;
 			if (typeof single_player == "object") {
 				// Single player: paid in seashells from the bag
-				seashells = single_player.seashell_price(cost);
+				seashells = cost ? single_player.item_seashell_price(name, def.cash, quantity) : 0;
 				if (!pay_seashells(player, seashells)) {
 					seashells_short(socket, seashells);
 					return fail_response("seashells_not_enough");

@@ -298,7 +298,9 @@ test("Shells are replaced by seashells: prices, bag payments and drop tables", (
 	assert.deepEqual(drops["5bucks"], [[0.02, "5bucks", 2], [1, "seashell", 6667]]);
 	const G = { items: { cosmo0: { cash: 289 }, hpot0: { g: 20 } }, drops: { x: [[1, "shells", 75]] }, classes: {} };
 	sp.create({}).apply_game_data(G);
-	assert.equal(G.items.cosmo0.seashells, 2409);
+	assert.equal(G.items.cosmo0.seashells, 2410); // set by hand
+	assert.equal(sp.item_seashell_price("cosmo2", 129, 1), 1075);
+	assert.deepEqual([1, 2, 3, 4, 5, 12].map((length) => sp.rename_seashells(length, 640)), [350000, 150000, 50000, 10000, 5334, 5334]);
 	assert.equal(G.items.hpot0.seashells, undefined);
 	assert.deepEqual(G.drops.x, [[1, "seashell", 625]]);
 });

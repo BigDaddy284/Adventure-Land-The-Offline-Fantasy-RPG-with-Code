@@ -361,6 +361,20 @@ function seashell_price(shells) {
 	return shells > 0 ? Math.ceil((shells * 625) / 75) : 0;
 }
 
+// Prices set by hand instead of the exchange rate
+const SEASHELL_ITEM_PRICES = { cosmo0: 2410 };
+function item_seashell_price(name, cash, quantity) {
+	quantity = quantity || 1;
+	return SEASHELL_ITEM_PRICES[name] ? SEASHELL_ITEM_PRICES[name] * quantity : seashell_price(cash * quantity);
+}
+
+// Short names are priced by hand: the exchange rate would make a 1-letter name cost more seashells than a bag
+// can hold (42 slots of 9,999). Names of 5 letters or more use the exchange rate
+const RENAME_SEASHELLS = { 1: 350000, 2: 150000, 3: 50000, 4: 10000 };
+function rename_seashells(length, shells) {
+	return RENAME_SEASHELLS[length] || seashell_price(shells);
+}
+
 // How many of an item a list of inventory slots holds
 function count_items(items, name) {
 	let have = 0;
@@ -539,6 +553,7 @@ function create(settings) {
 		// Shells to seashells, for the game server
 		BLESSING_SEASHELLS,
 		seashell_price,
+		item_seashell_price,
 		strip_shell_drops,
 		// Applies one setting to a value; success chances are capped at 100%
 		scale(kind, value) {
@@ -591,7 +606,7 @@ function create(settings) {
 			add_looks(G.classes);
 			if (G.drops) strip_shell_drops(G.drops);
 			// Items bought with Shells show their seashell price
-			for (const def of Object.values(G.items || {})) if (def && def.cash) def.seashells = seashell_price(def.cash);
+			for (const [name, def] of Object.entries(G.items || {})) if (def && def.cash) def.seashells = item_seashell_price(name, def.cash, 1);
 			return G;
 		},
 		apply_options(options) {
@@ -676,6 +691,8 @@ module.exports = {
 	add_looks,
 	BLESSING_SEASHELLS,
 	seashell_price,
+	item_seashell_price,
+	rename_seashells,
 	count_items,
 	take_items,
 	strip_shell_drops,
