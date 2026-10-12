@@ -267,13 +267,14 @@ Fantasy Land started as a copy of the MongoDB port of [Adventure Land](https://g
 ### v19
 - Every character slot is free, up to the game's limit of 18 characters. Creating more characters no longer asks for 200 shells or says your account has no free slots.
 - Up to 2 merchants can be online at once (part of Characters online). A 3rd merchant is turned away with a message that says why.
-- Opening another game window no longer drops the windows already open. Windows opened from the game share one browser process, so while a new window loads, the others can stop answering the game server for a few seconds, and the server was cutting them off after 12. It now waits up to 60 seconds. The server also no longer closes character select and loading windows when more than 5 are open at once.
+- The game server waits up to 60 seconds, instead of 12, before giving up on a window that's busy (for example while another window loads), and no longer closes character select and loading windows when more than 5 are open at once.
 - New starting looks E to H for every class, as a male and a female in light and dark skin: barbarian warriors, paladins in blue plate, a pope and a nun for priests, a wizard and a witch for mages, ninja rogues, Robin Hood rangers in green caps, and banker merchants. The game's own looks stay on A to D. The looks added in earlier versions are removed; characters already made with them keep their look.
 - Game windows keep running at full speed when they're in the background or minimised. Edge normally slows hidden windows down, which slowed your characters' CODE.
 - Each game window's title is the character's name, then the game's name, for example "Chillyinit: Fantasy Land - The Code (NOMMO) RPG". Character select still shows just the game's name.
 
 ### v20
-- Each game window opened from the game (Deploy, `/window` or `open_character_window`) now runs in its own browser process. Before, they all shared one, so opening a 5th character could freeze or crash that process and drop every window at once.
+- **Fixed:** going over 3 fighters or 1 merchant online disconnected every fighter (or every merchant) a few seconds later. A leftover rule from the online game's website checked every few seconds for 3 characters and 1 merchant per player, and kicked all of them. It's off in single player, so Characters online and the 2 merchant limit are the only limits.
+- Each game window opened from the game (Deploy, `/window` or `open_character_window`) now runs in its own browser process, so a window that's loading doesn't hold up the others.
 
 ## License
 

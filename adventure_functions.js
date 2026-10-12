@@ -1693,6 +1693,9 @@ function post_get_init_character(character) {
 async function enforce_limitations() {
 	// Port from Python - multi-accounting detection
 	// Runs from check_servers cron
+	// Single player: the game server enforces the Mod Menu's Characters online instead. This online-game rule
+	// (3 characters and 1 merchant) disconnected every character of a kind once one too many was online.
+	if (typeof options == "object" && options && options.single_player) return;
 	try {
 		var servers = await get_servers();
 		var players = [],
