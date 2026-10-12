@@ -76,8 +76,9 @@ show_json(character.s);</div>
 
 <div class="code">{
 	<span data-field="gold">gold</span>: 1200000000,
-	<span data-field="cash">cash</span>: 200, // Shells
-	<span data-field="isize">isize</span>: 42,
+{% if domain.single_player %}	<span data-field="cash">cash</span>: 0, // Shells, not used in Fantasy Land
+{% else %}	<span data-field="cash">cash</span>: 200, // Shells
+{% endif %}	<span data-field="isize">isize</span>: 42,
 	<span data-field="esize">esize</span>: 40,
 	<span data-field="items">items</span>: [
 		{ name: "gloves", level: 0 },

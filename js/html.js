@@ -1857,7 +1857,8 @@ function render_inventory(reset) {
 		phrase.html("interface.inventory.close") +
 		"</span></button>";
 	if (is_comm) html += "<div style='padding: 4px'>" + comm_chat_escape(character.name) + "</div>";
-	if (c_enabled) {
+	if (c_enabled && !window.single_player_mode) {
+		// Single player: no Shells
 		if (is_comm) {
 			html += "<div style='padding: 4px; display: inline-block;'>"; // '
 			html +=
@@ -4736,11 +4737,13 @@ function render_others() {
 		" " +
 		phrase.html("interface.others.using_boosters") +
 		"</div>";
-	html +=
-		"<div class='gamebutton' style='display: block; margin-bottom: 4px' onclick='pcs(); show_modal($(\"#shellsinfo\").html(),{url:\"/docs/ref/shells\"})'><span style='color:#47BA4E'>[$]</span>" +
-		" " +
-		phrase.html("interface.others.about_shells") +
-		"</div>";
+	if (!window.single_player_mode)
+		// Single player: no Shells
+		html +=
+			"<div class='gamebutton' style='display: block; margin-bottom: 4px' onclick='pcs(); show_modal($(\"#shellsinfo\").html(),{url:\"/docs/ref/shells\"})'><span style='color:#47BA4E'>[$]</span>" +
+			" " +
+			phrase.html("interface.others.about_shells") +
+			"</div>";
 	html += "</div>";
 	html += "</div>";
 	show_modal(html, { wrap: false, hideinbackground: true, url: "/docs/ref" });
@@ -5397,9 +5400,12 @@ function render_item(selector, args) {
 			var f = "buy_with_gold";
 			if (item.days) html += "<div style='color: #C3C3C3'>" + phrase.html("interface.item.lasts_30_days") + "</div>";
 
-			if (cash) ((html += "<div style='color: " + colors.cash + "'>" + phrase.html("interface.item.shells", { cash: to_pretty_num(item.cash) }) + "</div>"), (f = "buy_with_shells"));
+			if (cash && window.single_player_mode) ((html += "<div style='color: #E0C48C'>" + phrase.html("interface.item.sp_seashells", { value: to_pretty_num(item.seashells || 0) }) + "</div>"), (f = "buy_with_shells")); // Single player: paid in seashells
+			else if (cash) ((html += "<div style='color: " + colors.cash + "'>" + phrase.html("interface.item.shells", { cash: to_pretty_num(item.cash) }) + "</div>"), (f = "buy_with_shells"));
 			else html += "<div style='color: gold'>" + phrase.html("interface.item.gold_2", { value: to_pretty_num(value) }) + "</div>";
-			if (cash && character && item.cash >= character.cash) {
+			if (cash && character && window.single_player_mode && (item.seashells || 0) > quantity("seashell")) {
+				html += "<div style='color: #C3C3C3'>" + phrase.html("interface.item.sp_seashells_short") + "</div>";
+			} else if (cash && character && !window.single_player_mode && item.cash >= character.cash) {
 				if (is_electron || is_tauri) {
 					html += "<div style='border-top: solid 2px gray; margin-bottom: 2px; margin-top: 3px; margin-left: -1px; margin-right: -1px'></div>";
 					html += "<div style='color: #C3C3C3'>" + phrase.html("interface.item.you_can_find_shells_from_gems_monsters_in_future_from") + "</div>";
@@ -7104,7 +7110,20 @@ function render_interaction(type, sub_type, args) {
 		var pack = args.pack,
 			gold = bank_packs[pack][1],
 			shells = bank_packs[pack][2];
-		if (is_electron || is_tauri) {
+		if (window.single_player_mode) {
+			// Single player: gold, or seashells in place of Shells
+			html += phrase.html("interface.interaction.sp_bank_account", { value: to_pretty_num(gold), value2: to_pretty_num(Math.ceil((shells * 625) / 75)) });
+			html +=
+				"<span style='float: right; margin-top: 5px'><div class='slimbutton' onclick='socket.emit(\"bank\",{operation:\"unlock\",gold:1,pack:\"" +
+				pack +
+				"\"}); push_deferred(\"bank\");' style='margin-right: 5px;'>" +
+				phrase.html("interface.interaction.use_gold") +
+				'</div><div class=\'slimbutton\' onclick=\'socket.emit("bank",{operation:"unlock",shells:1,pack:"' +
+				pack +
+				'"}); push_deferred("bank");\'>' +
+				phrase.html("interface.interaction.sp_use_seashells") +
+				"</div></span>";
+		} else if (is_electron || is_tauri) {
 			html += phrase.html("interface.interaction.hello_you_don_t_seem_to_have_an_account_open", { value: to_pretty_num(gold) });
 			html +=
 				"<span style='float: right; margin-top: 5px'><div class='slimbutton' onclick='socket.emit(\"bank\",{operation:\"unlock\",gold:1,pack:\"" +

@@ -396,7 +396,9 @@
 	"server.game_error.poker_hand_active": "A pókerleosztásod még tart egy másik szerveren. Várd meg a végét, vagy csatlakozz újra ahhoz a szerverhez.",
 	"server.tracktrix.mail_subject": "A Tracktrixed",
 	"server.tracktrix.mail_body": "Egy kis segítség a következő vadászathoz. Tartsd magadnál ezt a Tracktrixet!",
-  "server.game_log.offered_for": "Cserére kínálva: {item}, kért: {want}",
-  "server.game_log.offered_for_or_higher": "Cserére kínálva: {item}, kért: {want} vagy magasabb",
-  "server.game_log.traded_for": "Csere: {item}, partner: {player}, kapott: {received}"
+	"server.game_log.offered_for": "Cserére kínálva: {item}, kért: {want}",
+	"server.game_log.offered_for_or_higher": "Cserére kínálva: {item}, kért: {want} vagy magasabb",
+	"server.game_log.traded_for": "Csere: {item}, partner: {player}, kapott: {received}",
+	"server.api.sp_spent_seashells": "{amount} tengeri kagyló elköltve {name} táskájából",
+	"server.api.sp_rename_quote": "{amount} tengeri kagylóba kerül a karakter táskájából"
 }

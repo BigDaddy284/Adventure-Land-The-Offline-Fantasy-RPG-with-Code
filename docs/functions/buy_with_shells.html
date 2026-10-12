@@ -1,5 +1,5 @@
 <p><span class='dlabel'>buy_with_shells(name, quantity, timeout_ms)</span></p>
-<p>{{ phrase("docs.functions.buy_with_shells.buys-an-item-with-shells-and-waits-for") }}</p>
+{% if domain.single_player %}<p>{{ phrase("docs.sp.functions.buy_with_shells") }}</p>{% else %}<p>{{ phrase("docs.functions.buy_with_shells.buys-an-item-with-shells-and-waits-for") }}</p>{% endif %}
 <p>{{ phrase_html("docs.functions.buy_with_shells.returns-promise-resolving-with-the-matching-shell-purchase") }}</p>
 <p>{{ phrase_html("docs.functions.buy_with_shells.promise-failures-unless-a-function-specific-note-says") }}</p>
 <p>{{ phrase_html("docs.functions.buy_with_shells.notes-the-optional-timeout-defaults-to-15-000ms") }}</p>

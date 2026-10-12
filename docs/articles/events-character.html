@@ -271,11 +271,11 @@ character.remove(listener);</div>
 
 <p>{{ phrase_html("docs.articles.events-character.unfriend-complete-and-unfriend-failed-include-name-and") }}</p>
 
-<p>{{ phrase_html("docs.articles.events-character.bank-new-pack-and-bank-new-pack-failed") }}</p>
+{% if domain.single_player %}<p>{{ phrase_html("docs.sp.events-character.bank") }}</p>{% else %}<p>{{ phrase_html("docs.articles.events-character.bank-new-pack-and-bank-new-pack-failed") }}</p>{% endif %}
 
 <p>{{ phrase_html("docs.articles.events-character.picked-pick-failed-and-the-fishing-mining-result") }}</p>
 
-<p>{{ phrase_html("docs.articles.events-character.merrit-a-delivered-market-parcel-with-item-quantity") }}</p>
+{% if domain.single_player %}<p>{{ phrase_html("docs.sp.events-character.merrit") }}</p>{% else %}<p>{{ phrase_html("docs.articles.events-character.merrit-a-delivered-market-parcel-with-item-quantity") }}</p>{% endif %}
 
 <hr>
 <p><span class="dlabel" data-event="cave">cave</span></p>

@@ -2365,6 +2365,7 @@ function init_socket(args) {
 				ui_log(phrase.html("response.bank_store", { gold: to_pretty_num(data.gold) }), "gray");
 			} else if (response == "bank_new_pack") {
 				if (data.gold) ui_log(phrase.html("response.bank_new_pack", { gold: to_pretty_num(data.gold) }), "gray");
+				else if (data.seashells) ui_log(phrase.html("response.sp_bank_new_pack", { seashells: to_pretty_num(data.seashells) }), "gray"); // Single player
 				else ui_log(phrase.html("response.bank_new_pack.opened_an_account_for_shells", { shells: to_pretty_num(data.shells) }), "gray");
 			} else if (response == "locked") ui_log(phrase.html("response.locked"), "gray");
 			else if (response == "seller_gone") ui_log(phrase.html("response.seller_gone"), "gray");
@@ -3671,8 +3672,8 @@ function npc_right_click(event) {
 		render_interaction({
 			auto: true,
 			skin: "favore",
-			message: phrase.html("npc.bless_server.offer"),
-			button: phrase.html("npc.bless_server.accept"),
+			message: phrase.html(window.single_player_mode ? "npc.bless_server.sp_offer" : "npc.bless_server.offer"),
+			button: phrase.html(window.single_player_mode ? "npc.bless_server.sp_accept" : "npc.bless_server.accept"), // Single player: 10,000 seashells
 			onclick: function () {
 				socket.emit("bless_server");
 			},

@@ -20,8 +20,8 @@
 	"pages.steam_signup.failed": "Weryfikacja Steam nie powiodła się lub wygasła. Spróbuj ponownie.",
 	"pages.steam_signup.not_owned": "To konto Steam nie posiada Adventure Land.",
 	"pages.steam_signup.unavailable": "Weryfikacja Steam jest teraz niedostępna. Spróbuj ponownie później.",
-  "pages.hub.title": "Hub - {name}",
-  "pages.contents.selection_features.upcoming": "WKRÓTCE",
+	"pages.hub.title": "Hub - {name}",
+	"pages.contents.selection_features.upcoming": "WKRÓTCE",
 	"pages.allnotes.adventure-land-update-notes": "Adventure Land - Aktualizacje",
 	"pages.allnotes.last-update": "Ostatnia aktualizacja {last_deploy}",
 	"pages.allnotes.update-notes": "Aktualizacje",
@@ -1497,5 +1497,6 @@
 	"pages.vscode.use-in-vs-code-or-cursor-it-replaces": "Użyj <span class=\"shell\">{id}</span> w VS Code lub Cursor. Zastępuje starą synchronizację folderu klienta automatyczną synchronizacją przez API, więc działa ze Steam, przeglądarką i zwykłymi edytorami komputerowymi.",
 	"pages.vscode.your-token": "Twój token",
 	"pages.contents.announcement_email.holiday_code_example": "PS 3. Oto <a style=\"color: #33BF6D\" href=\"https://raw.githubusercontent.com/kaansoral/adventureland/master/examples/happy_holidays.js\"><span style=\"color: #33BF6D\">CODE</span></a> automatyzujące świąteczne wzmocnienie\n\t\t\t\t\tPS 4. Są też nowe rzeczy i umiejętności!",
-	"pages.contents.selection.slots-in-use": "Wszystkie twoje miejsca na postacie są zajęte."
+	"pages.contents.selection.slots-in-use": "Wszystkie twoje miejsca na postacie są zajęte.",
+	"pages.contents.selection.sp-rename-seashells": "Zmiana imienia jest opłacana muszelkami z torby tej postaci. Użyj Wyceny, aby zobaczyć cenę."
 }

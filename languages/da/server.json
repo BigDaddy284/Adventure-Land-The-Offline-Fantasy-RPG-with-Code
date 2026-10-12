@@ -400,7 +400,9 @@
 	"server.game_error.poker_hand_active": "Din pokerhånd er stadig i gang på en anden server. Vent, til den er slut, eller opret forbindelse til den server igen.",
 	"server.tracktrix.mail_subject": "Din Tracktrix",
 	"server.tracktrix.mail_body": "Lidt hjælp til din næste jagt. Hav denne Tracktrix med dig!",
-  "server.game_log.offered_for": "Tilbød {item} i bytte for {want}",
-  "server.game_log.offered_for_or_higher": "Tilbød {item} i bytte for {want} eller højere",
-  "server.game_log.traded_for": "Byttede {item} med {player} for {received}"
+	"server.game_log.offered_for": "Tilbød {item} i bytte for {want}",
+	"server.game_log.offered_for_or_higher": "Tilbød {item} i bytte for {want} eller højere",
+	"server.game_log.traded_for": "Byttede {item} med {player} for {received}",
+	"server.api.sp_spent_seashells": "Brugte {amount} muslingeskaller fra {name}s taske",
+	"server.api.sp_rename_quote": "Koster {amount} muslingeskaller fra figurens taske"
 }

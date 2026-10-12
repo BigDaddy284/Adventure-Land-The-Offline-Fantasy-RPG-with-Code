@@ -399,7 +399,9 @@
 	"server.game_error.poker_hand_active": "Твоето раздаване на покер още продължава на друг сървър. Изчакай да завърши или се свържи отново с този сървър.",
 	"server.tracktrix.mail_subject": "Твоят Tracktrix",
 	"server.tracktrix.mail_body": "Малко помощ за следващия ти лов. Носи този Tracktrix със себе си!",
-  "server.game_log.offered_for": "Предложи {item} за размяна срещу {want}",
-  "server.game_log.offered_for_or_higher": "Предложи {item} за размяна срещу {want} или по-високо",
-  "server.game_log.traded_for": "Размени {item} с {player} срещу {received}"
+	"server.game_log.offered_for": "Предложи {item} за размяна срещу {want}",
+	"server.game_log.offered_for_or_higher": "Предложи {item} за размяна срещу {want} или по-високо",
+	"server.game_log.traded_for": "Размени {item} с {player} срещу {received}",
+	"server.api.sp_spent_seashells": "Похарчени {amount} морски миди от чантата на {name}",
+	"server.api.sp_rename_quote": "Струва {amount} морски миди от чантата на героя"
 }

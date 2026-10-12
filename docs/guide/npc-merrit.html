@@ -37,10 +37,12 @@
 	<p>{{ phrase("docs.guide.npc-merrit.after-each-delivery-settle-for-two-minutes-again") }}</p>
 	<p>{{ phrase_html("docs.guide.npc-merrit.parcels-stack-up-to-9-999-keep-an") }}</p>
 	<div class="divider"></div>
+{% if not domain.single_player %}{# Single player: needs other players #}
 	<p style="font-size:32px;text-decoration:underline dotted #C7C7B3">{{ phrase("docs.guide.npc-merrit.an-occasional-extra-1-shell") }}</p>
 	<p>{{ phrase_html("docs.guide.npc-merrit.sometimes-merrit-adds-1-shell-directly-to-your") }}</p>
 	<table><thead><tr><th>{{ phrase("docs.guide.npc-merrit.shells-before-the-visit") }}</th><th>{{ phrase("docs.guide.npc-merrit.chance-of-1-shell") }}</th></tr></thead><tbody class="merrit-shell-odds"></tbody></table>
 	<p>{{ phrase_html("docs.guide.npc-merrit.the-chance-is-0-5-at-zero-shells") }}</p>
+{% endif %}
 	<p>{{ phrase("docs.guide.npc-merrit.a-sparkle-and-a-coin-sound-mark-each") }}</p>
 	<div class="divider"></div>
 	<p style="font-size:32px;text-decoration:underline dotted #C7C7B3">CODE</p>

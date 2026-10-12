@@ -925,3 +925,8 @@ module.exports = {
 
 // Poker action refused while a durable checkpoint is in flight. Ask the player to retry shortly; this is not a whole-hand wait.
 module.exports["response.poker_saving"] = "The poker table is updating. Try again shortly.";
+
+// Single player: Shells are replaced by seashells (625 seashells for every 75 Shells, rounded up).
+module.exports["npc.bless_server.sp_offer"] = "Would you like to bless the entire server for 3 days? It costs 10,000 seashells from your bag.";
+module.exports["npc.bless_server.sp_accept"] = "Yes! [10,000 Seashells]";
+module.exports["response.sp_bank_new_pack"] = "Opened an account for {seashells} seashells";

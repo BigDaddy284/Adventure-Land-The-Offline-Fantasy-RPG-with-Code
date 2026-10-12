@@ -659,6 +659,13 @@ async function rename_character_api(args) {
 		if (!gf(character, "last_rename", null) && (character.level < 60 || hsince(character.created) < 72)) price = 0;
 		price = 640;
 	}
+	// Single player: paid in seashells from the renamed character's bag
+	var sp_rules = typeof options == "object" && options && options.single_player && require("./node/logic/single_player");
+	var seashells = sp_rules ? sp_rules.seashell_price(price) : 0;
+	if (sp_rules) {
+		if (sp_rules.count_items(gf(character, "items", []), "seashell") < seashells) return { failed: true, reason: "not_enough_seashells" };
+		price = 0;
+	}
 	if (!can_spend_shells(user.cash, price)) return { failed: true, reason: "not_enough_shells" };
 
 	var R = await tx(
@@ -668,6 +675,7 @@ async function rename_character_api(args) {
 			if (!owner || !can_spend_shells(owner.cash, A.price)) ex("not_enough_shells");
 			var c = await tx_get(A.character);
 			if (c.name === simplify_name(A.nname)) ex("duplicate_click");
+			if (A.seashells && !A.sp_rules.take_items(gf(c, "items", []), "seashell", A.seashells)) ex("not_enough_seashells");
 			for (var i = 0; i < (owner.info.characters || []).length; i++) {
 				if (simplify_name(owner.info.characters[i].name) === simplify_name(A.name)) {
 					owner.info.characters[i].name = A.nname;
@@ -687,12 +695,13 @@ async function rename_character_api(args) {
 			await tx_save({ _id: "MK_character-" + simplify_name(A.nname), type: "character", phrase: simplify_name(A.nname), owner: get_id(c), created: new Date() });
 			R.owner = owner;
 		},
-		{ user: user, character: character, name: name, nname: nname, price: price },
+		{ user: user, character: character, name: name, nname: nname, price: price, seashells: seashells, sp_rules: sp_rules },
 	);
 
 	if (R.failed) return { failed: true, reason: R.reason };
 	add_event(character, "rename_character", ["characters"], { req: args.req, info: { message: name + " renamed to " + nname }, backup: true });
-	args.res.infs.push({ type: "message", message: phrase_html("server.api.spent_shells", { amount: String(to_pretty_num(price)) }) });
+	if (sp_rules) args.res.infs.push({ type: "message", message: phrase_html("server.api.sp_spent_seashells", { amount: String(to_pretty_num(seashells)), name: String(nname) }) });
+	else args.res.infs.push({ type: "message", message: phrase_html("server.api.spent_shells", { amount: String(to_pretty_num(price)) }) });
 	args.res.infs.push({ type: "message", message: phrase_html("server.api.renamed_to", { name: String(name), nname: String(nname) }) });
 	args.res.infs.push(await selection_info(args.req, R.owner, domain));
 	return { success: true };
@@ -714,7 +723,10 @@ async function quote_name_api(args) {
 		if (character && !gf(character, "last_rename", null) && (character.level < 60 || hsince(character.created) < 72)) price = 0;
 		price = 640;
 	}
-	args.res.infs.push({ type: "eval", code: "show_alert('Costs " + to_pretty_num(price) + " shells')" });
+	if (typeof options == "object" && options && options.single_player)
+		// Single player: the price is in seashells, taken from that character's bag
+		args.res.infs.push({ type: "eval", code: "show_alert(" + JSON.stringify(phrase("server.api.sp_rename_quote", { amount: to_pretty_num(require("./node/logic/single_player").seashell_price(price)) })) + ")" });
+	else args.res.infs.push({ type: "eval", code: "show_alert('Costs " + to_pretty_num(price) + " shells')" });
 	return { success: true };
 }
 

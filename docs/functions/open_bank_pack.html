@@ -1,8 +1,8 @@
 <p><span class='dlabel'>open_bank_pack(pack, currency, timeout_ms)</span></p>
-<p>{{ phrase("docs.functions.open_bank_pack.opens-a-bank-pack-using-gold-or-shells") }}</p>
+{% if domain.single_player %}<p>{{ phrase("docs.sp.functions.open_bank_pack") }}</p>{% else %}<p>{{ phrase("docs.functions.open_bank_pack.opens-a-bank-pack-using-gold-or-shells") }}</p>{% endif %}
 <p>{{ phrase_html("docs.functions.open_bank_pack.returns-promise-resolving-after-the-pack-is-available") }}</p>
 <p>{{ phrase_html("docs.functions.open_bank_pack.promise-failures-unless-a-function-specific-note-says") }}</p>
-<p>{{ phrase_html("docs.functions.open_bank_pack.notes-the-character-must-be-inside-the-bank") }}</p>
+{% if domain.single_player %}<p>{{ phrase_html("docs.sp.functions.open_bank_pack_notes") }}</p>{% else %}<p>{{ phrase_html("docs.functions.open_bank_pack.notes-the-character-must-be-inside-the-bank") }}</p>{% endif %}
 <p>{{ phrase_html("docs.functions.open_bank_pack.example") }}</p>
 <div class='code'>async function example() {
 	await open_bank_pack("items2", "shells");

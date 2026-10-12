@@ -29,14 +29,14 @@
 
 <div class="divider"></div>
 <div class="title mt15">{{ phrase("docs.guide.banking.opening-more-space") }}</div>
-<p>{{ phrase("docs.guide.banking.walk-up-to-a-closed-teller-to-see") }}</p>
+{% if domain.single_player %}<p>{{ phrase("docs.sp.banking.teller") }}</p>{% else %}<p>{{ phrase("docs.guide.banking.walk-up-to-a-closed-teller-to-see") }}</p>{% endif %}
 <p>{{ phrase("docs.guide.banking.the-bank-key-opens-the-basement-the-underground") }}</p>
 <p>{{ phrase("docs.guide.banking.key_pack") }}</p>
 <div class="guide-card-grid">
 	<div class="guide-card">{{ phrase_html("docs.guide.banking.basement-key-unlocks-the-door-from-the-bank") }}</div>
 	<div class="guide-card">{{ phrase_html("docs.guide.banking.underground-key-unlocks-the-deeper-underground-floor") }}</div>
 	<div class="guide-card">{{ phrase_html("docs.guide.banking.diamond-key-opens-the-next-unopened-item-teller") }}</div>
-	<div class="guide-card">{{ phrase_html("docs.guide.banking.gold-or-shells-a-closed-teller-shows-its") }}</div>
+	{% if domain.single_player %}<div class="guide-card">{{ phrase_html("docs.sp.banking.gold_or_seashells") }}</div>{% else %}<div class="guide-card">{{ phrase_html("docs.guide.banking.gold-or-shells-a-closed-teller-shows-its") }}</div>{% endif %}
 </div>
 
 <div class="divider"></div>

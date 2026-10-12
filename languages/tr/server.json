@@ -396,7 +396,9 @@
 	"server.game_error.poker_hand_active": "Poker elin başka bir sunucuda devam ediyor. Bitmesini bekle veya o sunucuya yeniden bağlan.",
 	"server.tracktrix.mail_subject": "Tracktrix'in",
 	"server.tracktrix.mail_body": "Bir sonraki avın için küçük bir yardım. Bu Tracktrix'i yanında tut!",
-  "server.game_log.offered_for": "{item}, {want} karşılığında takasa çıkarıldı",
-  "server.game_log.offered_for_or_higher": "{item}, {want} veya üstü karşılığında takasa çıkarıldı",
-  "server.game_log.traded_for": "{item}, {player} adlı oyuncuyla {received} karşılığında takas edildi"
+	"server.game_log.offered_for": "{item}, {want} karşılığında takasa çıkarıldı",
+	"server.game_log.offered_for_or_higher": "{item}, {want} veya üstü karşılığında takasa çıkarıldı",
+	"server.game_log.traded_for": "{item}, {player} adlı oyuncuyla {received} karşılığında takas edildi",
+	"server.api.sp_spent_seashells": "{name} adlı karakterin çantasından {amount} deniz kabuğu harcandı",
+	"server.api.sp_rename_quote": "Karakterin çantasından {amount} deniz kabuğu tutar"
 }

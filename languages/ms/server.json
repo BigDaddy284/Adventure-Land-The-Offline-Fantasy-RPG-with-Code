@@ -396,7 +396,9 @@
 	"server.game_error.poker_hand_active": "Pusingan poker anda masih berlangsung di pelayan lain. Tunggu sehingga selesai atau sambung semula ke pelayan itu.",
 	"server.tracktrix.mail_subject": "Tracktrix anda",
 	"server.tracktrix.mail_body": "Sedikit bantuan untuk pemburuan anda yang seterusnya. Bawa Tracktrix ini bersama anda!",
-  "server.game_log.offered_for": "Menawarkan {item} untuk ditukar dengan {want}",
-  "server.game_log.offered_for_or_higher": "Menawarkan {item} untuk ditukar dengan {want} atau lebih tinggi",
-  "server.game_log.traded_for": "Menukar {item} dengan {player} untuk {received}"
+	"server.game_log.offered_for": "Menawarkan {item} untuk ditukar dengan {want}",
+	"server.game_log.offered_for_or_higher": "Menawarkan {item} untuk ditukar dengan {want} atau lebih tinggi",
+	"server.game_log.traded_for": "Menukar {item} dengan {player} untuk {received}",
+	"server.api.sp_spent_seashells": "Membelanjakan {amount} kulit kerang dari beg {name}",
+	"server.api.sp_rename_quote": "Berharga {amount} kulit kerang dari beg watak"
 }

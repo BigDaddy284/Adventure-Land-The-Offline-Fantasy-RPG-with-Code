@@ -170,3 +170,6 @@ module.exports = {
 module.exports["error.code_too_large"] = "This script is too large. Each CODE slot can hold up to 1 MiB (1,048,576 bytes) of UTF-8 text.";
 module.exports["error.code_storage_full"] = "Your CODE storage is full. Export and delete unused scripts before saving more code.";
 module.exports["error.code_rate_limited"] = "You're saving CODE too quickly. Wait a moment and try again.";
+
+// Single player: a rename needs seashells in the renamed character's bag.
+module.exports["error.not_enough_seashells"] = "That character doesn't have enough seashells in their bag.";

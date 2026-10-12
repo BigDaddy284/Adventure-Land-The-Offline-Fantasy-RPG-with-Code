@@ -398,7 +398,9 @@
 	"server.game_error.poker_hand_active": "Din pokerhand pågår fortfarande på en annan server. Vänta tills den är slut eller anslut till den servern igen.",
 	"server.tracktrix.mail_subject": "Din Tracktrix",
 	"server.tracktrix.mail_body": "Lite hjälp inför nästa jakt. Ha den här Tracktrix med dig!",
-  "server.game_log.offered_for": "Erbjöd {item} i byte mot {want}",
-  "server.game_log.offered_for_or_higher": "Erbjöd {item} i byte mot {want} eller högre",
-  "server.game_log.traded_for": "Bytte {item} med {player} mot {received}"
+	"server.game_log.offered_for": "Erbjöd {item} i byte mot {want}",
+	"server.game_log.offered_for_or_higher": "Erbjöd {item} i byte mot {want} eller högre",
+	"server.game_log.traded_for": "Bytte {item} med {player} mot {received}",
+	"server.api.sp_spent_seashells": "Använde {amount} snäckskal från {name}s väska",
+	"server.api.sp_rename_quote": "Kostar {amount} snäckskal från karaktärens väska"
 }

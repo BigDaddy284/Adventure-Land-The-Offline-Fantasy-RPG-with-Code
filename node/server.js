@@ -554,6 +554,7 @@ async function init_game() {
 			monster_gold: monster_gold,
 			odds: typeof odds !== "undefined" && odds,
 		};
+		if (typeof single_player == "object") single_player.strip_shell_drops(D.drops); // Single player: no Shells in any drop
 
 		if (S) {
 			init_server_data(S);
@@ -735,6 +736,7 @@ async function reload_server(to_broadcast, change) {
 			monster_gold: monster_gold,
 			odds: typeof odds !== "undefined" && odds,
 		};
+		if (typeof single_player == "object") single_player.strip_shell_drops(D.drops); // Single player: no Shells in any drop
 		restore_generated_maps();
 		sprocess_game_data();
 		prop_cache = {};
@@ -1985,6 +1987,35 @@ function consume_one_by_id(player, id) {
 		}
 	}
 	return false;
+}
+
+// Single player: takes seashells from the bag in place of Shells. Returns false, taking nothing, when there aren't enough
+function pay_seashells(player, amount) {
+	if (amount <= 0) return true;
+	var have = 0;
+	for (var i = 0; i < player.items.length; i++) if (player.items[i] && player.items[i].name == "seashell") have += player.items[i].q || 1;
+	if (have < amount) return false;
+	for (var i = 0; i < player.items.length && amount > 0; i++) {
+		if (!player.items[i] || player.items[i].name != "seashell") continue;
+		var take = min(amount, player.items[i].q || 1);
+		consume(player, i, take);
+		amount -= take;
+	}
+	return true;
+}
+
+// Single player: gives seashells back when a purchase paid in seashells fails
+function refund_seashells(player, amount) {
+	while (amount > 0) {
+		var q = min(amount, G.items.seashell.s);
+		add_item(player, create_new_item("seashell", q), { announce: false });
+		amount -= q;
+	}
+}
+
+// Single player: the log line when seashells are short
+function seashells_short(socket, amount) {
+	socket.emit("game_log", localization.message("server.game_log.sp_need_seashells", { amount: String(to_pretty_num(amount)) }, { color: "gray" }));
 }
 
 function create_new_item(name, quantity) {
@@ -8235,10 +8266,22 @@ function init_socket_io(socket_server, server_index) {
 			if (!can_add_item(player, create_new_item(name, quantity))) {
 				return fail_response("no_space");
 			}
+			var seashells = 0;
+			if (typeof single_player == "object") {
+				// Single player: paid in seashells from the bag
+				seashells = single_player.seashell_price(cost);
+				if (!pay_seashells(player, seashells)) {
+					seashells_short(socket, seashells);
+					return fail_response("seashells_not_enough");
+				}
+				cost = 0;
+				resend(player, "reopen+nc+inv");
+			}
 			(async function () {
 				try {
 					var user = await get(player.owner);
 					if (!user) {
+						if (seashells) refund_seashells(player, seashells);
 						socket.emit("game_log", localization.message("server.game_log.purchase_failed", {}));
 						finish_shell_purchase("shell_purchase_failed", { failed: true, reason: "nouser" });
 						return;
@@ -8256,6 +8299,7 @@ function init_socket_io(socket_server, server_index) {
 						{ user: user, amount: cost },
 					);
 					if (R.failed) {
+						if (seashells) refund_seashells(player, seashells);
 						socket.emit("game_log", localization.message("server.game_log.purchase_failed", {}));
 						finish_shell_purchase("shell_purchase_failed", { failed: true, reason: R.reason || "purchase_failed" });
 						return;
@@ -8264,10 +8308,13 @@ function init_socket_io(socket_server, server_index) {
 					player.cash = R.element.cash;
 					var new_item = create_new_item(name, quantity);
 					add_item(player, new_item, { announce: false });
-					socket.emit(
-						"game_log",
-						localization.message("server.game_log.spent_shells", { amount: String(to_pretty_num(cost)) }),
-					);
+					if (typeof single_player == "object") {
+						if (seashells) socket.emit("game_log", localization.message("server.game_log.sp_spent_seashells", { amount: String(to_pretty_num(seashells)) }));
+					} else
+						socket.emit(
+							"game_log",
+							localization.message("server.game_log.spent_shells", { amount: String(to_pretty_num(cost)) }),
+						);
 					add_event(R.element, "bill", ["cashflow"], {
 						info: {
 							message: player.name + " [" + get_id(user) + "] spent " + cost + " shells for: " + data.name,
@@ -8280,6 +8327,7 @@ function init_socket_io(socket_server, server_index) {
 					finish_shell_purchase("shell_purchase_complete", { success: true, cost: cost });
 				} catch (e) {
 					console.error("buy_with_cash error", e);
+					if (seashells) refund_seashells(player, seashells);
 					finish_shell_purchase("shell_purchase_failed", { failed: true, reason: "coms_failure" });
 				}
 			})();
@@ -8311,11 +8359,23 @@ function init_socket_io(socket_server, server_index) {
 			if (player.blessing) {
 				return fail_response("in_progress");
 			}
+			var seashells = 0;
+			if (typeof single_player == "object") {
+				// Single player: Favoré takes 10,000 seashells from the bag
+				seashells = single_player.BLESSING_SEASHELLS;
+				if (!pay_seashells(player, seashells)) {
+					seashells_short(socket, seashells);
+					return finish_bless("blessed_fail", { failed: true, reason: "seashells_not_enough", seashells: seashells });
+				}
+				cost = 0;
+				resend(player, "reopen+nc+inv");
+			}
 			player.blessing = true;
 			(async function () {
 				try {
 					var user = await get(player.owner);
 					if (!user) {
+						if (seashells) refund_seashells(player, seashells);
 						player.blessing = false;
 						socket.emit("game_log", localization.message("server.game_log.purchase_failed", {}));
 						finish_bless("blessed_fail", { failed: true, reason: "nouser", cost: cost });
@@ -8335,6 +8395,7 @@ function init_socket_io(socket_server, server_index) {
 					);
 					player.blessing = false;
 					if (R.failed) {
+						if (seashells) refund_seashells(player, seashells);
 						socket.emit("game_log", localization.message("server.game_log.purchase_failed", {}));
 						finish_bless("blessed_fail", { failed: true, reason: R.reason || "purchase_failed", cost: cost });
 						return;
@@ -8345,10 +8406,12 @@ function init_socket_io(socket_server, server_index) {
 					S.blessed_minutes = 60 * 24 * 3;
 					S.blessed_by = player.name;
 
-					socket.emit(
-						"game_log",
-						localization.message("server.game_log.spent_shells", { amount: String(to_pretty_num(cost)) }),
-					);
+					if (typeof single_player == "object") socket.emit("game_log", localization.message("server.game_log.sp_spent_seashells", { amount: String(to_pretty_num(seashells)) }));
+					else
+						socket.emit(
+							"game_log",
+							localization.message("server.game_log.spent_shells", { amount: String(to_pretty_num(cost)) }),
+						);
 					finish_bless("blessed", { success: true, cost: cost, blessed_by: player.name, minutes: S.blessed_minutes });
 
 					resend(player, "reopen+nc+inv");
@@ -8374,6 +8437,7 @@ function init_socket_io(socket_server, server_index) {
 					update_characters(R.element, null, null, 0).catch(console.error);
 				} catch (e) {
 					console.error("bless_server error", e);
+					if (seashells) refund_seashells(player, seashells);
 					player.blessing = false;
 					finish_bless("blessed_fail", { failed: true, reason: "coms_failure", cost: cost });
 				}
@@ -9394,6 +9458,22 @@ function init_socket_io(socket_server, server_index) {
 						response: "bank_new_pack",
 						pack: data.pack,
 						gold: gold,
+						request_id: data.request_id,
+						cevent: true,
+					};
+				} else if (data.shells && typeof single_player == "object") {
+					// Single player: the account is paid in seashells from the bag
+					var seashells = single_player.seashell_price(shells);
+					if (!pay_seashells(player, seashells)) {
+						seashells_short(socket, seashells);
+						return fail_response("seashells_not_enough");
+					}
+					player.user[data.pack] = [];
+					player.cuser[data.pack] = [];
+					success = {
+						response: "bank_new_pack",
+						pack: data.pack,
+						seashells: seashells,
 						request_id: data.request_id,
 						cevent: true,
 					};

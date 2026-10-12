@@ -398,7 +398,9 @@
 	"server.game_error.poker_hand_active": "Pokerhånden din pågår fortsatt på en annen server. Vent til den er ferdig, eller koble til den serveren igjen.",
 	"server.tracktrix.mail_subject": "Din Tracktrix",
 	"server.tracktrix.mail_body": "Litt hjelp til neste jakt. Ha denne Tracktrix med deg!",
-  "server.game_log.offered_for": "Tilbød {item} i bytte mot {want}",
-  "server.game_log.offered_for_or_higher": "Tilbød {item} i bytte mot {want} eller høyere",
-  "server.game_log.traded_for": "Byttet {item} med {player} mot {received}"
+	"server.game_log.offered_for": "Tilbød {item} i bytte mot {want}",
+	"server.game_log.offered_for_or_higher": "Tilbød {item} i bytte mot {want} eller høyere",
+	"server.game_log.traded_for": "Byttet {item} med {player} mot {received}",
+	"server.api.sp_spent_seashells": "Brukte {amount} skjell fra sekken til {name}",
+	"server.api.sp_rename_quote": "Koster {amount} skjell fra figurens sekk"
 }

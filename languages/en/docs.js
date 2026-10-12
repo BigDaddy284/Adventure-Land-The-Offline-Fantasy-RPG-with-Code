@@ -6366,3 +6366,19 @@ module.exports["docs.sp.tavern.tier"] = "Your table";
 
 // Single player guide: no buy orders without other players.
 module.exports["docs.sp.markets.divian"] = "<span class=\"guide-card-icon market-divian\"></span><b>Divian</b>Buy a stand, then list your own items for sale.";
+
+// Single player guide: Shells are replaced by seashells, and Merrit gives no Shells.
+module.exports["docs.sp.banking.gold_or_seashells"] = "<b>Gold or Seashells</b>A closed teller shows its own current opening price. Read that quote before choosing the payment. Seashells are taken from your bag.";
+module.exports["docs.sp.banking.teller"] = "Walk up to a closed teller to see its current price in gold or seashells. The quote shown there is the price for that exact pack. Once opened, the pack remains part of the account.";
+module.exports["docs.sp.shops.currency"] = "<b>4. Choose currency when needed</b><span class=\"dlabel\">buy()</span> uses the available shop currency. Mr. Dworf's cosmetic boxes are paid in seashells from your bag.";
+
+// Single player reference: blessing, bank packs and Shells purchases are paid in seashells.
+module.exports["docs.sp.functions.bless_server"] = "Spends 10,000 seashells from your bag to bless the server for three days and waits for the blessing to start.";
+module.exports["docs.sp.functions.open_bank_pack"] = "Opens a bank pack using gold or seashells from your bag and waits for the selected payment path to complete.";
+module.exports["docs.sp.functions.buy_with_shells"] = "Buys an item that was sold for Shells, paying in seashells from your bag (625 seashells for every 75 Shells, rounded up), and waits for the inventory update to complete.";
+
+// Single player reference: no Shells, seashells instead; Mainframe renewals do not apply.
+module.exports["docs.sp.events-character.bank"] = "<span class=\"dlabel\">bank_new_pack</span> and <span class=\"dlabel\">bank_new_pack_failed</span> include <span class=\"dlabel\">pack</span>, and <span class=\"dlabel\">gold</span> or <span class=\"dlabel\">seashells</span> for the payment used. Calls made through <span class=\"dlabel\">open_bank_pack</span> also include a unique <span class=\"dlabel\">request_id</span>.";
+module.exports["docs.sp.events-character.merrit"] = "<span class=\"dlabel\">merrit</span>: a delivered Market Parcel, with <span class=\"dlabel\">item</span> and <span class=\"dlabel\">quantity</span>. Emitted after the server confirms delivery. Read <span class=\"dlabel\">character.merrit</span> for eligibility.";
+module.exports["docs.sp.functions.bless_server_returns"] = "<b>Returns:</b> Promise resolving with the matching blessed response. It rejects when your bag has fewer than 10,000 seashells, another blessing request is already in progress, or on server failure, disconnect, or timeout.";
+module.exports["docs.sp.functions.open_bank_pack_notes"] = "<b>Notes:</b> The character must be inside the bank map that owns the pack. Pass <span class=\"dlabel\">\"shells\"</span> as the currency to pay in seashells from your bag (625 seashells for every 75 Shells of the pack's old price, rounded up).";

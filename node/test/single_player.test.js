@@ -277,3 +277,35 @@ test("characters made with a pre-v19 E to H look move onto the current look for 
 	assert.equal(docs.user[0].info.characters[1].cx.hat, "hat106g");
 	assert.equal(await sp.upgrade_looks(db), 0);
 });
+
+test("Shells are replaced by seashells: prices, bag payments and drop tables", () => {
+	const sp = require("../logic/single_player");
+	assert.equal(sp.seashell_price(75), 625);
+	assert.equal(sp.seashell_price(1399), 11659); // rounded up
+	assert.equal(sp.seashell_price(0), 0);
+	assert.equal(sp.BLESSING_SEASHELLS, 10000);
+	const bag = [{ name: "seashell", q: 9999 }, null, { name: "hpot0", q: 5 }, { name: "seashell", q: 50 }];
+	assert.equal(sp.count_items(bag, "seashell"), 10049);
+	assert.equal(sp.take_items(bag, "seashell", 20000), false);
+	assert.equal(bag[0].q, 9999);
+	assert.equal(sp.take_items(bag, "seashell", 10000), true);
+	assert.equal(bag[0], null);
+	assert.equal(bag[3].q, 49);
+	const drops = { monsters: { goo: [[0.001, "shells", 50], [1, "gslime"]] }, "5bucks": [[0.02, "5bucks", 2], [1, "shells", 800]], gem1: [[1, "gold", 5], [0.001, "shells", 50]] };
+	sp.strip_shell_drops(drops);
+	assert.deepEqual(drops.monsters.goo, [[1, "gslime"]]);
+	assert.deepEqual(drops.gem1, [[1, "gold", 5]]);
+	assert.deepEqual(drops["5bucks"], [[0.02, "5bucks", 2], [1, "seashell", 6667]]);
+	const G = { items: { cosmo0: { cash: 289 }, hpot0: { g: 20 } }, drops: { x: [[1, "shells", 75]] }, classes: {} };
+	sp.create({}).apply_game_data(G);
+	assert.equal(G.items.cosmo0.seashells, 2409);
+	assert.equal(G.items.hpot0.seashells, undefined);
+	assert.deepEqual(G.drops.x, [[1, "seashell", 625]]);
+});
+
+test("the game server's single player object has the seashell helpers", () => {
+	const instance = require("../logic/single_player").create({});
+	assert.equal(instance.BLESSING_SEASHELLS, 10000);
+	assert.equal(instance.seashell_price(75), 625);
+	assert.equal(typeof instance.strip_shell_drops, "function");
+});

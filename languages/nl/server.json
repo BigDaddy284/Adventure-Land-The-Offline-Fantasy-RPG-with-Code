@@ -399,7 +399,9 @@
 	"server.game_error.poker_hand_active": "Je pokerhand loopt nog op een andere server. Wacht tot die is afgelopen of verbind opnieuw met die server.",
 	"server.tracktrix.mail_subject": "Jouw Tracktrix",
 	"server.tracktrix.mail_body": "Een beetje hulp voor je volgende jacht. Houd deze Tracktrix bij je!",
-  "server.game_log.offered_for": "{item} aangeboden in ruil voor {want}",
-  "server.game_log.offered_for_or_higher": "{item} aangeboden in ruil voor {want} of hoger",
-  "server.game_log.traded_for": "{item} geruild met {player} voor {received}"
+	"server.game_log.offered_for": "{item} aangeboden in ruil voor {want}",
+	"server.game_log.offered_for_or_higher": "{item} aangeboden in ruil voor {want} of hoger",
+	"server.game_log.traded_for": "{item} geruild met {player} voor {received}",
+	"server.api.sp_spent_seashells": "{amount} zeeschelpen uitgegeven uit de tas van {name}",
+	"server.api.sp_rename_quote": "Kost {amount} zeeschelpen uit de tas van het personage"
 }

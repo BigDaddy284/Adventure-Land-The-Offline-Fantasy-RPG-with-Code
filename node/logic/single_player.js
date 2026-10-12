@@ -354,6 +354,56 @@ const CLASS_LOOKS = {
 	],
 };
 
+// Shells are gone in single player. What cost Shells costs seashells instead, at 625 seashells for every 75 Shells,
+// rounded up; Favoré's blessing is a flat 10,000
+const BLESSING_SEASHELLS = 10000;
+function seashell_price(shells) {
+	return shells > 0 ? Math.ceil((shells * 625) / 75) : 0;
+}
+
+// How many of an item a list of inventory slots holds
+function count_items(items, name) {
+	let have = 0;
+	for (const item of items || []) if (item && item.name == name) have += item.q || 1;
+	return have;
+}
+
+// Takes amount of an item out of a list of inventory slots (emptied slots become null).
+// Returns false, changing nothing, when there aren't enough
+function take_items(items, name, amount) {
+	if (amount <= 0) return true;
+	if (count_items(items, name) < amount) return false;
+	for (let i = 0; i < items.length && amount > 0; i++) {
+		const item = items[i];
+		if (!item || item.name != name) continue;
+		const take = Math.min(amount, item.q || 1);
+		if (take == (item.q || 1)) items[i] = null;
+		else item.q -= take;
+		amount -= take;
+	}
+	return true;
+}
+
+// Removes Shells from every drop table. A table that was mostly Shells (Old Paper Money's exchange) pays the same
+// value in seashells instead, so it still gives something
+function strip_shell_drops(drops) {
+	const walk = (node) => {
+		if (Array.isArray(node) && node.length && Array.isArray(node[0])) {
+			const total = node.reduce((sum, drop) => sum + (typeof drop[0] == "number" ? drop[0] : 0), 0);
+			for (let i = node.length - 1; i >= 0; i--) {
+				const drop = node[i];
+				if (!Array.isArray(drop) || drop[1] != "shells") continue;
+				if (drop[0] * 2 >= total) node[i] = [drop[0], "seashell", seashell_price(drop[2])];
+				else node.splice(i, 1);
+			}
+			return;
+		}
+		if (node && typeof node == "object") for (const key of Object.keys(node)) walk(node[key]);
+	};
+	walk(drops);
+	return drops;
+}
+
 // The starting looks offered on E to H before v19. Characters made with one are moved onto the current look for the
 // same letter when the website starts (upgrade_looks), keeping any other cosmetics they have
 const OLD_LOOKS = {
@@ -466,6 +516,16 @@ function prune_docs(docs) {
 	const interactions = docs.interactions || {};
 	delete interactions.pvp; // the arena's PvP guide
 	if (interactions.mainframe) interactions.mainframe.article = "special-interactions"; // Cyberland's terminal, not the hosting service
+	if (interactions.server_services) {
+		// Favoré's blessing costs seashells, and there are no Shells. A new key, so the online text's translations don't replace it
+		interactions.sp_server_services = Object.assign({}, interactions.server_services, {
+			title: "Server Blessings",
+			summary: "Favoré blesses the server for three days for 10,000 seashells from your bag.",
+		});
+		const map = docs.interaction_map || {};
+		for (const group of Object.values(map))
+			if (group && typeof group == "object") for (const key of Object.keys(group)) if (group[key] == "server_services") group[key] = "sp_server_services";
+	}
 	for (const name of Object.keys(interactions))
 		if (interactions[name].functions)
 			interactions[name].functions = interactions[name].functions.filter((fn) => !REMOVED_FUNCTIONS.includes(fn));
@@ -476,6 +536,10 @@ function create(settings) {
 	let base_limits = null;
 	return {
 		settings,
+		// Shells to seashells, for the game server
+		BLESSING_SEASHELLS,
+		seashell_price,
+		strip_shell_drops,
 		// Applies one setting to a value; success chances are capped at 100%
 		scale(kind, value) {
 			if (kind == "hp_loss" && settings.god_mode) return 0;
@@ -525,6 +589,9 @@ function create(settings) {
 				merrit.settle_ms = 0; // no wait after the stall opens
 			}
 			add_looks(G.classes);
+			if (G.drops) strip_shell_drops(G.drops);
+			// Items bought with Shells show their seashell price
+			for (const def of Object.values(G.items || {})) if (def && def.cash) def.seashells = seashell_price(def.cash);
 			return G;
 		},
 		apply_options(options) {
@@ -607,6 +674,11 @@ module.exports = {
 	EVENT_MONSTERS,
 	CLASS_LOOKS,
 	add_looks,
+	BLESSING_SEASHELLS,
+	seashell_price,
+	count_items,
+	take_items,
+	strip_shell_drops,
 	upgraded_look,
 	upgrade_looks,
 	prune_docs,

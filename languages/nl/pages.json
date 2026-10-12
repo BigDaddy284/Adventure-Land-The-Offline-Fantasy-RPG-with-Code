@@ -20,8 +20,8 @@
 	"pages.steam_signup.failed": "De Steam-verificatie is mislukt of verlopen. Probeer het opnieuw.",
 	"pages.steam_signup.not_owned": "Dit Steam-account heeft Adventure Land niet.",
 	"pages.steam_signup.unavailable": "Steam-verificatie is momenteel niet beschikbaar. Probeer het later opnieuw.",
-  "pages.hub.title": "Hub - {name}",
-  "pages.contents.selection_features.upcoming": "BINNENKORT",
+	"pages.hub.title": "Hub - {name}",
+	"pages.contents.selection_features.upcoming": "BINNENKORT",
 	"pages.allnotes.adventure-land-update-notes": "Adventure Land - Updatenotities",
 	"pages.allnotes.last-update": "Laatste update {last_deploy}",
 	"pages.allnotes.update-notes": "Updatenotities",
@@ -1497,5 +1497,6 @@
 	"pages.vscode.use-in-vs-code-or-cursor-it-replaces": "Gebruik <span class=\"shell\">{id}</span> in VS Code of Cursor. Deze extensie vervangt de oude mapsynchronisatie via de client door automatische synchronisatie via de API. Daardoor werkt ze vanuit Steam, de browser en gewone desktopeditors.",
 	"pages.vscode.your-token": "Je token",
 	"pages.contents.announcement_email.holiday_code_example": "Ps 3. Hier is <a style=\"color: #33BF6D\" href=\"https://raw.githubusercontent.com/kaansoral/adventureland/master/examples/happy_holidays.js\"><span style=\"color: #33BF6D\">CODE</span></a> die de kerstbonus automatiseert\n\t\t\t\t\tPs 4. Er zijn ook wat nieuwe dingen en nieuwe vaardigheden!",
-	"pages.contents.selection.slots-in-use": "Al je personageslots zijn bezet."
+	"pages.contents.selection.slots-in-use": "Al je personageslots zijn bezet.",
+	"pages.contents.selection.sp-rename-seashells": "Hernoemen betaal je met zeeschelpen uit de tas van dat personage. Gebruik Offerte om de prijs te zien."
 }

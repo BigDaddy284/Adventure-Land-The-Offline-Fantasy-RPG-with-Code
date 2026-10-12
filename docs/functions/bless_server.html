@@ -1,6 +1,6 @@
 <p><span class='dlabel'>bless_server(timeout_ms)</span></p>
-<p>{{ phrase("docs.functions.bless_server.spends-1-200-shells-to-bless-the-current") }}</p>
-<p>{{ phrase_html("docs.functions.bless_server.returns-promise-resolving-with-the-matching-blessed-response") }}</p>
+{% if domain.single_player %}<p>{{ phrase("docs.sp.functions.bless_server") }}</p>{% else %}<p>{{ phrase("docs.functions.bless_server.spends-1-200-shells-to-bless-the-current") }}</p>{% endif %}
+{% if domain.single_player %}<p>{{ phrase_html("docs.sp.functions.bless_server_returns") }}</p>{% else %}<p>{{ phrase_html("docs.functions.bless_server.returns-promise-resolving-with-the-matching-blessed-response") }}</p>{% endif %}
 <p>{{ phrase_html("docs.functions.bless_server.promise-failures-unless-a-function-specific-note-says") }}</p>
 <p>{{ phrase_html("docs.functions.bless_server.notes-the-timeout-defaults-to-15-000ms-success") }}</p>
 <p>{{ phrase_html("docs.functions.bless_server.example") }}</p>

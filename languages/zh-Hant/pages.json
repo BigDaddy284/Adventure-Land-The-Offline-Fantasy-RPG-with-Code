@@ -20,8 +20,8 @@
 	"pages.steam_signup.failed": "Steam驗證失敗或已過期。請再試一次。",
 	"pages.steam_signup.not_owned": "此Steam帳號未擁有Adventure Land。",
 	"pages.steam_signup.unavailable": "目前無法進行Steam驗證。請稍後再試。",
-  "pages.hub.title": "Hub - {name}",
-  "pages.contents.selection_features.upcoming": "即將推出",
+	"pages.hub.title": "Hub - {name}",
+	"pages.contents.selection_features.upcoming": "即將推出",
 	"pages.allnotes.adventure-land-update-notes": "Adventure Land - 更新說明",
 	"pages.allnotes.last-update": "最近更新 {last_deploy}",
 	"pages.allnotes.update-notes": "更新說明",
@@ -1497,5 +1497,6 @@
 	"pages.vscode.use-in-vs-code-or-cursor-it-replaces": "在VS Code或Cursor中使用<span class=\"shell\">{id}</span>。它以基於API的自動同步替代舊的用戶端資料夾同步，因此可以與Steam、瀏覽器和普通桌面編輯器配合使用。",
 	"pages.vscode.your-token": "你的權杖",
 	"pages.contents.announcement_email.holiday_code_example": "附言3：這裡有一段可自動領取聖誕增益的<a style=\"color: #33BF6D\" href=\"https://raw.githubusercontent.com/kaansoral/adventureland/master/examples/happy_holidays.js\"><span style=\"color: #33BF6D\">CODE</span></a>。\n\t\t\t\t\t附言4：還有一些新內容和新技能！",
-	"pages.contents.selection.slots-in-use": "你的角色欄位已全部使用。"
+	"pages.contents.selection.slots-in-use": "你的角色欄位已全部使用。",
+	"pages.contents.selection.sp-rename-seashells": "改名需用該角色背包裡的貝殼支付。用「報價」查看價格。"
 }

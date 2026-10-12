@@ -20,8 +20,8 @@
 	"pages.steam_signup.failed": "Steamの認証に失敗したか、有効期限が切れました。もう一度お試しください。",
 	"pages.steam_signup.not_owned": "このSteamアカウントはAdventure Landを所有していません。",
 	"pages.steam_signup.unavailable": "現在Steamの認証を利用できません。しばらくしてからもう一度お試しください。",
-  "pages.hub.title": "Hub - {name}",
-  "pages.contents.selection_features.upcoming": "近日登場",
+	"pages.hub.title": "Hub - {name}",
+	"pages.contents.selection_features.upcoming": "近日登場",
 	"pages.allnotes.adventure-land-update-notes": "Adventure Land - 更新情報",
 	"pages.allnotes.last-update": "最終更新 {last_deploy}",
 	"pages.allnotes.update-notes": "更新情報",
@@ -1497,5 +1497,6 @@
 	"pages.vscode.use-in-vs-code-or-cursor-it-replaces": "VS CodeまたはCursorで<span class=\"shell\">{id}</span>を使ってください。旧クライアントのフォルダー同期をAPIによる自動同期に置き換えるため、Steam、ブラウザー、通常のデスクトップエディターから利用できます。",
 	"pages.vscode.your-token": "自分のトークン",
 	"pages.contents.announcement_email.holiday_code_example": "追伸3：クリスマスの強化効果を自動で受け取る<a style=\"color: #33BF6D\" href=\"https://raw.githubusercontent.com/kaansoral/adventureland/master/examples/happy_holidays.js\"><span style=\"color: #33BF6D\">CODE</span></a>です。\n\t\t\t\t\t追伸4：他にも新しいものやスキルがあります！",
-	"pages.contents.selection.slots-in-use": "キャラクター枠はすべて使用中です。"
+	"pages.contents.selection.slots-in-use": "キャラクター枠はすべて使用中です。",
+	"pages.contents.selection.sp-rename-seashells": "名前の変更はそのキャラクターのバッグにある貝殻で支払います。見積もりで価格を確認できます。"
 }

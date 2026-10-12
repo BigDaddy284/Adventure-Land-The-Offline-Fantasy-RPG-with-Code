@@ -851,3 +851,9 @@ module.exports["server.cave.amber_limit"] = "All {amount} Cave Amber for this vi
 
 // Login refused because the character has a poker hand on a different live server. Reconnect there or wait for that hand to end.
 module.exports["server.game_error.poker_hand_active"] = "Your poker hand is still running on another server. Wait for it to finish, or reconnect there.";
+
+// Single player: Shells are replaced by seashells (625 seashells for every 75 Shells, rounded up).
+module.exports["server.game_log.sp_need_seashells"] = "You need {amount} seashells in your bag";
+module.exports["server.game_log.sp_spent_seashells"] = "Spent {amount} seashells";
+module.exports["server.api.sp_spent_seashells"] = "Spent {amount} seashells from {name}'s bag";
+module.exports["server.api.sp_rename_quote"] = "Costs {amount} seashells, taken from the character's bag";

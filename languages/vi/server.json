@@ -396,7 +396,9 @@
 	"server.game_error.poker_hand_active": "Ván poker của bạn vẫn đang diễn ra trên máy chủ khác. Hãy chờ ván kết thúc hoặc kết nối lại máy chủ đó.",
 	"server.tracktrix.mail_subject": "Tracktrix của bạn",
 	"server.tracktrix.mail_body": "Một chút trợ giúp cho chuyến săn tiếp theo. Hãy mang Tracktrix này bên mình!",
-  "server.game_log.offered_for": "Đã rao đổi {item} lấy {want}",
-  "server.game_log.offered_for_or_higher": "Đã rao đổi {item} lấy {want} hoặc cao hơn",
-  "server.game_log.traded_for": "Đã đổi {item} với {player} lấy {received}"
+	"server.game_log.offered_for": "Đã rao đổi {item} lấy {want}",
+	"server.game_log.offered_for_or_higher": "Đã rao đổi {item} lấy {want} hoặc cao hơn",
+	"server.game_log.traded_for": "Đã đổi {item} với {player} lấy {received}",
+	"server.api.sp_spent_seashells": "Đã dùng {amount} vỏ sò trong túi của {name}",
+	"server.api.sp_rename_quote": "Tốn {amount} vỏ sò trong túi của nhân vật"
 }

@@ -20,8 +20,8 @@
 	"pages.steam_signup.failed": "La vérification Steam a échoué ou a expiré. Réessaie.",
 	"pages.steam_signup.not_owned": "Ce compte Steam ne possède pas Adventure Land.",
 	"pages.steam_signup.unavailable": "La vérification Steam est indisponible pour le moment. Réessaie plus tard.",
-  "pages.hub.title": "Hub - {name}",
-  "pages.contents.selection_features.upcoming": "À VENIR",
+	"pages.hub.title": "Hub - {name}",
+	"pages.contents.selection_features.upcoming": "À VENIR",
 	"pages.allnotes.adventure-land-update-notes": "Adventure Land - Notes de mise à jour",
 	"pages.allnotes.last-update": "Dernière mise à jour {last_deploy}",
 	"pages.allnotes.update-notes": "Notes de mise à jour",
@@ -1497,5 +1497,6 @@
 	"pages.vscode.use-in-vs-code-or-cursor-it-replaces": "Utilise <span class=\"shell\">{id}</span> dans VS Code ou Cursor. L’extension remplace l’ancienne synchronisation du dossier client par une synchronisation automatique via l’API. Elle fonctionne donc avec Steam, le navigateur et les éditeurs de bureau habituels.",
 	"pages.vscode.your-token": "Ton jeton",
 	"pages.contents.announcement_email.holiday_code_example": "P.-S. 3. Voici un <a style=\"color: #33BF6D\" href=\"https://raw.githubusercontent.com/kaansoral/adventureland/master/examples/happy_holidays.js\"><span style=\"color: #33BF6D\">CODE</span></a> qui automatise le bonus de Noël.\n\t\t\t\t\tP.-S. 4. Il y a aussi quelques nouveautés et de nouvelles compétences !",
-	"pages.contents.selection.slots-in-use": "Tous tes emplacements de personnage sont occupés."
+	"pages.contents.selection.slots-in-use": "Tous tes emplacements de personnage sont occupés.",
+	"pages.contents.selection.sp-rename-seashells": "Le renommage se paie en coquillages pris dans le sac du personnage. Utilise Devis pour voir le prix."
 }

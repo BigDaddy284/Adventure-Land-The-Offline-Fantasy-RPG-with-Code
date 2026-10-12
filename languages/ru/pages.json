@@ -20,8 +20,8 @@
 	"pages.steam_signup.failed": "Проверка Steam не удалась или срок её действия истёк. Попробуй ещё раз.",
 	"pages.steam_signup.not_owned": "На этом аккаунте Steam нет Adventure Land.",
 	"pages.steam_signup.unavailable": "Проверка Steam сейчас недоступна. Попробуй позже.",
-  "pages.hub.title": "Hub - {name}",
-  "pages.contents.selection_features.upcoming": "СКОРО",
+	"pages.hub.title": "Hub - {name}",
+	"pages.contents.selection_features.upcoming": "СКОРО",
 	"pages.allnotes.adventure-land-update-notes": "Adventure Land — новости обновлений",
 	"pages.allnotes.last-update": "Последнее обновление: {last_deploy}",
 	"pages.allnotes.update-notes": "Новости обновлений",
@@ -1497,5 +1497,6 @@
 	"pages.vscode.use-in-vs-code-or-cursor-it-replaces": "Используйте <span class=\"shell\">{id}</span> в VS Code или Cursor. Расширение заменяет старую синхронизацию папки клиента автосинхронизацией через API, поэтому работает со Steam, браузером и обычными настольными редакторами.",
 	"pages.vscode.your-token": "Ваш токен доступа",
 	"pages.contents.announcement_email.holiday_code_example": "P. S. 3. Вот <a style=\"color: #33BF6D\" href=\"https://raw.githubusercontent.com/kaansoral/adventureland/master/examples/happy_holidays.js\"><span style=\"color: #33BF6D\">CODE</span></a>, который автоматизирует рождественское усиление.\n\t\t\t\t\tP. S. 4. Ещё появились новые вещи и умения!",
-	"pages.contents.selection.slots-in-use": "Все ваши места для персонажей заняты."
+	"pages.contents.selection.slots-in-use": "Все ваши места для персонажей заняты.",
+	"pages.contents.selection.sp-rename-seashells": "Переименование оплачивается морскими ракушками из сумки этого персонажа. Цену можно узнать через «Оценку»."
 }

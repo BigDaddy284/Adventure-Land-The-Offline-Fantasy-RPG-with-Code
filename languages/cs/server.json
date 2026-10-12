@@ -402,7 +402,9 @@
 	"server.game_error.poker_hand_active": "Tvoje pokerové rozdání stále probíhá na jiném serveru. Počkej, až skončí, nebo se k tomu serveru znovu připoj.",
 	"server.tracktrix.mail_subject": "Tvůj Tracktrix",
 	"server.tracktrix.mail_body": "Malá pomoc na příští lov. Nos tento Tracktrix s sebou!",
-  "server.game_log.offered_for": "{item} nabídnuto k výměně za {want}",
-  "server.game_log.offered_for_or_higher": "{item} nabídnuto k výměně za {want} nebo vyšší",
-  "server.game_log.traded_for": "{item} vyměněno s hráčem {player} za {received}"
+	"server.game_log.offered_for": "{item} nabídnuto k výměně za {want}",
+	"server.game_log.offered_for_or_higher": "{item} nabídnuto k výměně za {want} nebo vyšší",
+	"server.game_log.traded_for": "{item} vyměněno s hráčem {player} za {received}",
+	"server.api.sp_spent_seashells": "Utraceno {amount} mořských mušlí z batohu postavy {name}",
+	"server.api.sp_rename_quote": "Stojí {amount} mořských mušlí z batohu postavy"
 }

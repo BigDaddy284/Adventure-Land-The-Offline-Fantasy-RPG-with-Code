@@ -399,7 +399,9 @@
 	"server.game_error.poker_hand_active": "Pokerijakosi on yhä kesken toisella palvelimella. Odota sen päättymistä tai yhdistä uudelleen sille palvelimelle.",
 	"server.tracktrix.mail_subject": "Sinun Tracktrixisi",
 	"server.tracktrix.mail_body": "Pieni apu seuraavaan metsästykseesi. Pidä tämä Tracktrix mukanasi!",
-  "server.game_log.offered_for": "Tarjottu vaihtoon: {item}, pyydetty: {want}",
-  "server.game_log.offered_for_or_higher": "Tarjottu vaihtoon: {item}, pyydetty: {want} tai korkeampi",
-  "server.game_log.traded_for": "Vaihdettu: {item}, vaihtaja: {player}, saatu: {received}"
+	"server.game_log.offered_for": "Tarjottu vaihtoon: {item}, pyydetty: {want}",
+	"server.game_log.offered_for_or_higher": "Tarjottu vaihtoon: {item}, pyydetty: {want} tai korkeampi",
+	"server.game_log.traded_for": "Vaihdettu: {item}, vaihtaja: {player}, saatu: {received}",
+	"server.api.sp_spent_seashells": "Käytettiin {amount} simpukankuorta hahmon {name} laukusta",
+	"server.api.sp_rename_quote": "Maksaa {amount} simpukankuorta hahmon laukusta"
 }

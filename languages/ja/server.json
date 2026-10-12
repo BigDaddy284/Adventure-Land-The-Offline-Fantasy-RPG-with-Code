@@ -396,7 +396,9 @@
 	"server.game_error.poker_hand_active": "別のサーバーであなたのポーカーのハンドが続いています。終了を待つか、そのサーバーに再接続してください。",
 	"server.tracktrix.mail_subject": "あなたへのTracktrix",
 	"server.tracktrix.mail_body": "次の狩りに、ちょっとした助けを。このTracktrixを持ち歩いてね！",
-  "server.game_log.offered_for": "{item}を{want}との交換に出しました",
-  "server.game_log.offered_for_or_higher": "{item}を{want}以上との交換に出しました",
-  "server.game_log.traded_for": "{player}と{item}を{received}に交換しました"
+	"server.game_log.offered_for": "{item}を{want}との交換に出しました",
+	"server.game_log.offered_for_or_higher": "{item}を{want}以上との交換に出しました",
+	"server.game_log.traded_for": "{player}と{item}を{received}に交換しました",
+	"server.api.sp_spent_seashells": "{name}のバッグから貝殻を{amount}個使いました",
+	"server.api.sp_rename_quote": "キャラクターのバッグから貝殻{amount}個が必要です"
 }

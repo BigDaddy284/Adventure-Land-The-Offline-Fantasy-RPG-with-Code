@@ -396,7 +396,9 @@
 	"server.game_error.poker_hand_active": "다른 서버에서 포커 핸드가 아직 진행 중입니다. 끝날 때까지 기다리거나 해당 서버에 다시 접속하세요.",
 	"server.tracktrix.mail_subject": "당신을 위한 Tracktrix",
 	"server.tracktrix.mail_body": "다음 사냥에 작은 도움이 되길. 이 Tracktrix를 가지고 다니세요!",
-  "server.game_log.offered_for": "교환 등록: {item}, 희망 {want}",
-  "server.game_log.offered_for_or_higher": "교환 등록: {item}, 희망 {want} 이상",
-  "server.game_log.traded_for": "{player}님과 교환: {item} 주고 {received} 받음"
+	"server.game_log.offered_for": "교환 등록: {item}, 희망 {want}",
+	"server.game_log.offered_for_or_higher": "교환 등록: {item}, 희망 {want} 이상",
+	"server.game_log.traded_for": "{player}님과 교환: {item} 주고 {received} 받음",
+	"server.api.sp_spent_seashells": "{name}의 가방에서 조개껍데기 {amount}개를 사용했어요",
+	"server.api.sp_rename_quote": "캐릭터 가방에서 조개껍데기 {amount}개가 들어요"
 }

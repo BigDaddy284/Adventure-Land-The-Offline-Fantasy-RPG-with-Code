@@ -399,7 +399,9 @@
 	"server.game_error.poker_hand_active": "Sua mão de pôquer ainda está em andamento em outro servidor. Espere terminar ou reconecte-se lá.",
 	"server.tracktrix.mail_subject": "Seu Tracktrix",
 	"server.tracktrix.mail_body": "Uma ajudinha para sua próxima caçada. Leve este Tracktrix com você!",
-  "server.game_log.offered_for": "Você ofereceu {item} em troca de {want}",
-  "server.game_log.offered_for_or_higher": "Você ofereceu {item} em troca de {want} ou superior",
-  "server.game_log.traded_for": "Você trocou {item} com {player} por {received}"
+	"server.game_log.offered_for": "Você ofereceu {item} em troca de {want}",
+	"server.game_log.offered_for_or_higher": "Você ofereceu {item} em troca de {want} ou superior",
+	"server.game_log.traded_for": "Você trocou {item} com {player} por {received}",
+	"server.api.sp_spent_seashells": "Gastou {amount} conchas da bolsa de {name}",
+	"server.api.sp_rename_quote": "Custa {amount} conchas da bolsa do personagem"
 }

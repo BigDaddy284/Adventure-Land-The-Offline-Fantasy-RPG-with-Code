@@ -402,7 +402,9 @@
 	"server.game_error.poker_hand_active": "Mâna ta de poker se joacă încă pe alt server. Așteaptă să se termine sau reconectează-te acolo.",
 	"server.tracktrix.mail_subject": "Tracktrix pentru tine",
 	"server.tracktrix.mail_body": "Un mic ajutor pentru următoarea vânătoare. Ține acest Tracktrix la tine!",
-  "server.game_log.offered_for": "Ai oferit {item} la schimb pentru {want}",
-  "server.game_log.offered_for_or_higher": "Ai oferit {item} la schimb pentru {want} sau mai mare",
-  "server.game_log.traded_for": "Ai schimbat {item} cu {player} pe {received}"
+	"server.game_log.offered_for": "Ai oferit {item} la schimb pentru {want}",
+	"server.game_log.offered_for_or_higher": "Ai oferit {item} la schimb pentru {want} sau mai mare",
+	"server.game_log.traded_for": "Ai schimbat {item} cu {player} pe {received}",
+	"server.api.sp_spent_seashells": "Ai cheltuit {amount} scoici din geanta lui {name}",
+	"server.api.sp_rename_quote": "Costă {amount} scoici din geanta personajului"
 }

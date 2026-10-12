@@ -1998,3 +1998,9 @@ module.exports = {
 	// js/html.js render_server; compact label below an active boss/event icon, opening that event's guide. This is an event label, not a proper event name. Keep brief and emphatic.
 	"interface.server.event": "EVENT!",
 };
+
+// Single player: Shells are replaced by seashells (625 seashells for every 75 Shells, rounded up).
+module.exports["interface.item.sp_seashells"] = "{value} SEASHELLS";
+module.exports["interface.item.sp_seashells_short"] = "You don't have enough seashells in your bag. Frogs, crabs and other sea creatures drop them.";
+module.exports["interface.interaction.sp_bank_account"] = "Hello! You don't seem to have an account open with me. Would you like to open one? It costs {value} Gold or {value2} Seashells. We hold onto your items forever.";
+module.exports["interface.interaction.sp_use_seashells"] = "USE SEASHELLS";

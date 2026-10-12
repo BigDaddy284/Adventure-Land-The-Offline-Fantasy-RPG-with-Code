@@ -20,8 +20,8 @@
 	"pages.steam_signup.failed": "Verifikasi Steam gagal atau sudah kedaluwarsa. Silakan coba lagi.",
 	"pages.steam_signup.not_owned": "Akun Steam ini tidak memiliki Adventure Land.",
 	"pages.steam_signup.unavailable": "Verifikasi Steam sedang tidak tersedia. Silakan coba lagi nanti.",
-  "pages.hub.title": "Hub - {name}",
-  "pages.contents.selection_features.upcoming": "SEGERA HADIR",
+	"pages.hub.title": "Hub - {name}",
+	"pages.contents.selection_features.upcoming": "SEGERA HADIR",
 	"pages.allnotes.adventure-land-update-notes": "Adventure Land - Catatan Pembaruan",
 	"pages.allnotes.last-update": "Pembaruan Terakhir {last_deploy}",
 	"pages.allnotes.update-notes": "Catatan Pembaruan",
@@ -1497,5 +1497,6 @@
 	"pages.vscode.use-in-vs-code-or-cursor-it-replaces": "Gunakan <span class=\"shell\">{id}</span> di VS Code atau Cursor. Ekstensi ini menggantikan sinkronisasi folder klien lama dengan sinkronisasi otomatis berbasis API, sehingga bisa digunakan dari Steam, browser, dan editor desktop biasa.",
 	"pages.vscode.your-token": "Token kamu",
 	"pages.contents.announcement_email.holiday_code_example": "PS 3. Ini <a style=\"color: #33BF6D\" href=\"https://raw.githubusercontent.com/kaansoral/adventureland/master/examples/happy_holidays.js\"><span style=\"color: #33BF6D\">CODE</span></a> yang mengotomatiskan bonus Natal\n\t\t\t\t\tPS 4. Ada beberapa hal baru dan kemampuan baru juga!",
-	"pages.contents.selection.slots-in-use": "Semua slot karaktermu sudah terisi."
+	"pages.contents.selection.slots-in-use": "Semua slot karaktermu sudah terisi.",
+	"pages.contents.selection.sp-rename-seashells": "Ganti nama dibayar dengan kerang laut dari tas karakter itu. Gunakan Kutipan untuk melihat harganya."
 }

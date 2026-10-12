@@ -3563,3 +3563,6 @@ module.exports["pages.sp.about.intro"] = "Fantasy Land is a single player RPG yo
 module.exports["pages.sp.about.mod"] = "The <span class='mw'>MOD MENU</span> lets you tune the game to your taste: XP, drops, upgrade luck, events and how many characters play at once.";
 module.exports["pages.sp.about.economy"] = "Your <span class='mw'>MERCHANT</span> can keep a stand open to <span class='mw'>SELL</span> to Merrit, while Ponty and Ron keep their own stock.";
 module.exports["pages.sp.about.events"] = "<span class='mw'>DAILY EVENTS</span>, bosses and holiday events run on your own world, and you choose which ones are on.";
+
+// Single player: renames are paid in seashells.
+module.exports["pages.contents.selection.sp-rename-seashells"] = "Renaming is paid in seashells from that character's bag. Use Quote to see the price.";

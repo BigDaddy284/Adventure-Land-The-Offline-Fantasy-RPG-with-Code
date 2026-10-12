@@ -193,7 +193,7 @@ async function market_patron_grant(npc, player) {
 			per_character: typeof single_player == "object",
 			prepare: prepare,
 			sync: sync_entity,
-			chance: (balance) => market_patron_rules.shellChance(balance, config),
+			chance: (balance) => (typeof single_player == "object" ? 0 : market_patron_rules.shellChance(balance, config)), // Single player: no Shells
 		},
 	);
 	if (result.failed) {

@@ -164,7 +164,7 @@
 			<div class="textbutton mt5" onclick="if(bc(this)) return; api_call_l('rename_character',{name:$('.renamen').val(),nname:$('.rnnamen').val()},{disable:$(this)});">
 				{{ phrase_html("pages.contents.selection.rename-character") }}
 			</div>
-			<div style="color: red; margin-top: 6px">{{ phrase_html("pages.contents.selection.warning-use-the-quote-function-to-learn-about") }}</div>
+			{% if domain.single_player %}<div style="color: #E0C48C; margin-top: 6px">{{ phrase_html("pages.contents.selection.sp-rename-seashells") }}</div>{% else %}<div style="color: red; margin-top: 6px">{{ phrase_html("pages.contents.selection.warning-use-the-quote-function-to-learn-about") }}</div>{% endif %}
 		</div>
 		<div class="transferui onback-hide hidden">
 			<div class="whiteheader mb2">{{ phrase("pages.contents.selection.character-name") }}</div>
@@ -186,7 +186,9 @@
 				<span style="color: orange">#</span> {{ phrase("pages.contents.selection.sort-characters-2") }}{# <span style="color: gray">[Soon]</span>#}
 			</div>
 			<div class="textbutton mt5" onclick="if(bc(this)) return; $('.editui').hide(); $('.renameui').show(); resize();">{{ phrase_html("pages.contents.selection.rename-a-character") }}</div>
+			{% if not domain.single_player %}
 			<div class="textbutton mt5" onclick="if(bc(this)) return; $('.editui').hide(); $('.transferui').show(); resize();">{{ phrase_html("pages.contents.selection.transfer-a-character") }}</div>
+			{% endif %}
 			<div class="textbutton mt5 mb5" onclick="if(bc(this)) return; $('.editui').hide(); $('.deleteui').show(); resize();">{{ phrase_html("pages.contents.selection.x-delete-a-character") }}</div>
 			<div class="textbutton mt5 mb5" onclick="if(bc(this)) return; $('.editui').hide(); $('.privacyui').show(); resize();">{{ phrase_html("pages.contents.selection.toggle-privacy") }}</div>
 		</div>

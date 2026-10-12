@@ -396,7 +396,9 @@
 	"server.game_error.poker_hand_active": "你的這手牌仍在另一個伺服器上進行。請等牌局結束，或重新連線至該伺服器。",
 	"server.tracktrix.mail_subject": "你的Tracktrix",
 	"server.tracktrix.mail_body": "為下次狩獵送上一點幫助。記得隨身帶著這個Tracktrix！",
-  "server.game_log.offered_for": "已上架{item}，換取{want}",
-  "server.game_log.offered_for_or_higher": "已上架{item}，換取{want}或更高",
-  "server.game_log.traded_for": "與{player}交換，以{item}換得{received}"
+	"server.game_log.offered_for": "已上架{item}，換取{want}",
+	"server.game_log.offered_for_or_higher": "已上架{item}，換取{want}或更高",
+	"server.game_log.traded_for": "與{player}交換，以{item}換得{received}",
+	"server.api.sp_spent_seashells": "已從{name}的背包中花費 {amount} 個貝殼",
+	"server.api.sp_rename_quote": "需要角色背包中的 {amount} 個貝殼"
 }

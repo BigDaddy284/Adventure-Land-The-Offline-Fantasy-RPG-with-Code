@@ -13,7 +13,7 @@
 	<div class="guide-card">{{ phrase_html("docs.guide.shops-and-selling.1-find-the-right-merchant-a-merchant-can") }}</div>
 	<div class="guide-card">{{ phrase_html("docs.guide.shops-and-selling.2-inspect-one-item-read-its-price-currency") }}</div>
 	<div class="guide-card">{{ phrase_html("docs.guide.shops-and-selling.3-keep-free-space-a-compatible-stack-can") }}</div>
-	<div class="guide-card">{{ phrase_html("docs.guide.shops-and-selling.4-choose-currency-when-needed-buy-uses-the") }}</div>
+	{% if domain.single_player %}<div class="guide-card">{{ phrase_html("docs.sp.shops.currency") }}</div>{% else %}<div class="guide-card">{{ phrase_html("docs.guide.shops-and-selling.4-choose-currency-when-needed-buy-uses-the") }}</div>{% endif %}
 </div>
 
 <div class="divider"></div>

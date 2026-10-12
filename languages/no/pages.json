@@ -20,8 +20,8 @@
 	"pages.steam_signup.failed": "Steam-bekreftelsen mislyktes eller har utløpt. Prøv igjen.",
 	"pages.steam_signup.not_owned": "Denne Steam-kontoen eier ikke Adventure Land.",
 	"pages.steam_signup.unavailable": "Steam-bekreftelse er ikke tilgjengelig akkurat nå. Prøv igjen senere.",
-  "pages.hub.title": "Hub - {name}",
-  "pages.contents.selection_features.upcoming": "KOMMENDE",
+	"pages.hub.title": "Hub - {name}",
+	"pages.contents.selection_features.upcoming": "KOMMENDE",
 	"pages.allnotes.adventure-land-update-notes": "Adventure Land – oppdateringsnotater",
 	"pages.allnotes.last-update": "Sist oppdatert {last_deploy}",
 	"pages.allnotes.update-notes": "Oppdateringsnotater",
@@ -1497,5 +1497,6 @@
 	"pages.vscode.use-in-vs-code-or-cursor-it-replaces": "Bruk <span class=\"shell\">{id}</span> i VS Code eller Cursor. Den erstatter den gamle mappesynkroniseringen i klienten med API-basert automatisk synkronisering, slik at den virker fra Steam, nettleseren og vanlige skrivebordsredigerere.",
 	"pages.vscode.your-token": "Tokenet ditt",
 	"pages.contents.announcement_email.holiday_code_example": "PS 3. Her er <a style=\"color: #33BF6D\" href=\"https://raw.githubusercontent.com/kaansoral/adventureland/master/examples/happy_holidays.js\"><span style=\"color: #33BF6D\">CODE</span></a> som automatiserer juleforsterkningen\n\t\t\t\t\tPS 4. Det finnes noen nye ting og nye ferdigheter også!",
-	"pages.contents.selection.slots-in-use": "Alle figurplassene dine er i bruk."
+	"pages.contents.selection.slots-in-use": "Alle figurplassene dine er i bruk.",
+	"pages.contents.selection.sp-rename-seashells": "Navnebytte betales med skjell fra figurens sekk. Bruk Tilbud for å se prisen."
 }

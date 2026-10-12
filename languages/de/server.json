@@ -398,7 +398,9 @@
 	"server.game_error.poker_hand_active": "Deine Pokerhand läuft noch auf einem anderen Server. Warte auf ihr Ende oder verbinde dich wieder mit diesem Server.",
 	"server.tracktrix.mail_subject": "Dein Tracktrix",
 	"server.tracktrix.mail_body": "Eine kleine Hilfe für deine nächste Jagd. Behalte dieses Tracktrix bei dir!",
-  "server.game_log.offered_for": "{item} zum Tausch gegen {want} angeboten",
-  "server.game_log.offered_for_or_higher": "{item} zum Tausch gegen {want} oder höher angeboten",
-  "server.game_log.traded_for": "{item} mit {player} gegen {received} getauscht"
+	"server.game_log.offered_for": "{item} zum Tausch gegen {want} angeboten",
+	"server.game_log.offered_for_or_higher": "{item} zum Tausch gegen {want} oder höher angeboten",
+	"server.game_log.traded_for": "{item} mit {player} gegen {received} getauscht",
+	"server.api.sp_spent_seashells": "{amount} Seemuscheln aus der Tasche von {name} ausgegeben",
+	"server.api.sp_rename_quote": "Kostet {amount} Seemuscheln aus der Tasche des Charakters"
 }

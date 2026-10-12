@@ -4,7 +4,7 @@
 <p>{{ phrase_html("docs.functions.start_character.promise-failures-unless-a-function-specific-note-says") }}</p>
 <p>{{ phrase_html("docs.functions.start_character.notes-repeated-calls-for-the-same-local-character") }}</p>
 <p>{{ phrase_html("docs.functions.start_character.mainframe-the-first-child-call-changes-the-caller") }}</p>
-<p>{{ phrase_html("docs.functions.start_character.at-the-next-renewal-one-shell-or-free") }}</p>
+{% if not domain.single_player %}<p>{{ phrase_html("docs.functions.start_character.at-the-next-renewal-one-shell-or-free") }}</p>{% endif %}
 <p>{{ phrase_html("docs.functions.start_character.example") }}</p>
 <div class='code'>async function example() {
 	await start_character("Merchant", "merchant_code");

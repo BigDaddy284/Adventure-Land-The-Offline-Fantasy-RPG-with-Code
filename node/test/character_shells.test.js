@@ -319,3 +319,55 @@ test("negative shells remain signed in the UI and wire format and do not amplify
 		assert.equal(rules.shellChance(cash, config), rules.shellChance(0, config));
 	}
 });
+
+test("single player: Shells purchases, bank packs and blessings are paid in seashells from the bag", async () => {
+	const G = require("./helpers/design");
+	const sp = require("../logic/single_player");
+	const pack = Object.keys(G.bank_packs).find((name) => G.bank_packs[name][2] == 600);
+	for (const [event, data, need, done] of [
+		["buy_with_cash", { name: "cosmo0", quantity: 1 }, 2409, (f) => f.items.some((item) => item.name == "cosmo0")],
+		["bless_server", {}, 10000, (f) => f.context.S.blessed_minutes > 0],
+		["bank", { operation: "unlock", shells: 1, pack }, 5000, (f) => Array.isArray(f.player.user[pack])],
+	]) {
+		for (const short of [false, true]) {
+			const f = gameFixture(0, event === "bank");
+			f.context.single_player = sp.create({});
+			Object.assign(f.context, { cache_item: (item) => item, bless_loop() {}, discord_call() {}, realm_broadcast() {}, region: "US", server_name: "I" });
+			load(f.context, "node/server.js", ["consume", "pay_seashells", "refund_seashells", "seashells_short"]);
+			f.player.esize = 40;
+			f.player.citems = [];
+			f.player.items = short ? [{ name: "seashell", q: Math.min(need - 1, 9999) }] : [{ name: "seashell", q: 9999 }, { name: "seashell", q: 9999 }];
+			socketHandler(f.context, event)({ ...data, request_id: "fixture-request" });
+			for (let i = 0; i < 20; i++) await new Promise(setImmediate);
+			const left = f.player.items.reduce((sum, item) => sum + ((item && item.name == "seashell" && item.q) || 0), 0);
+			if (short) {
+				assert.equal(done(f), false, event);
+				assert.equal(left, Math.min(need - 1, 9999), event);
+			} else {
+				assert.equal(done(f), true, event);
+				assert.equal(left, 9999 * 2 - need, event);
+			}
+			assert.equal(f.records.get("US_fixture").cash, 0, event);
+		}
+	}
+});
+
+test("single player: renaming is paid in seashells from that character's bag", async () => {
+	const path = require("node:path");
+	for (const [seashells, ok] of [
+		[5334, true],
+		[5333, false],
+	]) {
+		const f = fixture({ cash: 0 });
+		f.context.options = { single_player: true };
+		f.context.require = (name) => require(path.resolve(__dirname, "../..", name));
+		f.records.get("CH_existing").info.items = [{ name: "seashell", q: seashells }, null];
+		const result = await f.call("rename_character");
+		assert.equal(!!result.success, ok);
+		const character = f.records.get("CH_existing");
+		assert.equal(character.name, ok ? "renamed" : "existing");
+		assert.deepEqual(character.info.items[0], ok ? null : { name: "seashell", q: 5333 });
+		assert.equal(f.saved().cash, 0);
+		if (!ok) assert.equal(result.reason, "not_enough_seashells");
+	}
+});
