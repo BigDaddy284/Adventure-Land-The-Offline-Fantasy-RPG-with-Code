@@ -87,13 +87,32 @@ If things get slow, close a window or two. Your characters are saved on the serv
 
 ## Updating to a new version
 
-The game never updates itself. A new version comes as a new zip:
+The game never updates itself. A new version comes as a new zip.
+
+Your game is kept in two places, and these are all you need to carry over:
+
+- `singleplayer\data`: the database. Your account, characters, items, bank and the scripts you saved in the game's CODE window are all in here.
+- `settings.txt` in the game folder: your settings, including everything you set in the Mod Menu.
+
+**Back them up first.** Close the game (or run `Stop.bat`) and copy both somewhere safe. Always copy them with the game closed, or the database copy may be incomplete.
+
+**Updating in place (easiest):**
 
 1. Close the game (or run `Stop.bat`).
-2. Extract the new zip over your game folder.
+2. Extract the new zip over your game folder, replacing files when asked.
 3. Start with `Fantasy Land.exe`.
 
-Your `settings.txt` and saved characters are kept. Extracting over the folder doesn't delete files that a newer version no longer uses, which is harmless.
+Your `settings.txt` and saved game are kept, since the zip contains neither. Extracting over the folder doesn't delete files that a newer version no longer uses, which is harmless.
+
+**Updating into a new folder:**
+
+1. Close the game (or run `Stop.bat`).
+2. Extract the new zip to its own folder.
+3. Copy the `singleplayer\data` folder from the old folder into the new folder's `singleplayer` folder.
+4. Copy `settings.txt` from the old folder into the new folder.
+5. Start the new folder's `Fantasy Land.exe`. Once you're happy everything is there, the old folder can be deleted.
+
+New settings added by a newer version are written to the end of your `settings.txt` automatically, and your own values are kept.
 
 ## Where things are
 
@@ -241,7 +260,7 @@ Fantasy Land started as a copy of the MongoDB port of [Adventure Land](https://g
 - New Mod Menu setting, **XP multiplier** (`xp_rate`): 1 = normal XP from monsters, 2 = double, and so on.
 - Upgrade and compound chance are now multipliers like drop luck (**Upgrade luck** and **Compound luck**, `upgrade_success` and `compound_success`): 1 = normal, 2 = twice the chance of success. An older `settings.txt` is converted automatically (`upgrade_success_percent = 200` becomes `upgrade_success = 2`).
 - **Characters online** in the Mod Menu now really sets how many characters can play at once. Before, the game could still stop a 5th character with "You can have 3 characters and one merchant online at most". Merchants now count like any other character, and the message, when you do reach the limit, says how many your setting allows.
-- README: a note on the risks of running a lot of game windows at once.
+- README: a note on the risks of running a lot of game windows at once, and clearer update steps: what to back up (`singleplayer\data` and `settings.txt`) and how to move to a new folder.
 
 ## License
 
