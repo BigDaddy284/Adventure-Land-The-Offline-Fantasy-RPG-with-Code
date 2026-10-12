@@ -3,8 +3,8 @@
 <div><span class="tutorial-travel" data-type="npc" data-target="standmerchant"></span></div>
 <hr class="mb15 mt15" />
 <p>{{ phrase("docs.tutorial.new.shop_open") }}</p>
-<p>{{ phrase("docs.tutorial.new.shop_listing") }}</p>
-<p>{{ phrase("docs.tutorial.new.shop_code") }}</p>
+{% if domain.single_player %}<p>{{ phrase("docs.sp.merchant.shop_listing") }}</p>{% else %}<p>{{ phrase("docs.tutorial.new.shop_listing") }}</p>{% endif %}
+{% if domain.single_player %}<p>{{ phrase("docs.sp.merchant.shop_code") }}</p>{% else %}<p>{{ phrase("docs.tutorial.new.shop_code") }}</p>{% endif %}
 <div class="divider"></div>
 <div class="title mt15">CODE</div>
 <!-- prettier-ignore -->

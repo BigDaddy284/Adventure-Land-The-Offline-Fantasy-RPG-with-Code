@@ -142,10 +142,10 @@ test("single player website blocks payments and online-only pages and API calls"
 		web.block_paths({ path }, { status: (s) => ((status = s), { send() {} }) }, () => {});
 		return status;
 	};
-	["/shells", "/steam-purchase", "/steam-signin/start", "/mcp", "/mcp_api/x", "/r/abc", "/sitemap.xml"].forEach((p) =>
+	["/shells", "/steam-purchase", "/steam-signin/start", "/mcp", "/mcp_api/x", "/r/abc", "/sitemap.xml", "/mainframe", "/docs/guide/hub", "/docs/guide/advanced/pvp", "/docs/guide/limits"].forEach((p) =>
 		assert.equal(blocked(p), 404, p),
 	);
-	["/", "/character/Me/in/US/I/", "/data.js", "/api/servers_and_characters", "/mainframe", "/docs"].forEach((p) =>
+	["/", "/character/Me/in/US/I/", "/data.js", "/api/servers_and_characters", "/docs", "/docs/guide/characters-and-limits", "/docs/guide/multi"].forEach((p) =>
 		assert.equal(blocked(p), 200, p),
 	);
 	const REF = { stripe_payment: {}, steam_payment_start: {}, save_code: {} };

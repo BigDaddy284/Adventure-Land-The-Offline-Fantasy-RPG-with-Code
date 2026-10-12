@@ -24,7 +24,7 @@
 <div class="divider"></div>
 <div class="title mt15">{{ phrase("docs.guide.stats.classes") }}</div> <div class="mb5"></div>
 
-<div>{{ phrase("docs.guide.stats.warriors-rogues-and-rangers-deal-physical-damage-while") }}</div>
+{% if domain.single_player %}<div>{{ phrase("docs.sp.stats.classes") }}</div>{% else %}<div>{{ phrase("docs.guide.stats.warriors-rogues-and-rangers-deal-physical-damage-while") }}</div>{% endif %}
 
 
 <div class="divider"></div>

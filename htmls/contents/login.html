@@ -78,19 +78,19 @@
 	<div id="features" style="font-size: 24px; max-width: 320px" class="loginfeatures">
 		<div style='border-bottom: 2px dashed gray; color: #E7E7E7; display: inline-block; margin-bottom: 6px'>{{ phrase("pages.contents.login.about-adventure-land") }}</div>
 		<div class="infop">
-			{{ phrase_html("pages.contents.login.adventure-land-is-an-experimental-indie-mmorpg-anyone") }}
+			{% if domain.single_player %}{{ phrase_html("pages.sp.about.intro") }}{% else %}{{ phrase_html("pages.contents.login.adventure-land-is-an-experimental-indie-mmorpg-anyone") }}{% endif %}
 		</div>
 		<div class="infop" style="margin-top: 12px">
 			{{ phrase_html("pages.contents.login.gameplay-has-many-aspects-to-it-it-s") }}
 		</div>
 		<div class="infop" style="margin-top: 12px">
-			{{ phrase_html("pages.contents.login.there-are-pvp-maps-with-increased-luck-gold") }}
+			{% if domain.single_player %}{{ phrase_html("pages.sp.about.mod") }}{% else %}{{ phrase_html("pages.contents.login.there-are-pvp-maps-with-increased-luck-gold") }}{% endif %}
 		</div>
 		<div class="infop" style="margin-top: 12px">
-			{{ phrase_html("pages.contents.login.the-economy-is-completely-peer-to-peer-you") }}
+			{% if domain.single_player %}{{ phrase_html("pages.sp.about.economy") }}{% else %}{{ phrase_html("pages.contents.login.the-economy-is-completely-peer-to-peer-you") }}{% endif %}
 		</div>
 		<div class="infop" style="margin-top: 12px">
-			{{ phrase_html("pages.contents.login.there-are-a-lot-of-planned-features-like") }}
+			{% if domain.single_player %}{{ phrase_html("pages.sp.about.events") }}{% else %}{{ phrase_html("pages.contents.login.there-are-a-lot-of-planned-features-like") }}{% endif %}
 		</div>
 		<div class="infop" style="margin-top: 12px">
 			{{ phrase_html("pages.contents.login.adventure-land-is-open-source-explore-the-code") }}

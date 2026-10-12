@@ -16,6 +16,8 @@ const BLOCKED_PATHS = [
 	/^\/sitemap\.xml$/,
 	/^\/internal\/bots\//,
 	/^\/(hub|comm)(\/|$)/, // multi-window hub for online play
+	/^\/mainframe(\/|$)/, // cloud hosting for characters
+	/^\/docs\/guide\/(.+\/)?(limits|hub|adventure-mcp|mainframe|adventure-api|pvp|X\.sub-msgpack)\/?$/, // guides for online-only services
 ];
 
 // API calls removed from the game's API list

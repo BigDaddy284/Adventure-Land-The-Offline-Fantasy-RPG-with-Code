@@ -55,7 +55,7 @@
 	<hr />
 	<p>{{ phrase("docs.cave.common_weapons") }}</p>
 	<p>{{ phrase("docs.cave.equipment_roles") }}</p>
-	<p>{{ phrase("docs.cave.craft") }}</p>
+	{% if domain.single_player %}<p>{{ phrase("docs.sp.cave.craft") }}</p>{% else %}<p>{{ phrase("docs.cave.craft") }}</p>{% endif %}
 	<div class="cave-guide-crafts"></div>
 	<hr />
 	<p>{{ phrase("docs.cave.exit") }}</p>

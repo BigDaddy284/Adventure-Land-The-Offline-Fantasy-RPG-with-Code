@@ -89,17 +89,17 @@ var helpers = require_code("helpers");</div>
 
 <p>{{ phrase_html("docs.articles.code-api.get-set-store-json-serializable-browser-local-values") }}</p>
 
-<p>{{ phrase_html("docs.articles.code-api.both-loaders-execute-the-file-again-on-every") }}</p>
+{% if domain.single_player %}<p>{{ phrase_html("docs.sp.code-api.loaders") }}</p>{% else %}<p>{{ phrase_html("docs.articles.code-api.both-loaders-execute-the-file-again-on-every") }}</p>{% endif %}
 
 <p>{{ phrase_html("docs.articles.code-api.low-level-socket-access") }}</p>
 
 <p>{{ phrase_html("docs.articles.code-api.get-socket-is-available-for-listening-to-low") }}</p>
 
-<p>{{ phrase_html("docs.articles.code-api.mainframe-execution") }}</p>
+{% if not domain.single_player %}<p>{{ phrase_html("docs.articles.code-api.mainframe-execution") }}</p>{% endif %}
 
-<p>{{ phrase_html("docs.articles.code-api.mainframe-runs-the-same-public-code-model-without") }}</p>
+{% if not domain.single_player %}<p>{{ phrase_html("docs.articles.code-api.mainframe-runs-the-same-public-code-model-without") }}</p>{% endif %}
 
-<p>{{ phrase("docs.articles.code-api.a-code-log-proves-that-javascript-reached-the") }}</p>
+{% if domain.single_player %}<p>{{ phrase("docs.sp.code-api.log") }}</p>{% else %}<p>{{ phrase("docs.articles.code-api.a-code-log-proves-that-javascript-reached-the") }}</p>{% endif %}
 
 <p>{{ phrase_html("docs.articles.code-api.long-running-loops") }}</p>
 
@@ -123,11 +123,11 @@ setInterval(async function () {
 	}
 }, 250);</div>
 
-<p>{{ phrase("docs.articles.code-api.a-synchronous-infinite-loop-blocks-heartbeats-and-is") }}</p>
+{% if domain.single_player %}<p>{{ phrase("docs.sp.code-api.loop") }}</p>{% else %}<p>{{ phrase("docs.articles.code-api.a-synchronous-infinite-loop-blocks-heartbeats-and-is") }}</p>{% endif %}
 
 <p>{{ phrase_html("docs.articles.code-api.definitions-observations-and-entities") }}</p>
 
-<p>{{ phrase_html("docs.articles.code-api.g-describes-what-can-exist-it-does-not") }}</p>
+{% if domain.single_player %}<p>{{ phrase_html("docs.sp.code-api.g") }}</p>{% else %}<p>{{ phrase_html("docs.articles.code-api.g-describes-what-can-exist-it-does-not") }}</p>{% endif %}
 
 <p>{{ phrase("docs.articles.code-api.never-keep-a-nearby-entity-object-across-an") }}</p>
 
@@ -135,7 +135,7 @@ setInterval(async function () {
 
 <p>{{ phrase_html("docs.articles.code-api.top-level-javascript-variables-reset-when-the-character") }}</p>
 
-<p>{{ phrase("docs.articles.code-api.a-running-mainframe-assignment-persists-through-adventure-land") }}</p>
+{% if not domain.single_player %}<p>{{ phrase("docs.articles.code-api.a-running-mainframe-assignment-persists-through-adventure-land") }}</p>{% endif %}
 
 <p>{{ phrase_html("docs.articles.code-api.before-saving-code") }}</p>
 

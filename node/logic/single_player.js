@@ -366,6 +366,38 @@ function add_looks(classes) {
 	return classes;
 }
 
+// Guide pages about online-only services, taken out of the guide and the in-game Guide window
+const REMOVED_GUIDES = ["limits", "hub", "adventure-mcp", "mainframe", "adventure-api", "pvp", "X.sub-msgpack"];
+// CODE functions documented only for PvP and duels
+const REMOVED_FUNCTIONS = ["get_pvp_history", "send_duel_challenge", "accept_duel_challenge", "enter_duel"];
+
+// Takes the online-only pages out of the guide directory (docs/directory.js); safe to run more than once
+function prune_docs(docs) {
+	if (!docs) return docs;
+	const prune = (list) =>
+		list.filter((entry) => {
+			if (!Array.isArray(entry)) return true;
+			if (entry[0] == "limits") {
+				// The online rules page becomes a single player page about characters online and slots
+				entry.splice(0, 3, "characters-and-limits", "Characters & Limits", "characters online,merchants,slots,windows,limits");
+				return true;
+			}
+			if (REMOVED_GUIDES.includes(entry[0])) return false;
+			if (Array.isArray(entry[4])) entry[4] = prune(entry[4]);
+			return true;
+		});
+	if (docs.guide) docs.guide = prune(docs.guide);
+	for (const key of ["functions", "documented"])
+		if (docs[key]) docs[key] = docs[key].filter((name) => !REMOVED_FUNCTIONS.includes(name));
+	const interactions = docs.interactions || {};
+	delete interactions.pvp; // the arena's PvP guide
+	if (interactions.mainframe) interactions.mainframe.article = "special-interactions"; // Cyberland's terminal, not the hosting service
+	for (const name of Object.keys(interactions))
+		if (interactions[name].functions)
+			interactions[name].functions = interactions[name].functions.filter((fn) => !REMOVED_FUNCTIONS.includes(fn));
+	return docs;
+}
+
 function create(settings) {
 	let base_limits = null;
 	return {
@@ -501,6 +533,8 @@ module.exports = {
 	EVENT_MONSTERS,
 	CLASS_LOOKS,
 	add_looks,
+	prune_docs,
+	REMOVED_GUIDES,
 	create: (values) => create(Object.assign({}, DEFAULTS, values)),
 	load: () => create(load()),
 };

@@ -4,7 +4,7 @@
 <div>{{ phrase_html("docs.guide.items.right-bottom-corner-indicates-the-item-quantity") }}</div>
 <div>{{ phrase_html("docs.guide.items.hp-mp-potions-have-special-quantity-colouring") }}</div>
 <div>{{ phrase_html("docs.guide.items.m-items-received-from-the-merchant-s-luck") }}</div>
-<div>{{ phrase_html("docs.guide.items.pvp-marked-item-can-be-dropped-on-death") }}</div>
+{% if not domain.single_player %}<div>{{ phrase_html("docs.guide.items.pvp-marked-item-can-be-dropped-on-death") }}</div>{% endif %}
 <div>{{ phrase_html("docs.guide.items.a-want-to-sell-item-listing") }}</div>
 <div>{{ phrase_html("docs.guide.items.a-want-to-buy-item-listing") }}</div>
 <div>{{ phrase_html("docs.guide.items.a-giveaway-item") }}</div>
@@ -12,7 +12,7 @@
 <div>{{ phrase_html("docs.guide.items.s-sealed-items-begin-a-two-day-unlocking") }}</div>
 <div>{{ phrase_html("docs.guide.items.u-indicates-an-unlocking-item") }}</div>
 
-<div class="mt10">{{ phrase("docs.guide.items.self_damage") }}</div>
+{% if not domain.single_player %}<div class="mt10">{{ phrase("docs.guide.items.self_damage") }}</div>{% endif %}
 <div class="mt10">{{ phrase("docs.items.stunned_use") }}</div>
 
 <div class="divider"></div>

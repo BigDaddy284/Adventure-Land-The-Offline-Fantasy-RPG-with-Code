@@ -7775,8 +7775,8 @@ function render_com() {
 	html += " <div class='gamebutton ffriends fserver fnearby' onclick='load_server_list();'>" + phrase.html("interface.com.comrades") + "</div>";
 	if (window.single_player_mode) html += " <div class='gamebutton fservers' onclick='load_merchants();'>" + phrase.html("interface.load_servers_list.all_merchants") + "</div>";
 	else html += " <div class='gamebutton fservers' onclick='load_servers_list();'>" + phrase.html("interface.com.realm") + "</div>";
-	html += " <div class='gamebutton fcharacters' onclick='load_character_list();'>" + phrase.html("interface.com.characters") + "<span class='ccount'>" + c_count + "</span>/4]</div>";
-	html += " <div class='gamebutton fmainframe' onclick='load_mainframe_list();'>" + "Mainframe" + "</div>";
+	html += " <div class='gamebutton fcharacters' onclick='load_character_list();'>" + phrase.html("interface.com.characters") + "<span class='ccount'>" + c_count + "</span>" + (window.single_player_mode ? "" : "/4") + "]</div>"; // Single player: Characters online sets the limit
+	if (!window.single_player_mode) html += " <div class='gamebutton fmainframe' onclick='load_mainframe_list();'>" + "Mainframe" + "</div>"; // Single player: no cloud hosting
 	html += " <div class='gamebutton fchat' onclick='load_chat();'>" + phrase.html("interface.com.chat") + "</div>";
 	html += " <div class='gamebutton fmail' onclick='load_mail();'>" + phrase.html("interface.com.mail") + "<span class='mcount'>" + ((window.X && X.unread) || 0) + "</span>]</div>";
 	// html+=" <div class='gamebutton fguild' onclick='load_coming_soon(2)'>Guild</div> <div class='gamebutton fmail' onclick='load_coming_soon(4)'>Mail</div> <div class='gamebutton fleaders' onclick='load_coming_soon(3)'>Leaderboards</div>";

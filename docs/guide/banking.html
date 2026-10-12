@@ -24,7 +24,7 @@
 </div>
 <p>{{ phrase("docs.guide.banking.open-an-item-teller-then-drag-an-inventory") }}</p>
 <p>{{ phrase("docs.guide.banking.overflow_items") }}</p>
-<p>{{ phrase("docs.guide.banking.items-cannot-be-equipped-sold-upgraded-or-sent") }}</p>
+{% if domain.single_player %}<p>{{ phrase("docs.sp.banking.stored") }}</p>{% else %}<p>{{ phrase("docs.guide.banking.items-cannot-be-equipped-sold-upgraded-or-sent") }}</p>{% endif %}
 <div class="guide-note">{{ phrase("docs.guide.banking.leave-at-least-one-inventory-space-before-retrieving") }}</div>
 
 <div class="divider"></div>

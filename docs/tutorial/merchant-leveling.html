@@ -1,9 +1,9 @@
-<p>{{ phrase("docs.tutorial.new.xp_trade") }}</p>
+{% if domain.single_player %}<p>{{ phrase("docs.sp.merchant.xp_trade") }}</p>{% else %}<p>{{ phrase("docs.tutorial.new.xp_trade") }}</p>{% endif %}
 <p>{{ phrase("docs.tutorial.new.xp_donate") }}</p>
 <p style="display:flex;align-items:center;gap:16px"><span class="tutorial-npc" data-npc="lostandfound"></span><span>Ron · Wizard's Crib</span></p>
 <div><span class="tutorial-travel" data-type="npc" data-target="lostandfound"></span></div>
 <p>{{ phrase("docs.tutorial.new.xp_combat") }}</p>
-<p>{{ phrase("docs.tutorial.new.xp_gather") }}</p>
+{% if domain.single_player %}<p>{{ phrase("docs.sp.merchant.xp_gather") }}</p>{% else %}<p>{{ phrase("docs.tutorial.new.xp_gather") }}</p>{% endif %}
 <div class="divider"></div>
 <div class="title mt15">CODE</div>
 <!-- prettier-ignore -->

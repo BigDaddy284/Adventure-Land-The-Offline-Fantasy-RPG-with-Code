@@ -1,38 +1,40 @@
-<div class="guide-kicker">{{ phrase("docs.guide.markets-and-trading.the-player-economy") }}</div>
+{% if domain.single_player %}<div class="guide-kicker">{{ phrase("docs.sp.markets.kicker") }}</div>{% else %}<div class="guide-kicker">{{ phrase("docs.guide.markets-and-trading.the-player-economy") }}</div>{% endif %}
 <div class="guide-title">{{ phrase("docs.guide.markets-and-trading.markets-trading") }}</div>
-<p>{{ phrase("docs.guide.markets-and-trading.merchant-stands-hold-player-priced-sales-buy-orders") }}</p>
+{% if domain.single_player %}<p>{{ phrase("docs.sp.markets.intro") }}</p>{% else %}<p>{{ phrase("docs.guide.markets-and-trading.merchant-stands-hold-player-priced-sales-buy-orders") }}</p>{% endif %}
 
 <div class="guide-card-grid">
-	<div class="guide-card">{{ phrase_html("docs.guide.markets-and-trading.divian-buy-a-stand-then-list-your-own") }}</div>
-	<div class="guide-card">{{ phrase_html("docs.guide.markets-and-trading.ponty-browse-equipment-sold-back-into-the-ordinary") }}</div>
+	{% if domain.single_player %}<div class="guide-card">{{ phrase_html("docs.sp.markets.divian") }}</div>{% else %}<div class="guide-card">{{ phrase_html("docs.guide.markets-and-trading.divian-buy-a-stand-then-list-your-own") }}</div>{% endif %}
+	{% if domain.single_player %}<div class="guide-card">{{ phrase_html("docs.sp.markets.ponty") }}</div>{% else %}<div class="guide-card">{{ phrase_html("docs.guide.markets-and-trading.ponty-browse-equipment-sold-back-into-the-ordinary") }}</div>{% endif %}
 	<div class="guide-card">{{ phrase_html("docs.guide.markets-and-trading.ron-browse-items-recovered-from-unlooted-chests-after") }}</div>
-	<div class="guide-card">{{ phrase_html("docs.guide.markets-and-trading.nearby-players-open-a-visible-merchant-s-stand") }}</div>
+	{% if not domain.single_player %}<div class="guide-card">{{ phrase_html("docs.guide.markets-and-trading.nearby-players-open-a-visible-merchant-s-stand") }}</div>{% endif %}
 </div>
 
 <div class="guide-flow" style="border-color: #2f917a" data-guide-visual="market-listings">
 	<div class="guide-flow-node">{{ phrase_html("docs.guide.markets-and-trading.your-staff-9") }}</div>
 	<div class="guide-flow-arrow">→</div>
 	<div class="guide-flow-node">{{ phrase_html("docs.guide.markets-and-trading.sale-set-quantity-price") }}</div>
-	<div class="guide-flow-node">{{ phrase_html("docs.guide.markets-and-trading.buy-name-level-price") }}</div>
-	<div class="guide-flow-node">{{ phrase_html("docs.guide.markets-and-trading.trade-item-level-title") }}</div>
+	{% if not domain.single_player %}<div class="guide-flow-node">{{ phrase_html("docs.guide.markets-and-trading.buy-name-level-price") }}</div>{% endif %}
+	{% if not domain.single_player %}<div class="guide-flow-node">{{ phrase_html("docs.guide.markets-and-trading.trade-item-level-title") }}</div>{% endif %}
 </div>
 
 <div class="divider"></div>
 <div class="title mt15">{{ phrase("docs.guide.markets-and-trading.your-merchant-stand") }}</div>
 <div class="guide-card-grid">
 	<div class="guide-card">{{ phrase_html("docs.guide.markets-and-trading.sale-listing-choose-the-exact-inventory-item-trade") }}</div>
-	<div class="guide-card">{{ phrase_html("docs.guide.markets-and-trading.wishlist-name-the-item-and-level-you-will") }}</div>
-	<div class="guide-card">{{ phrase_html("docs.guide.markets-and-trading.trade-offer-put-an-item-on-the-stand") }}</div>
-	<div class="guide-card">{{ phrase_html("docs.guide.markets-and-trading.giveaway-move-an-item-into-a-timed-stand") }}</div>
+	{% if not domain.single_player %}<div class="guide-card">{{ phrase_html("docs.guide.markets-and-trading.wishlist-name-the-item-and-level-you-will") }}</div>{% endif %}
+	{% if not domain.single_player %}<div class="guide-card">{{ phrase_html("docs.guide.markets-and-trading.trade-offer-put-an-item-on-the-stand") }}</div>{% endif %}
+	{% if not domain.single_player %}<div class="guide-card">{{ phrase_html("docs.guide.markets-and-trading.giveaway-move-an-item-into-a-timed-stand") }}</div>{% endif %}
 	<div class="guide-card">{{ phrase_html("docs.guide.markets-and-trading.stay-open-the-character-s-stand-must-remain") }}</div>
 </div>
-<p>{{ phrase("docs.functions.giveaway.duration") }}</p>
+{% if not domain.single_player %}<p>{{ phrase("docs.functions.giveaway.duration") }}</p>{% endif %}
 
 <div class="divider"></div>
+{% if not domain.single_player %}{# Single player: needs other players #}
 <div class="title mt15">{{ phrase("docs.guide.markets-and-trading.buying-from-another-player") }}</div>
 <p>{{ phrase("docs.guide.markets-and-trading.stand-nearby-and-open-the-player-s-merchant") }}</p>
 <div class="guide-note">{{ phrase("docs.guide.markets-and-trading.prices-are-per-unit-before-confirming-a-stack") }}</div>
 <p>{{ phrase("docs.guide.markets-and-trading.a-trade-offer-lists-the-item-it-wants") }}</p>
+{% endif %}
 
 <div class="divider"></div>
 <div class="title mt15">{{ phrase("docs.guide.markets-and-trading.code-list-and-buy") }}</div>
@@ -58,6 +60,7 @@
 
 open_example_shop().catch(show_json);</div>
 <!-- prettier-ignore -->
+{% if not domain.single_player %}{# Single player: needs other players #}
 <div class="code">async function inspect_nearby_listing(player_name, slot) {
 	var merchant = get_player(player_name);
 	var listing = merchant &amp;&amp; merchant.slots[slot];
@@ -68,16 +71,17 @@ open_example_shop().catch(show_json);</div>
 }
 
 // inspect_nearby_listing("MerchantName", "trade1");</div>
+{% endif %}
 <p>{{ phrase_html("docs.guide.markets-and-trading.references-open-stand-close-stand-trade-wishlist-trade") }}</p>
 
 <div class="divider"></div>
 <div class="title mt15">{{ phrase("docs.guide.markets-and-trading.code-recovered-markets") }}</div>
-<p>{{ phrase("docs.merchant.resale") }}</p>
+{% if domain.single_player %}<p>{{ phrase("docs.sp.markets.resale") }}</p>{% else %}<p>{{ phrase("docs.merchant.resale") }}</p>{% endif %}
 <p style="display: flex; align-items: center; gap: 16px; flex-wrap: wrap">
 	<span class="tutorial-npc" data-npc="secondhands"></span><span>Ponty · Mainland<br /><span class="tutorial-travel" data-type="npc" data-target="secondhands"></span></span
 	><span class="tutorial-npc" data-npc="lostandfound"></span><span>Ron · Wizard's Crib<br /><span class="tutorial-travel" data-type="npc" data-target="lostandfound"></span></span>
 </p>
-<p>{{ phrase("docs.merchant.resale_code") }}</p>
+{% if domain.single_player %}<p>{{ phrase("docs.sp.markets.resale_code") }}</p>{% else %}<p>{{ phrase("docs.merchant.resale_code") }}</p>{% endif %}
 <!-- prettier-ignore -->
 <div class="code" id="merchant-resale-code">get_progression();
 async function inspect_resale(market) {

@@ -23,7 +23,7 @@
 
 <div class="tutpath manual">
 	<div class="tutpath-title">{{ phrase("docs.tutorial.compound.manual") }}</div>
-	<p>{{ phrase("docs.tutorial.compound.bring-cue-three-accessories-with-the-same-name") }}</p>
+	{% if domain.single_player %}<p>{{ phrase("docs.sp.compound.rings") }}</p>{% else %}<p>{{ phrase("docs.tutorial.compound.bring-cue-three-accessories-with-the-same-name") }}</p>{% endif %}
 	<p style="display: flex; align-items: center; gap: 16px; flex-wrap: wrap">
 		<span class="tutorial-npc" data-npc="scrolls"></span><span>Lucas · Mainland<br />(-464, -96)</span><span class="tutorial-item" data-item="ringsj"></span
 		><span class="tutorial-item" data-item="cscroll0"></span><span class="tutorial-npc" data-npc="newupgrade"></span><span>Cue · Mainland<br />(-207, -220)</span>

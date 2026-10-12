@@ -80,6 +80,7 @@ eval("" + fs.readFileSync(path.resolve(__dirname, "design/precomputed_images.js"
 
 // docs
 eval("" + fs.readFileSync(path.resolve(__dirname, "docs/directory.js")));
+if (single_player) require("./node/logic/single_player").prune_docs(docs); // Single player: no Hub, MCP, Mainframe or PvP guides
 
 eval("" + fs.readFileSync(path.resolve(__dirname, "adventure_functions.js")));
 eval("" + fs.readFileSync(path.resolve(__dirname, "filters.js")));

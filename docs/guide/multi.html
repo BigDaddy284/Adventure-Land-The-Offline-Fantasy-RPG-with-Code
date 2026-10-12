@@ -1,19 +1,21 @@
 <div class="multi-guide">
 <div class="title mt10">{{ phrase("docs.guide.multi.run-more-than-one-character") }}</div> <div class="mb10"></div>
-<div>{{ phrase("docs.guide.multi.adventure-land-supports-browser-windows-child-character-frames") }}</div>
+{% if domain.single_player %}<div>{{ phrase("docs.sp.multi.intro") }}</div>{% else %}<div>{{ phrase("docs.guide.multi.adventure-land-supports-browser-windows-child-character-frames") }}</div>{% endif %}
 <div class="divider"></div>
 
 <div class="title mt10">{{ phrase("docs.guide.multi.browser-windows") }}</div> <div class="mb10"></div>
-<div>{{ phrase_html("docs.guide.multi.open-another-game-client-from-character-selection-with") }}</div>
+{% if domain.single_player %}<div>{{ phrase_html("docs.sp.multi.windows") }}</div>{% else %}<div>{{ phrase_html("docs.guide.multi.open-another-game-client-from-character-selection-with") }}</div>{% endif %}
 <div class="divider"></div>
 
 <div class="title mt10">{{ phrase("docs.guide.multi.launch-through-com") }}</div> <div class="mb10"></div>
 <div>{{ phrase_html("docs.guide.multi.open-com-select-characters-and-press-deploy-to") }}</div>
 <div class="divider"></div>
 
+{% if not domain.single_player %}
 <div class="title mt10">Mainframe</div> <div class="mb10"></div>
 <div>{{ phrase_html("docs.guide.multi.mainframe-runs-owned-characters-without-keeping-a-browser") }}</div>
 <div class="divider"></div>
+{% endif %}
 
 <div class="title mt10">{{ phrase("docs.guide.multi.child-characters") }}</div> <div class="mb10"></div>
 <div>{{ phrase_html("docs.guide.multi.type-start-charactername-in-chat-or-use-code") }}</div>
@@ -31,7 +33,7 @@ character.on("cm", function (message) {
 <div class="divider"></div>
 
 <div class="title mt10">{{ phrase("docs.guide.multi.observe-and-coordinate") }}</div> <div class="mb10"></div>
-<div>{{ phrase_html("docs.guide.multi.use-com-or-comm-to-observe-connected-characters") }}</div>
+{% if domain.single_player %}<div>{{ phrase_html("docs.sp.multi.observe") }}</div>{% else %}<div>{{ phrase_html("docs.guide.multi.use-com-or-comm-to-observe-connected-characters") }}</div>{% endif %}
 </div>
 
 <style>

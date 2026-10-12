@@ -1,4 +1,4 @@
-<p>{{ phrase("docs.tutorial.new.gather_manual") }}</p>
+{% if domain.single_player %}<p>{{ phrase("docs.sp.merchant.gather_manual") }}</p>{% else %}<p>{{ phrase("docs.tutorial.new.gather_manual") }}</p>{% endif %}
 <div><span class="tutorial-travel" data-type="npc" data-target="basics"></span> <span class="tutorial-travel" data-type="monster" data-target="spider"></span></div>
 <p style="display:flex;align-items:center;gap:16px"><span class="tutorial-npc" data-npc="craftsman"></span><span>Leo · Mainland<br>(92, 670)</span></p>
 <div><span class="tutorial-travel" data-type="npc" data-target="craftsman"></span></div>

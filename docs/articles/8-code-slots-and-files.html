@@ -48,7 +48,7 @@ load_code("Merchant");</div>
 
 <p>{{ phrase_html("docs.articles.8-code-slots-and-files.no-circular-dependencies-a-chain-such-as-a") }}</p>
 
-<p>{{ phrase("docs.articles.8-code-slots-and-files.these-repeated-loading-rules-also-apply-on-mainframe") }}</p>
+{% if not domain.single_player %}<p>{{ phrase("docs.articles.8-code-slots-and-files.these-repeated-loading-rules-also-apply-on-mainframe") }}</p>{% endif %}
 
 <hr />
 

@@ -1,4 +1,4 @@
-<p class="tutlead">{{ phrase("docs.tutorial.events-status.a-realm-is-never-entirely-quiet-watch-the") }}</p>
+{% if domain.single_player %}<p class="tutlead">{{ phrase("docs.sp.events-status.lead") }}</p>{% else %}<p class="tutlead">{{ phrase("docs.tutorial.events-status.a-realm-is-never-entirely-quiet-watch-the") }}</p>{% endif %}
 
 <div class="tutlinks">
 	<div
@@ -33,7 +33,7 @@
 	<p>
 		{{ phrase_html("docs.tutorial.events-status.event-buttons-appear-when-something-is-active-or") }}
 	</p>
-	<p>{{ phrase("docs.tutorial.events-status.events-differ-by-server-each-character-has-a") }}</p>
+	{% if domain.single_player %}<p>{{ phrase("docs.sp.events-status.events") }}</p>{% else %}<p>{{ phrase("docs.tutorial.events-status.events-differ-by-server-each-character-has-a") }}</p>{% endif %}
 </div>
 
 <div class="tutpath codepath">

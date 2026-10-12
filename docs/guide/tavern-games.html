@@ -59,12 +59,12 @@
 <p>{{ phrase("docs.guide.tavern-games.the-tavern-has-one-five-seat-no-limit") }}</p>
 <p>{{ phrase("docs.guide.tavern-games.venn-deals") }}</p>
 <div class="guide-paytable guide-blinds">
-	<div class="guide-paytable-row guide-paytable-head"><span>{{ phrase("docs.guide.tavern-games.servers") }}</span><span>{{ phrase("docs.guide.tavern-games.small-blind") }}</span><span>{{ phrase("docs.guide.tavern-games.big-blind") }}</span><span>{{ phrase("docs.guide.tavern-games.buy-in") }}</span></div>
-	<div class="guide-paytable-row" data-tier="I"><span>{{ phrase("docs.guide.tavern-games.tier-i") }}</span></div>
-	<div class="guide-paytable-row" data-tier="II"><span>{{ phrase("docs.guide.tavern-games.tier-ii") }}</span></div>
-	<div class="guide-paytable-row" data-tier="III"><span>{{ phrase("docs.guide.tavern-games.tier-iii") }}</span></div>
-	<div class="guide-paytable-row" data-tier="IV"><span>{{ phrase("docs.guide.tavern-games.tier-iv") }}</span></div>
-	<div class="guide-paytable-row" data-tier="PVP"><span>{{ phrase("docs.guide.tavern-games.tier-pvp") }}</span></div>
+	{% if domain.single_player %}<div class="guide-paytable-row guide-paytable-head"><span>{{ phrase("docs.sp.tavern.table") }}</span><span>{{ phrase("docs.guide.tavern-games.small-blind") }}</span><span>{{ phrase("docs.guide.tavern-games.big-blind") }}</span><span>{{ phrase("docs.guide.tavern-games.buy-in") }}</span></div>{% else %}<div class="guide-paytable-row guide-paytable-head"><span>{{ phrase("docs.guide.tavern-games.servers") }}</span><span>{{ phrase("docs.guide.tavern-games.small-blind") }}</span><span>{{ phrase("docs.guide.tavern-games.big-blind") }}</span><span>{{ phrase("docs.guide.tavern-games.buy-in") }}</span></div>{% endif %}
+	{% if domain.single_player %}<div class="guide-paytable-row" data-tier="I"><span>{{ phrase("docs.sp.tavern.tier") }}</span></div>{% else %}<div class="guide-paytable-row" data-tier="I"><span>{{ phrase("docs.guide.tavern-games.tier-i") }}</span></div>{% endif %}
+	{% if not domain.single_player %}<div class="guide-paytable-row" data-tier="II"><span>{{ phrase("docs.guide.tavern-games.tier-ii") }}</span></div>{% endif %}
+	{% if not domain.single_player %}<div class="guide-paytable-row" data-tier="III"><span>{{ phrase("docs.guide.tavern-games.tier-iii") }}</span></div>{% endif %}
+	{% if not domain.single_player %}<div class="guide-paytable-row" data-tier="IV"><span>{{ phrase("docs.guide.tavern-games.tier-iv") }}</span></div>{% endif %}
+	{% if not domain.single_player %}<div class="guide-paytable-row" data-tier="PVP"><span>{{ phrase("docs.guide.tavern-games.tier-pvp") }}</span></div>{% endif %}
 </div>
 <div class="guide-note">{{ phrase_html("docs.guide.tavern-games.leaving-the-table") }}</div>
 <div class="guide-note">{{ phrase_html("docs.guide.tavern-games.deck-verification") }}</div>

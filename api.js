@@ -2077,6 +2077,11 @@ async function delete_map_api(args) {
 
 async function load_article_api(args) {
 	var name = to_filename("" + args.name);
+	// Single player: the Hub, MCP, Mainframe and PvP guides are about online-only services
+	if (typeof single_player == "object" && single_player && require("./node/logic/single_player").REMOVED_GUIDES.includes(name)) {
+		args.res.infs.push({ type: "article", html: phrase_html("server.api.article_not_found", { name: name }), url: args.url });
+		return { success: true };
+	}
 	if (args.tutorial) {
 		args.res.infs.push({ type: "article", html: shtml("docs/tutorial/" + name + ".html"), tutorial: args.tutorial, track: args.track, url: args.url });
 	} else if (args.guide) {

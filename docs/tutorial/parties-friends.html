@@ -1,4 +1,4 @@
-<p class="tutlead">{{ phrase("docs.tutorial.parties-friends.some-roads-are-easier-with-company-some-are") }}</p>
+{% if domain.single_player %}<p class="tutlead">{{ phrase("docs.sp.parties-friends.lead") }}</p>{% else %}<p class="tutlead">{{ phrase("docs.tutorial.parties-friends.some-roads-are-easier-with-company-some-are") }}</p>{% endif %}
 
 <div class="tutlinks">
 	<div
@@ -21,9 +21,9 @@
 <div class="tutpath manual">
 	<div class="tutpath-title">{{ phrase("docs.tutorial.parties-friends.manual") }}</div>
 	<p>
-		{{ phrase_html("docs.tutorial.parties-friends.open-com-to-see-adventurers-friends-servers-merchants") }}
+		{% if domain.single_player %}{{ phrase_html("docs.sp.parties-friends.com") }}{% else %}{{ phrase_html("docs.tutorial.parties-friends.open-com-to-see-adventurers-friends-servers-merchants") }}{% endif %}
 	</p>
-	<p>{{ phrase("docs.tutorial.parties-friends.party-chat-reaches-the-group-friends-can-find") }}</p>
+	{% if domain.single_player %}<p>{{ phrase("docs.sp.parties-friends.chat") }}</p>{% else %}<p>{{ phrase("docs.tutorial.parties-friends.party-chat-reaches-the-group-friends-can-find") }}</p>{% endif %}
 </div>
 
 <div class="tutpath codepath">

@@ -6313,3 +6313,56 @@ module.exports["docs.code.save_rate"] = "You can make up to 10 CODE saves or del
 
 // Geometry article: recognized monster types use server combat rectangles, not sprite or skin dimensions. Default dimensions are 24 by 24; apply size only when set, then round. Keep distance, is_in_range() and can_attack() unchanged.
 module.exports["docs.articles.4.g-geometry.monster-combat-bounds"] = "For recognized monsters, distance uses the server combat bounds: the monster type's dimensions (24 by 24 when unspecified), multiplied by its size when set and rounded. Sprite dimensions and skin aliases do not determine monster attack range. This also applies to is_in_range() and can_attack(); visual sizing and movement collision bounds are unchanged.";
+
+// Single player guide text: replaces lines that describe other players, Mainframe or linked accounts.
+module.exports["docs.sp.encouragement.lone_wolf"] = "Another of your non-merchant characters being online pauses Lone Wolf. Log that character out and the bonus returns at the next check.";
+module.exports["docs.sp.encouragement.code"] = "Bonuses work automatically in CODE. Once your character has loaded:";
+module.exports["docs.sp.progression.code"] = "get_progression(options) returns advice without moving, spending or attacking. Calling it starts observation of subsequent fights; earlier play is unknown. Disabling the HUD does not disable this CODE function.";
+module.exports["docs.sp.parties-friends.lead"] = "Some roads are easier with company, even when the company is your own.";
+module.exports["docs.sp.parties-friends.com"] = "Open <span class=\"gamebutton gamebutton-small\">COM</span> to see your characters, merchants and mail. Party your characters to fight together: invite one that is nearby, or use CODE.";
+module.exports["docs.sp.parties-friends.chat"] = "Party chat reaches the whole group, which helps when you play several characters at once.";
+module.exports["docs.sp.events-status.lead"] = "The world is never entirely quiet. Watch the signs.";
+module.exports["docs.sp.events-status.events"] = "Holiday events and event monsters are switched on and off in the Mod Menu. Other events, such as the boss events, follow the game's own schedule.";
+module.exports["docs.sp.merchant.xp_trade"] = "Selling: merchants gain XP when items on their stand sell. With no other players around, the buyer is Merrit. Turn on Buys your stall in the Mod Menu and he buys everything listed on an open stand at its asking price when he visits. The XP is based on the sale's tax. Trades between your own characters do not count.";
+module.exports["docs.sp.merchant.xp_gather"] = "Gathering gives items, not a fixed XP reward per attempt. Listing gathered materials on your stand for Merrit can then earn trade XP.";
+module.exports["docs.sp.merchant.shop_listing"] = "Drag an item you want to sell from your bag into an empty trade slot. Set the quantity and gold price per item, then choose Put Up For Sale. With Buys your stall on in the Mod Menu, Merrit buys everything listed at its asking price when he visits. Stay online with the stand open. To close it, click the stand in your bag and choose Close.";
+module.exports["docs.sp.merchant.shop_code"] = "With a Merchant Stand in inventory, this opens the stand. Add your first listing by hand so you can check the item and price before Merrit sees it.";
+module.exports["docs.sp.merchant.intro"] = "Your merchant can bring potions to your fighters, carry loot home, and run a shop. Start with a small supply run, not an expensive purchase. Open COM, choose Characters, and open your merchant alongside a fighter. If you have not created a merchant yet, create one from the character selection page.";
+module.exports["docs.sp.stats.classes"] = "Warriors, Rogues, Rangers and Paladins deal physical damage; Mages and Priests deal magical damage. Merchants gain experience by selling from their stand and can attack with a dartgun. Priests can heal your other characters.";
+module.exports["docs.sp.cave.craft"] = "Bring Cave Amber and the recipe ingredients to Cole in Mainland. Click an item below to see its recipe. Deepvein Axe uses an unupgraded Tunnel Axe.";
+module.exports["docs.sp.markets.kicker"] = "THE MARKET";
+module.exports["docs.sp.markets.intro"] = "Your merchant's stand holds your sales. Merrit visits open stands and, with Buys your stall on in the Mod Menu, buys everything listed at its asking price. Ponty sells his own stock of second-hand gear, and Ron runs a market of items recovered from unlooted chests.";
+module.exports["docs.sp.markets.ponty"] = "<span class=\"guide-card-icon market-ponty\"></span><b>Ponty</b>Browse his second-hand gear. The Mod Menu sets how often he restocks and what he sells.";
+module.exports["docs.sp.markets.resale"] = "Sell spare loot first. Ponty and Ron's Lost & Found can have useful gear. Recovered purchases take the entire stack, so check the total cost. Keep supply gold and inventory space.";
+module.exports["docs.sp.markets.resale_code"] = "This example travels to Ponty and checks his stock without buying. Use lostandfound for Ron after unlocking his service.";
+
+// Single player guide: Characters & Limits page and the Multiple Characters guide.
+module.exports["docs.sp.limits.online"] = "Characters Online";
+module.exports["docs.sp.limits.online_text"] = "Characters online in the Mod Menu sets how many of your characters can play at the same time, merchants included, up to 18. Up to 2 of them can be merchants. A character over the limit is turned away when it tries to join, and its window's log says why.";
+module.exports["docs.sp.limits.slots"] = "Character Slots";
+module.exports["docs.sp.limits.slots_text"] = "All 18 character slots are free. Create new characters from the character selection page.";
+module.exports["docs.sp.limits.windows"] = "Running Many Windows";
+module.exports["docs.sp.limits.windows_text"] = "Every character runs in its own game window, and each one uses about as much memory and processor time as a browser tab running a game. The more windows you open, the more your PC has to do. If the game slows down, close a window or two. Your characters are saved as you play, so closing a window does not lose progress.";
+module.exports["docs.sp.multi.intro"] = "Fantasy Land can run your characters in their own game windows or as child characters inside one window. Choose one method for each character, and do not load the same character twice.";
+module.exports["docs.sp.multi.windows"] = "Open another game window from character selection with <b>&gt; New Game Window</b>, or type <span class=\"dlabel\">/window</span> in chat. Type <span class=\"dlabel\">/window CharacterName</span>, or call <span class=\"dlabel\">open_character_window(\"CharacterName\")</span> in CODE, to open a character straight into the game. Each window renders the complete game and runs that character's CODE.";
+module.exports["docs.sp.multi.observe"] = "Use COM to see which of your characters are online. Use <span class=\"dlabel\">send_cm</span> for character-to-character instructions, and always check the sender before acting on a message.";
+
+// Single player guide: banking, encouragement, gathering, compound, Golden Bot and CODE API lines without PvP, linked accounts, other players or Mainframe.
+module.exports["docs.sp.banking.stored"] = "Items cannot be equipped, sold, upgraded, or sent while stored. Blocked items and operations already in progress are refused.";
+module.exports["docs.sp.encouragement.new_player"] = "Everyone whose oldest character is less than 40 days old receives the New Player bonus. The clock starts when that character was created and keeps running while the game is closed.";
+module.exports["docs.sp.encouragement.stats"] = "Encouragement does not change the displayed XP, Gold or Luck stats. It does not multiply trading, selling or fixed prizes.";
+module.exports["docs.sp.encouragement.factors"] = "These are encouragement factors before contribution is applied, not <span class=\"dlabel\">xpm</span>, <span class=\"dlabel\">goldm</span> or <span class=\"dlabel\">luckm</span>. Active timed conditions include <span class=\"dlabel\">ms</span> and <span class=\"dlabel\">expires</span>; Lone Wolf has no expiry. Inactive conditions are absent. <span class=\"dlabel\">character.encouragement</span> reports totals, eligibility and the character count (capped at 25).";
+module.exports["docs.sp.merchant.gather_manual"] = "Gathering unlocks at merchant level 16. Start with a Rod: Leo, south of Mainland's town square, crafts one from a Staff, one Spider Silk, and 100 gold. A Pickaxe needs the same ingredients plus a Blade. Gabriel sells Staff and Blade; Spider Silk drops from Spiders. Right-click Leo and choose Recipes to inspect the tool, then Craft when you have its ingredients.";
+module.exports["docs.sp.compound.rings"] = "Save three +0 Rings of Small Joys from Mainland monster loot. Basic equipment shops do not sell these rings. Buy a basic Compound Scroll from Lucas, west of Mainland's town square. Right-click Cue, northwest of Gabriel, and choose Combine. Drag the three rings and scroll into the four slots, read the chance, then decide. You can also use three other compoundable accessories with the same name and level.";
+module.exports["docs.sp.golden-bot.code"] = "This attacks the nearest Golden Bot in range once per call. Bring a full party: it has 500,000 HP.";
+module.exports["docs.sp.code-api.loaders"] = "Both loaders execute the file again on every call. Repeated <span class=\"dlabel\">load_code</span> calls can redeclare globals or reset state. <span class=\"dlabel\">require_code</span> needs explicit exports and has no module cache or circular-dependency handling. Either loader can repeat initialization and duplicate timers or listeners. See <a href=\"/docs/guide/code/8-code-slots-and-files\">Code Slots and Files</a> for loading patterns and a complete dependency example.";
+module.exports["docs.sp.code-api.log"] = "A CODE log proves that JavaScript reached the logging call. It does not prove that the next movement, attack, skill, inventory, or trade request was accepted by the game server. Verify important outcomes from action Promise results and the character's current state.";
+module.exports["docs.sp.code-api.loop"] = "A synchronous infinite loop freezes the game window. Rapid timer creation, unbounded arrays, repeated storage writes, and action floods can also slow or disconnect a character, so CODE should avoid them.";
+module.exports["docs.sp.code-api.g"] = "<span class=\"dlabel\">G</span> describes what can exist. It does not say that a monster, player, event, item instance, or route is currently available. <span class=\"dlabel\">character</span> and visible entities describe current runtime state. Saved account data can lag a running character, so read the running character instead.";
+
+// Single player guide: the game runs one server, so the poker blinds table shows only its tier.
+module.exports["docs.sp.tavern.table"] = "Table";
+module.exports["docs.sp.tavern.tier"] = "Your table";
+
+// Single player guide: no buy orders without other players.
+module.exports["docs.sp.markets.divian"] = "<span class=\"guide-card-icon market-divian\"></span><b>Divian</b>Buy a stand, then list your own items for sale.";

@@ -10,7 +10,7 @@
 <div class="guide-drops golden-bot-drops"></div>
 <div class="divider"></div>
 <div class="title">CODE</div>
-<p>{{ phrase("docs.guide.golden-bot.code") }}</p>
+{% if domain.single_player %}<p>{{ phrase("docs.sp.golden-bot.code") }}</p>{% else %}<p>{{ phrase("docs.guide.golden-bot.code") }}</p>{% endif %}
 <!-- prettier-ignore -->
 <div class="code" id="golden-bot-code">async function fight_golden_bot() {
     var bot = get_nearest_monster({ type: "goldenbot" });
