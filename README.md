@@ -21,7 +21,7 @@ Git isn't needed, because the shared engine already comes in the game folder.
 
 A small window shows the progress while it starts the database, the website and the game server, with no console windows. Then the game opens in its own window. It opens on the title screen: press Login (or Enter) to go to character select. The very first start also installs the game's packages and loads the maps, so it takes a few minutes. After that it's quick.
 
-On character select, click a Free Slot (or New) to create a character, then click a character to play. There are extra starting looks (Opt. E to H) for some classes. The Logout button at the top left of the Settings window takes you back to the title screen.
+On character select, click a Free Slot (or New) to create a character, then click a character to play. Every class has extra starting looks from Opt. E onwards. The Logout button at the top left of the Settings window takes you back to the title screen.
 
 You're logged in automatically. Everything stays on your PC, and only your PC can connect to the game.
 
@@ -268,7 +268,7 @@ Fantasy Land started as a copy of the MongoDB port of [Adventure Land](https://g
 - Every character slot is free, up to the game's limit of 18 characters. Creating more characters no longer asks for 200 shells or says your account has no free slots.
 - Up to 2 merchants can be online at once (part of Characters online). A 3rd merchant is turned away with a message that says why.
 - Opening another game window no longer drops the windows already open. Windows opened from the game share one browser process, so while a new window loads, the others can stop answering the game server for a few seconds, and the server was cutting them off after 12. It now waits up to 60 seconds. The server also no longer closes character select and loading windows when more than 5 are open at once.
-- New A to D starting looks for every class, as a male and a female in light and dark skin: barbarian warriors, paladins in blue plate, a pope and a nun for priests, a wizard and a witch for mages, ninja rogues, Robin Hood rangers in green caps, and banker merchants. The looks added in earlier versions are still there from E onwards. Characters you've already made keep their look.
+- New starting looks E to H for every class, as a male and a female in light and dark skin: barbarian warriors, paladins in blue plate, a pope and a nun for priests, a wizard and a witch for mages, ninja rogues, Robin Hood rangers in green caps, and banker merchants. The game's own looks stay on A to D, and the looks added in earlier versions move to I onwards.
 - Each game window's title is the character's name, then the game's name, for example "Chillyinit: Fantasy Land - The Code (NOMMO) RPG". Character select still shows just the game's name.
 
 ## License

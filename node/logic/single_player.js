@@ -308,8 +308,8 @@ function check_value(key, value) {
 	return Math.round(number * 1000) / 1000;
 }
 
-// The A to D starting looks for each class: male light, female light, male dark, female dark
-const DEFAULT_LOOKS = {
+// Starting looks E to H for each class: male light, female light, male dark, female dark
+const CLASS_LOOKS = {
 	warrior: [
 		["marmor3f", { hair: "hairdo417", hat: "hat300", chin: "beard100", head: "makeup117" }],
 		["marmor3e", { hair: "hairdo208", hat: "hat300", head: "fmakeup01" }],
@@ -354,7 +354,7 @@ const DEFAULT_LOOKS = {
 	],
 };
 
-// Extra starting looks, added after each class's four (E onwards)
+// More starting looks, from I onwards
 // Each design comes in its main skin tone and an alternate one
 const NEW_LOOKS = {
 	warrior: [
@@ -395,16 +395,13 @@ const NEW_LOOKS = {
 
 // Adds the extra looks to the class definitions; safe to run more than once
 function add_looks(classes) {
-	for (const name of Object.keys(DEFAULT_LOOKS)) {
-		const looks = classes && classes[name] && classes[name].looks;
-		if (looks) DEFAULT_LOOKS[name].forEach((look, i) => (looks[i] = JSON.parse(JSON.stringify(look))));
-	}
-	for (const name of Object.keys(NEW_LOOKS)) {
-		const looks = classes && classes[name] && classes[name].looks;
-		if (!looks) continue;
-		const have = new Set(looks.map((look) => JSON.stringify(look)));
-		for (const look of NEW_LOOKS[name]) if (!have.has(JSON.stringify(look))) looks.push(JSON.parse(JSON.stringify(look)));
-	}
+	for (const extra of [CLASS_LOOKS, NEW_LOOKS])
+		for (const name of Object.keys(extra)) {
+			const looks = classes && classes[name] && classes[name].looks;
+			if (!looks) continue;
+			const have = new Set(looks.map((look) => JSON.stringify(look)));
+			for (const look of extra[name]) if (!have.has(JSON.stringify(look))) looks.push(JSON.parse(JSON.stringify(look)));
+		}
 	return classes;
 }
 
@@ -541,7 +538,7 @@ module.exports = {
 	check_value,
 	EVENT_SETTINGS,
 	EVENT_MONSTERS,
-	DEFAULT_LOOKS,
+	CLASS_LOOKS,
 	NEW_LOOKS,
 	add_looks,
 	create: (values) => create(Object.assign({}, DEFAULTS, values)),

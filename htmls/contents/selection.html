@@ -85,7 +85,7 @@
 					{{ phrase_html("pages.contents.selection.opt-d") }}
 				</div>
 				{% if domain.single_player %}{# Single player: extra looks, only shown when the class has them #}
-				{% for look in [[4,"E","#c06c9b"],[5,"F","#73bd6d"],[6,"G","#f08a24"],[7,"H","#a77bd1"]] %}
+				{% for look in [[4,"E","#c06c9b"],[5,"F","#73bd6d"],[6,"G","#f08a24"],[7,"H","#a77bd1"],[8,"I","#df0024"],[9,"J","#f3c300"],[10,"K","#00ac9f"],[11,"L","#2e6db4"]] %}
 				<div class="textbutton lookstype lookextra inline-block" data-look="{{ look[0] }}" onclick="pcs(); $('.lookstype').removeClass('selected'); $(this).addClass('selected'); thelooks={{ look[0] }}; load_class_info()" style="color: {{ look[2] }}">
 					<span style="color: gray">Opt.</span> {{ look[1] }}
 				</div>
