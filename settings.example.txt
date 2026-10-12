@@ -46,11 +46,23 @@ ponty_compound_level_min = 2
 ponty_compound_level_max = 4
 
 
-# ---------- Experience ----------
+# ---------- Experience and combat ----------
 
 # Experience from monsters. A multiplier: 1 = normal,
 # 2 = double XP, 0.5 = half.
 xp_rate = 1
+
+# Damage your characters deal to monsters. A multiplier: 1 = normal,
+# 2 = every hit does double damage, 0.5 = half.
+damage_rate = 1
+
+# Damage your characters take. A multiplier: 1 = normal,
+# 0.5 = you lose half as much HP, 0 = you never lose HP from attacks.
+hp_loss = 1
+
+# MP spent on attacks and skills. A multiplier: 1 = normal,
+# 0.5 = everything costs half MP, 0 = attacks and skills cost no MP.
+mp_usage = 1
 
 
 # ---------- Upgrading and compounding ----------
@@ -60,17 +72,6 @@ xp_rate = 1
 # upgrade/compound window already includes this.
 upgrade_success = 1
 compound_success = 1
-
-
-# ---------- HP and MP ----------
-
-# MP spent on attacks and skills. 50 = everything costs half MP,
-# 0 = attacks and skills cost no MP.
-mp_usage_percent = 100
-
-# Damage your characters take. 50 = you lose half as much HP,
-# 0 = you never lose HP from attacks.
-hp_loss_percent = 100
 
 
 # ---------- Drops ----------

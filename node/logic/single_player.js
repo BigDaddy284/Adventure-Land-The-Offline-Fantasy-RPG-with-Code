@@ -22,8 +22,9 @@ const DEFAULTS = {
 	upgrade_success: 1,
 	compound_success: 1,
 	xp_rate: 1,
-	mp_usage_percent: 100,
-	hp_loss_percent: 100,
+	damage_rate: 1,
+	mp_usage: 1,
+	hp_loss: 1,
 	drop_rate: 1,
 	gold_drop: 1,
 	drop_everything: false,
@@ -57,6 +58,8 @@ const RENAMED = {
 	gold_drop_percent: ["gold_drop", 100],
 	upgrade_success_percent: ["upgrade_success", 100],
 	compound_success_percent: ["compound_success", 100],
+	mp_usage_percent: ["mp_usage", 100],
+	hp_loss_percent: ["hp_loss", 100],
 };
 
 // Settings that were taken out, skipped without a warning and removed from settings.txt
@@ -109,6 +112,14 @@ const RENAMED_NOTES = [
 	[
 		"# Multiplies the success chance. 100 = normal, 200 = twice as\r\n# likely, 1000 = almost never fails.",
 		"# Multiplies the success chance. 1 = normal, 2 = twice as\r\n# likely, 10 = almost never fails.",
+	],
+	[
+		"# MP spent on attacks and skills. 50 = everything costs half MP,\r\n# 0 = attacks and skills cost no MP.",
+		"# MP spent on attacks and skills. A multiplier: 1 = normal,\r\n# 0.5 = everything costs half MP, 0 = attacks and skills cost no MP.",
+	],
+	[
+		"# Damage your characters take. 50 = you lose half as much HP,\r\n# 0 = you never lose HP from attacks.",
+		"# Damage your characters take. A multiplier: 1 = normal,\r\n# 0.5 = you lose half as much HP, 0 = you never lose HP from attacks.",
 	],
 ];
 
@@ -207,11 +218,10 @@ function save_setting(file, key, value) {
 	fs.writeFileSync(file, updated);
 }
 
-const SCALES = {
-	mp: "mp_usage_percent",
-	hp_loss: "hp_loss_percent",
-};
 const MULTIPLIERS = {
+	mp: "mp_usage",
+	hp_loss: "hp_loss",
+	damage: "damage_rate",
 	sell: "sell_multiplier",
 	drop: "drop_rate",
 	gold: "gold_drop",
@@ -231,11 +241,11 @@ const MOD_MENU = [
 	["gold_drop", "Gold dropped", "1 = normal, 2 = twice as much gold"],
 	["drop_everything", "Drop everything", "Every monster drops its whole drop list"],
 	["monster_hunt_tokens", "Daisy's tokens", "Monster tokens for each finished hunt"],
-	"Experience",
+	"Experience and Combat",
 	["xp_rate", "XP multiplier", "1 = normal, 2 = double XP from monsters"],
-	"Combat",
-	["hp_loss_percent", "HP loss %", "100 = normal, 50 = half damage, 0 = none"],
-	["mp_usage_percent", "MP usage %", "100 = normal, 0 = skills cost no MP"],
+	["damage_rate", "Damage multiplier", "1 = normal, 2 = your hits do double damage"],
+	["hp_loss", "HP loss", "1 = normal, 0.5 = half damage taken, 0 = none"],
+	["mp_usage", "MP usage", "1 = normal, 0.5 = half MP, 0 = skills cost no MP"],
 	"Upgrading",
 	["upgrade_success", "Upgrade luck", "1 = normal, 2 = twice the chance of success"],
 	["compound_success", "Compound luck", "1 = normal, 2 = twice the chance of success"],
@@ -562,7 +572,7 @@ function create(settings) {
 				const result = value * settings[MULTIPLIERS[kind]];
 				return kind == "upgrade" || kind == "compound" ? Math.min(1, result) : result;
 			}
-			return value * (settings[SCALES[kind]] / 100);
+			return value;
 		},
 		apply_events(events) {
 			Object.keys(EVENT_SETTINGS).forEach((name) => set_event(events, name, settings[EVENT_SETTINGS[name]]));

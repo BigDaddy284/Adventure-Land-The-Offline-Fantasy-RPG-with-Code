@@ -4301,6 +4301,8 @@ function complete_attack(attacker, target, info) {
 		attack = cave_damage(attacker, target, info, attack);
 		if (typeof single_player == "object" && target.is_player && attack > 0 && attacker != target)
 			attack = round(single_player.scale("hp_loss", attack)); // Single player: HP loss
+		if (typeof single_player == "object" && attacker.is_player && !target.is_player && attack > 0 && !info.heal && !info.positive)
+			attack = max(1, round(single_player.scale("damage", attack))); // Single player: damage multiplier
 		target.hp = min(target.hp - attack, target.max_hp); // both for damage and heal
 		var net = original - max(0, target.hp);
 		if (

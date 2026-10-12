@@ -32,7 +32,7 @@ test("removed settings are skipped quietly and taken out of settings.txt", () =>
 });
 
 test("God Mode, Fire Sale and Daisy's tokens have settings, and the Mod Menu checks values", () => {
-	const sp = single_player.create({ hp_loss_percent: 50, drop_rate: 2, gold_drop: 3 });
+	const sp = single_player.create({ hp_loss: 0.5, drop_rate: 2, gold_drop: 3 });
 	assert.equal(sp.scale("hp_loss", 100), 50);
 	assert.equal(sp.scale("drop", 0.1), 0.2);
 	assert.equal(sp.scale("gold", 10), 30);
@@ -76,7 +76,8 @@ test("scales apply percents and cap success chances at 100%", () => {
 	const sp = single_player.create({
 		sell_multiplier: 2,
 		upgrade_success: 3,
-		mp_usage_percent: 0,
+		mp_usage: 0,
+		damage_rate: 2,
 		drop_rate: 2,
 		xp_rate: 2.5,
 	});
@@ -86,6 +87,15 @@ test("scales apply percents and cap success chances at 100%", () => {
 	assert.equal(sp.scale("mp", 80), 0);
 	assert.equal(sp.scale("drop", 1), 2);
 	assert.equal(sp.scale("xp", 100), 250);
+	assert.equal(sp.scale("damage", 120), 240);
+});
+
+test("old HP loss and MP usage percents become multipliers", () => {
+	assert.deepEqual(single_player.parse("hp_loss_percent = 50\nmp_usage_percent = 0\n"), { hp_loss: 0.5, mp_usage: 0 });
+	assert.equal(
+		single_player.rename_settings("# Damage your characters take. 50 = you lose half as much HP,\n# 0 = you never lose HP from attacks.\nhp_loss_percent = 50\n"),
+		"# Damage your characters take. A multiplier: 1 = normal,\n# 0.5 = you lose half as much HP, 0 = you never lose HP from attacks.\nhp_loss = 0.5\n",
+	);
 });
 
 test("old upgrade and compound percents become multipliers", () => {

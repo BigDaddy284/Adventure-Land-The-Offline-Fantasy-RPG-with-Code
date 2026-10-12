@@ -54,8 +54,8 @@ You can also open `settings.txt` in the game folder with Notepad. Every setting 
 - shop sell prices
 - Ponty's restock and what he sells
 - upgrade and compound luck, as multipliers (1 = normal, 2 = twice the chance of success)
-- XP from monsters, as a multiplier (1 = normal, 2 = double XP)
-- HP loss and MP usage
+- XP from monsters and the damage your characters deal, as multipliers (1 = normal, 2 = double)
+- HP loss and MP usage, as multipliers (1 = normal, 0.5 = half, 0 = none)
 - drop luck and gold, as multipliers (1 = normal, 2 = double)
 - holiday events and event monsters
 - how many characters can be online at once
@@ -288,6 +288,11 @@ Fantasy Land started as a copy of the MongoDB port of [Adventure Land](https://g
 ### v21
 - Mr. Dworf's Armor box costs 2,410 seashells (was 2,409).
 - Renaming to a short name costs less, so every length can be bought: 10,000 seashells for 4 letters, 50,000 for 3, 150,000 for 2 and 350,000 for 1. A 1-letter name needs about 36 full stacks of seashells in that character's bag (a bag holds 42 stacks of 9,999). Names of 5 letters or more still cost 5,334.
+
+### v22
+- New Mod Menu setting, **Damage multiplier** (`damage_rate`): the damage your characters deal to monsters. 1 = normal, 2 = every hit does double damage, 0.5 = half. Hits still roll as usual, then the multiplier applies.
+- **HP loss** and **MP usage** are multipliers now, like the others (`hp_loss` and `mp_usage`): 1 = normal, 0.5 = half, 0 = none. An older `settings.txt` is converted automatically (`hp_loss_percent = 50` becomes `hp_loss = 0.5`).
+- The Mod Menu's Experience section is now **Experience and Combat**, with XP, damage, HP loss and MP usage together.
 
 ## License
 
