@@ -92,7 +92,7 @@ rem Fantasy Land.exe opens the game window itself, so it can tell when you close
 if defined FL_LAUNCHER echo Opening the game...& exit /b 0
 rem Opens the game in its own resizable window (Edge app mode with its own profile, so Stop.bat can close it).
 echo Opening the game...
-start "" msedge --app=http://127.0.0.1:8090 --user-data-dir="%LOCALAPPDATA%\FantasyLandSinglePlayer" --no-first-run --window-size=1280,800 2>nul || start "" http://127.0.0.1:8090
+start "" msedge --app=http://127.0.0.1:8090 --user-data-dir="%LOCALAPPDATA%\FantasyLandSinglePlayer" --no-first-run --window-size=1280,800 --disable-background-timer-throttling --disable-renderer-backgrounding --disable-backgrounding-occluded-windows --disable-features=CalculateNativeWinOcclusion,IntensiveWakeUpThrottling 2>nul || start "" http://127.0.0.1:8090
 echo.
 echo Everything is running. Close the game window when you're done, then run Stop.bat.
 timeout /t 8 >nul

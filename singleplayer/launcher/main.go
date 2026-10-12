@@ -253,7 +253,9 @@ func turnOffBackgroundMode() {
 
 func openGameWindow() bool {
 	turnOffBackgroundMode()
-	cmd := exec.Command("cmd.exe", "/c", "start", "", "msedge", "--app="+gameURL, "--user-data-dir="+profilePath(), "--no-first-run", "--window-size=1280,800")
+	cmd := exec.Command("cmd.exe", "/c", "start", "", "msedge", "--app="+gameURL, "--user-data-dir="+profilePath(), "--no-first-run", "--window-size=1280,800",
+		// Game windows keep running at full speed when they are in the background or minimised
+		"--disable-background-timer-throttling", "--disable-renderer-backgrounding", "--disable-backgrounding-occluded-windows", "--disable-features=CalculateNativeWinOcclusion,IntensiveWakeUpThrottling")
 	cmd.SysProcAttr = &syscall.SysProcAttr{HideWindow: true, CreationFlags: createNoWindow}
 	return cmd.Run() == nil
 }
