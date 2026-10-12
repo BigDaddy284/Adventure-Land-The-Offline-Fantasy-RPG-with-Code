@@ -268,6 +268,7 @@ Fantasy Land started as a copy of the MongoDB port of [Adventure Land](https://g
 - Every character slot is free, up to the game's limit of 18 characters. Creating more characters no longer asks for 200 shells or says your account has no free slots.
 - Up to 2 merchants can be online at once (part of Characters online). A 3rd merchant is turned away with a message that says why.
 - Opening another game window no longer drops the windows already open. Windows opened from the game share one browser process, so while a new window loads, the others can stop answering the game server for a few seconds, and the server was cutting them off after 12. It now waits up to 60 seconds. The server also no longer closes character select and loading windows when more than 5 are open at once.
+- New A to D starting looks for every class, as a male and a female in light and dark skin: barbarian warriors, paladins in blue plate, a pope and a nun for priests, a wizard and a witch for mages, ninja rogues, Robin Hood rangers in green caps, and banker merchants. The looks added in earlier versions are still there from E onwards. Characters you've already made keep their look.
 - Each game window's title is the character's name, then the game's name, for example "Chillyinit: Fantasy Land - The Code (NOMMO) RPG". Character select still shows just the game's name.
 
 ## License

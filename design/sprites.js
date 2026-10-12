@@ -59,6 +59,14 @@ var sprites = {
 		frames: 6,
 		matrix: [["stormhead0"]],
 	},
+	hat106g: {
+		// Single player: hat106 recoloured green, for the ranger's starting looks
+		file: "/images/singleplayer/hat106g.png",
+		rows: 1,
+		columns: 1,
+		type: "hat",
+		matrix: [["hat106g"]],
+	},
 	bwhair: {
 		file: "/images/cosmetics/hairdo/bwhair.png?v=2",
 		rows: 1,

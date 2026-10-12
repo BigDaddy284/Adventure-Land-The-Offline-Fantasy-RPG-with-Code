@@ -308,7 +308,53 @@ function check_value(key, value) {
 	return Math.round(number * 1000) / 1000;
 }
 
-// Extra starting looks, added after each class's original four (so A to D stay the same)
+// The A to D starting looks for each class: male light, female light, male dark, female dark
+const DEFAULT_LOOKS = {
+	warrior: [
+		["marmor3f", { hair: "hairdo417", hat: "hat300", chin: "beard100", head: "makeup117" }],
+		["marmor3e", { hair: "hairdo208", hat: "hat300", head: "fmakeup01" }],
+		["marmor3f", { hair: "hairdo417", hat: "hat300", chin: "beard100", head: "mmakeup02" }],
+		["marmor3e", { hair: "hairdo208", hat: "hat300", head: "fmakeup03" }],
+	],
+	paladin: [
+		["mbody3c", { hair: "hairdo320", head: "makeup117" }],
+		["mbody3c", { hair: "hairdo408", head: "fmakeup01" }],
+		["mbody3c", { hair: "hairdo320", head: "mmakeup02" }],
+		["mbody3c", { hair: "hairdo408", head: "fmakeup03" }],
+	],
+	priest: [
+		["mbody4g", { hat: "hat302", head: "makeup117" }],
+		["mabw", { hat: "hat203", head: "fmakeup01" }],
+		["mbody4g", { hat: "hat302", head: "mmakeup02" }],
+		["mabw", { hat: "hat203", head: "fmakeup03" }],
+	],
+	mage: [
+		["mbody5h", { hair: "hairdo111", hat: "hat102", chin: "beard104", head: "makeup117" }],
+		["mbody5c", { hair: "hairdo405", hat: "hat102", head: "fmakeup01" }],
+		["mbody5h", { hair: "hairdo111", hat: "hat102", chin: "beard104", head: "mmakeup02" }],
+		["mbody5c", { hair: "hairdo405", hat: "hat102", head: "fmakeup03" }],
+	],
+	rogue: [
+		["marmor3c", { hat: "hat207", chin: "beard110", head: "makeup117" }],
+		["marmor3c", { hair: "hairdo511", chin: "beard110", head: "fmakeup01" }],
+		["marmor3c", { hat: "hat207", chin: "beard110", head: "mmakeup02" }],
+		["marmor3c", { hair: "hairdo511", chin: "beard110", head: "fmakeup03" }],
+	],
+	ranger: [
+		["marmor8f", { hair: "hairdo105", hat: "hat106g", chin: "beard109", head: "makeup117" }],
+		["marmor8g", { hair: "hairdo208", hat: "hat106g", head: "fmakeup01" }],
+		["marmor8f", { hair: "hairdo105", hat: "hat106g", chin: "beard109", head: "mmakeup02" }],
+		["marmor8g", { hair: "hairdo208", hat: "hat106g", head: "fmakeup03" }],
+	],
+	merchant: [
+		["marmor1a", { hair: "hairdo105", hat: "hat214", chin: "beard106", face: "face101", head: "makeup117" }],
+		["marmor1b", { hair: "hairdo519", hat: "hat214", head: "fmakeup01" }],
+		["marmor1a", { hair: "hairdo105", hat: "hat214", chin: "beard106", face: "face101", head: "mmakeup02" }],
+		["marmor1b", { hair: "hairdo519", hat: "hat214", head: "fmakeup03" }],
+	],
+};
+
+// Extra starting looks, added after each class's four (E onwards)
 // Each design comes in its main skin tone and an alternate one
 const NEW_LOOKS = {
 	warrior: [
@@ -349,6 +395,10 @@ const NEW_LOOKS = {
 
 // Adds the extra looks to the class definitions; safe to run more than once
 function add_looks(classes) {
+	for (const name of Object.keys(DEFAULT_LOOKS)) {
+		const looks = classes && classes[name] && classes[name].looks;
+		if (looks) DEFAULT_LOOKS[name].forEach((look, i) => (looks[i] = JSON.parse(JSON.stringify(look))));
+	}
 	for (const name of Object.keys(NEW_LOOKS)) {
 		const looks = classes && classes[name] && classes[name].looks;
 		if (!looks) continue;
@@ -491,6 +541,7 @@ module.exports = {
 	check_value,
 	EVENT_SETTINGS,
 	EVENT_MONSTERS,
+	DEFAULT_LOOKS,
 	NEW_LOOKS,
 	add_looks,
 	create: (values) => create(Object.assign({}, DEFAULTS, values)),
