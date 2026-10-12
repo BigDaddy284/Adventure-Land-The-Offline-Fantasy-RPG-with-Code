@@ -59,6 +59,55 @@ var sprites = {
 		frames: 6,
 		matrix: [["stormhead0"]],
 	},
+	npc_newupgrade: {
+		// Single player: the redesigned NPC's own sprite sheet, 48x60 frames
+		file: "/images/singleplayer/npc_newupgrade.png",
+		rows: 1,
+		columns: 1,
+		matrix: [["npc_newupgrade"]],
+	},
+	npc_exchange: {
+		// Single player: the redesigned NPC's own sprite sheet, 48x60 frames
+		file: "/images/singleplayer/npc_exchange.png",
+		rows: 1,
+		columns: 1,
+		matrix: [["npc_exchange"]],
+	},
+	npc_basics: {
+		// Single player: the redesigned NPC's own sprite sheet, 48x60 frames
+		file: "/images/singleplayer/npc_basics.png",
+		rows: 1,
+		columns: 1,
+		matrix: [["npc_basics"]],
+	},
+	npc_craftsman: {
+		// Single player: the redesigned NPC's own sprite sheet, 48x60 frames
+		file: "/images/singleplayer/npc_craftsman.png",
+		rows: 1,
+		columns: 1,
+		matrix: [["npc_craftsman"]],
+	},
+	npc_pete: {
+		// Single player: the redesigned NPC's own sprite sheet, 48x60 frames
+		file: "/images/singleplayer/npc_pete.png",
+		rows: 1,
+		columns: 1,
+		matrix: [["npc_pete"]],
+	},
+	npc_funtokens: {
+		// Single player: the redesigned NPC's own sprite sheet, 48x60 frames
+		file: "/images/singleplayer/npc_funtokens.png",
+		rows: 1,
+		columns: 1,
+		matrix: [["npc_funtokens"]],
+	},
+	npc_secondhands: {
+		// Single player: the redesigned NPC's own sprite sheet, 48x68 frames
+		file: "/images/singleplayer/npc_secondhands.png",
+		rows: 1,
+		columns: 1,
+		matrix: [["npc_secondhands"]],
+	},
 	hat106g: {
 		// Single player: hat106 recoloured green, for the ranger's starting looks
 		file: "/images/singleplayer/hat106g.png",

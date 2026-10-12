@@ -1133,6 +1133,51 @@ for(var i=8;i<48;i++){
 	};
 }
 npcs.dreamkeeper={name:"Dorr",role:"dreamkeeper",skin:"mbody4e", cx:{head:"mmakeup01",hair:"hairdo410",chin:"beard102",hat:"hat221",back:"backpacks202"},type:"fullstatic",says:["Going inside? Bring your party close."],interaction:["You have 24 minutes inside. Stay together."]};
+// Single player: new looks for the town's NPCs. Some wear normal character outfits (skin + cx), seven have their own
+// sprite sheets (npc_*, 48x60 frames) with more room than a character needs: height is how tall the NPC really is plus the
+// few pixels a character sheet leaves above the head (for the name and speech bubble), feet how far above the bottom of the frame their feet are
+(function () {
+	var npc_looks = {
+		"newupgrade": {"skin":"npc_newupgrade","height":46}, // Cue
+		"exchange": {"skin":"npc_exchange","height":41}, // Xyn
+		"scrolls": {"skin":"marmor7a","cx":{"head":"makeup117","hair":"hairdo105","hat":"hat102","face":"face101"}}, // Lucas
+		"lotterylady": {"skin":"marmor10f","cx":{"head":"fmakeup01","hair":"hairdo600"}}, // Rose
+		"fisherman": {"skin":"marmor8b","cx":{"head":"makeup105","hair":"hairdo105","hat":"hat111","chin":"beard100"}}, // Tristian
+		"fancypots": {"skin":"marmor9f","cx":{"head":"fmakeup01","hair":"hairdo405","hat":"hat310"}}, // Ernis
+		"basics": {"skin":"npc_basics","height":33}, // Gabriel
+		"premium": {"skin":"mbody6a","cx":{"head":"makeup105","hair":"hairdo105","hat":"hat318","chin":"beard109"}}, // Garwyn
+		"transporter": {"skin":"mbody5h","cx":{"head":"fmakeup01","hair":"hairdo301","back":"wings300"}}, // Alia
+		"standmerchant": {"skin":"mbody2a","cx":{"head":"fmakeup03","hair":"hairdo519","hat":"hat221"}}, // Divian
+		"appearance": {"skin":"mbody2h","cx":{"head":"fmakeup04","hair":"hairdo608"}}, // Haila
+		"craftsman": {"skin":"npc_craftsman","height":34}, // Leo
+		"pete": {"skin":"npc_pete","height":35}, // Pete
+		"shellsguy": {"skin":"sarmor1d","cx":{"head":"makeup105","hat":"hat305","chin":"beard111"}}, // Mr. Dworf
+		"friendtokens": {"skin":"sarmor1e","cx":{"head":"fmakeup01","hair":"hairdo604"}}, // Fvona
+		"funtokens": {"skin":"npc_funtokens","height":34}, // Tricksy
+		"bean": {"skin":"marmor4a","cx":{"head":"makeup105","hair":"hairdo105","hat":"hat214","chin":"beard106"}}, // Bean
+		"secondhands": {"skin":"npc_secondhands","height":34,"feet":8}, // Ponty
+		"pvptokens": {"skin":"mbody3d","cx":{"head":"makeup117","hat":"hat320","chin":"beard106"}}, // Gn. Spence
+		"monsterhunter": {"skin":"marmor6a","cx":{"head":"fmakeup03","hair":"hairdo208","hat":"hat306"}}, // Daisy
+		"mcollector": {"skin":"marmor2g","cx":{"head":"makeup104","hat":"hat224","chin":"beard111","back":"backpacks02"}}, // Cole
+		"favors": {"skin":"mbody2e","cx":{"head":"makeup117","hair":"hairdo404","hat":"hat218","back":"backpacks200"}}, // Favoré
+		"dreamkeeper": {"skin":"mbody6b","cx":{"head":"makeup117","hat":"hat114","chin":"beard104"}}, // Dorr
+	};
+	npc_looks.antip2w = npc_looks.shellsguy; // Mr. Dworf again
+	for (var npc in npc_looks) {
+		if (!npcs[npc]) continue;
+		npcs[npc].skin = npc_looks[npc].skin;
+		npcs[npc].type = "fullstatic";
+		if (npc_looks[npc].cx) npcs[npc].cx = npc_looks[npc].cx;
+		else delete npcs[npc].cx;
+		if (npc_looks[npc].feet) npcs[npc].feet = npc_looks[npc].feet;
+		if (npc_looks[npc].height) npcs[npc].height = npc_looks[npc].height;
+		if (npcs[npc].side_interaction && npcs[npc].side_interaction.skin) {
+			npcs[npc].side_interaction.skin = npc_looks[npc].skin;
+			if (npc_looks[npc].cx) npcs[npc].side_interaction.cx = npc_looks[npc].cx;
+			else delete npcs[npc].side_interaction.cx;
+		}
+	}
+})();
 for(var npc in npcs){
 	npcs[npc]["id"]=npc;
 }

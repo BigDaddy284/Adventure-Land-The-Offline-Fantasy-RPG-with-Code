@@ -136,9 +136,10 @@ test("NPC portraits keep the right sheet crop before and after HTML previews ini
 	c.IID = null;
 	c.precompute_image_positions();
 	portraits.forEach((face, i) => assert.equal(c.render_interaction(face, "return_html"), before[i], face.skin));
+	// Single player: Ernis wears a normal character outfit now, drawn from the armor sheet
 	const potion = c.render_interaction(c.G.npcs.fancypots.side_interaction, "return_html");
-	assert.match(potion, /margin-left: -416px; margin-top: -576px; width: 1248px; height: 1152px;/);
-	assert.match(potion, /src='\/images\/tiles\/characters\/custom2\.png\?v=4'/);
+	assert.match(potion, /margin-left: -432px;\s+margin-top: -576px;\s+width: 1296px;\s+height: 1152px;/);
+	assert.match(potion, /src='\/images\/cosmetics\/armors\/marmor9\.png\?v=2'/);
 	// The real animated shopkeeper must still use the animation portrait layout.
 	assert.match(
 		c.render_interaction({ auto: true, skin: "fancypots", message: "" }, "return_html"),
@@ -173,11 +174,9 @@ test("hooded upper costumes hide hair in both character rendering and HTML previ
 test("character-sheet NPC portraits use the sprite renderer instead of animation coordinates", () => {
 	const { c, load } = runtime();
 	load("js/html.js", "render_interaction");
-	const face = Object.values(c.G.npcs)
-		.map((npc) => npc.side_interaction)
-		.find((face) => face && c.T[face.skin] === "character");
-	assert(face, "a shipped character-sheet portrait exists");
-	assert.equal(face.skin, "xxschar2h");
+	// Single player: no NPC uses a character-sheet portrait since the NPC redesigns, so one is made here
+	const face = { auto: true, skin: "xxschar2h", message: "" };
+	assert.equal(c.T[face.skin], "character");
 	const html = c.render_interaction(face, "return_html");
 	assert.match(html, /width: 1296px;/, "the 324px character sheet stays at integer 4x scale");
 	assert.doesNotMatch(html, /width: 2256px;/, "not the unrelated animation layout");

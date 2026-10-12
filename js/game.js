@@ -6537,6 +6537,7 @@ function add_character(data, me) {
 	sprite.real_y = parseFloat(data.y);
 	sprite.last_ms = new Date();
 	sprite.anchor.set(0.5, 1);
+	if (npc && npc.feet && sprite.texture) sprite.anchor.set(0.5, 1 - npc.feet / sprite.texture.height); // feet above the bottom of the frame (Ponty's stall hangs below his)
 	sprite.type = "character";
 	sprite.me = me;
 	sprite.base = { h: 8, v: 7, vn: 2 };
@@ -6556,6 +6557,7 @@ function add_character(data, me) {
 	}
 	sprite.awidth = sprite.width / cscale;
 	sprite.aheight = sprite.height / cscale;
+	if (npc && npc.height) sprite.aheight = npc.height; // a sprite sheet with room to spare: the NPC's real height, for the name and speech bubble
 	if (stype == "emote") {
 		var actual = [26, 35],
 			anchor = sprite.anchor;
