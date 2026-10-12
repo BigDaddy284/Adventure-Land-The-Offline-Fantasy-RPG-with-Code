@@ -161,4 +161,9 @@ Fantasy Land started as a copy of the MongoDB port of [Adventure Land](https://g
 ### v22
 - New Mod Menu setting, **Damage multiplier** (`damage_rate`): the damage your characters deal to monsters. 1 = normal, 2 = every hit does double damage, 0.5 = half. Hits still roll as usual, then the multiplier applies.
 - **HP loss** and **MP usage** are multipliers now, like the others (`hp_loss` and `mp_usage`): 1 = normal, 0.5 = half, 0 = none. An older `settings.txt` is converted automatically (`hp_loss_percent = 50` becomes `hp_loss = 0.5`).
-- The Mod Menu's Experience section is now **Experience and Combat**, with XP, damage, HP loss and MP usage together.
+- New Mod Menu setting, **Respawn time** (`monster_respawn`): how long killed monsters take to come back, bosses and event monsters included. 1 = normal, 0.5 = twice as fast, 0 = straight away. Changing it also speeds up respawns that are already waiting.
+- New Mod Menu setting, **Death penalty** (`death_penalty`): the XP a character loses on death. 1 = normal, 0.5 = half, 0 = none.
+- New Mod Menu setting, **Run speed** (`run_speed`): 1 = normal, 2 = double, up to 5.
+- New Mod Menu setting, **Safe upgrades** (`safe_upgrades`): a failed upgrade keeps the item at its old level, and a failed compound keeps all three items. The scroll is still used.
+- New Mod Menu setting, **Skill cooldowns** (`skill_cooldown`): the wait before a skill can be used again. 1 = normal, 0.5 = half the wait, 0 = no wait. Monster skills aren't changed.
+- **The Mod Menu is grouped:** it opens on a page of groups (Combat, Monsters, Loot, Crafting & Gathering, Market, Characters and Holiday Events), each showing how many of its settings you've changed. Click a group to open its page, and Back to return.

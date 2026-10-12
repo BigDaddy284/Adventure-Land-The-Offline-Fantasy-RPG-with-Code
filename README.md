@@ -44,7 +44,7 @@ When the game is started with `Fantasy Land.exe`, the database, website and game
 
 ## Settings
 
-The easiest way is the **Mod Menu**: the computer button at the bottom of the screen, left of the game log. It lists every setting, changes apply as soon as you set them, and your choices are saved to `settings.txt`. Type a number and press Enter, or click ON/OFF. Two settings, Merrit's visit minutes and the fishing and mining wait, only take effect after a restart.
+The easiest way is the **Mod Menu**: the computer button at the bottom of the screen, left of the game log. It opens on a list of groups (Combat, Monsters, Loot, Crafting & Gathering, Market, Characters and Holiday Events), each showing how many of its settings you've changed; click one to see its settings. Changes apply as soon as you set them, and your choices are saved to `settings.txt`. Type a number and press Enter, or click ON/OFF. Two settings, Merrit's visit minutes and the fishing and mining wait, only take effect after a restart.
 
 You can also open `settings.txt` in the game folder with Notepad. Every setting is explained inside it. Save the file, then close the game and start it again for the change to take effect. You can change:
 
@@ -56,6 +56,10 @@ You can also open `settings.txt` in the game folder with Notepad. Every setting 
 - upgrade and compound luck, as multipliers (1 = normal, 2 = twice the chance of success)
 - XP from monsters and the damage your characters deal, as multipliers (1 = normal, 2 = double)
 - HP loss and MP usage, as multipliers (1 = normal, 0.5 = half, 0 = none)
+- skill cooldowns and the XP lost on death, as multipliers (1 = normal, 0.5 = half, 0 = none)
+- monster respawn time, bosses included (1 = normal, 0.5 = twice as fast, 0 = straight away)
+- run speed (1 = normal, 2 = double, 5 at most)
+- safe upgrades: a failed upgrade or compound keeps your items
 - drop luck and gold, as multipliers (1 = normal, 2 = double)
 - holiday events and event monsters
 - how many characters can be online at once
@@ -292,7 +296,12 @@ Fantasy Land started as a copy of the MongoDB port of [Adventure Land](https://g
 ### v22
 - New Mod Menu setting, **Damage multiplier** (`damage_rate`): the damage your characters deal to monsters. 1 = normal, 2 = every hit does double damage, 0.5 = half. Hits still roll as usual, then the multiplier applies.
 - **HP loss** and **MP usage** are multipliers now, like the others (`hp_loss` and `mp_usage`): 1 = normal, 0.5 = half, 0 = none. An older `settings.txt` is converted automatically (`hp_loss_percent = 50` becomes `hp_loss = 0.5`).
-- The Mod Menu's Experience section is now **Experience and Combat**, with XP, damage, HP loss and MP usage together.
+- New Mod Menu setting, **Respawn time** (`monster_respawn`): how long killed monsters take to come back, bosses and event monsters included. 1 = normal, 0.5 = twice as fast, 0 = straight away. Changing it also speeds up respawns that are already waiting.
+- New Mod Menu setting, **Death penalty** (`death_penalty`): the XP a character loses on death. 1 = normal, 0.5 = half, 0 = none.
+- New Mod Menu setting, **Run speed** (`run_speed`): 1 = normal, 2 = double, up to 5.
+- New Mod Menu setting, **Safe upgrades** (`safe_upgrades`): a failed upgrade keeps the item at its old level, and a failed compound keeps all three items. The scroll is still used.
+- New Mod Menu setting, **Skill cooldowns** (`skill_cooldown`): the wait before a skill can be used again. 1 = normal, 0.5 = half the wait, 0 = no wait. Monster skills aren't changed.
+- **The Mod Menu is grouped:** it opens on a page of groups (Combat, Monsters, Loot, Crafting & Gathering, Market, Characters and Holiday Events), each showing how many of its settings you've changed. Click a group to open its page, and Back to return.
 
 ## License
 

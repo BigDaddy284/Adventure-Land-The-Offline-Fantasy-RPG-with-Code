@@ -2676,9 +2676,11 @@ function event_loop() {
 			if (on && !monster_c[s[1]]) {
 				if (!timers[s[1]]) {
 					if (timers[s[1]] !== 0) {
-						timers[s[1]] = future_s(120);
+						timers[s[1]] = future_s(typeof single_player == "object" ? single_player.scale("respawn", 120) : 120);
 					} else {
-						timers[s[1]] = future_s(G.monsters[s[1]].respawn);
+						var respawn_s = G.monsters[s[1]].respawn;
+						if (typeof single_player == "object") respawn_s = single_player.scale("respawn", respawn_s); // Single player: respawn time
+						timers[s[1]] = future_s(respawn_s);
 					}
 					E[s[1]] = { live: false, spawn: timers[s[1]] };
 					broadcast_e();

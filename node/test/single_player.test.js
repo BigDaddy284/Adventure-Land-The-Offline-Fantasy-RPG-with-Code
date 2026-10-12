@@ -47,7 +47,11 @@ test("God Mode, Fire Sale and Daisy's tokens have settings, and the Mod Menu che
 	assert.equal(single_player.check_value("monster_hunt_tokens", "-1"), undefined);
 	assert.equal(single_player.check_value("monster_hunt_tokens", ""), undefined);
 	assert.equal(single_player.check_value("nothing", 1), undefined);
-	const keys = sp.mod_state().rows.filter((row) => row.key).map((row) => row.key);
+	const keys = sp
+		.mod_state()
+		.groups.flatMap((group) => group.rows)
+		.filter((row) => row.key)
+		.map((row) => row.key);
 	// Every setting is in the Mod Menu, holiday events and event monsters included
 	assert.deepEqual(Object.keys(single_player.DEFAULTS).filter((key) => !keys.includes(key)), []);
 	assert.equal(sp.holiday_event("holiday_season"), "holidayseason");
@@ -320,4 +324,39 @@ test("the game server's single player object has the seashell helpers", () => {
 	assert.equal(instance.BLESSING_SEASHELLS, 10000);
 	assert.equal(instance.seashell_price(75), 625);
 	assert.equal(typeof instance.strip_shell_drops, "function");
+});
+
+test("respawn time, death penalty, skill cooldowns, run speed and safe upgrades", () => {
+	const sp = single_player.create({});
+	const settings = sp.settings;
+	assert.equal(sp.scale("respawn", 1000), 1000);
+	assert.equal(sp.scale("death", 500), 500);
+	assert.equal(sp.scale("speed", 1), 1);
+	settings.monster_respawn = 0.5;
+	settings.death_penalty = 0;
+	settings.run_speed = 1.5;
+	assert.equal(sp.scale("respawn", 1000), 500);
+	assert.equal(sp.scale("death", 500), 0);
+	assert.equal(sp.scale("speed", 1), 1.5);
+	assert.equal(single_player.check_value("run_speed", 50), 5);
+	assert.equal(single_player.DEFAULTS.safe_upgrades, false);
+	// Skill cooldowns follow the setting while the game runs; monster skills are left alone
+	const G = { skills: { charge: { cooldown: 40000 }, fishing: { reuse_cooldown: 300000 }, rimeshatter: { cooldown: 8000, monster: true } } };
+	settings.fishing_mining_cooldown = true;
+	sp.apply_game_data(G);
+	assert.equal(G.skills.charge.cooldown, 40000);
+	settings.skill_cooldown = 0.5;
+	sp.apply_cooldowns();
+	assert.equal(G.skills.charge.cooldown, 20000);
+	assert.equal(G.skills.fishing.reuse_cooldown, 150000);
+	assert.equal(G.skills.rimeshatter.cooldown, 8000);
+	settings.skill_cooldown = 0;
+	sp.apply_cooldowns();
+	assert.equal(G.skills.charge.cooldown, 0);
+	settings.skill_cooldown = 1;
+	sp.apply_cooldowns();
+	assert.equal(G.skills.charge.cooldown, 40000);
+	// The home page counts what's changed in each group
+	const combat = sp.mod_state().groups.find((group) => group.name == "Combat");
+	assert.equal(combat.changed, 1); // death penalty
 });

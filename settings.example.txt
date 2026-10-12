@@ -64,6 +64,14 @@ hp_loss = 1
 # 0.5 = everything costs half MP, 0 = attacks and skills cost no MP.
 mp_usage = 1
 
+# Wait before a skill can be used again. A multiplier: 1 = normal,
+# 0.5 = half the wait, 0 = no wait at all.
+skill_cooldown = 1
+
+# XP lost when a character dies. A multiplier: 1 = normal,
+# 0.5 = half as much, 0 = nothing is lost.
+death_penalty = 1
+
 
 # ---------- Upgrading and compounding ----------
 
@@ -72,6 +80,10 @@ mp_usage = 1
 # upgrade/compound window already includes this.
 upgrade_success = 1
 compound_success = 1
+
+# Safe upgrades: a failed upgrade or compound doesn't destroy
+# anything. The item stays at its old level (only the scroll is used).
+safe_upgrades = no
 
 
 # ---------- Drops ----------
@@ -94,6 +106,14 @@ drop_everything = no
 # Monster tokens Daisy gives for each finished monster hunt.
 # 0 = none.
 monster_hunt_tokens = 1
+
+
+# ---------- Monster respawns ----------
+
+# Time before a killed monster comes back, bosses and event
+# monsters included. A multiplier: 1 = normal, 0.5 = twice as
+# fast, 0 = straight away.
+monster_respawn = 1
 
 
 # ---------- Cheats ----------
@@ -135,6 +155,10 @@ monster_wabbit = yes
 
 # How many of your characters can be logged in at the same time.
 max_characters_online = 10
+
+# How fast your characters run. A multiplier: 1 = normal,
+# 1.5 = half as fast again, 2 = double. 5 at most.
+run_speed = 1
 
 
 # ---------- Fishing and mining ----------

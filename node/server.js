@@ -1764,6 +1764,7 @@ function calculate_player_stats(player) {
 		player.speed *= 0.95;
 	}
 
+	if (typeof single_player == "object" && !player.npc) player.speed *= single_player.scale("speed", 1); // Single player: run speed
 	if (player.p.stand || player.s.hardshell) {
 		player.speed = 10;
 	}
@@ -7020,6 +7021,7 @@ function init_socket_io(socket_server, server_index) {
 				delete player.p.c_item;
 				delete player.p.c_itemx;
 				delete player.p.c_roll;
+				delete player.p.c_safe;
 
 				oprobability = probability = D.compounds[igrade][new_level];
 				result = Math.random();
@@ -7131,8 +7133,12 @@ function init_socket_io(socket_server, server_index) {
 						nums: [],
 					},
 				};
-				player.items[data.items[1]] = null;
-				player.items[data.items[2]] = null;
+				// Single player: Safe upgrades, a failed compound leaves the other two items where they are
+				var sp_safe = typeof single_player == "object" && single_player.settings.safe_upgrades && !(result <= probability);
+				if (!sp_safe) {
+					player.items[data.items[1]] = null;
+					player.items[data.items[2]] = null;
+				}
 
 				if (result <= probability) {
 					if (offering) {
@@ -7187,9 +7193,10 @@ function init_socket_io(socket_server, server_index) {
 					if (offering) {
 						player.p.ograce += 0.4;
 					}
-					player.esize += 2;
+					if (!sp_safe) player.esize += 2;
 					player.p.c_item = null;
 					player.p.c_itemx = item0;
+					if (sp_safe) player.p.c_safe = true; // the first item comes back when the compound finishes
 				}
 
 				player.citems[data.items[0]] = cache_item(player.items[data.items[0]]);
@@ -7567,7 +7574,10 @@ function init_socket_io(socket_server, server_index) {
 						if (offering) {
 							player.p.ograce += 0.6;
 						} // previously 1 [16/07/18]
-						if (scroll_def.grade != 3.6) {
+						if (typeof single_player == "object" && single_player.settings.safe_upgrades) {
+							player.p.u_item = item; // Single player: Safe upgrades, the item comes back at its old level
+							player.p.u_fail = true;
+						} else if (scroll_def.grade != 3.6) {
 							player.p.u_itemx = item;
 						} else {
 							player.p.u_item = item;
@@ -9101,11 +9111,19 @@ function init_socket_io(socket_server, server_index) {
 				}
 				socket.emit("single_player_events", single_player.event_state()); // keeps the event icons in step
 			} else if (data.key) {
+				var before = single_player.settings[data.key];
 				var value = single_player.change(data.key, data.value);
 				if (value === undefined) return socket.emit("game_log", "That value can't be used for " + data.key);
 				if (data.key == "drop_everything") mode.drop_all = value ? 1 : single_player_drop_all;
 				if (data.key == "max_characters_online") single_player.apply_options(options);
 				if (data.key == "ponty_restock_minutes") start_single_player_ponty();
+				if (data.key == "skill_cooldown") single_player.apply_cooldowns();
+				if (data.key == "monster_respawn") rescale_single_player_respawns(before, value);
+				if (data.key == "run_speed")
+					for (var id in players) {
+						calculate_player_stats(players[id]);
+						resend(players[id], "u+cid");
+					}
 			}
 			socket.emit("single_player_settings", single_player.mod_state()); // a request without a key just asks for the settings
 		});
@@ -13538,6 +13556,26 @@ function level_monster(monster, args) {
 	monster.luckx += 0.25 * mult;
 }
 
+// Single player: the Mod Menu's respawn time, for normal monsters and bosses alike
+function single_player_respawn(ms) {
+	return typeof single_player == "object" ? round(single_player.scale("respawn", ms)) : ms;
+}
+
+// Single player: respawns already waiting follow a new respawn time straight away, event monsters' timers included
+function rescale_single_player_respawns(before, after) {
+	var ratio = before > 0 ? after / before : 0;
+	monster_respawns.forEach(function (entry) {
+		entry[1] = after ? entry[1] * ratio : 0;
+	});
+	var now = Date.now();
+	single_player.EVENT_MONSTERS.forEach(function (name) {
+		if (!timers[name] || !(timers[name] > now)) return;
+		timers[name] = new Date(now + (after ? (timers[name] - now) * ratio : 0));
+		if (E[name] && !E[name].live) E[name].spawn = timers[name];
+	});
+	broadcast_e();
+}
+
 function remove_monster(target, args) {
 	if (!args) {
 		args = {};
@@ -13560,13 +13598,13 @@ function remove_monster(target, args) {
 		if (target.map_def.grow && (target.map_def.live || 0) <= (target.map_def.count * 2) / 3) {
 			setTimeout(new_monster_f(target.oin, target.map_def, { before_respawn: target }), 25);
 		} else if (G.monsters[target.type].respawn > 200) {
-			monster_respawns.push([target, round(G.monsters[target.type].respawn * (720 + Math.random() * 480)), Date.now()]);
+			monster_respawns.push([target, single_player_respawn(round(G.monsters[target.type].respawn * (720 + Math.random() * 480))), Date.now()]);
 			//setTimeout(
 			//	new_monster_f(target.oin, target.map_def, { before_respawn: target }),
 			//	round(G.monsters[target.type].respawn * (720 + Math.random() * 480)),
 			//);
 		} else {
-			monster_respawns.push([target, round(G.monsters[target.type].respawn * 1000 + Math.random() * 900), Date.now()]);
+			monster_respawns.push([target, single_player_respawn(round(G.monsters[target.type].respawn * 1000 + Math.random() * 900)), Date.now()]);
 			//setTimeout(
 			//	new_monster_f(target.oin, target.map_def, { before_respawn: target }),
 			//	round(G.monsters[target.type].respawn * 1000 + Math.random() * 900),
@@ -14083,6 +14121,7 @@ function defeated_by_a_monster(attacker, player) {
 		divider = 10;
 	}
 	var lost_xp = floor(min(max((player.max_xp * 0.01) / divider, (player.xp * 0.02) / divider), player.xp));
+	if (typeof single_player == "object") lost_xp = floor(single_player.scale("death", lost_xp)); // Single player: death penalty
 	// Originally all of them are divided by player.xpm [05/06/19]
 	for (var i = 0; i < player.isize; i++) {
 		if (player.items[i] && player.items[i].name == "xptome") {
@@ -15054,7 +15093,7 @@ function update_instance(instance) {
 							"game_response",
 							{ response: "compound_fail", level: item.level, num: ref.num, stale: ref.stale },
 						]);
-						if (calculate_item_value(item) + (def.edge || 0) * 2000000 > 920000 && !player.stealth) {
+						if (calculate_item_value(item) + (def.edge || 0) * 2000000 > 920000 && !player.stealth && !player.p.c_safe) {
 							broadcast(
 								"server_message",
 								item_message(
@@ -15067,12 +15106,18 @@ function update_instance(instance) {
 						}
 						xy_emit(G.maps.main.compound, "upgrade", { type: "compound", success: 0 });
 						if (player.items[ref.num] && player.items[ref.num].name == "placeholder") {
-							player.citems[ref.num] = player.items[ref.num] = null;
-							player.esize++;
+							if (player.p.c_safe) {
+								player.items[ref.num] = item; // Single player: Safe upgrades
+								player.citems[ref.num] = cache_item(item);
+							} else {
+								player.citems[ref.num] = player.items[ref.num] = null;
+								player.esize++;
+							}
 						}
 					}
 					delete player.p.c_item;
 					delete player.p.c_itemx;
+					delete player.p.c_safe;
 					delete player.p.c_roll;
 					resend(player, "reopen+u+cid+nc+inv");
 				}
@@ -15133,7 +15178,7 @@ function update_instance(instance) {
 							"game_response",
 							{ response: "upgrade_fail", level: new_level, num: ref.num, stale: ref.stale },
 						]);
-						if (announce && calculate_item_value(item) > 4800000 && !player.stealth) {
+						if (announce && calculate_item_value(item) > 4800000 && !player.stealth && !(typeof single_player == "object" && player.p.u_fail)) {
 							broadcast(
 								"server_message",
 								item_message(

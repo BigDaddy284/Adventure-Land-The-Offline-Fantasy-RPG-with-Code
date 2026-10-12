@@ -6465,19 +6465,44 @@ function single_player_mods_row(row) {
 	return html + "</div>";
 }
 
+var single_player_mods_group = null; // the group page that's open, or null for the home page
+
 function single_player_mods_html() {
-	var html = "<div class='single-player-mods'><div style='font-size: 40px; text-align: center; margin-bottom: 4px'>Mod Menu</div>";
-	html += "<div style='font-size: 20px; color: gray; margin: 0 12px 4px'>Changes apply straight away and are saved in settings.txt. Type a number and press Enter.</div>";
-	single_player_mods_state.rows.forEach(function (row) {
+	var html = "<div class='single-player-mods'>";
+	var group = single_player_mods_group !== null && single_player_mods_state.groups[single_player_mods_group];
+	if (!group) {
+		html += "<div style='font-size: 40px; text-align: center; margin-bottom: 4px'>Mod Menu</div>";
+		html += "<div style='font-size: 20px; color: gray; margin: 0 12px 8px'>Pick a group. Changes apply straight away and are saved in settings.txt.</div>";
+		single_player_mods_state.groups.forEach(function (g, index) {
+			html += "<div class='gamebutton' style='display: flex; justify-content: space-between; align-items: center; margin: 6px 12px; padding: 8px 12px; text-align: left; line-height: 22px' onclick='open_single_player_mods_group(" + index + ")'>";
+			html += "<div><div style='font-size: 30px; color: #E8E44D'>" + html_escape(g.name) + "</div>";
+			html += "<div style='font-size: 20px; color: gray'>" + html_escape(g.note || "") + "</div></div>";
+			html += "<div style='font-size: 22px; color: " + (g.changed ? "#5DE376" : "gray") + "; flex: none; margin-left: 12px'>" + (g.changed ? g.changed + " changed" : "normal") + " &gt;</div>";
+			html += "</div>";
+		});
+		return html + "</div>";
+	}
+	html += "<div style='display: flex; align-items: center; margin: 0 12px 4px'>";
+	html += "<div class='gamebutton' style='flex: none; font-size: 26px; padding: 2px 10px' onclick='open_single_player_mods_group(null)'>&lt; Back</div>";
+	html += "<div style='flex: 1; font-size: 40px; text-align: center; margin-right: 90px'>" + html_escape(group.name) + "</div></div>";
+	html += "<div style='font-size: 20px; color: gray; margin: 0 12px 4px'>Type a number and press Enter.</div>";
+	group.rows.forEach(function (row) {
 		if (row.section) html += "<div style='font-size: 30px; color: #E8E44D; margin: 14px 12px 2px; border-bottom: 2px solid #4A4A4A'>" + html_escape(row.section) + "</div>";
 		else html += single_player_mods_row(row);
 	});
 	return html + "</div>";
 }
 
+function open_single_player_mods_group(index) {
+	single_player_mods_group = index;
+	if ($(".single-player-mods").length) $(".single-player-mods").replaceWith(single_player_mods_html());
+	$(".single-player-mods").closest(".modal").scrollTop(0); // each page starts at the top
+}
+
 function open_single_player_mods() {
 	if (!single_player_mods_state) return socket.emit("single_player_setting", {}); // asks for the settings, then opens
 	if ($(".single-player-mods").length) hide_modal();
+	single_player_mods_group = null; // always opens on the home page
 	show_modal(single_player_mods_html(), { wwidth: 560 });
 }
 

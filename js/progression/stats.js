@@ -722,6 +722,7 @@
 				player.speed *= 0.95;
 			}
 
+			if (typeof single_player == "object" && !player.npc) player.speed *= single_player.scale("speed", 1); // Single player: run speed
 			if (player.p.stand || player.s.hardshell) {
 				player.speed = 10;
 			}

@@ -25,6 +25,11 @@ const DEFAULTS = {
 	damage_rate: 1,
 	mp_usage: 1,
 	hp_loss: 1,
+	death_penalty: 1,
+	skill_cooldown: 1,
+	run_speed: 1,
+	monster_respawn: 1,
+	safe_upgrades: false,
 	drop_rate: 1,
 	gold_drop: 1,
 	drop_everything: false,
@@ -222,6 +227,10 @@ const MULTIPLIERS = {
 	mp: "mp_usage",
 	hp_loss: "hp_loss",
 	damage: "damage_rate",
+	death: "death_penalty",
+	respawn: "monster_respawn",
+	cooldown: "skill_cooldown",
+	speed: "run_speed",
 	sell: "sell_multiplier",
 	drop: "drop_rate",
 	gold: "gold_drop",
@@ -230,59 +239,100 @@ const MULTIPLIERS = {
 	compound: "compound_success",
 };
 
-// What the Mod Menu shows, in order: [setting, label, note]. A section is a string on its own.
+// What the Mod Menu shows: a home page of groups, each opening its own page. In a group, rows are
+// [setting, label, note] and a string on its own starts a section.
 // Settings in RESTART only take effect the next time the game starts.
 const MOD_MENU = [
-	"Cheats",
-	["god_mode", "God Mode", "Your characters take no damage"],
-	["fire_sale", "Fire Sale", "Everything in the NPC shops, Ponty and Lost and Found is free"],
-	"Drops",
-	["drop_rate", "Drop luck", "1 = normal, 2 = every item twice as likely to drop"],
-	["gold_drop", "Gold dropped", "1 = normal, 2 = twice as much gold"],
-	["drop_everything", "Drop everything", "Every monster drops its whole drop list"],
-	["monster_hunt_tokens", "Daisy's tokens", "Monster tokens for each finished hunt"],
-	"Experience and Combat",
-	["xp_rate", "XP multiplier", "1 = normal, 2 = double XP from monsters"],
-	["damage_rate", "Damage multiplier", "1 = normal, 2 = your hits do double damage"],
-	["hp_loss", "HP loss", "1 = normal, 0.5 = half damage taken, 0 = none"],
-	["mp_usage", "MP usage", "1 = normal, 0.5 = half MP, 0 = skills cost no MP"],
-	"Upgrading",
-	["upgrade_success", "Upgrade luck", "1 = normal, 2 = twice the chance of success"],
-	["compound_success", "Compound luck", "1 = normal, 2 = twice the chance of success"],
-	"Shops",
-	["sell_multiplier", "Sell price", "1 = normal, 2 = NPCs pay double"],
-	["starting_gold", "Starting gold", "Gold for each new character"],
-	"Ponty",
-	["ponty_restock_minutes", "Restock minutes", "0 = normal Ponty"],
-	["ponty_item_count", "Items per restock", ""],
-	["ponty_min_grade", "Lowest grade", "0 any, 1 high, 2 rare, 3 legendary"],
-	["ponty_upgrade_level_min", "Upgrade level from", ""],
-	["ponty_upgrade_level_max", "Upgrade level to", ""],
-	["ponty_compound_level_min", "Compound level from", ""],
-	["ponty_compound_level_max", "Compound level to", ""],
-	"Merrit",
-	["merrit_visit_minutes", "Visit minutes", "Minutes between parcels"],
-	["merrit_buys_stall", "Buys your stall", "Buys everything on the stall each visit"],
-	"Gathering",
-	["fishing_mining_cooldown", "Fishing and mining wait", "Off = fish and mine again straight away"],
-	["tools_break", "Tools break", "Rods and pickaxes can break"],
-	"Characters",
-	["max_characters_online", "Characters online", "How many can play at once"],
-	"Holiday Events",
-	["holiday_season", "Holiday Season", ""],
-	["lunar_new_year", "Lunar New Year", ""],
-	["valentines", "Valentine's", ""],
-	["halloween", "Halloween", ""],
-	["egg_hunt", "Egg Hunt", ""],
-	"Event Monsters",
-	["monster_grinch", "Grinch", "Each spawns even when its holiday is off"],
-	["monster_snowman", "Snowman", ""],
-	["monster_mrpumpkin", "Mr Pumpkin", ""],
-	["monster_mrgreen", "Mr Green", ""],
-	["monster_slenderman", "Slenderman", ""],
-	["monster_dragold", "Dragold", ""],
-	["monster_pinkgoo", "Love Goo", ""],
-	["monster_wabbit", "Wabbit", ""],
+	{
+		name: "Combat",
+		note: "XP, damage, HP, MP, skills and dying",
+		rows: [
+			["god_mode", "God Mode", "Your characters take no damage"],
+			["xp_rate", "XP multiplier", "1 = normal, 2 = double XP from monsters"],
+			["damage_rate", "Damage multiplier", "1 = normal, 2 = your hits do double damage"],
+			["hp_loss", "HP loss", "1 = normal, 0.5 = half damage taken, 0 = none"],
+			["mp_usage", "MP usage", "1 = normal, 0.5 = half MP, 0 = skills cost no MP"],
+			["skill_cooldown", "Skill cooldowns", "1 = normal, 0.5 = half the wait, 0 = no wait"],
+			["death_penalty", "Death penalty", "XP lost on death: 1 = normal, 0.5 = half, 0 = none"],
+		],
+	},
+	{
+		name: "Monsters",
+		note: "Respawns, Daisy's hunts and event monsters",
+		rows: [
+			["monster_respawn", "Respawn time", "Bosses too: 1 = normal, 0.5 = twice as fast, 0 = instant"],
+			["monster_hunt_tokens", "Daisy's tokens", "Monster tokens for each finished hunt"],
+			"Event Monsters",
+			["monster_grinch", "Grinch", "Each spawns even when its holiday is off"],
+			["monster_snowman", "Snowman", ""],
+			["monster_mrpumpkin", "Mr Pumpkin", ""],
+			["monster_mrgreen", "Mr Green", ""],
+			["monster_slenderman", "Slenderman", ""],
+			["monster_dragold", "Dragold", ""],
+			["monster_pinkgoo", "Love Goo", ""],
+			["monster_wabbit", "Wabbit", ""],
+		],
+	},
+	{
+		name: "Loot",
+		note: "Item drops and gold",
+		rows: [
+			["drop_rate", "Drop luck", "1 = normal, 2 = every item twice as likely to drop"],
+			["gold_drop", "Gold dropped", "1 = normal, 2 = twice as much gold"],
+			["drop_everything", "Drop everything", "Every monster drops its whole drop list"],
+		],
+	},
+	{
+		name: "Crafting & Gathering",
+		note: "Upgrading, compounding, fishing and mining",
+		rows: [
+			["upgrade_success", "Upgrade luck", "1 = normal, 2 = twice the chance of success"],
+			["compound_success", "Compound luck", "1 = normal, 2 = twice the chance of success"],
+			["safe_upgrades", "Safe upgrades", "A failed upgrade or compound keeps your items"],
+			"Gathering",
+			["fishing_mining_cooldown", "Fishing and mining wait", "Off = fish and mine again straight away"],
+			["tools_break", "Tools break", "Rods and pickaxes can break"],
+		],
+	},
+	{
+		name: "Market",
+		note: "NPC shops, Ponty and Merrit",
+		rows: [
+			["fire_sale", "Fire Sale", "Everything in the NPC shops, Ponty and Lost and Found is free"],
+			["sell_multiplier", "Sell price", "1 = normal, 2 = NPCs pay double"],
+			"Ponty",
+			["ponty_restock_minutes", "Restock minutes", "0 = normal Ponty"],
+			["ponty_item_count", "Items per restock", ""],
+			["ponty_min_grade", "Lowest grade", "0 any, 1 high, 2 rare, 3 legendary"],
+			["ponty_upgrade_level_min", "Upgrade level from", ""],
+			["ponty_upgrade_level_max", "Upgrade level to", ""],
+			["ponty_compound_level_min", "Compound level from", ""],
+			["ponty_compound_level_max", "Compound level to", ""],
+			"Merrit",
+			["merrit_visit_minutes", "Visit minutes", "Minutes between parcels"],
+			["merrit_buys_stall", "Buys your stall", "Buys everything on the stall each visit"],
+		],
+	},
+	{
+		name: "Characters",
+		note: "Run speed, characters online and starting gold",
+		rows: [
+			["run_speed", "Run speed", "1 = normal, 1.5 = half as fast again, 5 at most"],
+			["max_characters_online", "Characters online", "How many can play at once"],
+			["starting_gold", "Starting gold", "Gold for each new character"],
+		],
+	},
+	{
+		name: "Holiday Events",
+		note: "Switch each holiday on or off",
+		rows: [
+			["holiday_season", "Holiday Season", ""],
+			["lunar_new_year", "Lunar New Year", ""],
+			["valentines", "Valentine's", ""],
+			["halloween", "Halloween", ""],
+			["egg_hunt", "Egg Hunt", ""],
+		],
+	},
 ];
 const RESTART = ["fishing_mining_cooldown", "merrit_visit_minutes"];
 // Whole numbers only, and the highest each can go
@@ -298,6 +348,8 @@ const WHOLE = {
 	starting_gold: 1e12,
 	merrit_visit_minutes: 1e6,
 };
+// The highest other numbers can go
+const MAXIMUM = { run_speed: 5 };
 
 // The game's name for a holiday event or event monster setting (holiday_season -> holidayseason,
 // monster_grinch -> grinch), or undefined for any other setting
@@ -315,7 +367,7 @@ function check_value(key, value) {
 	const number = Number(value);
 	if (value === "" || value === null || typeof value == "boolean" || !Number.isFinite(number) || number < 0) return undefined;
 	if (key in WHOLE) return Math.min(WHOLE[key], Math.round(number));
-	return Math.round(number * 1000) / 1000;
+	return Math.min(MAXIMUM[key] || Infinity, Math.round(number * 1000) / 1000);
 }
 
 // Starting looks E to H for each class: male light, female light, male dark, female dark
@@ -558,6 +610,8 @@ function prune_docs(docs) {
 
 function create(settings) {
 	let base_limits = null;
+	let skill_game = null;
+	let base_cooldowns = {};
 	return {
 		settings,
 		// Shells to seashells, for the game server
@@ -565,6 +619,7 @@ function create(settings) {
 		seashell_price,
 		item_seashell_price,
 		strip_shell_drops,
+		EVENT_MONSTERS,
 		// Applies one setting to a value; success chances are capped at 100%
 		scale(kind, value) {
 			if (kind == "hp_loss" && settings.god_mode) return 0;
@@ -604,6 +659,13 @@ function create(settings) {
 		},
 		// Changes to the game data (G) the server and website build from the design files
 		apply_game_data(G) {
+			// Skill cooldowns as the design files have them, so the Mod Menu can change them while the game runs
+			skill_game = G;
+			base_cooldowns = {};
+			for (const [name, def] of Object.entries(G.skills || {}))
+				if (def && !def.monster && def.type != "monster")
+					base_cooldowns[name] = { cooldown: def.cooldown, reuse_cooldown: def.reuse_cooldown };
+			this.apply_cooldowns();
 			if (!settings.fishing_mining_cooldown)
 				["fishing", "mining"].forEach(function (name) {
 					if (G.skills && G.skills[name]) G.skills[name].reuse_cooldown = 0;
@@ -618,6 +680,18 @@ function create(settings) {
 			// Items bought with Shells show their seashell price
 			for (const [name, def] of Object.entries(G.items || {})) if (def && def.cash) def.seashells = item_seashell_price(name, def.cash, 1);
 			return G;
+		},
+		// Sets every skill's cooldown from the design files' value and the Skill cooldowns setting
+		apply_cooldowns() {
+			if (!skill_game) return;
+			const multiplier = typeof settings.skill_cooldown == "number" ? settings.skill_cooldown : 1;
+			for (const [name, base] of Object.entries(base_cooldowns)) {
+				const def = skill_game.skills[name];
+				if (!def) continue;
+				for (const key of ["cooldown", "reuse_cooldown"])
+					if (typeof base[key] == "number") def[key] = Math.round(base[key] * multiplier);
+				if (!settings.fishing_mining_cooldown && (name == "fishing" || name == "mining")) def.reuse_cooldown = 0;
+			}
 		},
 		apply_options(options) {
 			// The game's own limits are remembered, so lowering the setting while playing works too
@@ -636,21 +710,26 @@ function create(settings) {
 				save_setting(SETTINGS_FILE, key, typeof value == "boolean" ? (value ? "yes" : "no") : String(value));
 			return value;
 		},
-		// What the Mod Menu shows: sections and rows with their current values
+		// What the Mod Menu shows: its groups, each with sections and rows holding the current values.
+		// changed counts the group's settings that aren't at their normal value
 		mod_state() {
 			return {
-				rows: MOD_MENU.map((row) =>
-					typeof row == "string"
-						? { section: row }
-						: {
-								key: row[0],
-								label: row[1],
-								note: row[2],
-								value: settings[row[0]],
-								yesno: typeof DEFAULTS[row[0]] == "boolean",
-								restart: RESTART.includes(row[0]),
-							},
-				),
+				groups: MOD_MENU.map((group) => {
+					const rows = group.rows.map((row) =>
+						typeof row == "string"
+							? { section: row }
+							: {
+									key: row[0],
+									label: row[1],
+									note: row[2],
+									value: settings[row[0]],
+									yesno: typeof DEFAULTS[row[0]] == "boolean",
+									restart: RESTART.includes(row[0]),
+								},
+					);
+					const changed = rows.filter((row) => row.key && settings[row.key] !== DEFAULTS[row.key]).length;
+					return { name: group.name, note: group.note, changed, rows };
+				}),
 			};
 		},
 		// One setting as settings.txt has it right now (for the website, which runs separately from the game server)
