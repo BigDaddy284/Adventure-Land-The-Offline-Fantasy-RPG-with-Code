@@ -354,6 +354,80 @@ const CLASS_LOOKS = {
 	],
 };
 
+// The starting looks offered on E to H before v19. Characters made with one are moved onto the current look for the
+// same letter when the website starts (upgrade_looks), keeping any other cosmetics they have
+const OLD_LOOKS = {
+	warrior: [
+		["marmor6g", { head: "makeup104", hair: "hairdo417", chin: "beard111" }],
+		["marmor6g", { head: "makeup117", hair: "hairdo417", chin: "beard111" }],
+		["marmor6c", { head: "fmakeup01", hair: "hairdo519" }],
+		["marmor6c", { head: "fmakeup03", hair: "hairdo519" }],
+	],
+	rogue: [
+		["sbody1d", { head: "makeup108", hair: "hairdo415", chin: "beard112" }],
+		["sbody1d", { head: "makeup117", hair: "hairdo415", chin: "beard112" }],
+		["sarmor1g", { head: "fmakeup01", hair: "hairdo600" }],
+		["sarmor1g", { head: "fmakeup03", hair: "hairdo600" }],
+	],
+	mage: [
+		["mbody1e", { head: "makeup117", hair: "hairdo111", chin: "beard104" }],
+		["mbody1e", { head: "makeup105", hair: "hairdo111", chin: "beard104" }],
+		["mbody5h", { head: "fmakeup01", hair: "hairdo301", hat: "hat102" }],
+		["mbody5h", { head: "fmakeup03", hair: "hairdo301", hat: "hat102" }],
+	],
+	paladin: [
+		["mbody3c", { head: "makeup105", hair: "hairdo320" }],
+		["mbody3c", { head: "makeup117", hair: "hairdo320" }],
+	],
+	merchant: [
+		["marmor11g", { head: "makeup104", hair: "hairdo105", hat: "hat213", chin: "beard109" }],
+		["marmor11g", { head: "makeup117", hair: "hairdo105", hat: "hat213", chin: "beard109" }],
+	],
+	ranger: [
+		["marmor5c", { head: "fmakeup03", hair: "hairdo208", hat: "hat221" }],
+		["marmor5c", { head: "fmakeup01", hair: "hairdo208", hat: "hat221" }],
+	],
+	priest: [
+		["mbody4g", { head: "nfmakeup06", hair: "hairdo602" }],
+		["mbody4g", { head: "fmakeup01", hair: "hairdo602" }],
+	],
+};
+
+// Returns the current look for a character still wearing an old E to H look, or null
+function upgraded_look(type, skin, cx) {
+	const old = OLD_LOOKS[type] || [];
+	cx = cx && typeof cx == "object" && !Array.isArray(cx) ? cx : {};
+	const index = old.findIndex(([s, parts]) => s == skin && Object.keys(parts).every((slot) => cx[slot] == parts[slot]));
+	if (index < 0 || !CLASS_LOOKS[type] || !CLASS_LOOKS[type][index]) return null;
+	const [new_skin, new_parts] = CLASS_LOOKS[type][index];
+	const result = Object.assign({}, cx);
+	for (const slot of Object.keys(old[index][1])) delete result[slot];
+	return { skin: new_skin, cx: Object.assign(result, new_parts) };
+}
+
+// Moves characters made with an old E to H look onto the current look for that letter
+async function upgrade_looks(db) {
+	let moved = 0;
+	for (const type of Object.keys(OLD_LOOKS)) {
+		const characters = await db.collection("character").find({ type: type }).toArray();
+		for (const character of characters) {
+			const info = character.info || {};
+			const look = upgraded_look(type, info.skin, info.cx);
+			if (!look) continue;
+			await db.collection("character").updateOne({ _id: character._id }, { $set: { "info.skin": look.skin, "info.cx": look.cx } });
+			const owner = character.owner && (await db.collection("user").findOne({ _id: character.owner }));
+			const list = owner && owner.info && owner.info.characters;
+			if (Array.isArray(list))
+				for (let i = 0; i < list.length; i++)
+					if (list[i] && list[i].id == character._id)
+						await db.collection("user").updateOne({ _id: owner._id }, { $set: { ["info.characters." + i + ".skin"]: look.skin, ["info.characters." + i + ".cx"]: look.cx } });
+			moved++;
+		}
+	}
+	if (moved) console.log("Single player: moved " + moved + " character(s) onto the current E to H looks");
+	return moved;
+}
+
 // Adds the extra looks to the class definitions; safe to run more than once
 function add_looks(classes) {
 	for (const extra of [CLASS_LOOKS])
@@ -533,6 +607,8 @@ module.exports = {
 	EVENT_MONSTERS,
 	CLASS_LOOKS,
 	add_looks,
+	upgraded_look,
+	upgrade_looks,
 	prune_docs,
 	REMOVED_GUIDES,
 	create: (values) => create(Object.assign({}, DEFAULTS, values)),

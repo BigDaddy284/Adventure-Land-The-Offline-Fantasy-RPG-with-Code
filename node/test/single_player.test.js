@@ -244,3 +244,36 @@ test("event monsters switch on and off on their own, apart from their holiday", 
 	assert.equal(sp.event_state().events.holidayseason, true);
 	assert.equal(sp.event_state().monsters.snowman, true);
 });
+
+test("characters made with a pre-v19 E to H look move onto the current look for that letter", async () => {
+	const sp = require("../logic/single_player");
+	const look = sp.upgraded_look("warrior", "marmor6c", { head: "fmakeup01", hair: "hairdo519", upper: "kept" });
+	assert.deepEqual(look, { skin: "marmor3f", cx: { upper: "kept", hair: "hairdo417", hat: "hat300", chin: "beard100", head: "mmakeup02" } });
+	assert.equal(sp.upgraded_look("warrior", "marmor6c", { head: "fmakeup01", hair: "hairdo100" }), null);
+	assert.equal(sp.upgraded_look("warrior", "marmor3f", sp.CLASS_LOOKS.warrior[0][1]), null);
+	const docs = {
+		character: [{ _id: "CH1", type: "ranger", owner: "US1", info: { skin: "marmor5c", cx: { head: "fmakeup01", hair: "hairdo208", hat: "hat221" } } }],
+		user: [{ _id: "US1", info: { characters: [{ id: "CH9" }, { id: "CH1", skin: "marmor5c", cx: {} }] } }],
+	};
+	const set = (doc, path, value) => {
+		const keys = path.split(".");
+		let at = doc;
+		for (const key of keys.slice(0, -1)) at = at[key];
+		at[keys[keys.length - 1]] = value;
+	};
+	const db = {
+		collection: (name) => ({
+			find: (q) => ({ toArray: async () => docs[name].filter((d) => d.type == q.type) }),
+			findOne: async (q) => docs[name].find((d) => d._id == q._id),
+			updateOne: async (q, u) => {
+				const doc = docs[name].find((d) => d._id == q._id);
+				for (const [path, value] of Object.entries(u.$set)) set(doc, path, value);
+			},
+		}),
+	};
+	assert.equal(await sp.upgrade_looks(db), 1);
+	assert.equal(docs.character[0].info.skin, "marmor8g");
+	assert.equal(docs.user[0].info.characters[1].skin, "marmor8g");
+	assert.equal(docs.user[0].info.characters[1].cx.hat, "hat106g");
+	assert.equal(await sp.upgrade_looks(db), 0);
+});

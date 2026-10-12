@@ -67,6 +67,7 @@ eval("" + fs.readFileSync(path.resolve(__dirname, "design/multipliers.js")));
 eval("" + fs.readFileSync(path.resolve(__dirname, "design/items.js")));
 eval("" + fs.readFileSync(path.resolve(__dirname, "design/classes.js")));
 if (single_player) require("./node/logic/single_player").add_looks(classes); // Single player: extra starting looks
+if (single_player) setTimeout(() => require("./node/logic/single_player").upgrade_looks(db).catch((e) => console.error("upgrade_looks", e)), 2000); // Single player: characters made with the pre-v19 E to H looks move onto the current ones
 eval("" + fs.readFileSync(path.resolve(__dirname, "design/levels.js")));
 eval("" + fs.readFileSync(path.resolve(__dirname, "design/upgrades.js")));
 eval("" + fs.readFileSync(path.resolve(__dirname, "design/drops.js"))); // needs items
