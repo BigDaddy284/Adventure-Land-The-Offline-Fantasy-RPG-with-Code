@@ -266,6 +266,7 @@
 </div>
 <div id="topui" class="menu">
 	{% if domain.single_player %}{% include "htmls/contents/singleplayer_credits.html" %}{% endif %}
+	{% if not domain.single_player %}{# Single player: no Logout here, and Character Ops sits at the top of the In Game box #}
 	<div class="largeborder" style="padding-left: 15px; padding-right: 15px">
 		{% if not domain.single_player %}
 		<div class="textbutton" onclick="pcs(); $('.menu').hide(); $('.accountui').show(); resize()">
@@ -300,7 +301,9 @@
 		{%endif%}
 		<div class="mt5 textbutton logout" onclick="if(bc(this)) return; api_call_l('logout',{},{disable:$(this)}).then(function(result){if(!result.failed) location.reload();})">{{ phrase("pages.contents.selection.logout") }}</div>
 	</div>
-	<div class="largeborder" style="padding-left: 15px; padding-right: 15px; margin-top: 8px; font-size: 24px">
+	{% endif %}
+	<div class="largeborder" style="padding-left: 15px; padding-right: 15px; {% if not domain.single_player %}margin-top: 8px; {% endif %}font-size: 24px">
+		{% if domain.single_player %}<div class="textbutton" style="font-size: 32px; margin-bottom: 8px" onclick="pcs(); $('.menu').hide(); $('.editui').show(); resize()">{{ phrase("pages.contents.selection.character-ops") }}</div>{% endif %}
 		<div style="border-bottom: 2px dashed gray; color: #e7e7e7; display: inline-block; margin-bottom: 6px">{{ phrase("pages.contents.selection.in-game") }}</div>
 		{% if domain.single_player %}{# Single player: room for 8 characters and 2 merchants #}
 		{% for row in [[1,"> 1st Character:"],[2,"> 2nd Character:"],[3,"> 3rd Character:"],[4,"> 4th Character:"],[5,"> 5th Character:"],[6,"> 6th Character:"],[7,"> 7th Character:"],[8,"> 8th Character:"],["merchant","> 1st Merchant:"],["merchant2","> 2nd Merchant:"]] %}

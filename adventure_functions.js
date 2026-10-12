@@ -1595,7 +1595,7 @@ async function block_account(name, days, reason, toggle) {
 function shtml(path, vars) {
 	if (path.includes("..")) throw new Error("shtml: invalid path");
 	vars = Object.assign({}, vars);
-	if (!vars.domain) vars.domain = { language: localization.current_language() };
+	if (!vars.domain) vars.domain = { language: localization.current_language(), single_player: typeof options == "object" && !!options.single_player }; // Single player: articles opened in game use the single player templates too
 	return nunjucks.render(path, vars);
 }
 

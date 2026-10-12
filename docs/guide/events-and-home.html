@@ -1,3 +1,57 @@
+{% if domain.single_player %}
+{# Single player: this page explains events as they work in Fantasy Land, one world on your own PC #}
+<div class="guide-kicker">WHAT'S HAPPENING IN YOUR WORLD</div>
+<div class="guide-title">Events</div>
+<p>Fantasy Land is one world running on your own PC, so there are no realms, home servers or server hopping to worry about. Events come in three kinds: holidays you switch on yourself, scheduled events that follow the game's clock, and rare creatures that turn up on their own.</p>
+
+<div class="guide-card-grid">
+	<div class="guide-card"><span class="guide-card-icon sp-events-candycane"></span><b>Holidays</b>Holiday Season, Lunar New Year, Valentine's, Halloween and Egg Hunt. Switch any of them on or off while you play with the candy cane button above the skill bar.</div>
+	<div class="guide-card"><span class="guide-card-icon events-rgoo"></span><b>Event monsters</b>Grinch, Snowman, Mr Pumpkin, Mr Green, Slenderman, Dragold, Love Goo and Wabbit each have their own switch in the same menu. They spawn even when their holiday is off.</div>
+	<div class="guide-card"><span class="guide-card-icon events-tracker"></span><b>Scheduled events</b>Every day at 13:00 and 20:00 UTC, Goo Brawl, Giga Crab or A/B Testing starts, taking turns. At 23:00 UTC it's Ice Golem or Franky. The game has to be running at the time.</div>
+	<div class="guide-card"><b>Rare creatures</b>Golden bats, cute bees, mimics and other rare monsters appear on their own as you play.</div>
+</div>
+
+<div class="guide-flow" style="border-color:#7D5DA5" data-guide-visual="events">
+	<div class="guide-flow-node"><span class="guide-flow-icon sp-events-candycane"></span><span class="guide-flow-label">Switch holidays on</span></div>
+	<div class="guide-flow-arrow">→</div>
+	<div class="guide-flow-node"><span class="guide-flow-icon events-rgoo"></span><span class="guide-flow-label">Read the event's guide</span></div>
+	<div class="guide-flow-arrow">→</div>
+	<div class="guide-flow-node"><span class="events-route">↗</span><span class="guide-flow-label">Join or travel</span></div>
+</div>
+
+<div class="divider"></div>
+<div class="title mt15">Joining an event</div>
+<div class="guide-card-grid">
+	<div class="guide-card"><b>Event button</b>While a scheduled event is running, an EVENT button can appear in game. Click it to join.</div>
+	<div class="guide-card"><b>Travel</b>Event bosses and holiday monsters live on the map. Walk there, or use <span class="sp-code">smart_move</span> in CODE.</div>
+	<div class="guide-card"><b>NPCs</b>Some holidays add an NPC with a shop or an exchange.</div>
+	<div class="guide-card"><b>Your settings</b>Drop luck, gold and the other Mod Menu settings apply to event drops too.</div>
+</div>
+<div class="guide-note">Bean's home server and Favoré's server blessings come from the online game. With only one world they don't change anything, so you can ignore them.</div>
+
+<div class="divider"></div>
+<div class="title mt15">Event guides</div>
+<p><span class="sp-guide-link" onclick="hide_modal(); open_guide('event-holidayseason',get_guide_url('event-holidayseason'))">Holiday Season</span>, <span class="sp-guide-link" onclick="hide_modal(); open_guide('event-lunarnewyear',get_guide_url('event-lunarnewyear'))">Lunar New Year</span>, <span class="sp-guide-link" onclick="hide_modal(); open_guide('event-valentines',get_guide_url('event-valentines'))">Valentine's</span>, <span class="sp-guide-link" onclick="hide_modal(); open_guide('event-halloween',get_guide_url('event-halloween'))">Halloween</span>, <span class="sp-guide-link" onclick="hide_modal(); open_guide('event-egghunt',get_guide_url('event-egghunt'))">Egg Hunt</span>, <span class="sp-guide-link" onclick="hide_modal(); open_guide('event-goobrawl',get_guide_url('event-goobrawl'))">Goo Brawl</span>, <span class="sp-guide-link" onclick="hide_modal(); open_guide('event-crabxx',get_guide_url('event-crabxx'))">Giga Crab</span>, <span class="sp-guide-link" onclick="hide_modal(); open_guide('event-abtesting',get_guide_url('event-abtesting'))">A/B Testing</span>, <span class="sp-guide-link" onclick="hide_modal(); open_guide('event-icegolem',get_guide_url('event-icegolem'))">Ice Golem</span>, <span class="sp-guide-link" onclick="hide_modal(); open_guide('event-franky',get_guide_url('event-franky'))">Franky</span>.</p>
+
+<div class="divider"></div>
+<div class="title mt15">CODE: see what's on</div>
+<div class="code">function report_live_events() {
+	for (var name in G.events) {
+		if (server.status[name]) game_log(G.events[name].name + " is on");
+	}
+}
+
+async function join_goobrawl_if_live() {
+	if (!server.status.goobrawl) return game_log("No Goo Brawl right now");
+	await join("goobrawl");
+}
+
+report_live_events();
+join_goobrawl_if_live().catch(show_json);</div>
+<p>References: <span class="rlabel" onclick="render_function_reference($(this).html())">join</span>, <span class="rlabel" onclick="render_function_reference($(this).html())">smart_move</span>.</p>
+
+<div class="guide-related">See also: <span onclick="hide_modal(); open_guide('travel-and-instances',get_guide_url('travel-and-instances'))">Travel and Instances</span>.</div>
+{% else %}
 <div class="guide-kicker">{{ phrase("docs.guide.events-and-home.the-world-keeps-moving") }}</div>
 <div class="guide-title">{{ phrase("docs.guide.events-and-home.events-home-servers") }}</div>
 <p>{{ phrase("docs.guide.events-and-home.the-realm-clock-event-buttons-and-live-server") }}</p>
@@ -85,14 +139,16 @@ join_goobrawl_if_live().catch(show_json);</div>
 <p>{{ phrase_html("docs.guide.events-and-home.references-join-smart-move-set-home-bless-server") }}</p>
 
 <div class="guide-related">{{ phrase_html("docs.guide.events-and-home.see-also-travel-and-instances") }}</div>
+{% endif %}
 
 <script>
 	$(".events-tracker").html(item_container({ skin: "schedule_clock" }));
 	$(".events-rgoo").html(sprite("rgoo", { height: 48, overflow: true }));
 	$(".events-bean").html(sprite(G.npcs.bean.skin, { height: 58 }));
 	$(".events-favore").html(sprite(G.npcs.favors.skin, { height: 58 }));
+	$(".sp-events-candycane").html(item_container({ skin: G.items.candycane.skin }));
 </script>
 
 <style>
-	.guide-kicker{color:#7D5DA5;font-size:18px;font-weight:bold;letter-spacing:2px}.guide-title{color:#58417A;font-size:44px;line-height:48px;margin:2px 0 12px}.title{color:#58417A;font-size:36px;margin-top:15px}.divider{margin-top:15px;height:5px;background-color:#A2A2A2;margin-left:-26px;margin-right:-26px}.guide-note{border-left:6px solid #8061A8;background:#EAE3F1;padding:10px 14px;margin:12px 0}.guide-related{border-top:2px dotted #AAA;margin-top:18px;padding-top:10px;color:#666}.guide-related span{color:#674C8A;cursor:pointer;text-decoration:underline}.events-route{font-size:42px;color:#C2A8E0}
+	.guide-kicker{color:#7D5DA5;font-size:18px;font-weight:bold;letter-spacing:2px}.guide-title{color:#58417A;font-size:44px;line-height:48px;margin:2px 0 12px}.title{color:#58417A;font-size:36px;margin-top:15px}.divider{margin-top:15px;height:5px;background-color:#A2A2A2;margin-left:-26px;margin-right:-26px}.guide-note{border-left:6px solid #8061A8;background:#EAE3F1;padding:10px 14px;margin:12px 0}.guide-related{border-top:2px dotted #AAA;margin-top:18px;padding-top:10px;color:#666}.guide-related span{color:#674C8A;cursor:pointer;text-decoration:underline}.events-route{font-size:42px;color:#C2A8E0}.sp-guide-link{color:#674C8A;cursor:pointer;text-decoration:underline}.sp-code{background:#44A0D8;color:white;padding:0 4px}
 </style>
