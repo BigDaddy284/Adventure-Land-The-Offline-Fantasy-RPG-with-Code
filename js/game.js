@@ -3117,6 +3117,7 @@ function init_socket(args) {
 		render_map();
 	});
 	socket.on("single_player_events", on_single_player_events);
+	socket.on("single_player_settings", on_single_player_settings);
 	socket.on("server_info", function (data) {
 		S = data;
 		render_server();

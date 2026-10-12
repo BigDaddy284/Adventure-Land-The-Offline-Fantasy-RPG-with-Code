@@ -534,7 +534,7 @@ async function create_character_api(args) {
 				info: {
 					characterth: A.characterth,
 					name: A.name,
-					gold: typeof single_player == "object" && single_player ? single_player.settings.starting_gold : 0, // Single player: starting gold
+					gold: typeof single_player == "object" && single_player ? single_player.current("starting_gold") : 0, // Single player: starting gold, read fresh so a Mod Menu change counts straight away
 					items: [
 						{ name: "hpot0", q: 200, gift: 1 },
 						{ name: "mpot0", q: 200, gift: 1 },

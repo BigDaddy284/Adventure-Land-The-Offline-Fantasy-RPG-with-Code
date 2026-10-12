@@ -9,7 +9,50 @@ test("settings.txt parsing accepts comments, percent signs, yes/no and ignores b
 	const values = single_player.parse(
 		"# note\ndrop_rate_percent = 50%\r\ndrop_everything = yes # inline note\nhp_loss_percent = lots\nunknown = 3\nno equals sign\n",
 	);
-	assert.deepEqual(values, { drop_rate_percent: 50, drop_everything: true });
+	assert.deepEqual(values, { drop_rate: 0.5, drop_everything: true });
+});
+
+test("the old percent drop and gold settings still work, and the new names win", () => {
+	assert.deepEqual(single_player.parse("drop_rate_percent = 300\ngold_drop_percent = 50\n"), { drop_rate: 3, gold_drop: 0.5 });
+	assert.deepEqual(single_player.parse("drop_rate = 2\ndrop_rate_percent = 300\n"), { drop_rate: 2 });
+	assert.equal(
+		single_player.rename_settings(
+			"# Gold dropped by monsters. 100 = normal.\r\ngold_drop_percent = 250%  # mine\r\ndrop_rate_percent=100\r\n",
+		),
+		"# Gold dropped by monsters. A multiplier: 1 = normal, 2 = double.\r\ngold_drop = 2.5  # mine\r\ndrop_rate=1\r\n",
+	);
+});
+
+test("God Mode, Fire Sale and Daisy's tokens have settings, and the Mod Menu checks values", () => {
+	const sp = single_player.create({ hp_loss_percent: 50, drop_rate: 2, gold_drop: 3 });
+	assert.equal(sp.scale("hp_loss", 100), 50);
+	assert.equal(sp.scale("drop", 0.1), 0.2);
+	assert.equal(sp.scale("gold", 10), 30);
+	sp.settings.god_mode = true;
+	assert.equal(sp.scale("hp_loss", 100), 0);
+	assert.equal(single_player.DEFAULTS.monster_hunt_tokens, 1);
+	assert.equal(single_player.DEFAULTS.fire_sale, false);
+	assert.equal(single_player.check_value("fire_sale", true), true);
+	assert.equal(single_player.check_value("fire_sale", "yes"), undefined);
+	assert.equal(single_player.check_value("drop_rate", "1.5"), 1.5);
+	assert.equal(single_player.check_value("monster_hunt_tokens", "2.6"), 3);
+	assert.equal(single_player.check_value("monster_hunt_tokens", "-1"), undefined);
+	assert.equal(single_player.check_value("monster_hunt_tokens", ""), undefined);
+	assert.equal(single_player.check_value("nothing", 1), undefined);
+	const keys = sp.mod_state().rows.filter((row) => row.key).map((row) => row.key);
+	// Every setting is in the Mod Menu, apart from the holiday ones, which have their own menu
+	const holiday = Object.values(single_player.EVENT_SETTINGS).concat(single_player.EVENT_MONSTERS.map((name) => "monster_" + name));
+	assert.deepEqual(Object.keys(single_player.DEFAULTS).filter((key) => !keys.includes(key) && !holiday.includes(key)), []);
+});
+
+test("the character limit can go down again while playing", () => {
+	const sp = single_player.create({ max_characters_online: 10 });
+	const options = { character_limit: 3, ip_limit: 3 };
+	sp.apply_options(options);
+	assert.equal(options.character_limit, 10);
+	sp.settings.max_characters_online = 5;
+	sp.apply_options(options);
+	assert.deepEqual(options, { character_limit: 5, ip_limit: 5 });
 });
 
 test("every setting in settings.example.txt is known and parses", () => {
@@ -23,7 +66,7 @@ test("scales apply percents and cap success chances at 100%", () => {
 		sell_multiplier: 2,
 		upgrade_success_percent: 300,
 		mp_usage_percent: 0,
-		drop_rate_percent: 200,
+		drop_rate: 2,
 	});
 	assert.equal(sp.scale("sell", 1000), 2000);
 	assert.equal(sp.scale("upgrade", 0.5), 1);

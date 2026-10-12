@@ -162,6 +162,9 @@
 					{{ phrase_html("pages.index.news-from-steam-latest-update") }}
 				</div>
 				{% endif %}
+				{% if domain.single_player %}
+				<div id="sp-modmenu" class="enableclicks" title="Mod Menu" style="display: none; position: absolute; bottom: 0px; right: 325px; background-color: black; border: 5px solid gray; padding: 2px"></div>
+				{% endif %}
 				<div id="gamelog" class="noscroll cbold enableclicks"></div>
 			</div>
 			<div id="bottomrightcodecorner" class="codeui disableclicks bpclicks">

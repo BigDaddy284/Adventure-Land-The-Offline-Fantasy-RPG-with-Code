@@ -105,3 +105,11 @@ Fantasy Land started as a copy of the MongoDB port of [Adventure Land](https://g
 - The "A derivative of Adventure Land" note moved to the bottom left, so the log box no longer covers it.
 - The log says "Click Login to get started." under the welcome while the title screen is showing.
 - Character select shows "Fantasy Land - The Code (NOMMO) RPG" where it used to show "Server: Americas I".
+
+### v15
+- **Mod Menu:** a new button at the bottom of the screen, left of the game log, opens a window with every setting. Changes apply straight away and are saved to `settings.txt`.
+- **God Mode** (`god_mode`): your characters take no damage, from monsters, burns, traps or anything else.
+- **Fire Sale** (`fire_sale`): everything in the NPC shops, Ponty and Lost and Found costs nothing.
+- **Daisy's tokens** (`monster_hunt_tokens`): how many monster tokens Daisy gives for each finished monster hunt. Default 1.
+- **Drop luck and gold are multipliers now:** `drop_rate` and `gold_drop`, where 1 = normal and 2 = double. They replace `drop_rate_percent` and `gold_drop_percent`. An older `settings.txt` is converted on the next start, so 200 becomes 2.
+- `starting_gold` changes count for the next new character without a restart.

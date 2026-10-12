@@ -333,6 +333,7 @@ shuffle(dailies);
 var nightlies = ["icegolem", "franky"];
 shuffle(nightlies);
 single_player.apply_events(events); // Single player: holiday events always on
+var single_player_drop_all = mode.drop_all; // Single player: the Mod Menu's drop everything switch goes back to this when turned off
 if (single_player.settings.drop_everything) mode.drop_all = 1;
 if (events.holidayseason) {
 	events.snowman = 60;
@@ -3693,6 +3694,7 @@ function active_guardians_oath_target(guardian) {
 function redirect_guardians_oath_damage(target, attack, mp_eligible) {
 	var result = { attack: attack, redirected: 0, guardian: null, broken: false };
 	if (!target || !target.is_player || attack <= 0 || !target.s || !target.s.guardians_oath) return result;
+	if (typeof single_player == "object" && single_player.settings.god_mode) return result; // Single player: God Mode, nobody takes the hit
 	var guardian = guardians_oath_source(target);
 	if (!guardian) {
 		end_guardians_oath(target);
@@ -4322,6 +4324,7 @@ function complete_attack(attacker, target, info) {
 				attacker.cid++;
 			}
 			if (attacker.is_monster) encouragement_points(attacker, target, min(def.dreturn, attacker.hp));
+			if (attacker.is_player && typeof single_player == "object" && single_player.settings.god_mode) def.dreturn = 0; // Single player: God Mode
 			attacker.hp = max(attacker.hp - def.dreturn, 0);
 		}
 
@@ -5438,7 +5441,9 @@ function init_socket_io(socket_server, server_index) {
 				var marker = "monsterhunt_" + player.s.monsterhunt.id;
 				if (server.s[marker] && server.s[marker].name === player.name) delete server.s[marker];
 				delete player.s.monsterhunt;
-				add_item(player, "monstertoken", { log: true, q: (gameplay == "hardcore" && 100) || 1 });
+				var tokens = (gameplay == "hardcore" && 100) || 1;
+				if (typeof single_player == "object") tokens = single_player.settings.monster_hunt_tokens; // Single player: Daisy's tokens
+				if (tokens) add_item(player, "monstertoken", { log: true, q: tokens });
 				resend(player, "u+cid+reopen");
 				return success_response({ completed: true });
 			}
@@ -8222,6 +8227,7 @@ function init_socket_io(socket_server, server_index) {
 				quantity = 1;
 			}
 			var cost = def.cash * quantity;
+			if (typeof single_player == "object" && single_player.settings.fire_sale) cost = 0; // Single player: Fire Sale
 			if (!can_add_item(player, create_new_item(name, quantity))) {
 				return fail_response("no_space");
 			}
@@ -8415,6 +8421,7 @@ function init_socket_io(socket_server, server_index) {
 						mult = 3;
 					}
 					var gold = calculate_item_value(c[i]) * mult * (c[i].q || 1);
+					if (typeof single_player == "object" && single_player.settings.fire_sale) gold = 0; // Single player: Fire Sale
 					var item = c[i];
 					if (!can_add_item(player, c[i])) {
 						if (data.request_id) return fail_response("no_space", ev, { request_id: data.request_id, rid: data.rid });
@@ -8490,6 +8497,7 @@ function init_socket_io(socket_server, server_index) {
 			if (G.items[name].p2w) {
 				cost *= G.inflation;
 			}
+			if (typeof single_player == "object" && single_player.settings.fire_sale) cost = 0; // Single player: Fire Sale
 			if (player.gold < cost) {
 				return fail_response("buy_cost");
 			}
@@ -9019,6 +9027,18 @@ function init_socket_io(socket_server, server_index) {
 				reload_server(false, "events"); // rebuilds the drop tables, which include each event's drops
 			}
 			socket.emit("single_player_events", single_player.event_state()); // a request without a name just asks for the current state
+		});
+		// Single player: the Mod Menu changes settings while the game runs
+		socket.on("single_player_setting", function (data) {
+			if (typeof single_player != "object" || !players[socket.id] || !data) return;
+			if (data.key) {
+				var value = single_player.change(data.key, data.value);
+				if (value === undefined) return socket.emit("game_log", "That value can't be used for " + data.key);
+				if (data.key == "drop_everything") mode.drop_all = value ? 1 : single_player_drop_all;
+				if (data.key == "max_characters_online") single_player.apply_options(options);
+				if (data.key == "ponty_restock_minutes") start_single_player_ponty();
+			}
+			socket.emit("single_player_settings", single_player.mod_state()); // a request without a key just asks for the settings
 		});
 		socket.on("trade_buy", function (data) {
 			var player = players[socket.id];
@@ -10417,6 +10437,7 @@ function init_socket_io(socket_server, server_index) {
 				} else if (prop.armor) {
 					damage = round(Math.random() * prop.armor * 24);
 				}
+				if (target.is_player && typeof single_player == "object" && single_player.settings.god_mode) damage = 0; // Single player: God Mode
 				if (damage) {
 					if (target["1hp"]) {
 						damage = 1;
@@ -14744,7 +14765,7 @@ function update_instance(instance) {
 			if (def && def.interval) {
 				if (!player.s[name].last || mssince(player.s[name].last) >= def.interval) {
 					player.s[name].last = new Date();
-					if (name == "eburn") {
+					if (name == "eburn" && !(typeof single_player == "object" && single_player.settings.god_mode)) {
 						disappearing_text(player.socket, player, "-50", { color: "red", xy: 1 });
 						player.hp = max(1, player.hp - 50);
 					}
@@ -15225,7 +15246,7 @@ function update_instance(instance) {
 				// console.log(player.red_zone);
 				if (player.red_zone > smap_edge) {
 					player.red_zone = 0;
-					player.hp -= parseInt(player.hp / 2 + 1000);
+					if (!(typeof single_player == "object" && single_player.settings.god_mode)) player.hp -= parseInt(player.hp / 2 + 1000); // Single player: not with God Mode
 					player.socket.emit("game_log", localization.message("server.game_log.received_a_movement_penalty", {}));
 					player.socket.emit(
 						"game_log",
@@ -15291,7 +15312,7 @@ function update_instance(instance) {
 		if (trap.type == "spikes") {
 			for (var id in pmap_get({ x: trap.position[0], y: trap.position[1], in: instance.name })) {
 				var player = players[id_to_id[id]];
-				if (player && !player.npc) {
+				if (player && !player.npc && !(typeof single_player == "object" && single_player.settings.god_mode)) {
 					disappearing_text(player.socket, player, "-50", { color: "red", xy: 1 });
 					player.hp = max(0, player.hp - 50);
 					player_rip_logic(player);
@@ -15846,11 +15867,14 @@ function single_player_merrit_buyout(player) {
 	resend(player, "reopen+u+cid");
 }
 
+var single_player_ponty_timer = null;
 function start_single_player_ponty() {
 	var minutes = single_player.settings.ponty_restock_minutes;
+	clearInterval(single_player_ponty_timer); // the Mod Menu starts it again when the minutes change
+	single_player_ponty_timer = null;
 	if (!minutes) return;
 	single_player_ponty_restock();
-	setInterval(single_player_ponty_restock, minutes * 60 * 1000);
+	single_player_ponty_timer = setInterval(single_player_ponty_restock, minutes * 60 * 1000);
 }
 
 var server_conditions = false;

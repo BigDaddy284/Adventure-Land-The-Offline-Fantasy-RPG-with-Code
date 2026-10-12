@@ -24,9 +24,12 @@ const DEFAULTS = {
 	compound_success_percent: 100,
 	mp_usage_percent: 100,
 	hp_loss_percent: 100,
-	drop_rate_percent: 100,
-	gold_drop_percent: 100,
+	drop_rate: 1,
+	gold_drop: 1,
 	drop_everything: false,
+	monster_hunt_tokens: 1,
+	fire_sale: false,
+	god_mode: false,
 	holiday_season: false,
 	lunar_new_year: false,
 	valentines: false,
@@ -48,8 +51,15 @@ const DEFAULTS = {
 	merrit_buys_stall: false,
 };
 
+// Settings that were renamed: old name -> [new name, divide the old value by]
+const RENAMED = {
+	drop_rate_percent: ["drop_rate", 100],
+	gold_drop_percent: ["gold_drop", 100],
+};
+
 function parse(text) {
 	const values = {};
+	const renamed = {};
 	text.split(/\r?\n/).forEach(function (line, index) {
 		line = line.replace(/#.*$/, "").trim();
 		if (!line) return;
@@ -61,6 +71,11 @@ function parse(text) {
 			.trim()
 			.replace(/%$/, "")
 			.toLowerCase();
+		if (key in RENAMED) {
+			const number = Number(raw);
+			if (raw !== "" && Number.isFinite(number) && number >= 0) renamed[RENAMED[key][0]] = number / RENAMED[key][1];
+			return;
+		}
 		if (!(key in DEFAULTS)) return console.warn("settings.txt: unknown setting '" + key + "', ignored");
 		if (typeof DEFAULTS[key] == "boolean") {
 			if (["yes", "true", "on", "1"].includes(raw)) values[key] = true;
@@ -73,7 +88,34 @@ function parse(text) {
 			else values[key] = number;
 		}
 	});
+	Object.keys(renamed).forEach((key) => key in values || (values[key] = renamed[key]));
 	return values;
+}
+
+// Old notes written above a renamed setting, swapped for the new ones when settings.txt is updated
+const RENAMED_NOTES = [
+	[
+		"# Item drop chance from every monster, everywhere.\r\n# 100 = normal, 200 = twice as many drops, 0 = nothing drops.\r\n",
+		"# Item drop chance from every monster, everywhere. A multiplier:\r\n# 1 = normal, 2 = every item is twice as likely to drop,\r\n# 0.5 = half as likely, 0 = nothing drops.\r\n",
+	],
+	["# Gold dropped by monsters. 100 = normal.\r\n", "# Gold dropped by monsters. A multiplier: 1 = normal, 2 = double.\r\n"],
+	["# Very silly. Overrides drop_rate_percent.", "# Very silly. Overrides drop_rate."],
+];
+
+// Rewrites renamed settings in an older settings.txt under their new names (drop_rate_percent = 200 becomes drop_rate = 2)
+function rename_settings(text) {
+	Object.keys(RENAMED).forEach(function (old) {
+		const pattern = new RegExp("^([ \\t]*)" + old + "([ \\t]*=[ \\t]*)([^#\\r\\n]*?)%?([ \\t]*(#[^\\r\\n]*)?)(?=\\r?$)", "im");
+		text = text.replace(pattern, function (line, indent, eq, value, rest) {
+			const number = Number(value.trim());
+			const converted = value.trim() !== "" && Number.isFinite(number) ? String(number / RENAMED[old][1]) : value;
+			return indent + RENAMED[old][0] + eq + converted + rest;
+		});
+	});
+	RENAMED_NOTES.forEach(function ([before, after]) {
+		text = text.split(before).join(after).split(before.replace(/\r\n/g, "\n")).join(after.replace(/\r\n/g, "\n"));
+	});
+	return text;
 }
 
 // Settings in example_text that text doesn't mention yet, each with the notes written above it
@@ -100,6 +142,11 @@ function missing_settings(text, example_text) {
 
 function load() {
 	if (!fs.existsSync(SETTINGS_FILE) && fs.existsSync(EXAMPLE_FILE)) fs.copyFileSync(EXAMPLE_FILE, SETTINGS_FILE);
+	if (fs.existsSync(SETTINGS_FILE)) {
+		const text = fs.readFileSync(SETTINGS_FILE, "utf8");
+		const renamed = rename_settings(text);
+		if (renamed != text) fs.writeFileSync(SETTINGS_FILE, renamed);
+	}
 	// Settings added by a newer version go to the end of an older settings.txt
 	if (fs.existsSync(SETTINGS_FILE) && fs.existsSync(EXAMPLE_FILE)) {
 		const blocks = missing_settings(fs.readFileSync(SETTINGS_FILE, "utf8"), fs.readFileSync(EXAMPLE_FILE, "utf8"));
@@ -150,9 +197,76 @@ const SCALES = {
 	compound: "compound_success_percent",
 	mp: "mp_usage_percent",
 	hp_loss: "hp_loss_percent",
-	drop: "drop_rate_percent",
-	gold: "gold_drop_percent",
 };
+const MULTIPLIERS = {
+	sell: "sell_multiplier",
+	drop: "drop_rate",
+	gold: "gold_drop",
+};
+
+// What the Mod Menu shows, in order: [setting, label, note]. A section is a string on its own.
+// Settings in RESTART only take effect the next time the game starts.
+const MOD_MENU = [
+	"Cheats",
+	["god_mode", "God Mode", "Your characters take no damage"],
+	["fire_sale", "Fire Sale", "Everything in the NPC shops, Ponty and Lost and Found is free"],
+	"Drops",
+	["drop_rate", "Drop luck", "1 = normal, 2 = every item twice as likely to drop"],
+	["gold_drop", "Gold dropped", "1 = normal, 2 = twice as much gold"],
+	["drop_everything", "Drop everything", "Every monster drops its whole drop list"],
+	["monster_hunt_tokens", "Daisy's tokens", "Monster tokens for each finished hunt"],
+	"Combat",
+	["hp_loss_percent", "HP loss %", "100 = normal, 50 = half damage, 0 = none"],
+	["mp_usage_percent", "MP usage %", "100 = normal, 0 = skills cost no MP"],
+	"Upgrading",
+	["upgrade_success_percent", "Upgrade chance %", "100 = normal, 200 = twice as likely"],
+	["compound_success_percent", "Compound chance %", "100 = normal, 200 = twice as likely"],
+	"Shops",
+	["sell_multiplier", "Sell price", "1 = normal, 2 = NPCs pay double"],
+	["starting_gold", "Starting gold", "Gold for each new character"],
+	"Ponty",
+	["ponty_restock_minutes", "Restock minutes", "0 = normal Ponty"],
+	["ponty_item_count", "Items per restock", ""],
+	["ponty_min_grade", "Lowest grade", "0 any, 1 high, 2 rare, 3 legendary"],
+	["ponty_upgrade_level_min", "Upgrade level from", ""],
+	["ponty_upgrade_level_max", "Upgrade level to", ""],
+	["ponty_compound_level_min", "Compound level from", ""],
+	["ponty_compound_level_max", "Compound level to", ""],
+	["ponty_keep_sold_items", "Keep sold items", "Items you sell him stay between restocks"],
+	"Merrit",
+	["merrit_visit_minutes", "Visit minutes", "Minutes between parcels"],
+	["merrit_buys_stall", "Buys your stall", "Buys everything on the stall each visit"],
+	"Gathering",
+	["fishing_mining_cooldown", "Fishing and mining wait", "Off = fish and mine again straight away"],
+	["tools_break", "Tools break", "Rods and pickaxes can break"],
+	"Characters",
+	["max_characters_online", "Characters online", "How many can play at once"],
+];
+const RESTART = ["fishing_mining_cooldown", "merrit_visit_minutes"];
+// Whole numbers only, and the highest each can go
+const WHOLE = {
+	monster_hunt_tokens: 9999,
+	ponty_item_count: 400,
+	ponty_min_grade: 3,
+	ponty_upgrade_level_min: 12,
+	ponty_upgrade_level_max: 12,
+	ponty_compound_level_min: 7,
+	ponty_compound_level_max: 7,
+	max_characters_online: 18,
+	starting_gold: 1e12,
+	merrit_visit_minutes: 1e6,
+};
+
+// Checks a value from the Mod Menu: true/false for yes/no settings, a number 0 or above for the rest.
+// Returns the value to use, or undefined when it can't be used.
+function check_value(key, value) {
+	if (!(key in DEFAULTS)) return undefined;
+	if (typeof DEFAULTS[key] == "boolean") return typeof value == "boolean" ? value : undefined;
+	const number = Number(value);
+	if (value === "" || value === null || typeof value == "boolean" || !Number.isFinite(number) || number < 0) return undefined;
+	if (key in WHOLE) return Math.min(WHOLE[key], Math.round(number));
+	return Math.round(number * 1000) / 1000;
+}
 
 // Extra starting looks, added after each class's original four (so A to D stay the same)
 // Each design comes in its main skin tone and an alternate one
@@ -205,11 +319,13 @@ function add_looks(classes) {
 }
 
 function create(settings) {
+	let base_limits = null;
 	return {
 		settings,
-		// Applies one percent setting to a value; success chances are capped at 100%
+		// Applies one setting to a value; success chances are capped at 100%
 		scale(kind, value) {
-			if (kind == "sell") return value * settings.sell_multiplier;
+			if (kind == "hp_loss" && settings.god_mode) return 0;
+			if (kind in MULTIPLIERS) return value * settings[MULTIPLIERS[kind]];
 			const result = value * (settings[SCALES[kind]] / 100);
 			return kind == "upgrade" || kind == "compound" ? Math.min(1, result) : result;
 		},
@@ -255,8 +371,44 @@ function create(settings) {
 			return G;
 		},
 		apply_options(options) {
-			options.character_limit = Math.max(options.character_limit || 0, settings.max_characters_online);
-			options.ip_limit = Math.max(options.ip_limit || 0, settings.max_characters_online);
+			// The game's own limits are remembered, so lowering the setting while playing works too
+			if (!base_limits) base_limits = { character_limit: options.character_limit || 0, ip_limit: options.ip_limit || 0 };
+			const most = Math.max(1, settings.max_characters_online);
+			options.character_limit = Math.max(base_limits.character_limit, most);
+			options.ip_limit = Math.max(base_limits.ip_limit, most);
+		},
+		// Changes one setting while the game runs and saves it to settings.txt.
+		// Returns the value that was used, or undefined when the name or value can't be used.
+		change(key, value) {
+			value = check_value(key, value);
+			if (value === undefined) return undefined;
+			settings[key] = value;
+			if (fs.existsSync(SETTINGS_FILE))
+				save_setting(SETTINGS_FILE, key, typeof value == "boolean" ? (value ? "yes" : "no") : String(value));
+			return value;
+		},
+		// What the Mod Menu shows: sections and rows with their current values
+		mod_state() {
+			return {
+				rows: MOD_MENU.map((row) =>
+					typeof row == "string"
+						? { section: row }
+						: {
+								key: row[0],
+								label: row[1],
+								note: row[2],
+								value: settings[row[0]],
+								yesno: typeof DEFAULTS[row[0]] == "boolean",
+								restart: RESTART.includes(row[0]),
+							},
+				),
+			};
+		},
+		// One setting as settings.txt has it right now (for the website, which runs separately from the game server)
+		current(key) {
+			if (!fs.existsSync(SETTINGS_FILE)) return settings[key];
+			const values = parse(fs.readFileSync(SETTINGS_FILE, "utf8"));
+			return key in values ? values[key] : DEFAULTS[key];
 		},
 		// A fresh list of random high grade items for Ponty: [{name, level}]
 		ponty_stock(G, calculate_item_grade, random) {
@@ -290,7 +442,10 @@ module.exports = {
 	DEFAULTS,
 	parse,
 	missing_settings,
+	rename_settings,
 	save_setting,
+	MOD_MENU,
+	check_value,
 	EVENT_SETTINGS,
 	EVENT_MONSTERS,
 	NEW_LOOKS,

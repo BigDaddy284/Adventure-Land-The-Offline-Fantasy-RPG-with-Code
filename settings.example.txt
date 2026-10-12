@@ -2,11 +2,14 @@
 #  Fantasy Land - The Code (NOMMO) RPG - Settings
 # ============================================================
 #  Edit this file with Notepad, save it, then restart the game:
-#  run Stop.bat, then Play.bat.
+#  run Stop.bat, then Play.bat. Or change them while playing:
+#  the Mod Menu button left of the game log has every setting
+#  here, and saves your changes to this file.
 #
 #  Format:  name = value
 #  Lines starting with # are notes and are ignored.
 #  Percent values: 100 = normal game, 50 = half, 200 = double.
+#  Multipliers: 1 = normal game, 0.5 = half, 2 = double.
 #  Yes/no values: yes or no.
 # ============================================================
 
@@ -68,16 +71,34 @@ hp_loss_percent = 100
 
 # ---------- Drops ----------
 
-# Item drop chance from every monster, everywhere.
-# 100 = normal, 200 = twice as many drops, 0 = nothing drops.
-drop_rate_percent = 100
+# Item drop chance from every monster, everywhere. A multiplier:
+# 1 = normal, 2 = every item is twice as likely to drop,
+# 0.5 = half as likely, 0 = nothing drops.
+drop_rate = 1
 
-# Gold dropped by monsters. 100 = normal.
-gold_drop_percent = 100
+# Gold dropped by monsters. A multiplier: 1 = normal, 2 = double.
+gold_drop = 1
 
 # Every monster drops every item on its drop list on every kill.
-# Very silly. Overrides drop_rate_percent.
+# Very silly. Overrides drop_rate.
 drop_everything = no
+
+
+# ---------- Daisy (monster hunts) ----------
+
+# Monster tokens Daisy gives for each finished monster hunt.
+# 0 = none.
+monster_hunt_tokens = 1
+
+
+# ---------- Cheats ----------
+
+# Fire Sale: everything in the NPC shops, Ponty and Lost and
+# Found costs nothing.
+fire_sale = no
+
+# God Mode: your characters take no damage at all.
+god_mode = no
 
 
 # ---------- Holiday events ----------

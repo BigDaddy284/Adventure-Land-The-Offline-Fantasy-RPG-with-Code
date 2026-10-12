@@ -6424,6 +6424,7 @@ function render_skillbar(empty) {
 	html += "</div>";
 	if (typeof single_player_mode != "undefined" && single_player_mode) html = single_player_events_button() + html;
 	$("#skillbar").html(html).css("display", "inline-block");
+	if (typeof single_player_mode != "undefined" && single_player_mode) render_single_player_mods_button();
 	restart_skill_tints();
 	// $("#topmid").show().html(html);
 }
@@ -6490,6 +6491,58 @@ function on_single_player_events(state) {
 	});
 	render_server();
 	if (was_waiting) open_single_player_events();
+}
+
+// Single player: the Mod Menu, opened from the button left of the game log. Every setting in settings.txt, changed while playing.
+var single_player_mods_state = null;
+
+function render_single_player_mods_button() {
+	var skin = (G.items.computer && G.items.computer.skin) || G.items.candycane.skin;
+	$("#sp-modmenu").html(item_container({ skin: skin, draggable: false, onclick: "open_single_player_mods()" })).show();
+}
+
+function single_player_mods_row(row) {
+	var html = "<div style='display: flex; justify-content: space-between; align-items: center; margin: 4px 12px; gap: 12px'>";
+	html += "<div style='line-height: 22px'><div style='font-size: 28px'>" + html_escape(row.label) + "</div>";
+	var note = row.note || "";
+	if (row.restart) note += (note ? " " : "") + "(after a restart)";
+	if (note) html += "<div style='font-size: 20px; color: gray'>" + html_escape(note) + "</div>";
+	html += "</div>";
+	if (row.yesno)
+		html += "<div class='gamebutton' style='width: 70px; flex: none; text-align: center; color: " + (row.value ? "#5DE376" : "gray") + "' onclick='change_single_player_setting(\"" + row.key + "\"," + !row.value + ")'>" + (row.value ? "ON" : "OFF") + "</div>";
+	else
+		html += "<input class='sp-mod-number' data-key='" + row.key + "' value='" + html_escape(String(row.value)) + "' inputmode='decimal' style='flex: none; width: 150px; box-sizing: border-box; background: black; color: white; border: 4px solid gray; font-family: var(--pixel-font, pixel); font-size: 28px; padding: 2px 6px; text-align: right' onkeydown='if(event.key==\"Enter\") this.blur()' onchange='change_single_player_setting(this.dataset.key, this.value)' />";
+	return html + "</div>";
+}
+
+function single_player_mods_html() {
+	var html = "<div class='single-player-mods'><div style='font-size: 40px; text-align: center; margin-bottom: 4px'>Mod Menu</div>";
+	html += "<div style='font-size: 20px; color: gray; margin: 0 12px 4px'>Changes apply straight away and are saved in settings.txt. Type a number and press Enter.</div>";
+	single_player_mods_state.rows.forEach(function (row) {
+		if (row.section) html += "<div style='font-size: 30px; color: #E8E44D; margin: 14px 12px 2px; border-bottom: 2px solid #4A4A4A'>" + html_escape(row.section) + "</div>";
+		else html += single_player_mods_row(row);
+	});
+	html += "<div style='font-size: 30px; color: #E8E44D; margin: 14px 12px 2px; border-bottom: 2px solid #4A4A4A'>Holiday Events</div>";
+	html += "<div style='display: flex; justify-content: space-between; align-items: center; margin: 4px 12px'><div style='font-size: 20px; color: gray'>Holidays and event monsters</div><div class='gamebutton' onclick='open_single_player_events()'>OPEN</div></div>";
+	return html + "</div>";
+}
+
+function open_single_player_mods() {
+	if (!single_player_mods_state) return socket.emit("single_player_setting", {}); // asks for the settings, then opens
+	if ($(".single-player-mods").length) hide_modal();
+	show_modal(single_player_mods_html(), { wwidth: 560 });
+}
+
+function change_single_player_setting(key, value) {
+	socket.emit("single_player_setting", { key: key, value: value }); // the server replies with the saved settings, which redraws the menu
+}
+
+// The server's reply to the Mod Menu: every setting as it is now
+function on_single_player_settings(state) {
+	var was_waiting = !single_player_mods_state;
+	single_player_mods_state = state;
+	if ($(".single-player-mods").length) $(".single-player-mods").replaceWith(single_player_mods_html()); // redrawn in place, so the window keeps its scroll
+	else if (was_waiting) open_single_player_mods();
 }
 
 function skill_click(slot) {

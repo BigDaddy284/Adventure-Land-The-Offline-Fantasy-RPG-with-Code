@@ -44,13 +44,18 @@ When the game is started with `Fantasy Land.exe`, the database, website and game
 
 ## Settings
 
-Open `settings.txt` in the game folder with Notepad. Every setting is explained inside it. Save the file, then close the game and start it again for the change to take effect. You can change:
+The easiest way is the **Mod Menu**: the computer button at the bottom of the screen, left of the game log. It lists every setting, changes apply as soon as you set them, and your choices are saved to `settings.txt`. Type a number and press Enter, or click ON/OFF. Two settings, Merrit's visit minutes and the fishing and mining wait, only take effect after a restart.
 
+You can also open `settings.txt` in the game folder with Notepad. Every setting is explained inside it. Save the file, then close the game and start it again for the change to take effect. You can change:
+
+- God Mode: your characters take no damage
+- Fire Sale: everything in the NPC shops, Ponty and Lost and Found is free
+- how many monster tokens Daisy gives for a finished monster hunt
 - shop sell prices
 - Ponty's restock and what he sells
 - upgrade and compound luck
 - HP loss and MP usage
-- drop and gold rates
+- drop luck and gold, as multipliers (1 = normal, 2 = double)
 - holiday events and event monsters
 - how many characters can be online at once
 - fishing and mining wait times, and whether tools break
@@ -201,6 +206,14 @@ Fantasy Land started as a copy of the MongoDB port of [Adventure Land](https://g
 - The "A derivative of Adventure Land" note moved to the bottom left, so the log box no longer covers it.
 - The log says "Click Login to get started." under the welcome while the title screen is showing.
 - Character select shows "Fantasy Land - The Code (NOMMO) RPG" where it used to show "Server: Americas I".
+
+### v15
+- **Mod Menu:** a new button at the bottom of the screen, left of the game log, opens a window with every setting. Changes apply straight away and are saved to `settings.txt`.
+- **God Mode** (`god_mode`): your characters take no damage, from monsters, burns, traps or anything else.
+- **Fire Sale** (`fire_sale`): everything in the NPC shops, Ponty and Lost and Found costs nothing.
+- **Daisy's tokens** (`monster_hunt_tokens`): how many monster tokens Daisy gives for each finished monster hunt. Default 1.
+- **Drop luck and gold are multipliers now:** `drop_rate` and `gold_drop`, where 1 = normal and 2 = double. They replace `drop_rate_percent` and `gold_drop_percent`. An older `settings.txt` is converted on the next start, so 200 becomes 2.
+- `starting_gold` changes count for the next new character without a restart.
 
 ## License
 
