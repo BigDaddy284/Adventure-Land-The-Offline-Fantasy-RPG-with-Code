@@ -99,9 +99,8 @@ god_mode = no
 
 
 # ---------- Holiday events ----------
-# You can also switch these while playing: the candy cane button
-# above the skill bar opens the Holiday Events menu, and your
-# choices are saved here. The holidays control their drops
+# You can also switch these while playing in the Mod Menu, and
+# your choices are saved here. The holidays control their drops
 # and event icons; the event monsters are switched separately.
 # yes = always on. They were designed to run one at a time, so if
 # something looks odd, turn some of them off.

@@ -3655,7 +3655,7 @@ function turn_tutorial_lore(direction) {
 	while (960 / divisor > available && divisor < 16) divisor *= 2;
 	container.closest(".guide-article").css("width", 960 / divisor + 10);
 	container.attr("data-page", page);
-	container.find("img").attr("src", "/images/tutorial/lore/" + container.attr("data-language") + "/page-0" + page + ".jpg?v=native-20260909").attr("alt", container.find("img").attr("data-alt-" + page)).css({ width: 960 / divisor, height: 540 / divisor });
+	container.find("img").attr("src", "/images/tutorial/lore/" + container.attr("data-language") + "/page-0" + page + ".jpg?v=native-20261012").attr("alt", container.find("img").attr("data-alt-" + page)).css({ width: 960 / divisor, height: 540 / divisor });
 	container.find(".tutorial-lore-prev").css("visibility", page === 1 ? "hidden" : "visible");
 	container.find(".tutorial-lore-skip").css("visibility", page === 5 ? "hidden" : "visible");
 	container.find(".tutorial-lore-next").toggle(page < 5);
@@ -6422,82 +6422,26 @@ function render_skillbar(empty) {
 		i++;
 	});
 	html += "</div>";
-	if (typeof single_player_mode != "undefined" && single_player_mode) html = single_player_events_button() + html;
 	$("#skillbar").html(html).css("display", "inline-block");
 	if (typeof single_player_mode != "undefined" && single_player_mode) render_single_player_mods_button();
 	restart_skill_tints();
 	// $("#topmid").show().html(html);
 }
 
-// Single player: holiday events menu, opened from the button above the skill bar
-var single_player_events = [
-	["holidayseason", "Holiday Season"],
-	["lunarnewyear", "Lunar New Year"],
-	["valentines", "Valentine's"],
-	["halloween", "Halloween"],
-	["egghunt", "Egg Hunt"],
-];
-var single_player_monsters = [
-	["grinch", "Grinch"],
-	["snowman", "Snowman"],
-	["mrpumpkin", "Mr Pumpkin"],
-	["mrgreen", "Mr Green"],
-	["slenderman", "Slenderman"],
-	["dragold", "Dragold"],
-	["pinkgoo", "Love Goo"],
-	["wabbit", "Wabbit"],
-];
-var single_player_event_state = null;
-
-function single_player_events_button() {
-	var html = "<div style='display: block; margin: 0 0 6px 5px'><div class='enableclicks' title='Holiday events' style='background-color: black; border: 5px solid gray; padding: 2px; display: inline-block'>";
-	html += item_container({ skin: G.items.candycane.skin, draggable: false, onclick: "open_single_player_events()" });
-	return html + "</div></div>";
-}
-
-function single_player_toggle_row(name, label, on) {
-	var html = "<div style='display: flex; justify-content: space-between; align-items: center; font-size: 28px; margin: 6px 12px'><span>" + label + "</span>";
-	return html + "<div class='gamebutton' style='width: 70px; text-align: center; color: " + (on ? "#5DE376" : "gray") + "' onclick='toggle_single_player_event(\"" + name + "\"," + !on + ")'>" + (on ? "ON" : "OFF") + "</div></div>";
-}
-
-function open_single_player_events() {
-	if (!single_player_event_state) return socket.emit("single_player_event", {}); // asks for the switches, then opens
-	var state = single_player_event_state,
-		html = "<div class='single-player-events'><div style='font-size: 40px; text-align: center; margin-bottom: 6px'>Holiday Events</div>";
-	html += "<div style='font-size: 20px; color: gray; margin: 0 12px 6px'>Holidays: their drops and event icons</div>";
-	single_player_events.forEach(function (event) {
-		html += single_player_toggle_row(event[0], event[1], state.events[event[0]]);
-	});
-	html += "<div style='font-size: 20px; color: gray; margin: 14px 12px 6px'>Event monsters, each on their own</div>";
-	single_player_monsters.forEach(function (monster) {
-		html += single_player_toggle_row(monster[0], monster[1], state.monsters[monster[0]]);
-	});
-	html += "<div style='font-size: 20px; color: gray; margin: 12px'>Changes apply straight away and are saved in settings.txt. A monster that's already out stays until it's defeated.</div></div>";
-	if ($(".single-player-events").length) hide_modal();
-	show_modal(html, { wwidth: 460 });
-}
-
-function toggle_single_player_event(name, on) {
-	socket.emit("single_player_event", { name: name, on: on }); // the server replies with the new switches, which redraws the menu
-}
-
-// The server's reply to the menu: the current switches
+// Single player: the holiday events that are on, sent after one is switched in the Mod Menu
 function on_single_player_events(state) {
-	var was_waiting = !single_player_event_state || $(".single-player-events").length;
-	single_player_event_state = state;
 	Object.keys(state.events).forEach(function (name) {
 		if (state.events[name]) S[name] = true;
 		else delete S[name];
 	});
 	render_server();
-	if (was_waiting) open_single_player_events();
 }
 
 // Single player: the Mod Menu, opened from the button left of the game log. Every setting in settings.txt, changed while playing.
 var single_player_mods_state = null;
 
 function render_single_player_mods_button() {
-	var skin = (G.items.computer && G.items.computer.skin) || G.items.candycane.skin;
+	var skin = (G.items.computer && G.items.computer.skin) || "ancientcomputer";
 	$("#sp-modmenu").html(item_container({ skin: skin, draggable: false, onclick: "open_single_player_mods()" })).show();
 }
 
@@ -6522,8 +6466,6 @@ function single_player_mods_html() {
 		if (row.section) html += "<div style='font-size: 30px; color: #E8E44D; margin: 14px 12px 2px; border-bottom: 2px solid #4A4A4A'>" + html_escape(row.section) + "</div>";
 		else html += single_player_mods_row(row);
 	});
-	html += "<div style='font-size: 30px; color: #E8E44D; margin: 14px 12px 2px; border-bottom: 2px solid #4A4A4A'>Holiday Events</div>";
-	html += "<div style='display: flex; justify-content: space-between; align-items: center; margin: 4px 12px'><div style='font-size: 20px; color: gray'>Holidays and event monsters</div><div class='gamebutton' onclick='open_single_player_events()'>OPEN</div></div>";
 	return html + "</div>";
 }
 

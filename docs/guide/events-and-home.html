@@ -5,14 +5,14 @@
 <p>{{ t.intro }}</p>
 
 <div class="guide-card-grid">
-	<div class="guide-card"><span class="guide-card-icon sp-events-candycane"></span><b>{{ t.holidays_title }}</b>{{ t.holidays_text }}</div>
+	<div class="guide-card"><span class="guide-card-icon sp-events-modmenu"></span><b>{{ t.holidays_title }}</b>{{ t.holidays_text }}</div>
 	<div class="guide-card"><span class="guide-card-icon events-rgoo"></span><b>{{ t.monsters_title }}</b>{{ t.monsters_text }}</div>
 	<div class="guide-card"><span class="guide-card-icon events-tracker"></span><b>{{ t.scheduled_title }}</b>{{ t.scheduled_text }}</div>
 	<div class="guide-card"><b>{{ t.rare_title }}</b>{{ t.rare_text }}</div>
 </div>
 
 <div class="guide-flow" style="border-color:#7D5DA5" data-guide-visual="events">
-	<div class="guide-flow-node"><span class="guide-flow-icon sp-events-candycane"></span><span class="guide-flow-label">{{ t.flow_switch }}</span></div>
+	<div class="guide-flow-node"><span class="guide-flow-icon sp-events-modmenu"></span><span class="guide-flow-label">{{ t.flow_switch }}</span></div>
 	<div class="guide-flow-arrow">→</div>
 	<div class="guide-flow-node"><span class="guide-flow-icon events-rgoo"></span><span class="guide-flow-label">{{ t.flow_guide }}</span></div>
 	<div class="guide-flow-arrow">→</div>
@@ -147,7 +147,7 @@ join_goobrawl_if_live().catch(show_json);</div>
 	$(".events-rgoo").html(sprite("rgoo", { height: 48, overflow: true }));
 	$(".events-bean").html(sprite(G.npcs.bean.skin, { height: 58 }));
 	$(".events-favore").html(sprite(G.npcs.favors.skin, { height: 58 }));
-	$(".sp-events-candycane").html(item_container({ skin: G.items.candycane.skin }));
+	$(".sp-events-modmenu").html(item_container({ skin: G.items.computer.skin }));
 </script>
 
 <style>

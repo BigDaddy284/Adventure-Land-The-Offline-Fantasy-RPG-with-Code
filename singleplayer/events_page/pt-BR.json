@@ -3,7 +3,7 @@
 	"title": "Eventos",
 	"intro": "Fantasy Land é um único mundo rodando no seu próprio PC, então não tem reinos, servidores de origem nem troca de servidor com que se preocupar. Os eventos são de três tipos: feriados que você mesmo ativa, eventos agendados que seguem o relógio do jogo e criaturas raras que aparecem sozinhas.",
 	"holidays_title": "Feriados",
-	"holidays_text": "Temporada de Festas, Ano-Novo Lunar, Dia dos Namorados, Halloween e Caça aos Ovos. Ative ou desative qualquer um enquanto joga com o botão de bengala doce acima da barra de habilidades.",
+	"holidays_text": "Temporada de Festas, Ano-Novo Lunar, Dia dos Namorados, Halloween e Caça aos Ovos. Ative ou desative qualquer um enquanto joga no Mod Menu, o botão à esquerda do registro do jogo.",
 	"monsters_title": "Monstros de evento",
 	"monsters_text": "Grinch, Snowman, Mr Pumpkin, Mr Green, Slenderman, Dragold, Love Goo e Wabbit têm cada um seu próprio botão no mesmo menu. Eles aparecem mesmo com o feriado desativado.",
 	"scheduled_title": "Eventos agendados",

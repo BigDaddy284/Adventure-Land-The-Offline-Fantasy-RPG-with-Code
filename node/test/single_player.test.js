@@ -48,9 +48,12 @@ test("God Mode, Fire Sale and Daisy's tokens have settings, and the Mod Menu che
 	assert.equal(single_player.check_value("monster_hunt_tokens", ""), undefined);
 	assert.equal(single_player.check_value("nothing", 1), undefined);
 	const keys = sp.mod_state().rows.filter((row) => row.key).map((row) => row.key);
-	// Every setting is in the Mod Menu, apart from the holiday ones, which have their own menu
-	const holiday = Object.values(single_player.EVENT_SETTINGS).concat(single_player.EVENT_MONSTERS.map((name) => "monster_" + name));
-	assert.deepEqual(Object.keys(single_player.DEFAULTS).filter((key) => !keys.includes(key) && !holiday.includes(key)), []);
+	// Every setting is in the Mod Menu, holiday events and event monsters included
+	assert.deepEqual(Object.keys(single_player.DEFAULTS).filter((key) => !keys.includes(key)), []);
+	assert.equal(sp.holiday_event("holiday_season"), "holidayseason");
+	assert.equal(sp.holiday_event("monster_grinch"), "grinch");
+	assert.equal(sp.holiday_event("monster_hunt_tokens"), undefined);
+	assert.equal(sp.holiday_event("god_mode"), undefined);
 });
 
 test("the character limit can go down again while playing", () => {

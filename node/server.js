@@ -9016,22 +9016,21 @@ function init_socket_io(socket_server, server_index) {
 			resend(buyer, "reopen+u+cid");
 			success_response({});
 		});
-		// Single player: the holiday events menu turns events on and off while the game runs
-		socket.on("single_player_event", function (data) {
-			if (typeof single_player != "object" || !players[socket.id] || !data) return;
-			var kind = data.name && single_player.toggle_event(events, data.name, !!data.on);
-			if (kind == "event") {
-				if (data.on) E[data.name] = true;
-				else delete E[data.name];
-				broadcast_e();
-				reload_server(false, "events"); // rebuilds the drop tables, which include each event's drops
-			}
-			socket.emit("single_player_events", single_player.event_state()); // a request without a name just asks for the current state
-		});
-		// Single player: the Mod Menu changes settings while the game runs
+		// Single player: the Mod Menu changes settings while the game runs, holiday events included
 		socket.on("single_player_setting", function (data) {
 			if (typeof single_player != "object" || !players[socket.id] || !data) return;
-			if (data.key) {
+			var holiday = data.key && single_player.holiday_event(data.key);
+			if (holiday) {
+				if (typeof data.value != "boolean") return;
+				var kind = single_player.toggle_event(events, holiday, data.value);
+				if (kind == "event") {
+					if (data.value) E[holiday] = true;
+					else delete E[holiday];
+					broadcast_e();
+					reload_server(false, "events"); // rebuilds the drop tables, which include each event's drops
+				}
+				socket.emit("single_player_events", single_player.event_state()); // keeps the event icons in step
+			} else if (data.key) {
 				var value = single_player.change(data.key, data.value);
 				if (value === undefined) return socket.emit("game_log", "That value can't be used for " + data.key);
 				if (data.key == "drop_everything") mode.drop_all = value ? 1 : single_player_drop_all;

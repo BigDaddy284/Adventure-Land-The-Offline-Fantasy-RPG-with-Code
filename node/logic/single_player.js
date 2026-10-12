@@ -248,6 +248,21 @@ const MOD_MENU = [
 	["tools_break", "Tools break", "Rods and pickaxes can break"],
 	"Characters",
 	["max_characters_online", "Characters online", "How many can play at once"],
+	"Holiday Events",
+	["holiday_season", "Holiday Season", ""],
+	["lunar_new_year", "Lunar New Year", ""],
+	["valentines", "Valentine's", ""],
+	["halloween", "Halloween", ""],
+	["egg_hunt", "Egg Hunt", ""],
+	"Event Monsters",
+	["monster_grinch", "Grinch", "Each spawns even when its holiday is off"],
+	["monster_snowman", "Snowman", ""],
+	["monster_mrpumpkin", "Mr Pumpkin", ""],
+	["monster_mrgreen", "Mr Green", ""],
+	["monster_slenderman", "Slenderman", ""],
+	["monster_dragold", "Dragold", ""],
+	["monster_pinkgoo", "Love Goo", ""],
+	["monster_wabbit", "Wabbit", ""],
 ];
 const RESTART = ["fishing_mining_cooldown", "merrit_visit_minutes"];
 // Whole numbers only, and the highest each can go
@@ -263,6 +278,14 @@ const WHOLE = {
 	starting_gold: 1e12,
 	merrit_visit_minutes: 1e6,
 };
+
+// The game's name for a holiday event or event monster setting (holiday_season -> holidayseason,
+// monster_grinch -> grinch), or undefined for any other setting
+function holiday_event(key) {
+	const event = Object.keys(EVENT_SETTINGS).find((name) => EVENT_SETTINGS[name] == key);
+	if (event) return event;
+	if (typeof key == "string" && key.startsWith("monster_") && EVENT_MONSTERS.includes(key.slice(8))) return key.slice(8);
+}
 
 // Checks a value from the Mod Menu: true/false for yes/no settings, a number 0 or above for the rest.
 // Returns the value to use, or undefined when it can't be used.
@@ -356,7 +379,8 @@ function create(settings) {
 		monster_on(name) {
 			return !!settings["monster_" + name];
 		},
-		// What the holiday events menu shows
+		holiday_event,
+		// Which holiday events and event monsters are on
 		event_state() {
 			const state = { events: {}, monsters: {} };
 			Object.keys(EVENT_SETTINGS).forEach((name) => (state.events[name] = !!settings[EVENT_SETTINGS[name]]));

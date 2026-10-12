@@ -64,7 +64,7 @@ You can also open `settings.txt` in the game folder with Notepad. Every setting 
 
 If `settings.txt` is deleted, a fresh one is made on the next start. New settings from a newer version are added to the end of your file automatically, and your own values are kept.
 
-Holiday events can also be switched while you play. The candy cane button above the skill bar opens the Holiday Events menu.
+Holiday events and event monsters are switched in the Mod Menu too.
 
 ## Playing several characters at once
 
@@ -219,6 +219,11 @@ Fantasy Land started as a copy of the MongoDB port of [Adventure Land](https://g
 - **Events page:** the Info button on character select opens a rewritten Events page about how events work in Fantasy Land: holidays and event monsters you switch on yourself, the daily and nightly events, and links to each event's guide. The home server and realm parts are gone. It's translated into every language the game supports (text in `singleplayer/events_page`).
 - **Game window:** the icon is the Fantasy Land title screen picture instead of the Adventure Land logo, and the window title always reads "Fantasy Land - The Code (NOMMO) RPG" instead of the character's name.
 - **Goo comic:** the "Fantasy Land" title now also shows when the comic opens from the tutorial in game. Before, it only showed on the website version.
+
+### v16
+- **Holiday events moved into the Mod Menu:** the holiday and event monster switches are at the bottom of the Mod Menu. The candy cane button and the separate Holiday Events menu are gone.
+- **Comic page 2:** the speech bubble now says "We built Fantasy Land inside their machines.", in every language.
+- The Events page says to switch holidays in the Mod Menu, in every language.
 
 ## License
 
