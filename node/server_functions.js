@@ -402,13 +402,20 @@ function is_player_allowed(player) {
 		return true;
 	}
 	if (typeof single_player == "object") {
-		// Single player: the Mod Menu's "Characters online" is the only limit, merchants included
-		var online = 0;
+		// Single player: the Mod Menu's "Characters online" is the limit, merchants included, and at most 2 of them can be merchants
+		var online = 0,
+			merchants = 0;
 		for (var id in players) {
 			if (players[id].name == player.name && player != players[id]) return false;
-			if (players[id].owner == player.owner) online++;
+			if (players[id].owner != player.owner) continue;
+			online++;
+			if (players[id].type == "merchant") merchants++;
 		}
-		if (player.socket && !players[player.socket.id]) online++;
+		if (player.socket && !players[player.socket.id]) {
+			online++;
+			if (player.type == "merchant") merchants++;
+		}
+		if (player.type == "merchant" && merchants > 2) return false;
 		return online <= max(1, single_player.settings.max_characters_online);
 	}
 	if (player.type == "merchant") {

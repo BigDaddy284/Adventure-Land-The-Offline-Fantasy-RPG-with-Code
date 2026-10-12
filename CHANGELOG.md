@@ -132,3 +132,8 @@ Fantasy Land started as a copy of the MongoDB port of [Adventure Land](https://g
 - Upgrade and compound chance are now multipliers like drop luck (**Upgrade luck** and **Compound luck**, `upgrade_success` and `compound_success`): 1 = normal, 2 = twice the chance of success. An older `settings.txt` is converted automatically (`upgrade_success_percent = 200` becomes `upgrade_success = 2`).
 - **Characters online** in the Mod Menu now really sets how many characters can play at once. Before, the game could still stop a 5th character with "You can have 3 characters and one merchant online at most". Merchants now count like any other character, and the message, when you do reach the limit, says how many your setting allows.
 - README: a note on the risks of running a lot of game windows at once, and clearer update steps: what to back up (`singleplayer\data` and `settings.txt`) and how to move to a new folder.
+
+### v19
+- Every character slot is free, up to the game's limit of 18 characters. Creating more characters no longer asks for 200 shells or says your account has no free slots.
+- Up to 2 merchants can be online at once (part of Characters online). A 3rd merchant is turned away with a message that says why.
+- Each game window's title is the character's name, then the game's name, for example "Chillyinit: Fantasy Land - The Code (NOMMO) RPG". Character select still shows just the game's name.

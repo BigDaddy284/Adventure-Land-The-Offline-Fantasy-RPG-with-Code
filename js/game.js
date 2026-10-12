@@ -401,7 +401,7 @@ function disconnect() {
 			add_log(
 				"You can have " +
 					window.single_player_limit +
-					" characters online at once. Raise Characters online in the Mod Menu to play more.",
+					" characters online at once, and up to 2 of them can be merchants. Raise Characters online in the Mod Menu to play more characters.",
 				"#CF888A",
 			);
 		else add_log(phrase.html("game.you_can_have_3_characters_and_one_merchant_online"), "#CF888A");
@@ -444,7 +444,7 @@ function disconnect() {
 		);
 	}
 
-	if (character) $("title").html(title_m + " - " + (window.single_player_mode ? "Fantasy Land - The Code (NOMMO) RPG" : character.name)); // Single player: the game's name, not the character's
+	if (character) $("title").html(title_m + " - " + (window.single_player_mode ? character.name + ": Fantasy Land - The Code (NOMMO) RPG" : character.name)); // Single player: the character's name, then the game's
 }
 
 function position_map() {
@@ -1780,7 +1780,7 @@ function init_socket(args) {
 		$(".charactername").html(character.name);
 		page.title = character.name;
 		if (gameplay == "hardcore") page.title = phrase("game.title.hardcore", { character: character.name });
-		if (window.single_player_mode) page.title = "Fantasy Land - The Code (NOMMO) RPG"; // Single player: the window shows the game's name, not the character's
+		if (window.single_player_mode) page.title = character.name + ": Fantasy Land - The Code (NOMMO) RPG"; // Single player: the character's name, then the game's
 		try {
 			var get = "";
 			if (no_html) get += ((!get && "?") || "&") + "no_html=true";
