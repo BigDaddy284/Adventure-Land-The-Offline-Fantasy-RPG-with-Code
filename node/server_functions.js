@@ -593,6 +593,7 @@ function save_player(player) {
 }
 
 function secondhands_logic(item, quantity) {
+	if (typeof single_player == "object") return; // Single player: sold items are gone, Ponty only sells his own stock
 	var new_item = cache_item(item);
 	var done = false;
 	var count = 0;

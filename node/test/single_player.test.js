@@ -23,6 +23,14 @@ test("the old percent drop and gold settings still work, and the new names win",
 	);
 });
 
+test("removed settings are skipped quietly and taken out of settings.txt", () => {
+	assert.deepEqual(single_player.parse("ponty_keep_sold_items = yes\n"), {});
+	assert.equal(
+		single_player.rename_settings("a = 1\r\n\r\n# Keep?\r\nponty_keep_sold_items = no\r\n\r\n# x\r\nb = 2\r\n"),
+		"a = 1\r\n\r\n# x\r\nb = 2\r\n",
+	);
+});
+
 test("God Mode, Fire Sale and Daisy's tokens have settings, and the Mod Menu checks values", () => {
 	const sp = single_player.create({ hp_loss_percent: 50, drop_rate: 2, gold_drop: 3 });
 	assert.equal(sp.scale("hp_loss", 100), 50);

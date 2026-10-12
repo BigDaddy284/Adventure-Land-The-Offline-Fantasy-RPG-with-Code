@@ -15825,10 +15825,8 @@ setInterval(bless_loop, 60 * 1000);
 // Single player: Ponty restocks with random high grade items every ponty_restock_minutes
 function single_player_ponty_restock() {
 	var stock = single_player.ponty_stock(G, calculate_item_grade);
-	if (!single_player.settings.ponty_keep_sold_items) {
-		S.sold.length = 0;
-		csold.length = 0;
-	}
+	S.sold.length = 0;
+	csold.length = 0;
 	stock.forEach(function (entry) {
 		var item = create_new_item(entry.name, 1);
 		item.level = entry.level;

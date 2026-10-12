@@ -45,9 +45,6 @@ ponty_upgrade_level_max = 9
 ponty_compound_level_min = 2
 ponty_compound_level_max = 4
 
-# Keep the items you sell to Ponty in his stock between restocks?
-ponty_keep_sold_items = no
-
 
 # ---------- Upgrading and compounding ----------
 

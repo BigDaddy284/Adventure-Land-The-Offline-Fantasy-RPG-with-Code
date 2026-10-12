@@ -19,7 +19,6 @@ const DEFAULTS = {
 	ponty_upgrade_level_max: 9,
 	ponty_compound_level_min: 2,
 	ponty_compound_level_max: 4,
-	ponty_keep_sold_items: false,
 	upgrade_success_percent: 100,
 	compound_success_percent: 100,
 	mp_usage_percent: 100,
@@ -57,6 +56,9 @@ const RENAMED = {
 	gold_drop_percent: ["gold_drop", 100],
 };
 
+// Settings that were taken out, skipped without a warning and removed from settings.txt
+const REMOVED = ["ponty_keep_sold_items"];
+
 function parse(text) {
 	const values = {};
 	const renamed = {};
@@ -71,6 +73,7 @@ function parse(text) {
 			.trim()
 			.replace(/%$/, "")
 			.toLowerCase();
+		if (REMOVED.includes(key)) return;
 		if (key in RENAMED) {
 			const number = Number(raw);
 			if (raw !== "" && Number.isFinite(number) && number >= 0) renamed[RENAMED[key][0]] = number / RENAMED[key][1];
@@ -102,7 +105,8 @@ const RENAMED_NOTES = [
 	["# Very silly. Overrides drop_rate_percent.", "# Very silly. Overrides drop_rate."],
 ];
 
-// Rewrites renamed settings in an older settings.txt under their new names (drop_rate_percent = 200 becomes drop_rate = 2)
+// Brings an older settings.txt up to date: renamed settings get their new names (drop_rate_percent = 200 becomes
+// drop_rate = 2) and removed ones are taken out
 function rename_settings(text) {
 	Object.keys(RENAMED).forEach(function (old) {
 		const pattern = new RegExp("^([ \\t]*)" + old + "([ \\t]*=[ \\t]*)([^#\\r\\n]*?)%?([ \\t]*(#[^\\r\\n]*)?)(?=\\r?$)", "im");
@@ -111,6 +115,10 @@ function rename_settings(text) {
 			const converted = value.trim() !== "" && Number.isFinite(number) ? String(number / RENAMED[old][1]) : value;
 			return indent + RENAMED[old][0] + eq + converted + rest;
 		});
+	});
+	REMOVED.forEach(function (key) {
+		// the setting's line, with the notes written straight above it
+		text = text.replace(new RegExp("(^[ \\t]*\\r?\\n)?(^[ \\t]*#[^\\r\\n]*\\r?\\n)*^[ \\t]*" + key + "[ \\t]*=[^\\r\\n]*(\\r?\\n)?", "gim"), "");
 	});
 	RENAMED_NOTES.forEach(function ([before, after]) {
 		text = text.split(before).join(after).split(before.replace(/\r\n/g, "\n")).join(after.replace(/\r\n/g, "\n"));
@@ -232,7 +240,6 @@ const MOD_MENU = [
 	["ponty_upgrade_level_max", "Upgrade level to", ""],
 	["ponty_compound_level_min", "Compound level from", ""],
 	["ponty_compound_level_max", "Compound level to", ""],
-	["ponty_keep_sold_items", "Keep sold items", "Items you sell him stay between restocks"],
 	"Merrit",
 	["merrit_visit_minutes", "Visit minutes", "Minutes between parcels"],
 	["merrit_buys_stall", "Buys your stall", "Buys everything on the stall each visit"],
