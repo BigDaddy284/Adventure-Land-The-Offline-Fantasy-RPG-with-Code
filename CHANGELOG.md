@@ -123,3 +123,6 @@ Fantasy Land started as a copy of the MongoDB port of [Adventure Land](https://g
 - **Holiday events moved into the Mod Menu:** the holiday and event monster switches are at the bottom of the Mod Menu. The candy cane button and the separate Holiday Events menu are gone.
 - **Comic page 2:** the speech bubble now says "We built Fantasy Land inside their machines.", in every language.
 - The Events page says to switch holidays in the Mod Menu, in every language.
+
+### v17
+- Character select no longer shows a server tag ("US I") in the corner of each character, or the home server popup when you hover over one.

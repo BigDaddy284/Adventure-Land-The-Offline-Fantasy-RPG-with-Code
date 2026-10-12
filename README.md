@@ -225,6 +225,9 @@ Fantasy Land started as a copy of the MongoDB port of [Adventure Land](https://g
 - **Comic page 2:** the speech bubble now says "We built Fantasy Land inside their machines.", in every language.
 - The Events page says to switch holidays in the Mod Menu, in every language.
 
+### v17
+- Character select no longer shows a server tag ("US I") in the corner of each character, or the home server popup when you hover over one.
+
 ## License
 
 [AdventureLandOnlyUse](LICENSE) — free for commercial use with attribution. See the license file for full terms.
