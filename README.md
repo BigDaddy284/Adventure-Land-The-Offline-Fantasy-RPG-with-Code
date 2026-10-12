@@ -216,7 +216,7 @@ Fantasy Land started as a copy of the MongoDB port of [Adventure Land](https://g
 - `starting_gold` changes count for the next new character without a restart.
 - Items you sell to an NPC are gone. Ponty no longer stocks them and only sells his own restocked gear. The `ponty_keep_sold_items` setting is removed, and an older `settings.txt` drops it on the next start.
 - **Character select:** the menu box with Character Ops and Logout is gone. Character Ops now sits at the top of the In Game box. To log out, use the Logout button in the settings window.
-- **Events page:** the Info button on character select opens a rewritten Events page about how events work in Fantasy Land: holidays and event monsters you switch on yourself, the daily and nightly events, and links to each event's guide. The home server and realm parts are gone. This page is in English only.
+- **Events page:** the Info button on character select opens a rewritten Events page about how events work in Fantasy Land: holidays and event monsters you switch on yourself, the daily and nightly events, and links to each event's guide. The home server and realm parts are gone. It's translated into every language the game supports (text in `singleplayer/events_page`).
 - **Goo comic:** the "Fantasy Land" title now also shows when the comic opens from the tutorial in game. Before, it only showed on the website version.
 
 ## License

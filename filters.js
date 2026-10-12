@@ -89,6 +89,7 @@ env.addGlobal("tutorial_data", function (key) {
 });
 
 // Checked against calculate_player_stats by the tutorial content tests.
+env.addGlobal("single_player_events_text", function (language) { return require("./singleplayer/events_page").text(language); }); // Single player: Events page text
 env.addGlobal("tutorial_comparisons", function () { return require("./docs/tutorial/comparisons.json"); });
 
 env.addGlobal("task_name", function (key) {
