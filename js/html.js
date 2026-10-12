@@ -6460,7 +6460,12 @@ function single_player_mods_row(row) {
 	html += "</div>";
 	if (row.yesno)
 		html += "<div class='gamebutton' style='width: 70px; flex: none; text-align: center; color: " + (row.value ? "#5DE376" : "gray") + "' onclick='change_single_player_setting(\"" + row.key + "\"," + !row.value + ")'>" + (row.value ? "ON" : "OFF") + "</div>";
-	else
+	else if (row.button) {
+		// An amount and a button: the button reads the box when pressed (on mousedown, so the box doesn't lose focus and redraw first)
+		html += "<div style='flex: none; display: flex; gap: 8px; align-items: center'>";
+		html += "<input class='sp-mod-number' data-key='" + row.key + "' value='" + html_escape(String(row.value)) + "' inputmode='decimal' style='width: 150px; box-sizing: border-box; background: black; color: white; border: 4px solid gray; font-family: var(--pixel-font, pixel); font-size: 28px; padding: 2px 6px; text-align: right' onkeydown='if(event.key==\"Enter\") this.blur()' onchange='change_single_player_setting(this.dataset.key, this.value)' />";
+		html += "<div class='gamebutton' style='color: #E8C34D; white-space: nowrap' onmousedown='event.preventDefault(); single_player_mods_action(\"" + row.key + "\")'>" + html_escape(row.button) + "</div></div>";
+	} else
 		html += "<input class='sp-mod-number' data-key='" + row.key + "' value='" + html_escape(String(row.value)) + "' inputmode='decimal' style='flex: none; width: 150px; box-sizing: border-box; background: black; color: white; border: 4px solid gray; font-family: var(--pixel-font, pixel); font-size: 28px; padding: 2px 6px; text-align: right' onkeydown='if(event.key==\"Enter\") this.blur()' onchange='change_single_player_setting(this.dataset.key, this.value)' />";
 	return html + "</div>";
 }
@@ -6504,6 +6509,11 @@ function open_single_player_mods() {
 	if ($(".single-player-mods").length) hide_modal();
 	single_player_mods_group = null; // always opens on the home page
 	show_modal(single_player_mods_html(), { wwidth: 560 });
+}
+
+// A Mod Menu button: sends what's in its box (Give Gold sends that much gold to every character online)
+function single_player_mods_action(key) {
+	socket.emit("single_player_setting", { action: key, value: $(".sp-mod-number[data-key='" + key + "']").val() });
 }
 
 function change_single_player_setting(key, value) {

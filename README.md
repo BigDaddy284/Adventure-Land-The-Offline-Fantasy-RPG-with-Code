@@ -51,7 +51,7 @@ You can also open `settings.txt` in the game folder with Notepad. Every setting 
 - God Mode: your characters take no damage
 - Fire Sale: everything in the NPC shops, Ponty and Lost and Found is free
 - how many monster tokens Daisy gives for a finished monster hunt
-- shop sell prices
+- what NPCs pay for your items (Sell Item Price, a multiplier) and a Trader Discount off shop prices (0 = normal, 100 = free)
 - Ponty's restock and what he sells
 - upgrade and compound luck, as multipliers (1 = normal, 2 = twice the chance of success)
 - XP from monsters and the damage your characters deal, as multipliers (1 = normal, 2 = double)
@@ -60,11 +60,11 @@ You can also open `settings.txt` in the game folder with Notepad. Every setting 
 - monster respawn time, bosses included (1 = normal, 0.5 = twice as fast, 0 = straight away)
 - run speed (1 = normal, 2 = double, 5 at most)
 - safe upgrades: a failed upgrade or compound keeps your items
-- drop luck and gold, as multipliers (1 = normal, 2 = double)
+- drop luck, gold and exchange luck, as multipliers (1 = normal, 2 = double)
 - holiday events and event monsters
 - how many characters can be online at once
 - fishing and mining wait times, and whether tools break
-- starting gold
+- starting gold, and the amount Give Gold sends
 - Merrit's market visits
 
 If `settings.txt` is deleted, a fresh one is made on the next start. New settings from a newer version are added to the end of your file automatically, and your own values are kept.
@@ -301,6 +301,10 @@ Fantasy Land started as a copy of the MongoDB port of [Adventure Land](https://g
 - New Mod Menu setting, **Run speed** (`run_speed`): 1 = normal, 2 = double, up to 5.
 - New Mod Menu setting, **Safe upgrades** (`safe_upgrades`): a failed upgrade keeps the item at its old level, and a failed compound keeps all three items. The scroll is still used.
 - New Mod Menu setting, **Skill cooldowns** (`skill_cooldown`): the wait before a skill can be used again. 1 = normal, 0.5 = half the wait, 0 = no wait. Monster skills aren't changed.
+- New Mod Menu button, **Give Gold** (Characters): type an amount and press **Send Gold** to add it to every character online. The amount stays in the box (and in `settings.txt` as `give_gold`), so you can press Send again as often as you like.
+- New Mod Menu setting, **Exchange luck** (`exchange_luck`, in Loot): every exchange in the game (Xyn, boxes, gems, quest items, class rewards), fishing, mining and the chests monsters drop. 1 = normal, 2 = every reward rarer than the table's most common one is twice as likely, and bonus rewards are twice as likely too.
+- New Mod Menu setting, **Trader Discount %** (`trader_discount`, in Market): percent off the gold price of everything in the NPC shops, Ponty and Lost and Found. 0 = normal, 100 = free. Seashell prices aren't changed.
+- **Sell price** is now called **Sell Item Price** in the Mod Menu: what NPCs pay for your items, 1 = normal, 2 = double.
 - **The Mod Menu is grouped:** it opens on a page of groups (Combat, Monsters, Loot, Crafting & Gathering, Market, Characters and Holiday Events), each showing how many of its settings you've changed. Click a group to open its page, and Back to return.
 
 ## License

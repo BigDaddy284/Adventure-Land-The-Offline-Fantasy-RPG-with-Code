@@ -8501,7 +8501,7 @@ function init_socket_io(socket_server, server_index) {
 						mult = 3;
 					}
 					var gold = calculate_item_value(c[i]) * mult * (c[i].q || 1);
-					if (typeof single_player == "object" && single_player.settings.fire_sale) gold = 0; // Single player: Fire Sale
+					if (typeof single_player == "object") gold = single_player.shop_price(gold); // Single player: Fire Sale and Trader Discount
 					var item = c[i];
 					if (!can_add_item(player, c[i])) {
 						if (data.request_id) return fail_response("no_space", ev, { request_id: data.request_id, rid: data.rid });
@@ -8577,7 +8577,7 @@ function init_socket_io(socket_server, server_index) {
 			if (G.items[name].p2w) {
 				cost *= G.inflation;
 			}
-			if (typeof single_player == "object" && single_player.settings.fire_sale) cost = 0; // Single player: Fire Sale
+			if (typeof single_player == "object") cost = single_player.shop_price(cost); // Single player: Fire Sale and Trader Discount
 			if (player.gold < cost) {
 				return fail_response("buy_cost");
 			}
@@ -9099,6 +9099,19 @@ function init_socket_io(socket_server, server_index) {
 		// Single player: the Mod Menu changes settings while the game runs, holiday events included
 		socket.on("single_player_setting", function (data) {
 			if (typeof single_player != "object" || !players[socket.id] || !data) return;
+			if (data.action == "give_gold") {
+				// Give Gold: the amount is remembered, then every character online gets it
+				var amount = single_player.change("give_gold", data.value);
+				if (amount === undefined) return socket.emit("game_log", "That amount of gold can't be sent");
+				for (var id in players) {
+					var p = players[id];
+					if (!p || p.npc) continue;
+					p.gold += amount;
+					p.socket.emit("game_log", { message: "Received " + to_pretty_num(amount) + " gold from the Mod Menu", color: "gold" });
+					resend(p, "reopen");
+				}
+				return socket.emit("single_player_settings", single_player.mod_state());
+			}
 			var holiday = data.key && single_player.holiday_event(data.key);
 			if (holiday) {
 				if (typeof data.value != "boolean") return;

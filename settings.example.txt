@@ -21,6 +21,11 @@
 # 1 = normal, 2 = double, 0.5 = half.
 sell_multiplier = 1
 
+# Trader Discount: percent off the gold price of everything in the
+# NPC shops, Ponty and Lost and Found. 0 = normal price,
+# 50 = half price, 100 = free. Fire Sale makes everything free anyway.
+trader_discount = 0
+
 
 # ---------- Ponty (second-hand shop in town) ----------
 
@@ -100,6 +105,12 @@ gold_drop = 1
 # Very silly. Overrides drop_rate.
 drop_everything = no
 
+# Exchange luck: every exchange (Xyn, boxes, gems, quest items),
+# fishing, mining and the chests monsters drop. A multiplier:
+# 1 = normal, 2 = every reward rarer than the table's most common
+# one is twice as likely, 0.5 = half as likely.
+exchange_luck = 1
+
 
 # ---------- Daisy (monster hunts) ----------
 
@@ -175,6 +186,10 @@ tools_break = no
 
 # Gold every new character starts with.
 starting_gold = 10000000
+
+# The amount the Mod Menu's Give Gold sends to every character
+# online when you press Send Gold. Kept here so it's remembered.
+give_gold = 1000000
 
 
 # ---------- Merrit (market square visitor) ----------

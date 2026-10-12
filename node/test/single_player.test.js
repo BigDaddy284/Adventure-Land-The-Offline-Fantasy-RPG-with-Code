@@ -360,3 +360,34 @@ test("respawn time, death penalty, skill cooldowns, run speed and safe upgrades"
 	const combat = sp.mod_state().groups.find((group) => group.name == "Combat");
 	assert.equal(combat.changed, 1); // death penalty
 });
+
+test("trader discount, exchange luck and give gold", () => {
+	const sp = single_player.create({});
+	const settings = sp.settings;
+	assert.equal(sp.shop_price(1000), 1000);
+	settings.trader_discount = 25;
+	assert.equal(sp.shop_price(1000), 750);
+	settings.fire_sale = true;
+	assert.equal(sp.shop_price(1000), 0);
+	assert.equal(single_player.check_value("trader_discount", 150), 100);
+	const table = [
+		[100, "hpot0", 1],
+		[10, "ring", 1],
+		[5, "empty"],
+	];
+	assert.equal(sp.luck_table(table), table);
+	settings.exchange_luck = 2;
+	assert.deepEqual(sp.luck_table(table), [
+		[100, "hpot0", 1],
+		[20, "ring", 1],
+		[5, "empty"],
+	]);
+	assert.equal(table[1][0], 10); // the game's table isn't changed
+	assert.equal(sp.luck_chance(0.3), 0.6);
+	assert.equal(sp.luck_chance(0.8), 1);
+	// The amount Give Gold remembers isn't counted as a change
+	settings.give_gold = 5;
+	const characters = sp.mod_state().groups.find((group) => group.name == "Characters");
+	assert.equal(characters.changed, 0);
+	assert.equal(characters.rows.find((row) => row.key == "give_gold").button, "Send Gold");
+});

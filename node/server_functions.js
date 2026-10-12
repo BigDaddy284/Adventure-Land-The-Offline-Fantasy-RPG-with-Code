@@ -4077,6 +4077,7 @@ function exchange(player, name, args) {
 		});
 		console.log(table);
 	}
+	if (typeof single_player == "object") table = single_player.luck_table(table); // Single player: Exchange luck
 	table.forEach(function (drop) {
 		total += drop[0];
 	});
@@ -4172,7 +4173,8 @@ function exchange(player, name, args) {
 	}
 	if (done && bonus)
 		bonus.forEach(function (drop) {
-			if (Math.random() < drop[0]) exchange(player, [drop], { ...args, name });
+			var chance = typeof single_player == "object" ? single_player.luck_chance(drop[0]) : drop[0]; // Single player: Exchange luck
+			if (Math.random() < chance) exchange(player, [drop], { ...args, name });
 		});
 }
 
@@ -4182,6 +4184,7 @@ function chest_exchange(chest, name) {
 	var current = 0;
 	var table = is_array(name) ? name : D.drops[name];
 	var bonus = !is_array(name) && D.drops[name + "_bonus"];
+	if (typeof single_player == "object") table = single_player.luck_table(table); // Single player: Exchange luck
 	table.forEach(function (drop) {
 		total += drop[0];
 	});
@@ -4211,7 +4214,7 @@ function chest_exchange(chest, name) {
 	});
 	if (done && bonus)
 		bonus.forEach(function (drop) {
-			if (Math.random() < drop[0]) chest_exchange(chest, [drop]);
+			if (Math.random() < (typeof single_player == "object" ? single_player.luck_chance(drop[0]) : drop[0])) chest_exchange(chest, [drop]);
 		});
 }
 

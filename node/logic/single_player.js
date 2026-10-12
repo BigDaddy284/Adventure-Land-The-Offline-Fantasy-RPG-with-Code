@@ -12,6 +12,9 @@ const EXAMPLE_FILE = path.join(ROOT, "settings.example.txt");
 
 const DEFAULTS = {
 	sell_multiplier: 1,
+	trader_discount: 0,
+	exchange_luck: 1,
+	give_gold: 1000000,
 	ponty_restock_minutes: 0,
 	ponty_item_count: 20,
 	ponty_min_grade: 1,
@@ -275,11 +278,12 @@ const MOD_MENU = [
 	},
 	{
 		name: "Loot",
-		note: "Item drops and gold",
+		note: "Item drops, gold and exchange luck",
 		rows: [
 			["drop_rate", "Drop luck", "1 = normal, 2 = every item twice as likely to drop"],
 			["gold_drop", "Gold dropped", "1 = normal, 2 = twice as much gold"],
 			["drop_everything", "Drop everything", "Every monster drops its whole drop list"],
+			["exchange_luck", "Exchange luck", "Every exchange, box, fish and mine: 1 = normal, 2 = rare rewards twice as likely"],
 		],
 	},
 	{
@@ -299,7 +303,8 @@ const MOD_MENU = [
 		note: "NPC shops, Ponty and Merrit",
 		rows: [
 			["fire_sale", "Fire Sale", "Everything in the NPC shops, Ponty and Lost and Found is free"],
-			["sell_multiplier", "Sell price", "1 = normal, 2 = NPCs pay double"],
+			["trader_discount", "Trader Discount %", "Off gold prices in NPC shops, Ponty and Lost and Found: 0 = normal, 100 = free"],
+			["sell_multiplier", "Sell Item Price", "What NPCs pay for your items: 1 = normal, 2 = double"],
 			"Ponty",
 			["ponty_restock_minutes", "Restock minutes", "0 = normal Ponty"],
 			["ponty_item_count", "Items per restock", ""],
@@ -315,11 +320,12 @@ const MOD_MENU = [
 	},
 	{
 		name: "Characters",
-		note: "Run speed, characters online and starting gold",
+		note: "Run speed, characters online and gold",
 		rows: [
 			["run_speed", "Run speed", "1 = normal, 1.5 = half as fast again, 5 at most"],
 			["max_characters_online", "Characters online", "How many can play at once"],
 			["starting_gold", "Starting gold", "Gold for each new character"],
+			["give_gold", "Give Gold", "Gold for every character online, each time you press Send", "Send Gold"],
 		],
 	},
 	{
@@ -347,9 +353,12 @@ const WHOLE = {
 	max_characters_online: 18,
 	starting_gold: 1e12,
 	merrit_visit_minutes: 1e6,
+	give_gold: 1e12,
 };
+// Not counted as changed on the Mod Menu's home page: the amount Give Gold remembers isn't a mod
+const NOT_COUNTED = ["give_gold"];
 // The highest other numbers can go
-const MAXIMUM = { run_speed: 5 };
+const MAXIMUM = { run_speed: 5, trader_discount: 100 };
 
 // The game's name for a holiday event or event monster setting (holiday_season -> holidayseason,
 // monster_grinch -> grinch), or undefined for any other setting
@@ -681,6 +690,25 @@ function create(settings) {
 			for (const [name, def] of Object.entries(G.items || {})) if (def && def.cash) def.seashells = item_seashell_price(name, def.cash, 1);
 			return G;
 		},
+		// A gold price in the NPC shops, Ponty or Lost and Found after Fire Sale and the Trader Discount
+		shop_price(gold) {
+			if (settings.fire_sale) return 0;
+			const discount = Math.min(100, Math.max(0, settings.trader_discount || 0));
+			return Math.round(gold * (1 - discount / 100));
+		},
+		// An exchange table with Exchange luck applied: every reward rarer than the table's most common one has its
+		// weight multiplied by the luck, so 2 makes rare rewards twice as likely. "Nothing" results are never boosted
+		luck_table(table) {
+			const luck = typeof settings.exchange_luck == "number" ? settings.exchange_luck : 1;
+			if (luck == 1 || !Array.isArray(table) || table.length < 2) return table;
+			const most = Math.max(...table.map((drop) => drop[0]));
+			return table.map((drop) => (drop[0] < most && drop[1] != "empty" ? [drop[0] * luck].concat(drop.slice(1)) : drop));
+		},
+		// The chance of an exchange's bonus reward with Exchange luck applied
+		luck_chance(chance) {
+			const luck = typeof settings.exchange_luck == "number" ? settings.exchange_luck : 1;
+			return Math.min(1, chance * luck);
+		},
 		// Sets every skill's cooldown from the design files' value and the Skill cooldowns setting
 		apply_cooldowns() {
 			if (!skill_game) return;
@@ -725,9 +753,10 @@ function create(settings) {
 									value: settings[row[0]],
 									yesno: typeof DEFAULTS[row[0]] == "boolean",
 									restart: RESTART.includes(row[0]),
+									button: row[3],
 								},
 					);
-					const changed = rows.filter((row) => row.key && settings[row.key] !== DEFAULTS[row.key]).length;
+					const changed = rows.filter((row) => row.key && !NOT_COUNTED.includes(row.key) && settings[row.key] !== DEFAULTS[row.key]).length;
 					return { name: group.name, note: group.note, changed, rows };
 				}),
 			};
