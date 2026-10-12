@@ -437,7 +437,7 @@ function disconnect() {
 		);
 	}
 
-	if (character) $("title").html(title_m + " - " + character.name);
+	if (character) $("title").html(title_m + " - " + (window.single_player_mode ? "Fantasy Land - The Code (NOMMO) RPG" : character.name)); // Single player: the game's name, not the character's
 }
 
 function position_map() {
@@ -1773,6 +1773,7 @@ function init_socket(args) {
 		$(".charactername").html(character.name);
 		page.title = character.name;
 		if (gameplay == "hardcore") page.title = phrase("game.title.hardcore", { character: character.name });
+		if (window.single_player_mode) page.title = "Fantasy Land - The Code (NOMMO) RPG"; // Single player: the window shows the game's name, not the character's
 		try {
 			var get = "";
 			if (no_html) get += ((!get && "?") || "&") + "no_html=true";
