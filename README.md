@@ -267,6 +267,7 @@ Fantasy Land started as a copy of the MongoDB port of [Adventure Land](https://g
 ### v19
 - Every character slot is free, up to the game's limit of 18 characters. Creating more characters no longer asks for 200 shells or says your account has no free slots.
 - Up to 2 merchants can be online at once (part of Characters online). A 3rd merchant is turned away with a message that says why.
+- Opening another game window no longer drops the windows already open. Windows opened from the game share one browser process, so while a new window loads, the others can stop answering the game server for a few seconds, and the server was cutting them off after 12. It now waits up to 60 seconds. The server also no longer closes character select and loading windows when more than 5 are open at once.
 - Each game window's title is the character's name, then the game's name, for example "Chillyinit: Fantasy Land - The Code (NOMMO) RPG". Character select still shows just the game's name.
 
 ## License

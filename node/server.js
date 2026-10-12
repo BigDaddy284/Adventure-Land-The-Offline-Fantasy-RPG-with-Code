@@ -83,7 +83,7 @@ function coalesce_socket_writes(socket_server) {
 var io = new SocketIOServer(http_server, {
 	path: server_def.path,
 	pingInterval: 4000,
-	pingTimeout: 12000,
+	pingTimeout: typeof single_player == "object" ? 60000 : 12000, // Single player: a window busy loading another one (they share a process) isn't dropped
 	cors: socket_cors,
 	parser: json_socket_parser, // node/json_parser.js - pre-built entity frames skip socket.io's per-recipient JSON.stringify
 }); // default is 25000 to 60000
@@ -94,7 +94,7 @@ var msgpack_io = new SocketIOServer(http_server, {
 	transports: ["websocket"],
 	maxHttpBufferSize: 64 * 1024,
 	pingInterval: 4000,
-	pingTimeout: 12000,
+	pingTimeout: typeof single_player == "object" ? 60000 : 12000, // Single player: a window busy loading another one (they share a process) isn't dropped
 	cors: socket_cors,
 	parser: msgpack_parser.createParser({ maxPacketBytes: 64 * 1024 }),
 });
@@ -4907,7 +4907,8 @@ function init_socket_io(socket_server, server_index) {
 		socket.generated_protocol = Number(socket.handshake.query.map_protocol) || 0;
 		socket.generated_headless = socket.handshake.query.no_graphics === "1";
 
-		if (!is_socket_allowed(socket)) {
+		if (typeof single_player != "object" && !is_socket_allowed(socket)) {
+			// Single player: every window is on this PC, so character select and loading windows aren't cut off
 			disconnect_old_sockets(socket);
 		}
 
