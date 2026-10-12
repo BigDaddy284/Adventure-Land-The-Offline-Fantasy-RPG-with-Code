@@ -140,3 +140,6 @@ Fantasy Land started as a copy of the MongoDB port of [Adventure Land](https://g
 - New starting looks E to H for every class, as a male and a female in light and dark skin: barbarian warriors, paladins in blue plate, a pope and a nun for priests, a wizard and a witch for mages, ninja rogues, Robin Hood rangers in green caps, and banker merchants. The game's own looks stay on A to D. The looks added in earlier versions are removed; characters already made with them keep their look.
 - Game windows keep running at full speed when they're in the background or minimised. Edge normally slows hidden windows down, which slowed your characters' CODE.
 - Each game window's title is the character's name, then the game's name, for example "Chillyinit: Fantasy Land - The Code (NOMMO) RPG". Character select still shows just the game's name.
+
+### v20
+- Each game window opened from the game (Deploy, `/window` or `open_character_window`) now runs in its own browser process. Before, they all shared one, so opening a 5th character could freeze or crash that process and drop every window at once.

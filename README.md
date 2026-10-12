@@ -272,6 +272,9 @@ Fantasy Land started as a copy of the MongoDB port of [Adventure Land](https://g
 - Game windows keep running at full speed when they're in the background or minimised. Edge normally slows hidden windows down, which slowed your characters' CODE.
 - Each game window's title is the character's name, then the game's name, for example "Chillyinit: Fantasy Land - The Code (NOMMO) RPG". Character select still shows just the game's name.
 
+### v20
+- Each game window opened from the game (Deploy, `/window` or `open_character_window`) now runs in its own browser process. Before, they all shared one, so opening a 5th character could freeze or crash that process and drop every window at once.
+
 ## License
 
 [AdventureLandOnlyUse](LICENSE) — free for commercial use with attribution. See the license file for full terms.

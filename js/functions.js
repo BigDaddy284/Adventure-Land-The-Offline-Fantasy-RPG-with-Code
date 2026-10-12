@@ -2475,9 +2475,10 @@ function owned_character_name(name) {
 function open_character_window(name) {
 	var url = name ? "/character/" + name + "/in/" + server_region + "/" + server_identifier + "/" : base_url;
 	if (is_tauri) return tauri_create_subwindow(name ? url : undefined);
-	var opened = window.open(url, "al_window_" + (name || randomStr(6)), "width=" + $(window).width() + ",height=" + $(window).height());
-	if (!opened) add_chat("", "Your browser blocked the new window. Allow pop-ups for this site and try again.", "gray");
-	return opened;
+	// noopener gives each game window its own browser process. Sharing one, the windows stall each other while one loads,
+	// and a few game windows together can run that process out of memory, which closes all of them at once.
+	window.open(url, "_blank", "noopener,width=" + $(window).width() + ",height=" + $(window).height());
+	return true;
 }
 
 function start_character_runner(name, code_slot_or_name) {
