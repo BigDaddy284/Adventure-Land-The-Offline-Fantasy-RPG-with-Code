@@ -401,6 +401,16 @@ function is_player_allowed(player) {
 	if (is_free(player) || (player.stones && 0)) {
 		return true;
 	}
+	if (typeof single_player == "object") {
+		// Single player: the Mod Menu's "Characters online" is the only limit, merchants included
+		var online = 0;
+		for (var id in players) {
+			if (players[id].name == player.name && player != players[id]) return false;
+			if (players[id].owner == player.owner) online++;
+		}
+		if (player.socket && !players[player.socket.id]) online++;
+		return online <= max(1, single_player.settings.max_characters_online);
+	}
 	if (player.type == "merchant") {
 		for (var id in players) {
 			if ((players[id].stones && 0) || id == player.socket.id || is_free(player)) {

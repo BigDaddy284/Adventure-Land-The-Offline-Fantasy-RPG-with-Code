@@ -397,7 +397,14 @@ function disconnect() {
 		// add_log("Ps. This is the third version of our prototype limits enforcer. If it's unfair, please email hello@adventure.land","#CF888A");
 		add_log(phrase.html("game.oops_you_exceeded_the_limitations"), "#83BDCF");
 		// add_log("You can use one character on a normal server, one additional character on a PVP server and one merchant.","#CF888A");
-		add_log(phrase.html("game.you_can_have_3_characters_and_one_merchant_online"), "#CF888A");
+		if (window.single_player_mode && window.single_player_limit)
+			add_log(
+				"You can have " +
+					window.single_player_limit +
+					" characters online at once. Raise Characters online in the Mod Menu to play more.",
+				"#CF888A",
+			);
+		else add_log(phrase.html("game.you_can_have_3_characters_and_one_merchant_online"), "#CF888A");
 	} else if (window.disconnect_reason) add_log(phrase.html("game.disconnect_reason", { disconnect_reason: window.disconnect_reason }), "gray");
 	if (inside != "game") {
 		return;
@@ -3272,6 +3279,9 @@ function init_socket(args) {
 	});
 	socket.on("disconnect_reason", function (reason) {
 		window.disconnect_reason = reason;
+	});
+	socket.on("single_player_limit", function (limit) {
+		window.single_player_limit = limit;
 	});
 	socket.on("limitdcreport", function (data) {
 		window.rc_delay = 16;

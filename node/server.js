@@ -2780,6 +2780,7 @@ function issue_monster_awards(monster) {
 				continue;
 			}
 			var cxp = encouragement_xp(current, monster, round(monster.xp * share * current.xpm), share);
+			if (typeof single_player == "object") cxp = round(single_player.scale("xp", cxp)); // Single player: XP multiplier
 			current.xp += cxp;
 			if (current.t) {
 				current.t.xp += cxp;
@@ -2827,6 +2828,7 @@ function issue_monster_award(monster, award) {
 			return;
 		}
 		var cxp = encouragement_xp(player, monster, monster.xp * player.xpm * monster.mult, 1);
+		if (typeof single_player == "object") cxp = round(single_player.scale("xp", cxp)); // Single player: XP multiplier
 		player.xp += cxp;
 		if (player.t) {
 			player.t.xp += cxp;
@@ -2861,6 +2863,7 @@ function issue_monster_award(monster, award) {
 				return;
 			}
 			cxp = encouragement_xp(current, monster, cxp * monster.mult, share);
+			if (typeof single_player == "object") cxp = round(single_player.scale("xp", cxp)); // Single player: XP multiplier
 			current.xp += cxp;
 			if (current.t) {
 				current.t.xp += cxp;
@@ -12014,6 +12017,8 @@ function init_socket_io(socket_server, server_index) {
 				}
 
 				if (!is_player_allowed(player)) {
+					if (typeof single_player == "object")
+						socket.emit("single_player_limit", max(1, single_player.settings.max_characters_online));
 					socket.emit("disconnect_reason", "limits");
 					socket.disconnect();
 				} else {

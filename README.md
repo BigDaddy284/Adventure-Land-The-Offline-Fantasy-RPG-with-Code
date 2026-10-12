@@ -53,7 +53,8 @@ You can also open `settings.txt` in the game folder with Notepad. Every setting 
 - how many monster tokens Daisy gives for a finished monster hunt
 - shop sell prices
 - Ponty's restock and what he sells
-- upgrade and compound luck
+- upgrade and compound luck, as multipliers (1 = normal, 2 = twice the chance of success)
+- XP from monsters, as a multiplier (1 = normal, 2 = double XP)
 - HP loss and MP usage
 - drop luck and gold, as multipliers (1 = normal, 2 = double)
 - holiday events and event monsters
@@ -74,7 +75,15 @@ Each of these opens a character in its own window:
 - **Chat:** type `/window CharacterName`. `/window` on its own opens the character select page.
 - **CODE:** call `open_character_window("CharacterName")`.
 
-`max_characters_online` in `settings.txt` sets how many can be online together.
+**Characters online** in the Mod Menu (`max_characters_online` in `settings.txt`) sets how many can be online together, merchants included, up to 18.
+
+**Running a lot of windows.** Every character runs in its own game window, and each window uses roughly as much memory and processor time as a browser tab running a game. The game doesn't stop you at a hardware limit, so the more windows you open the more your PC has to do. Things to watch for:
+
+- The game, and your PC, slowing down or stuttering, most noticeably while many characters fight at once.
+- Windows running out of memory: windows can freeze or close, and other programs slow down.
+- On a laptop, more heat, fan noise and battery drain.
+
+If things get slow, close a window or two. Your characters are saved on the server as you play, so closing a window doesn't lose progress.
 
 ## Updating to a new version
 
@@ -227,6 +236,12 @@ Fantasy Land started as a copy of the MongoDB port of [Adventure Land](https://g
 
 ### v17
 - Character select no longer shows a server tag ("US I") in the corner of each character, or the home server popup when you hover over one.
+
+### v18
+- New Mod Menu setting, **XP multiplier** (`xp_rate`): 1 = normal XP from monsters, 2 = double, and so on.
+- Upgrade and compound chance are now multipliers like drop luck (**Upgrade luck** and **Compound luck**, `upgrade_success` and `compound_success`): 1 = normal, 2 = twice the chance of success. An older `settings.txt` is converted automatically (`upgrade_success_percent = 200` becomes `upgrade_success = 2`).
+- **Characters online** in the Mod Menu now really sets how many characters can play at once. Before, the game could still stop a 5th character with "You can have 3 characters and one merchant online at most". Merchants now count like any other character, and the message, when you do reach the limit, says how many your setting allows.
+- README: a note on the risks of running a lot of game windows at once.
 
 ## License
 

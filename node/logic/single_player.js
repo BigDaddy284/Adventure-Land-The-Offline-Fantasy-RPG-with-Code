@@ -19,8 +19,9 @@ const DEFAULTS = {
 	ponty_upgrade_level_max: 9,
 	ponty_compound_level_min: 2,
 	ponty_compound_level_max: 4,
-	upgrade_success_percent: 100,
-	compound_success_percent: 100,
+	upgrade_success: 1,
+	compound_success: 1,
+	xp_rate: 1,
 	mp_usage_percent: 100,
 	hp_loss_percent: 100,
 	drop_rate: 1,
@@ -54,6 +55,8 @@ const DEFAULTS = {
 const RENAMED = {
 	drop_rate_percent: ["drop_rate", 100],
 	gold_drop_percent: ["gold_drop", 100],
+	upgrade_success_percent: ["upgrade_success", 100],
+	compound_success_percent: ["compound_success", 100],
 };
 
 // Settings that were taken out, skipped without a warning and removed from settings.txt
@@ -103,6 +106,10 @@ const RENAMED_NOTES = [
 	],
 	["# Gold dropped by monsters. 100 = normal.\r\n", "# Gold dropped by monsters. A multiplier: 1 = normal, 2 = double.\r\n"],
 	["# Very silly. Overrides drop_rate_percent.", "# Very silly. Overrides drop_rate."],
+	[
+		"# Multiplies the success chance. 100 = normal, 200 = twice as\r\n# likely, 1000 = almost never fails.",
+		"# Multiplies the success chance. 1 = normal, 2 = twice as\r\n# likely, 10 = almost never fails.",
+	],
 ];
 
 // Brings an older settings.txt up to date: renamed settings get their new names (drop_rate_percent = 200 becomes
@@ -201,8 +208,6 @@ function save_setting(file, key, value) {
 }
 
 const SCALES = {
-	upgrade: "upgrade_success_percent",
-	compound: "compound_success_percent",
 	mp: "mp_usage_percent",
 	hp_loss: "hp_loss_percent",
 };
@@ -210,6 +215,9 @@ const MULTIPLIERS = {
 	sell: "sell_multiplier",
 	drop: "drop_rate",
 	gold: "gold_drop",
+	xp: "xp_rate",
+	upgrade: "upgrade_success",
+	compound: "compound_success",
 };
 
 // What the Mod Menu shows, in order: [setting, label, note]. A section is a string on its own.
@@ -223,12 +231,14 @@ const MOD_MENU = [
 	["gold_drop", "Gold dropped", "1 = normal, 2 = twice as much gold"],
 	["drop_everything", "Drop everything", "Every monster drops its whole drop list"],
 	["monster_hunt_tokens", "Daisy's tokens", "Monster tokens for each finished hunt"],
+	"Experience",
+	["xp_rate", "XP multiplier", "1 = normal, 2 = double XP from monsters"],
 	"Combat",
 	["hp_loss_percent", "HP loss %", "100 = normal, 50 = half damage, 0 = none"],
 	["mp_usage_percent", "MP usage %", "100 = normal, 0 = skills cost no MP"],
 	"Upgrading",
-	["upgrade_success_percent", "Upgrade chance %", "100 = normal, 200 = twice as likely"],
-	["compound_success_percent", "Compound chance %", "100 = normal, 200 = twice as likely"],
+	["upgrade_success", "Upgrade luck", "1 = normal, 2 = twice the chance of success"],
+	["compound_success", "Compound luck", "1 = normal, 2 = twice the chance of success"],
 	"Shops",
 	["sell_multiplier", "Sell price", "1 = normal, 2 = NPCs pay double"],
 	["starting_gold", "Starting gold", "Gold for each new character"],
@@ -355,9 +365,11 @@ function create(settings) {
 		// Applies one setting to a value; success chances are capped at 100%
 		scale(kind, value) {
 			if (kind == "hp_loss" && settings.god_mode) return 0;
-			if (kind in MULTIPLIERS) return value * settings[MULTIPLIERS[kind]];
-			const result = value * (settings[SCALES[kind]] / 100);
-			return kind == "upgrade" || kind == "compound" ? Math.min(1, result) : result;
+			if (kind in MULTIPLIERS) {
+				const result = value * settings[MULTIPLIERS[kind]];
+				return kind == "upgrade" || kind == "compound" ? Math.min(1, result) : result;
+			}
+			return value * (settings[SCALES[kind]] / 100);
 		},
 		apply_events(events) {
 			Object.keys(EVENT_SETTINGS).forEach((name) => set_event(events, name, settings[EVENT_SETTINGS[name]]));

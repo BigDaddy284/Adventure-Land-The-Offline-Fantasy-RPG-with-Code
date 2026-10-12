@@ -46,13 +46,20 @@ ponty_compound_level_min = 2
 ponty_compound_level_max = 4
 
 
+# ---------- Experience ----------
+
+# Experience from monsters. A multiplier: 1 = normal,
+# 2 = double XP, 0.5 = half.
+xp_rate = 1
+
+
 # ---------- Upgrading and compounding ----------
 
-# Multiplies the success chance. 100 = normal, 200 = twice as
-# likely, 1000 = almost never fails. The chance shown in the
+# Multiplies the success chance. 1 = normal, 2 = twice as
+# likely, 10 = almost never fails. The chance shown in the
 # upgrade/compound window already includes this.
-upgrade_success_percent = 100
-compound_success_percent = 100
+upgrade_success = 1
+compound_success = 1
 
 
 # ---------- HP and MP ----------

@@ -75,15 +75,26 @@ test("every setting in settings.example.txt is known and parses", () => {
 test("scales apply percents and cap success chances at 100%", () => {
 	const sp = single_player.create({
 		sell_multiplier: 2,
-		upgrade_success_percent: 300,
+		upgrade_success: 3,
 		mp_usage_percent: 0,
 		drop_rate: 2,
+		xp_rate: 2.5,
 	});
 	assert.equal(sp.scale("sell", 1000), 2000);
 	assert.equal(sp.scale("upgrade", 0.5), 1);
 	assert.equal(sp.scale("compound", 0.5), 0.5);
 	assert.equal(sp.scale("mp", 80), 0);
 	assert.equal(sp.scale("drop", 1), 2);
+	assert.equal(sp.scale("xp", 100), 250);
+});
+
+test("old upgrade and compound percents become multipliers", () => {
+	const values = single_player.parse("upgrade_success_percent = 250\ncompound_success_percent = 50\n");
+	assert.equal(values.upgrade_success, 2.5);
+	assert.equal(values.compound_success, 0.5);
+	const text = single_player.rename_settings("# Multiplies the success chance. 100 = normal, 200 = twice as\n# likely, 1000 = almost never fails.\nupgrade_success_percent = 300\n");
+	assert.match(text, /^upgrade_success = 3$/m);
+	assert.match(text, /1 = normal, 2 = twice as/);
 });
 
 test("events and character limits are switched on from settings", () => {
