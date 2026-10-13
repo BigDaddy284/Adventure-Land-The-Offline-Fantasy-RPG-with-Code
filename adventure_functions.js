@@ -152,6 +152,27 @@ function find_code_slot(code_list, name) {
 	return null;
 }
 
+// The default scripts every account has: "Party AIO" (slot PARTY) and "Bank Items List" (slot BANKLIST). They come from templates that ship with the
+// game until the player saves their own copy. <ID>_LATEST (the Reset button) means the template, even when the player has saved a copy.
+// Returns { id, name, file, hint, reset, slot } for a script name or slot, where slot is the code slot to read (null: use the template), or null
+function find_default_code(code_list, name) {
+	var defaults = {
+		PARTY: { name: "Party AIO", file: "party_script.js", aliases: ["party", "party aio", "party script", "party_script"], hint: "Fill in your names, then Save." },
+		BANKLIST: { name: "Bank Items List", file: "bank_items_list.js", aliases: ["banklist", "bank items list", "bank list", "bank_items_list"], hint: "Add your item ids, then Save." },
+	};
+	name = String(name);
+	var lower = name.toLowerCase();
+	for (var id of Object.keys(defaults)) {
+		var reset = name === id + "_LATEST";
+		if (!reset && name !== id && !defaults[id].aliases.includes(lower)) continue;
+		var slot = null;
+		if (!reset && Object.prototype.hasOwnProperty.call(code_list, id)) slot = id; // the player's own copy comes first
+		else if (!reset && name !== id) slot = find_code_slot(code_list, name); // then a slot with that name, then the template
+		return { id: id, name: defaults[id].name, file: defaults[id].file, hint: defaults[id].hint, reset: reset, slot: slot };
+	}
+	return null;
+}
+
 // ==================== GAME DATA UTILITIES ====================
 
 function gf(element, name, def) {

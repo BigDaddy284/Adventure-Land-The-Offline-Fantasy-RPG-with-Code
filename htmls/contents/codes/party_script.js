@@ -32,7 +32,7 @@
 // - HP/MP potion use and potion restocking (town teleport)
 // - Auto-loot
 // - Inventory cleanup: loot + gold to the merchant, then the bank
-// - Banks configured items and individual item IDs (code slot 5)
+// - Banks configured items and individual item IDs (the Bank Items List)
 // - Protects tokens / collectibles
 // - Runs the compounder when the bank is full
 // - Auto-respawn
@@ -446,21 +446,22 @@ var BANK_OTHER_NON_STACKABLES = false;
 
 // INDIVIDUAL ITEMS TO BANK 
  
-// The list lives in CODE SLOT 5 so every script shares one copy.
+// The list lives in the "Bank Items List" code slot (the default
+// Bank Items List in the CODE menu) so every character shares one copy.
 // Edit it there (it is just a list of BANK_ITEM_IDS.push("itemid");
 // lines). It is read when this script starts, so restart the script
-// after changing slot 5. If slot 5 is empty or missing the list is empty.
-var BANK_LIST_CODE_SLOT = 5;
+// after changing the list. If the list is empty, nothing extra is banked.
+var BANK_LIST_CODE = "Bank Items List";
 
 var BANK_ITEM_IDS = [];
 
 try {
-    load_code(BANK_LIST_CODE_SLOT);
+    load_code(BANK_LIST_CODE);
 } catch (e) {
-    game_log("BANK LIST: could not load code slot " + BANK_LIST_CODE_SLOT + " (" + e + ")");
+    game_log("BANK LIST: could not load " + BANK_LIST_CODE + " (" + e + ")");
 }
 
-game_log("BANK LIST: " + BANK_ITEM_IDS.length + " item id(s) from code slot " + BANK_LIST_CODE_SLOT + ".");
+game_log("BANK LIST: " + BANK_ITEM_IDS.length + " item id(s) from " + BANK_LIST_CODE + ".");
 
 
 // PENNYWORTH SETTINGS 

@@ -340,6 +340,12 @@ Fantasy Land started as a copy of the MongoDB port of [Adventure Land](https://g
 - **Party AIO** (CODE menu): the default party script is now **[Default] Party AIO**, with **[Party AIO] Reset to latest** under it. It is the newest party script. The leader picks one meeting spot for the monster it is about to hunt and tells the party; followers path straight to that spot (not to the leader), and the leader waits there until everyone who is on the way has arrived before fighting. Followers busy in town (potions or banking) aren't waited for and join when they're done. Everything else from the v24 script is still there: Leader, Followers and Roles at the top, role-based kiting, Priest healing, smart skills, and each character's own potions, banking, compounding and stuck checks.
 - **Your saved copy is kept:** if you saved the v24 "Party Script", it is still your Party AIO slot, so your names stay. It runs the old code until you press **Reset to latest** (copy your names across, then Save). `load_code("Party AIO")` runs your slot; `load_code("Party Script")` still works.
 
+### v26
+- **Code menu tidied:** **Load Base Code** and the **Character Default** button are gone, and so is **Reset to latest**. The menu now starts with the two default scripts, **[Default] Party AIO** and **[Default] Bank Items List**, then your numbered slots.
+- **Bank Items List:** a new default script, kept in its own slot like Party AIO. It starts empty, with notes on adding item ids (`BANK_ITEM_IDS.push("itemid");`). **Party AIO now reads it** by name, with `load_code("Bank Items List")`, instead of code slot 5. If you already have a slot named "Bank Items List", Party AIO keeps using that until you save the default one.
+- **Yours to edit:** both default scripts are ordinary editable scripts. Type in your names or item ids and press **Save**, and your copy is kept (it is also what `load_code` and starting a character from the CODE window use).
+- **Reset button:** each default script has a **Reset** button on the right of its row. It loads the original script into the editor; your saved copy is only replaced when you press Save.
+
 ## License
 
 [AdventureLandOnlyUse](LICENSE) — free for commercial use with attribution. See the license file for full terms.

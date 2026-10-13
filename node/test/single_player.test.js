@@ -488,16 +488,20 @@ test("files the game rewrites are never hidden, because Windows refuses to write
 	assert.match(fs.readFileSync(path.join(root, "Play.bat"), "utf8"), /attrib -h version\.js/);
 });
 
-test("the code menu lists the Default Party Script between Character Default and the numbered slots", () => {
+test("the code menu lists only the default Party AIO and Bank Items List, each with a Reset button", () => {
 	const source = fs.readFileSync(path.join(__dirname, "../../js/functions.js"), "utf8");
 	const menu = source.slice(source.indexOf('info.purpose == "load"'), source.indexOf('info.purpose == "save"'));
-	const character_default = menu.indexOf("character_default");
-	const party = menu.indexOf('load_code(\\"PARTY\\",1)');
-	const reset = menu.indexOf('load_code(\\"PARTY_LATEST\\",1)');
+	assert.doesNotMatch(menu, /load_base_code\(\)/);
+	assert.doesNotMatch(menu, /character_default"\) \+ "<\/span> " \+ \(character\.name\)/);
+	assert.doesNotMatch(menu, /Reset to latest/);
+	const party = menu.indexOf('["PARTY", "Party AIO"]');
+	const bank = menu.indexOf('["BANKLIST", "Bank Items List"]');
 	const slots = menu.indexOf("for (var num in ui_list)");
-	assert.ok(character_default > 0 && party > character_default && reset > party && slots > reset);
-	assert.match(menu, /num == "PARTY"\) continue/);
-	assert.match(source, /if \(!ui_list\.PARTY\) ui_list\.PARTY/);
+	assert.ok(party > 0 && bank > party && slots > bank);
+	assert.match(menu, /reset_default_code\(/);
+	assert.match(menu, /num == "PARTY" \|\| num == "BANKLIST"\) continue/);
+	assert.match(source, /load_code\(slot \+ "_LATEST", 1\)/);
+	assert.match(source, /if \(!ui_list\.BANKLIST\) ui_list\.BANKLIST/);
 });
 
 test("Exchange speed and Crafting speed shorten exchanges, upgrades and compounds", () => {

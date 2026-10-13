@@ -91,6 +91,7 @@ function fixture(options = {}) {
 		"to_filename",
 		"to_legacy_filename",
 		"find_code_slot",
+		"find_default_code",
 		"get_user_data",
 	]);
 	load(context, "api.js", [
@@ -489,4 +490,32 @@ test("a Party slot saved under the old name Party Script is still found as Party
 	for (const name of ["Party AIO", "party aio", "Party Script", "PARTY"])
 		assert.equal((await h.context.load_code_api({ user: h.user, name, pure: true })).code, "my names", name);
 	assert.equal((await h.context.load_code_api({ user: h.user, name: "PARTY_LATEST", pure: true })).code, "template");
+});
+
+test("the Bank Items List is a second default script with its own slot, found by name and by id", async () => {
+	const fs = require("node:fs"),
+		path = require("node:path");
+	const template = fs.readFileSync(path.join(__dirname, "../../htmls/contents/codes/bank_items_list.js"), "utf8");
+	assert.doesNotThrow(() => new vm.Script(template));
+	const party = fs.readFileSync(path.join(__dirname, "../../htmls/contents/codes/party_script.js"), "utf8");
+	assert.match(party, /var BANK_LIST_CODE = "Bank Items List";/);
+	assert.doesNotMatch(party, /BANK_LIST_CODE_SLOT/);
+	const h = fixture({ list: { 5: ["Bank Items List", 2] }, documents: [code("5", "legacy list")] });
+	h.context.shtml = (file) => (file.endsWith("bank_items_list.js") ? template : "party");
+	const load = async (name) => (await h.context.load_code_api({ user: h.user, name, pure: true })).code;
+	// Nothing saved in the default slot: the id shows the template, the name still finds the player's own slot 5
+	assert.equal(await load("BANKLIST"), template);
+	assert.equal(await load("Bank Items List"), "legacy list");
+	assert.equal(await load("BANKLIST_LATEST"), template);
+	// Saving to the default slot makes it the player's copy, and the name now prefers it
+	assert.equal((await h.save("BANKLIST", "BANK_ITEM_IDS.push('ring');", "")).success, true);
+	assert.equal(h.store.records.get(dataId).info.code_list.BANKLIST[0], "Bank Items List");
+	assert.equal(await load("Bank Items List"), "BANK_ITEM_IDS.push('ring');");
+	assert.equal(await load("BANKLIST"), "BANK_ITEM_IDS.push('ring');");
+	// Reset gives the original back without touching the saved copy
+	assert.equal(await load("BANKLIST_LATEST"), template);
+	assert.equal(h.store.records.get(codeId("BANKLIST")).info.code, "BANK_ITEM_IDS.push('ring');");
+	// The other scripts are unaffected
+	assert.equal(await load("5"), "legacy list");
+	assert.equal(await load("PARTY"), "party");
 });

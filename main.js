@@ -431,7 +431,8 @@ app.all("/code.js", async (req, res, next) => {
 	if (user) {
 		var data = await get_user_data(user);
 		var code_list = gf(data, "code_list", {});
-		var slot = find_code_slot(code_list, name);
+		var default_script = find_default_code(code_list, name);
+		var slot = default_script ? default_script.slot : find_code_slot(code_list, name);
 		if (slot !== null) {
 			var code = await get("IE_USERCODE-" + get_id(user) + "-" + slot);
 			if (code)
@@ -440,6 +441,11 @@ app.all("/code.js", async (req, res, next) => {
 					.set("Content-Type", "application/javascript")
 					.send("" + code.info.code);
 		}
+		if (default_script && !req.query.xrequire)
+			return res
+				.status(200)
+				.set("Content-Type", "application/javascript")
+				.send(shtml("htmls/contents/codes/" + default_script.file)); // not saved yet: the template that ships with the game
 	}
 	if (req.query.xrequire)
 		res

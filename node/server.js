@@ -11936,7 +11936,9 @@ function init_socket_io(socket_server, server_index) {
 				if (code_slot) {
 					var code_list = gf(user_data, "code_list", {}) || {};
 					code_slot = "" + code_slot;
-					if (!code_list[code_slot]) {
+					var default_script = find_default_code(code_list, code_slot); // Party AIO and Bank Items List, from the template until saved
+					if (default_script) code_slot = default_script.slot || default_script.id;
+					else if (!code_list[code_slot]) {
 						var filename = code_slot;
 						code_slot = find_code_slot(code_list, filename);
 					}
@@ -11945,6 +11947,11 @@ function init_socket_io(socket_server, server_index) {
 						var code_entity = await get("IE_USERCODE-" + get_id(owner) + "-" + code_slot);
 						check_character_login(attempt, "CODE loaded");
 						if (code_entity) code = code_entity.info.code;
+					}
+					if (code === null && default_script) {
+						try {
+							code = require("fs").readFileSync(require("path").join(__dirname, "..", "htmls", "contents", "codes", default_script.file), "utf8");
+						} catch (e) {}
 					}
 				}
 

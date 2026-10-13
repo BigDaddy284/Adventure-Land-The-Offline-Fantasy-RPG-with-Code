@@ -6596,6 +6596,19 @@ function update_servers_and_characters() {
 	$(".mcount").html(X.unread);
 }
 
+// The Reset button next to a default script (Party AIO, Bank Items List): loads the original into the editor
+function reset_default_code(slot, name) {
+	show_confirm(
+		"Load the original " + name + " into the editor? Your saved copy is only replaced when you press Save.",
+		["#D06631", phrase.html("client.confirm.yes")],
+		phrase.html("client.confirm.no"),
+		function () {
+			load_code(slot + "_LATEST", 1);
+			hide_modal(true);
+		},
+	);
+}
+
 function load_base_code() {
 	if (character && X.codes[real_id])
 		show_confirm(
@@ -6630,18 +6643,19 @@ function handle_information(infs) {
 				}
 				html +=
 					"<div class=\"gamebutton block\" style=\"display: block; margin-bottom: -4px\" onclick=\"open_guide('8-code-slots-and-files','/docs/guide/code/8-code-slots-and-files')\"><span style=\"color: #6FD23F\">" + phrase.html("client.handle_information.documentation") + "</span>" + " " + phrase.html("client.handle_information.code_slots_and_files") + "</div>";
-				html += "<div class='gamebutton block' style='margin-bottom: -4px' onclick='load_base_code()'><span style='color: gray'>" + phrase.html("client.handle_information.default") + "</span>" + " " + phrase.html("client.handle_information.load_base_code") + "</div>";
-				if (character) {
+				// The default scripts, each with a Reset button on the right that loads the original into the editor (your saved copy is only replaced when you Save)
+				[
+					["PARTY", "Party AIO"],
+					["BANKLIST", "Bank Items List"],
+				].forEach(function (script) {
 					html +=
-						"<div class='gamebutton block' style='margin-bottom: -4px' onclick='load_code(\"" + (((X.codes[real_id] && real_id) || "0")) + "\",1)'><span style='color: #D46E33'>" + phrase.html("client.handle_information.character_default") + "</span> " + (character.name) + "</div>";
-				}
-				// The Default Party AIO sits between Character Default and the numbered slots; "Reset" loads the newest template without saving
-				html +=
-					"<div class='gamebutton block' style='margin-bottom: -4px' onclick='load_code(\"PARTY\",1)'><span style='color: #6FD23F'>" + phrase.html("client.handle_information.default") + "</span> Party AIO</div>";
-				html +=
-					"<div class='gamebutton block' style='margin-bottom: -4px' onclick='load_code(\"PARTY_LATEST\",1)' title='Loads the newest Party AIO into the editor without saving over yours'><span style='color: gray'>[Party AIO]</span> Reset to latest</div>";
+						"<div style='display: flex; margin-bottom: -4px'>" +
+						"<div class='gamebutton' style='flex: 1; margin-right: -4px' onclick='load_code(\"" + script[0] + "\",1)'><span style='color: #6FD23F'>" + phrase.html("client.handle_information.default") + "</span> " + script[1] + "</div>" +
+						"<div class='gamebutton' style='color: #E5A94D' title='Load the original " + script[1] + " into the editor. Your saved copy is replaced when you Save' onclick='reset_default_code(\"" + script[0] + "\",\"" + script[1] + "\")'>Reset</div>" +
+						"</div>";
+				});
 				for (var num in ui_list) {
-					if (num == real_id || num == "PARTY") continue;
+					if (num == real_id || num == "PARTY" || num == "BANKLIST") continue;
 					var sname = num,
 						lnum = num;
 					if (parseInt(num) > 100 || ("" + num).startsWith("CH_")) (color = "#D46E33"), (sname = phrase.html("client.code.character_default"));
@@ -6689,6 +6703,7 @@ function handle_information(infs) {
 					}
 				if (character && !ui_list[real_id]) ui_list[real_id] = [character.name, 0];
 				if (!ui_list.PARTY) ui_list.PARTY = ["Party AIO", 0];
+				if (!ui_list.BANKLIST) ui_list.BANKLIST = ["Bank Items List", 0];
 				ui_list["#"] = ["DELETE", 0];
 				html +=
 					"<div class=\"gamebutton block\" style=\"display: block; margin-bottom: -4px\" onclick=\"open_guide('8-code-slots-and-files','/docs/guide/code/8-code-slots-and-files')\"><span style=\"color: #6FD23F\">" + phrase.html("client.handle_information.documentation") + "</span>" + " " + phrase.html("client.handle_information.code_slots_and_files") + "</div>";
@@ -6792,11 +6807,11 @@ function handle_information(infs) {
 					if (code_run) toggle_runner(), toggle_runner();
 				}
 
-				if (code_slot == "PARTY") $(".codeslottype").html("Party");
+				if (code_slot == "PARTY" || code_slot == "BANKLIST") $(".codeslottype").html(code_slot == "PARTY" ? "Party" : "Bank");
 				else if (parseInt(code_slot) <= 100) $(".codeslottype").html("" + code_slot);
 				else $(".codeslottype").html(phrase.html("client.handle_information.character"));
 
-				$(".codeslotname").html("" + ((X.codes[code_slot] && X.codes[code_slot][0]) || (code_slot == "PARTY" && "Party AIO") || phrase.html("client.code.default")));
+				$(".codeslotname").html("" + ((X.codes[code_slot] && X.codes[code_slot][0]) || (code_slot == "PARTY" && "Party AIO") || (code_slot == "BANKLIST" && "Bank Items List") || phrase.html("client.code.default")));
 			}
 		} else if (info.type == "gcode") {
 			var html = "";

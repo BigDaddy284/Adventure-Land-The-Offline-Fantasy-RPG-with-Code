@@ -1415,7 +1415,7 @@ async function save_code_api(args) {
 			var owner = await tx_get(A.user);
 			if (!owner || owner.banned) ex("not_logged_in");
 			var character = gf(owner, "characters", []).find((entry) => entry.id === A.slot);
-			var valid_slot = /^(?:[1-9][0-9]?|100)$/.test(A.slot) || A.slot === "PARTY" || !!character;
+			var valid_slot = /^(?:[1-9][0-9]?|100)$/.test(A.slot) || ["PARTY", "BANKLIST"].includes(A.slot) || !!character;
 			if (!A.deleting && !valid_slot) ex("no_slot");
 			R.character = character && character.name;
 			var owner_id = get_id(owner),
@@ -1448,7 +1448,7 @@ async function save_code_api(args) {
 				return;
 			}
 			var entry = idata.info.code_list[A.slot];
-			R.name = A.name || (entry && entry[0]) || R.character || (A.slot === "PARTY" ? "Party AIO" : A.slot);
+			R.name = A.name || (entry && entry[0]) || R.character || (A.slot === "PARTY" ? "Party AIO" : A.slot === "BANKLIST" ? "Bank Items List" : A.slot);
 			R.old_name = entry ? entry[0] : R.name;
 			if (A.deleting) {
 				delete idata.info.code_list[A.slot];
@@ -1512,20 +1512,17 @@ async function load_code_api(args) {
 		return { success: true };
 	}
 
-	// The Default Party Script: every account has a "Party AIO" slot (id PARTY), filled from a template that ships with the game until the player saves it.
-	// PARTY_LATEST (Reset to latest): the newest template, shown in the editor without saving over the player's copy
-	var party_latest = name === "PARTY_LATEST";
+	// Default scripts (Party AIO, Bank Items List): the player's own copy, or the template that ships with the game
 	var code_list = gf(data, "code_list", {});
-	var slot = party_latest ? null : find_code_slot(code_list, name);
-	var party_alias = ["party", "party aio", "party script", "party_script"].includes(name.toLowerCase());
-	if (slot === null && !party_latest && party_alias && Object.prototype.hasOwnProperty.call(code_list, "PARTY")) slot = "PARTY"; // saved under an older name
-	if (slot === null && (party_latest || party_alias)) {
-		var party_code = shtml("htmls/contents/codes/party_script.js");
-		if (args.pure) return { code: party_code };
-		args.res.infs.push({ type: "code", code: party_code, run: args.run, slot: "PARTY", save: args.save, name: "Party AIO" });
-		var party_message = party_latest ? "Loaded the latest Party AIO. Copy your names across, then Save." : "Loaded the Party AIO. Fill in your names, then Save.";
-		if (args.log) args.res.infs.push({ type: "message", message: party_message, color: "#32A3B0" });
-		else if (!args.save) args.res.infs.push({ type: "chat_message", message: party_message, color: "#32A3B0" });
+	var default_script = find_default_code(code_list, name);
+	var slot = default_script ? default_script.slot : find_code_slot(code_list, name);
+	if (default_script && slot === null) {
+		var default_code = shtml("htmls/contents/codes/" + default_script.file);
+		if (args.pure) return { code: default_code };
+		args.res.infs.push({ type: "code", code: default_code, run: args.run, slot: default_script.id, save: args.save, name: default_script.name });
+		var default_message = default_script.reset ? "Reset: loaded the original " + default_script.name + ". Press Save to replace your copy." : "Loaded the " + default_script.name + ". " + default_script.hint;
+		if (args.log) args.res.infs.push({ type: "message", message: default_message, color: "#32A3B0" });
+		else if (!args.save) args.res.infs.push({ type: "chat_message", message: default_message, color: "#32A3B0" });
 		return { success: true };
 	}
 	if (slot !== null) {
