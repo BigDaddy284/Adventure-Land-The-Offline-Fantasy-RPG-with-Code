@@ -19,11 +19,9 @@
 //   is only replaced when you press Save.
 //
 // THE LIST
-// These four items are here as examples. Change them to what you want.
+// One example is below, switched off with // at the start of the line.
+// Remove the // to bank that item, and add your own lines under it.
 
 var BANK_ITEM_IDS = [];
 
-BANK_ITEM_IDS.push("vitring");
-BANK_ITEM_IDS.push("skullamulet");
-BANK_ITEM_IDS.push("ftrinket");
-BANK_ITEM_IDS.push("wbook0");
+// BANK_ITEM_IDS.push("vitring");
