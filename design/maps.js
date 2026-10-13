@@ -598,7 +598,6 @@ var maps = {
 			{ id: "citizen3", position: [0, 0] },
 			{ id: "citizen4", position: [0, 0] },
 			{ id: "antip2w", position: [274, -554] }, //shellsguy"
-			{ id: "friendtokens", position: [120, -560] },
 			{ id: "funtokens", position: [303, -87] || [105, -34] || [220, -151] },
 			//{"id":"funtokens","position":[225,-105]},
 			{ id: "bean", position: [74, -34], boundary: [-100, -100, 100, 100] },

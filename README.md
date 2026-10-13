@@ -321,6 +321,7 @@ Fantasy Land started as a copy of the MongoDB port of [Adventure Land](https://g
 
 ### v23
 - **Give and Take, gold and XP** (Mod Menu, Characters, under Gold and XP): one line with a **Gold / XP** switch, an amount box, a **Name** box, then **Give** and **Take** buttons. Fill in a character's name to change only that character; leave it empty to change every character online. The amounts are remembered in `settings.txt` as `give_gold` and `give_xp`. Taking never goes below zero, and taking XP only removes progress in the current level, it never lowers a level. Giving XP levels the character up as usual.
+- **Fvona and Friend Tokens removed:** Fvona, the NPC who traded Friend Tokens for inviting friends, is gone from the game, along with the Friend Token item and its exchange. Party invites between your own characters are unchanged. (The website code that would send a referral reward is left in place but can't run in single player.)
 
 ## License
 

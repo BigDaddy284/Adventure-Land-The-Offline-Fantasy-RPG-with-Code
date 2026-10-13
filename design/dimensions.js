@@ -1144,7 +1144,6 @@ var positions={
 	//"dragondagger":["",15,42],
 	//"claw":["",13,42],
 
-	"friendtoken":["",15,33],
 	"rimeglass":["rawitems",1,4],
 	"djinncrown":["rawitems",2,4],
 	"covemantle":["rawitems",3,4],

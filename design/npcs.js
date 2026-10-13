@@ -66,18 +66,6 @@ var npcs={
 		"name":"Tricksy",
 		"side_interaction":{"auto":true,"skin":"ftokener","message":"Bring your fun tokens to me and I'll give you some exciting items!"},
 	},
-	"friendtokens":{
-		"role":"friendtokens",
-		"skin":"xxschar2h",
-		"token":"friendtoken",
-		"says":"Hihihi",
-		"color":"#92D467",
-		"atype":"flow",
-		"stand":"fstand_texture",
-		"aspeed":"slow",
-		"name":"Fvona",
-		"side_interaction":{"auto":true,"skin":"xxschar2h","message":"Invite your friends to Adventure Land to win some of these goodie goodies!"},
-	},
 	"shellsguy":{
 		"role":"shells",
 		"name":"Mr. Dworf",
@@ -1152,7 +1140,6 @@ npcs.dreamkeeper={name:"Dorr",role:"dreamkeeper",skin:"mbody4e", cx:{head:"mmake
 		"craftsman": {"skin":"npc_craftsman","height":34}, // Leo
 		"pete": {"skin":"npc_pete","height":35}, // Pete
 		"shellsguy": {"skin":"sarmor1d","cx":{"head":"makeup105","hat":"hat305","chin":"beard111"}}, // Mr. Dworf
-		"friendtokens": {"skin":"sarmor1e","cx":{"head":"fmakeup01","hair":"hairdo604"}}, // Fvona
 		"funtokens": {"skin":"npc_funtokens","height":34}, // Tricksy
 		"bean": {"skin":"marmor4a","cx":{"head":"makeup105","hair":"hairdo105","hat":"hat214","chin":"beard106"}}, // Bean
 		"secondhands": {"skin":"npc_secondhands","height":34,"feet":8}, // Ponty

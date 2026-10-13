@@ -5463,7 +5463,6 @@ function render_item(selector, args) {
 			if (args.token == "funtoken") color = "#AA6AB3";
 			else if (args.token == "pvptoken") text = "#CCAE08";
 			else if (args.token == "monstertoken") text = "#6C531B";
-			else if (args.token == "friendtoken") text = "#AA6AB3";
 			if (G.tokens[args.token][args.key] == 1) display_phrase = phrase.html("interface.item.token");
 			if (G.tokens[args.token][args.key] < 1)
 				html +=

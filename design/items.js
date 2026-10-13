@@ -6795,14 +6795,6 @@ var misc={
 		"s":true,
 		"g":12000,
 	},
-	"friendtoken":{
-		"type":"token",
-		"skin":"friendtoken",
-		"name":"Friend Token",
-		"explanation":"A token representing friendship. Awarded each time a friend joins the adventure!",
-		"s":true,
-		"g":36000,
-	},
 	"emptyheart":{
 		"type":"material",
 		"skin":"emptyheart",

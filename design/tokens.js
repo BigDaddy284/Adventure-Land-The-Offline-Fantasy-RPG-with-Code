@@ -33,7 +33,4 @@ var tokens={
 		"fieldgen0":100,
 		"concordmace":12,
 	},
-	"friendtoken":{
-		"cxjar-xgravestone2":4,
-	},
 };

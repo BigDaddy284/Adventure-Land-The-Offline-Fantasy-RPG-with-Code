@@ -3113,9 +3113,6 @@ function init_socket(args) {
 				if (npc.role == "pvptokens" && data.type == "pvptokens") {
 					start_animation(npc, "exchange");
 				}
-				if (npc.role == "friendtokens" && data.type == "friendtokens") {
-					start_animation(npc, "exchange");
-				}
 				if (npc.role == "monstertokens" && data.type == "monstertokens") {
 					start_animation(npc, "exchange");
 				}
@@ -3773,9 +3770,6 @@ function npc_right_click(event) {
 	}
 	if (this.role == "pvptokens") {
 		render_token_exchange("pvptoken");
-	}
-	if (this.role == "friendtokens") {
-		render_token_exchange("friendtoken");
 	}
 	if (this.role == "funtokens") {
 		render_token_exchange("funtoken");
