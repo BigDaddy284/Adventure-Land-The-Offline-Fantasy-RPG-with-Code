@@ -6511,6 +6511,11 @@ function new_map_logic(place, data) {
 		add_log(phrase.html("client.new_map_logic.tavern_is_a_prototype_with_work_in_progress"), "#63ABE4");
 	} else (dice_bet.active = false), (topleft_npc = false);
 
+	if (is_pvp && (place == "start" || place == "welcome")) add_log(phrase.html("client.new_map_logic.this_is_a_pvp_server_be_careful"), "#E1664C");
+	if (place == "map" && !is_pvp && G.maps[current_map].safe_pvp && !warned[current_map])
+		(warned[current_map] = 1), add_log(phrase.html("client.new_map_logic.this_is_a_safe_pvp_zone_you_can_lose_recently"), "#E1664C");
+	else if (place == "map" && !is_pvp && G.maps[current_map].pvp && !warned[current_map]) (warned[current_map] = 1), add_log(phrase.html("client.new_map_logic.this_is_a_pvp_zone_be_careful"), "#E1664C");
+	else if (place == "map" && is_pvp && G.maps[current_map].safe && !warned[current_map]) (warned[current_map] = 1), add_log(phrase.html("client.new_map_logic.this_is_a_safe_zone_no_one_can_hurt_you"), "#9DE85E");
 	light_logic();
 	render_map();
 }

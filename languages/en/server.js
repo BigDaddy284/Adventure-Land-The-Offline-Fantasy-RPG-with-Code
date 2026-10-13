@@ -161,9 +161,9 @@ module.exports = {
 	// node/logic/tavern_poker.js; game_log when the decision clock and the time bank ran out while facing a bet, so the server folded.
 	"server.game_log.poker_auto_fold": "Your clock ran out. Folded for you",
 	// node/server.js:11607; game_log authored display. Keep character, item, monster, map, and product names unchanged.
-	"server.game_log.can_t_join_the_duel_from_a_pvp_zone": "You cannot duel in this zone. Please move to a non-PvP area first.",
+	"server.game_log.can_t_join_the_duel_from_a_pvp_zone": "Can't join the duel from a pvp zone!",
 	// node/server.js:11526; game_log authored display. Keep character, item, monster, map, and product names unchanged.
-	"server.game_log.can_t_start_a_duel_if_any_of_the_parties_are_already": "You cannot duel in this zone. Please move to a non-PvP area first.",
+	"server.game_log.can_t_start_a_duel_if_any_of_the_parties_are_already": "Can't start a duel if any of the parties are already in a pvp zone",
 	// node/server.js:11520; game_log authored display. Keep character, item, monster, map, and product names unchanged.
 	"server.game_log.challenge_expired": "Challenge expired",
 	// node/server.js:10471; game_log authored display. Keep character, item, monster, map, and product names unchanged.
