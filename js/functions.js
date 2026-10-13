@@ -6635,8 +6635,13 @@ function handle_information(infs) {
 					html +=
 						"<div class='gamebutton block' style='margin-bottom: -4px' onclick='load_code(\"" + (((X.codes[real_id] && real_id) || "0")) + "\",1)'><span style='color: #D46E33'>" + phrase.html("client.handle_information.character_default") + "</span> " + (character.name) + "</div>";
 				}
+				// The Default Party Script sits between Character Default and the numbered slots; "Reset" loads the newest template without saving
+				html +=
+					"<div class='gamebutton block' style='margin-bottom: -4px' onclick='load_code(\"PARTY\",1)'><span style='color: #6FD23F'>" + phrase.html("client.handle_information.default") + "</span> Party Script</div>";
+				html +=
+					"<div class='gamebutton block' style='margin-bottom: -4px' onclick='load_code(\"PARTY_LATEST\",1)' title='Loads the newest Party Script into the editor without saving over yours'><span style='color: gray'>[Party Script]</span> Reset to latest</div>";
 				for (var num in ui_list) {
-					if (num == real_id) continue;
+					if (num == real_id || num == "PARTY") continue;
 					var sname = num,
 						lnum = num;
 					if (parseInt(num) > 100 || ("" + num).startsWith("CH_")) (color = "#D46E33"), (sname = phrase.html("client.code.character_default"));
@@ -6683,6 +6688,7 @@ function handle_information(infs) {
 						if (parseInt(num) > 100 || ("" + num).startsWith("CH_")) delete ui_list[num];
 					}
 				if (character && !ui_list[real_id]) ui_list[real_id] = [character.name, 0];
+				if (!ui_list.PARTY) ui_list.PARTY = ["Party Script", 0];
 				ui_list["#"] = ["DELETE", 0];
 				html +=
 					"<div class=\"gamebutton block\" style=\"display: block; margin-bottom: -4px\" onclick=\"open_guide('8-code-slots-and-files','/docs/guide/code/8-code-slots-and-files')\"><span style=\"color: #6FD23F\">" + phrase.html("client.handle_information.documentation") + "</span>" + " " + phrase.html("client.handle_information.code_slots_and_files") + "</div>";
@@ -6786,10 +6792,11 @@ function handle_information(infs) {
 					if (code_run) toggle_runner(), toggle_runner();
 				}
 
-				if (parseInt(code_slot) <= 100) $(".codeslottype").html("" + code_slot);
+				if (code_slot == "PARTY") $(".codeslottype").html("Party");
+				else if (parseInt(code_slot) <= 100) $(".codeslottype").html("" + code_slot);
 				else $(".codeslottype").html(phrase.html("client.handle_information.character"));
 
-				$(".codeslotname").html("" + ((X.codes[code_slot] && X.codes[code_slot][0]) || phrase.html("client.code.default")));
+				$(".codeslotname").html("" + ((X.codes[code_slot] && X.codes[code_slot][0]) || (code_slot == "PARTY" && "Party Script") || phrase.html("client.code.default")));
 			}
 		} else if (info.type == "gcode") {
 			var html = "";

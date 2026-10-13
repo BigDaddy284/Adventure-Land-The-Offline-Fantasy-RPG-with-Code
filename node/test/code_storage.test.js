@@ -450,3 +450,35 @@ test("player map storage accepts only the ten exact owned keys", async () => {
 	}
 	assert.deepEqual(saved, ["MP_US_1_1", "MP_US_1_10"]);
 });
+
+test("the Party Script slot loads the template, saves the player's names and survives Reset to latest", async () => {
+	const fs = require("node:fs"),
+		path = require("node:path");
+	const template = fs.readFileSync(path.join(__dirname, "../../htmls/contents/codes/party_script.js"), "utf8");
+	assert.match(template, /var LEADER = "";/);
+	assert.doesNotMatch(template, /Chillyinit|Zenzoo|NunNun|Smagical|Deadpool/);
+	assert.doesNotThrow(() => new vm.Script(template));
+	const h = fixture();
+	h.context.shtml = (file) => (file === "htmls/contents/codes/party_script.js" ? template : "");
+	h.context.phrase_html = (key) => key;
+
+	// Nothing saved yet: the template comes back
+	assert.equal((await h.context.load_code_api({ user: h.user, name: "Party Script", pure: true })).code, template);
+	assert.equal((await h.context.load_code_api({ user: h.user, name: "PARTY", pure: true })).code, template);
+
+	// The player fills in names and saves; the slot is created with its name
+	const mine = template.replace('var LEADER = "";', 'var LEADER = "Zed";');
+	const saved = await h.save("PARTY", mine, "");
+	assert.equal(saved.success, true);
+	assert.equal(h.store.records.get(dataId).info.code_list.PARTY[0], "Party Script");
+	assert.equal(h.store.records.get(codeId("PARTY")).info.code, mine);
+	assert.equal((await h.context.load_code_api({ user: h.user, name: "Party Script", pure: true })).code, mine);
+	assert.equal((await h.context.load_code_api({ user: h.user, name: "party script", pure: true })).code, mine);
+
+	// Reset to latest shows the template and does not touch the saved copy
+	assert.equal((await h.context.load_code_api({ user: h.user, name: "PARTY_LATEST", pure: true })).code, template);
+	assert.equal(h.store.records.get(codeId("PARTY")).info.code, mine);
+	const res = { infs: [] };
+	await h.context.load_code_api({ user: h.user, name: "PARTY_LATEST", res });
+	assert.equal(res.infs.find((entry) => entry.type === "code").slot, "PARTY");
+});

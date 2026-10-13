@@ -487,3 +487,15 @@ test("files the game rewrites are never hidden, because Windows refuses to write
 	assert.match(main, /try \{\s*fs\.writeFileSync\(filePath, lines\.join/); // a failed version bump never stops the website
 	assert.match(fs.readFileSync(path.join(root, "Play.bat"), "utf8"), /attrib -h version\.js/);
 });
+
+test("the code menu lists the Default Party Script between Character Default and the numbered slots", () => {
+	const source = fs.readFileSync(path.join(__dirname, "../../js/functions.js"), "utf8");
+	const menu = source.slice(source.indexOf('info.purpose == "load"'), source.indexOf('info.purpose == "save"'));
+	const character_default = menu.indexOf("character_default");
+	const party = menu.indexOf('load_code(\\"PARTY\\",1)');
+	const reset = menu.indexOf('load_code(\\"PARTY_LATEST\\",1)');
+	const slots = menu.indexOf("for (var num in ui_list)");
+	assert.ok(character_default > 0 && party > character_default && reset > party && slots > reset);
+	assert.match(menu, /num == "PARTY"\) continue/);
+	assert.match(source, /if \(!ui_list\.PARTY\) ui_list\.PARTY/);
+});
