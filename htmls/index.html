@@ -140,7 +140,10 @@
 			</div>
 			<div id="bottomrightcorner" class="disableclicks bpclicks">
 				<div style="text-align: right; font-size: 0px" class="bpclicks">
-					<div id="iframelist" style="display: none; margin-bottom: -5px; vertical-align: bottom" class="enableclicks"></div><div id="partylist" style="display: none; margin-left: -5px; margin-bottom: -5px; vertical-align: bottom"></div><div id="skillbar" style="margin-left: -5px; margin-bottom: -5px; display: none; vertical-align: bottom"></div>
+					<div id="iframelist" style="display: none; margin-bottom: -5px; vertical-align: bottom" class="enableclicks"></div><div id="partylist" style="display: none; margin-left: -5px; margin-bottom: -5px; vertical-align: bottom"></div>
+				</div>
+				<div style="text-align: right; font-size: 0px" class="bpclicks">
+					<div id="skillbar" style="margin-bottom: -5px; display: none; vertical-align: bottom"></div>
 				</div>
 				<div style="background: black; padding: 2px; width: 316px; border: 5px solid gray; margin-bottom: -5px; display:none; position: relative" 
 					class="clickable inline-block bshadow tutorialui enableclicks" onclick="btc(event); open_tutorial()"><!-- previously margin-bottom: -5px; [16/07/18] -->
@@ -163,7 +166,7 @@
 				</div>
 				{% endif %}
 				{% if domain.single_player %}
-				<div id="sp-modmenu" class="enableclicks" title="Mod Menu" style="display: none; position: absolute; bottom: 0px; right: 325px; background-color: black; border: 5px solid gray; padding: 2px"></div>
+				<div id="sp-modmenu" class="enableclicks" title="Mod Menu" style="display: none; position: absolute; bottom: 0px; background-color: black; border: 5px solid gray; padding: 2px"></div>
 				{% endif %}
 				<div id="gamelog" class="noscroll cbold enableclicks"></div>
 			</div>

@@ -1653,3 +1653,18 @@ li{
 	padding-top: 4px;
 	margin-top: 4px;
 }
+
+/* Skill bar: every key on show in two rows, collapsible; the log, XP bar and event cards match its width while it is open */
+#bottomrightcorner{ --sp-log-w: 330px; }
+#bottomrightcorner.skills-open{ --sp-log-w: 392px; }
+#sp-modmenu{ right: calc(var(--sp-log-w) - 5px); }
+#skillbar{ position: relative; }
+#skillbar .skillbar-row{ display: inline-flex; align-items: flex-end; font-size: 0; }
+#skillbar .skillbar-slots{ background-color: black; border: 5px solid gray; padding: 2px; width: 378px; box-sizing: content-box; text-align: left; }
+#skillbar .skillbar-toggle{ position: absolute; right: calc(100% - 5px); bottom: 0; }
+#skillbar .skillbar-row.collapsed .skillbar-toggle{ position: static; margin-right: -5px; }
+#skillbar .skillbar-toggle .gamebutton{ padding: 6px 8px; font-size: 24px; line-height: 18px; }
+#bottomrightcorner.skills-open #gamelog{ width: 362px; }
+#bottomrightcorner.skills-open .xpsui,#bottomrightcorner.skills-open .tutorialui{ width: 378px !important; }
+#bottomrightcorner.skills-open #xpui,#bottomrightcorner.skills-open #tutorialui{ width: 378px !important; }
+#bottomrightcorner.skills-open #event-announcements{ width: 392px; }

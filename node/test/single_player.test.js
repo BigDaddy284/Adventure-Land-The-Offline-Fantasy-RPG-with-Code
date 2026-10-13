@@ -453,3 +453,15 @@ test("every NPC picture is drawn through npc_sprite, so it shows the NPC's own l
 	assert.ok(/function npc_sprite\(/.test(js));
 	assert.ok(!/\bsprite\(npc\.skin/.test(js.replace(/return sprite\(npc\.skin, args\);/, "")));
 });
+
+test("the skill bar shows every key in two rows, collapses, and the log follows its width", () => {
+	const root = path.join(__dirname, "..", "..");
+	const js = fs.readFileSync(path.join(root, "js/html.js"), "utf8");
+	assert.ok(js.includes('var SKILL_KEYS = ["1", "2", "3", "4", "5", "6", "7", "Q", "W", "E", "R", "X", "T", "B"]'));
+	assert.ok(js.includes("function toggle_skillbar()") && js.includes('localStorage.setItem("skillbar_collapsed"'));
+	const css = fs.readFileSync(path.join(root, "css/index.css"), "utf8");
+	assert.ok(css.includes("#bottomrightcorner.skills-open #gamelog"));
+	const page = fs.readFileSync(path.join(root, "htmls/index.html"), "utf8");
+	assert.ok(page.indexOf('id="iframelist"') < page.indexOf('id="skillbar"'));
+	assert.ok(!/id="sp-modmenu"[^>]*right: 325px/.test(page));
+});

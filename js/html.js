@@ -6426,31 +6426,59 @@ function unlocked_skill_mapping(current) {
 	return current;
 }
 
+// Every skill key is always on show, two rows of seven; the keys a player added to their own skillbar come after them.
+// The whole bar can be collapsed to one button, and the choice is remembered in this browser.
+var SKILL_KEYS = ["1", "2", "3", "4", "5", "6", "7", "Q", "W", "E", "R", "X", "T", "B"];
+var skillbar_collapsed = false;
+try {
+	skillbar_collapsed = localStorage.getItem("skillbar_collapsed") == "1";
+} catch (e) {}
+
+function skillbar_keys() {
+	var keys = SKILL_KEYS.slice();
+	skillbar.forEach(function (id) {
+		if (keys.indexOf(id) == -1) keys.push(id);
+	});
+	return keys;
+}
+
+function toggle_skillbar() {
+	skillbar_collapsed = !skillbar_collapsed;
+	try {
+		localStorage.setItem("skillbar_collapsed", skillbar_collapsed ? "1" : "0");
+	} catch (e) {}
+	render_skillbar();
+}
+
 function render_skillbar(empty) {
 	if (empty) {
 		$("#skillbar").html("").hide();
+		$("#bottomrightcorner").removeClass("skills-open");
 		return;
 	}
-	// $("#topmid").html("");
-	var html = "<div style='background-color: black; border: 5px solid gray; padding: 2px; display: inline-block' class='enableclicks'>",
-		i = 0;
-	skillbar.forEach(function (id) {
-		var current = unlocked_skill_mapping(keymap[id]),
-			skin = current;
-		if (current) {
-			if (current && current.skin) skin = current.skin;
-			else if (current.type == "item" && G.items[current.name]) skin = G.items[current.name].skin;
-			else if (G.skills[current.name || current]) skin = G.skills[current.name || current].skin;
-			html += item_container({ skid: id, skin: skin || "", draggable: false, droppable: true, onclick: "on_skill('" + id + "')" }, current);
-		} else html += item_container({ skid: id, draggable: false, droppable: true });
-		if (!(skillbar.length >= 8 && !(skillbar.length % 2) && !(i % 2))) html += "<div></div>";
-		i++;
-	});
+	var html = "<div class='skillbar-row" + (skillbar_collapsed ? " collapsed" : "") + "'><div class='skillbar-toggle enableclicks'><div class='gamebutton' title='Show or hide the skill boxes' onclick='pcs(event);toggle_skillbar()'>";
+	html += "<div style='height:24px;line-height:24px'>" + (skillbar_collapsed ? "&#9664;" : "&#9654;") + "</div>";
+	html += "<div style='color:#CFD1D1;margin-top:1px'>" + (skillbar_collapsed ? "SKILLS" : "HIDE") + "</div></div></div>";
+	if (!skillbar_collapsed) {
+		html += "<div class='skillbar-slots enableclicks'>";
+		skillbar_keys().forEach(function (id, i) {
+			var current = unlocked_skill_mapping(keymap[id]),
+				skin = current;
+			if (current) {
+				if (current && current.skin) skin = current.skin;
+				else if (current.type == "item" && G.items[current.name]) skin = G.items[current.name].skin;
+				else if (G.skills[current.name || current]) skin = G.skills[current.name || current].skin;
+				html += item_container({ skid: id, skin: skin || "", draggable: false, droppable: true, onclick: "on_skill('" + id + "')" }, current);
+			} else html += item_container({ skid: id, draggable: false, droppable: true });
+			if (i % 7 == 6) html += "<div></div>";
+		});
+		html += "</div>";
+	}
 	html += "</div>";
 	$("#skillbar").html(html).css("display", "inline-block");
+	$("#bottomrightcorner").toggleClass("skills-open", !skillbar_collapsed);
 	if (typeof single_player_mode != "undefined" && single_player_mode) render_single_player_mods_button();
 	restart_skill_tints();
-	// $("#topmid").show().html(html);
 }
 
 // Single player: the holiday events that are on, sent after one is switched in the Mod Menu
