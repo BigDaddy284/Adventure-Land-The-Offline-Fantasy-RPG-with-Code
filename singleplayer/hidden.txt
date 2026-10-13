@@ -20,10 +20,8 @@ steam_news.js
 steam_signin.js
 steam_signup.js
 update_notes.js
-version.js
 web_assets.js
 package.json
-package-lock.json
 settings.example.txt
 
 # The game's files and the packages it installs

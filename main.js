@@ -38,7 +38,12 @@ if (Local) {
 		const newVersion = parseInt(p1, 10) + 1;
 		return `Version = ${newVersion};`;
 	});
-	fs.writeFileSync(filePath, lines.join("\n"), "utf-8");
+	try {
+		fs.writeFileSync(filePath, lines.join("\n"), "utf-8");
+	} catch (e) {
+		// A read-only or hidden version.js (Windows refuses to write a hidden file) must never stop the website from starting
+		console.log("version.js was not updated: " + e.message);
+	}
 }
 
 eval("" + fs.readFileSync(path.resolve(__dirname, "common/js/common_functions.js")));

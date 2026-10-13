@@ -478,3 +478,12 @@ test("the skill bar shows every key in two rows, collapses, and the log follows 
 	assert.ok(page.indexOf('id="iframelist"') < page.indexOf('id="skillbar"'));
 	assert.ok(!/id="sp-modmenu"[^>]*right: 325px/.test(page));
 });
+
+test("files the game rewrites are never hidden, because Windows refuses to write a hidden file", () => {
+	const root = path.resolve(__dirname, "../..");
+	const lines = fs.readFileSync(path.join(root, "singleplayer/hidden.txt"), "utf8").split(/\r?\n/).map((line) => line.trim().replace(/\\/g, "/"));
+	for (const name of ["version.js", "package-lock.json", "settings.txt"]) assert.ok(!lines.includes(name), name);
+	const main = fs.readFileSync(path.join(root, "main.js"), "utf8");
+	assert.match(main, /try \{\s*fs\.writeFileSync\(filePath, lines\.join/); // a failed version bump never stops the website
+	assert.match(fs.readFileSync(path.join(root, "Play.bat"), "utf8"), /attrib -h version\.js/);
+});

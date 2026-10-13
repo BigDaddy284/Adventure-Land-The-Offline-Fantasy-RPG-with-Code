@@ -31,6 +31,9 @@ if not exist node\node_modules\ (
 	popd
 )
 
+rem version.js is rewritten every time the website starts, and Windows refuses to write a hidden file: an earlier build hid it, so unhide it
+attrib -h version.js >nul 2>nul
+attrib -h package-lock.json >nul 2>nul
 rem Hide the game's own files, so the folder only shows what you use (turn on Hidden items in File Explorer to see them)
 if exist singleplayer\hidden.txt for /f "usebackq eol=# delims=" %%F in ("singleplayer\hidden.txt") do if exist "%%F" attrib +h "%%F" >nul 2>nul
 
