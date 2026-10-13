@@ -1448,7 +1448,7 @@ async function save_code_api(args) {
 				return;
 			}
 			var entry = idata.info.code_list[A.slot];
-			R.name = A.name || (entry && entry[0]) || R.character || (A.slot === "PARTY" ? "Party Script" : A.slot);
+			R.name = A.name || (entry && entry[0]) || R.character || (A.slot === "PARTY" ? "Party AIO" : A.slot);
 			R.old_name = entry ? entry[0] : R.name;
 			if (A.deleting) {
 				delete idata.info.code_list[A.slot];
@@ -1512,16 +1512,18 @@ async function load_code_api(args) {
 		return { success: true };
 	}
 
-	// The Default Party Script: every account has a "Party Script" slot (id PARTY), filled from a template that ships with the game until the player saves it.
+	// The Default Party Script: every account has a "Party AIO" slot (id PARTY), filled from a template that ships with the game until the player saves it.
 	// PARTY_LATEST (Reset to latest): the newest template, shown in the editor without saving over the player's copy
 	var party_latest = name === "PARTY_LATEST";
 	var code_list = gf(data, "code_list", {});
 	var slot = party_latest ? null : find_code_slot(code_list, name);
-	if (slot === null && (party_latest || ["party", "party script", "party_script"].includes(name.toLowerCase()))) {
+	var party_alias = ["party", "party aio", "party script", "party_script"].includes(name.toLowerCase());
+	if (slot === null && !party_latest && party_alias && Object.prototype.hasOwnProperty.call(code_list, "PARTY")) slot = "PARTY"; // saved under an older name
+	if (slot === null && (party_latest || party_alias)) {
 		var party_code = shtml("htmls/contents/codes/party_script.js");
 		if (args.pure) return { code: party_code };
-		args.res.infs.push({ type: "code", code: party_code, run: args.run, slot: "PARTY", save: args.save, name: "Party Script" });
-		var party_message = party_latest ? "Loaded the latest Party Script. Copy your names across, then Save." : "Loaded the Party Script. Fill in your names, then Save.";
+		args.res.infs.push({ type: "code", code: party_code, run: args.run, slot: "PARTY", save: args.save, name: "Party AIO" });
+		var party_message = party_latest ? "Loaded the latest Party AIO. Copy your names across, then Save." : "Loaded the Party AIO. Fill in your names, then Save.";
 		if (args.log) args.res.infs.push({ type: "message", message: party_message, color: "#32A3B0" });
 		else if (!args.save) args.res.infs.push({ type: "chat_message", message: party_message, color: "#32A3B0" });
 		return { success: true };

@@ -451,7 +451,7 @@ test("player map storage accepts only the ten exact owned keys", async () => {
 	assert.deepEqual(saved, ["MP_US_1_1", "MP_US_1_10"]);
 });
 
-test("the Party Script slot loads the template, saves the player's names and survives Reset to latest", async () => {
+test("the Party AIO slot loads the template, saves the player's names and survives Reset to latest", async () => {
 	const fs = require("node:fs"),
 		path = require("node:path");
 	const template = fs.readFileSync(path.join(__dirname, "../../htmls/contents/codes/party_script.js"), "utf8");
@@ -463,17 +463,17 @@ test("the Party Script slot loads the template, saves the player's names and sur
 	h.context.phrase_html = (key) => key;
 
 	// Nothing saved yet: the template comes back
-	assert.equal((await h.context.load_code_api({ user: h.user, name: "Party Script", pure: true })).code, template);
+	assert.equal((await h.context.load_code_api({ user: h.user, name: "Party AIO", pure: true })).code, template);
 	assert.equal((await h.context.load_code_api({ user: h.user, name: "PARTY", pure: true })).code, template);
 
 	// The player fills in names and saves; the slot is created with its name
 	const mine = template.replace('var LEADER = "";', 'var LEADER = "Zed";');
 	const saved = await h.save("PARTY", mine, "");
 	assert.equal(saved.success, true);
-	assert.equal(h.store.records.get(dataId).info.code_list.PARTY[0], "Party Script");
+	assert.equal(h.store.records.get(dataId).info.code_list.PARTY[0], "Party AIO");
 	assert.equal(h.store.records.get(codeId("PARTY")).info.code, mine);
-	assert.equal((await h.context.load_code_api({ user: h.user, name: "Party Script", pure: true })).code, mine);
-	assert.equal((await h.context.load_code_api({ user: h.user, name: "party script", pure: true })).code, mine);
+	assert.equal((await h.context.load_code_api({ user: h.user, name: "Party AIO", pure: true })).code, mine);
+	assert.equal((await h.context.load_code_api({ user: h.user, name: "party aio", pure: true })).code, mine);
 
 	// Reset to latest shows the template and does not touch the saved copy
 	assert.equal((await h.context.load_code_api({ user: h.user, name: "PARTY_LATEST", pure: true })).code, template);
@@ -481,4 +481,12 @@ test("the Party Script slot loads the template, saves the player's names and sur
 	const res = { infs: [] };
 	await h.context.load_code_api({ user: h.user, name: "PARTY_LATEST", res });
 	assert.equal(res.infs.find((entry) => entry.type === "code").slot, "PARTY");
+});
+
+test("a Party slot saved under the old name Party Script is still found as Party AIO", async () => {
+	const h = fixture({ list: { PARTY: ["Party Script", 3] }, documents: [code("PARTY", "my names")] });
+	h.context.shtml = () => "template";
+	for (const name of ["Party AIO", "party aio", "Party Script", "PARTY"])
+		assert.equal((await h.context.load_code_api({ user: h.user, name, pure: true })).code, "my names", name);
+	assert.equal((await h.context.load_code_api({ user: h.user, name: "PARTY_LATEST", pure: true })).code, "template");
 });

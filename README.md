@@ -6,7 +6,7 @@ It's built on the MongoDB port of [Adventure Land](https://github.com/kaansoral/
 
 ## Made with AI
 
-Fantasy Land was built with the help of AI. The changes in this version of the game (the Mod Menu and its settings, the single-player changes, the screen layout, the Default Party Script and the packaging) were written with Anthropic's Claude as a coding assistant, working from the requests and testing of the project's owner.
+Fantasy Land was built with the help of AI. The changes in this version of the game (the Mod Menu and its settings, the single-player changes, the screen layout, the Party AIO script and the packaging) were written with Anthropic's Claude as a coding assistant, working from the requests and testing of the project's owner.
 
 The new artwork is AI-generated too: the redrawn monsters, the redesigned town NPCs, the new character looks and the title screen art. It is used alongside the original Adventure Land art, which was made by the Adventure Land artists and is unchanged where it hasn't been replaced.
 
@@ -335,6 +335,10 @@ Fantasy Land started as a copy of the MongoDB port of [Adventure Land](https://g
 - **Your copy is yours:** it is saved in its own "Party Script" slot, so your names are kept and the whole script stays readable and editable. A **[Party Script] Reset to latest** button loads the newest version of the script into the editor without saving over yours, so after an update you can copy your names across and Save.
 - **Exchange speed** (Mod Menu, Loot; `exchange_speed`): how fast exchanges finish (Xyn, boxes, gems and quest items). 1 = normal, 2 = double speed, 0.5 = half speed. The lowest is 0.1 and the highest 100.
 - **Crafting speed** (Mod Menu, Crafting & Gathering; `crafting_speed`): the same for upgrades and compounds. It applies to every upgrade and compound, and stacks with the Mass Production scrolls.
+
+### v25
+- **Party AIO** (CODE menu): the default party script is now **[Default] Party AIO**, with **[Party AIO] Reset to latest** under it. It is the newest party script. The leader picks one meeting spot for the monster it is about to hunt and tells the party; followers path straight to that spot (not to the leader), and the leader waits there until everyone who is on the way has arrived before fighting. Followers busy in town (potions or banking) aren't waited for and join when they're done. Everything else from the v24 script is still there: Leader, Followers and Roles at the top, role-based kiting, Priest healing, smart skills, and each character's own potions, banking, compounding and stuck checks.
+- **Your saved copy is kept:** if you saved the v24 "Party Script", it is still your Party AIO slot, so your names stay. It runs the old code until you press **Reset to latest** (copy your names across, then Save). `load_code("Party AIO")` runs your slot; `load_code("Party Script")` still works.
 
 ## License
 

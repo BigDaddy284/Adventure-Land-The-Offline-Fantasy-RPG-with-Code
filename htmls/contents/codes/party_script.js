@@ -1,9 +1,9 @@
-// ADVENTURE LAND / FANTASY LAND - PARTY HUNTER (Default Party Script)
+// ADVENTURE LAND / FANTASY LAND - PARTY AIO (Default Party Script)
 //
 // SET-UP: type your character names into LEADER, FOLLOWERS and ROLES
-// below, then press Save. Your names are kept in your own "Party Script"
+// below, then press Save. Your names are kept in your own "Party AIO"
 // slot. Start this script on every character in the party (use
-// load_code("Party Script") or pick the slot in the CODE window).
+// load_code("Party AIO") or pick the slot in the CODE window).
 // With LEADER left empty every character just hunts on its own.
 // "Reset to latest" in the code menu loads the newest version of this
 // script into the editor (copy your names across, then Save).
@@ -151,7 +151,20 @@ var FOLLOWERS_PULL = false;
 var FOLLOW_REPATH_DISTANCE = 250;
 var LEADER_WAITS_FOR_PARTY = true;
 var PARTY_GATHER_DISTANCE = 300;
-var PARTY_WAIT_MAX_SECONDS = 30;
+var PARTY_WAIT_MAX_SECONDS = 120;
+
+// MEETING SPOT
+//
+// The leader picks ONE spot for the monster it is going to hunt and tells
+// the party "I'm going here, meet you there". Followers path straight to
+// that spot (not to the leader), and the leader holds off starting a
+// fight until everyone who is on their way has arrived. Followers that
+// are busy in town (potions / banking) are not waited for - they come to
+// the spot when they are done.
+//
+// MEET_RADIUS  - a follower within this distance of the spot has arrived
+
+var MEET_RADIUS = 150;
 
 
 // ================================================================
@@ -3923,6 +3936,9 @@ async function cleanup_inventory() {
     // TELEPORT TO TOWN
     // ============================================================
 
+    // Followers: tell the leader not to wait for us
+    follower_status = "busy";
+
     var teleported =
         await teleport_to_town();
 
@@ -4008,6 +4024,10 @@ async function check_potions() {
     } 
  
     set_message("Restocking potions..."); 
+
+    // Followers: tell the leader not to wait for us
+    follower_status = "busy";
+
  
     game_log( 
         "POTIONS: Restocking. HP=" + 
@@ -5170,11 +5190,99 @@ function hunt_destination(monster_name) {
             typeof info.x === "number" &&
             typeof info.y === "number"
         ) {
-            return { map: info.map, x: info.x, y: info.y };
+            current_meet = { map: info.map, x: info.x, y: info.y };
+            meet_spot_for = monster_name;
+
+            return current_meet;
         }
     }
 
-    return monster_name;
+    var spot = monster_spot(monster_name);
+
+    if (!spot) return monster_name;
+
+    current_meet = spot;
+
+    return spot;
+}
+
+// ONE FIXED SPOT FOR A MONSTER
+//
+// smart_move("bee") picks a RANDOM bee spawn every time it is called, so
+// two characters (or the same one retrying) can end up on different maps.
+// This picks one spawn and keeps it until the monster changes: the closest
+// one on the leader's map, otherwise the first one in the game's list.
+
+function monster_spot(monster_name) {
+
+    if (!monster_name || !G.monsters[monster_name]) return null;
+
+    if (current_meet && meet_spot_for === monster_name) {
+        return current_meet;
+    }
+
+    var spots = [];
+
+    for (var map_name in G.maps) {
+
+        var map = G.maps[map_name];
+
+        if (!map || map.ignore || map.instance) continue;
+
+        (map.monsters || []).forEach(function(pack) {
+
+            if (pack.type !== monster_name) return;
+
+            if (pack.boundary) {
+
+                var b = pack.boundary;
+
+                spots.push({
+                    map: map_name,
+                    x: (b[0] + b[2]) / 2,
+                    y: (b[1] + b[3]) / 2
+                });
+            }
+
+            else if (pack.boundaries) {
+
+                pack.boundaries.forEach(function(bb) {
+
+                    spots.push({
+                        map: bb[0],
+                        x: (bb[1] + bb[3]) / 2,
+                        y: (bb[2] + bb[4]) / 2
+                    });
+                });
+            }
+        });
+    }
+
+    if (spots.length === 0) return null;
+
+    var best = spots[0];
+    var best_distance = Infinity;
+
+    for (var i = 0; i < spots.length; i++) {
+
+        if (spots[i].map !== character.map) continue;
+
+        var d = Math.hypot(spots[i].x - character.x, spots[i].y - character.y);
+
+        if (d < best_distance) {
+            best = spots[i];
+            best_distance = d;
+        }
+    }
+
+    meet_spot_for = monster_name;
+
+    game_log(
+        "MEET: " + monster_name + " at " + best.map +
+        " (" + Math.round(best.x) + ", " + Math.round(best.y) + ")"
+    );
+
+    return best;
 }
 
 
@@ -5443,6 +5551,15 @@ var party_wait_started = 0;
 
 // Followers' run speeds, reported to the leader
 var follower_speeds = {};
+
+// Meeting spot the leader has chosen (leader) / been told (followers)
+var current_meet = null;
+var meet_spot_for = null;
+
+// What each follower is doing: "busy" (town trip), "heading" (on the way
+// to the meeting spot), "here" (at the spot / with the leader)
+var follower_status = "here";
+var follower_states = {};
 var leader_cruising = false;
 var last_sent_target = null;
 
@@ -5592,6 +5709,7 @@ function send_party_state() {
                     monster: current_hunt_monster,
                     target: last_sent_target || character.target || null,
                     dest: leader_dest,
+                    meet: current_meet,
                     map: character.map,
                     x: character.x,
                     y: character.y
@@ -5636,6 +5754,11 @@ character.on(
 
             follower_speeds[String(m.name).toLowerCase()] =
                 m.message.member_speed;
+
+            follower_states[String(m.name).toLowerCase()] = {
+                status: m.message.member_status,
+                time: Date.now()
+            };
 
             return;
         }
@@ -5882,6 +6005,24 @@ function fresh_leader_dest() {
     return null;
 }
 
+function fresh_meet() {
+
+    if (
+        leader_state &&
+        leader_state.meet &&
+        Date.now() - leader_state.time < 10000
+    ) {
+        return leader_state.meet;
+    }
+
+    return null;
+}
+
+function leader_distance_or_far(leader) {
+
+    return leader ? distance(character, leader) : Infinity;
+}
+
 function same_dest(a, b) {
 
     return JSON.stringify(a) === JSON.stringify(b);
@@ -5945,6 +6086,15 @@ setInterval(
             return;
         }
 
+        if (follow_path_kind === "meet") {
+
+            if (!same_dest(fresh_meet(), follow_path_target)) {
+                interrupt_follow("meeting spot changed");
+            }
+
+            return;
+        }
+
         var dest = fresh_leader_dest();
 
         if (follow_path_kind === "dest") {
@@ -5993,6 +6143,17 @@ function followers_not_here() {
 
         // Only wait for followers that are online and in the party
         if (!in_party_list(name)) continue;
+
+        // ... and not busy in town (they come to the spot afterwards)
+        var state = follower_states[String(name).toLowerCase()];
+
+        if (
+            state &&
+            state.status === "busy" &&
+            Date.now() - state.time < 5000
+        ) {
+            continue;
+        }
 
         var seen = get_player(name);
 
@@ -6134,10 +6295,13 @@ setInterval(
 
         send_cm(
             LEADER,
-            { member_speed: character.speed }
+            {
+                member_speed: character.speed,
+                member_status: follower_status
+            }
         ).catch(function() { });
     },
-    5000
+    1000
 );
 
 
@@ -6445,6 +6609,56 @@ async function follower_step(no_attack) {
 
     // Leader is on another map or out of sight - go to it, don't stop
     // to fight whatever is left behind
+    // Meeting spot: go there, not to the leader
+    var meet = fresh_meet();
+
+    if (
+        meet &&
+        (!leader || leader_distance_or_far(leader) > FOLLOW_FAR_DISTANCE)
+    ) {
+
+        var at_spot =
+            character.map === meet.map &&
+            Math.hypot(character.x - meet.x, character.y - meet.y) <= MEET_RADIUS;
+
+        if (!at_spot) {
+
+            follower_status = "heading";
+
+            set_message("Meeting " + LEADER + " at " + meet.map);
+
+            await follow_smart_move(meet, "meet");
+
+            return;
+        }
+
+        follower_status = "here";
+
+        // Arrived - wait for the leader, defend ourselves meanwhile
+        if (!leader) {
+
+            var on_me_here =
+                no_attack ? null : get_nearest_monster({ target: character });
+
+            if (on_me_here) {
+
+                await fight_target(on_me_here);
+
+                return;
+            }
+
+            hunt_phase = null;
+
+            loot();
+
+            set_message("Waiting for " + LEADER + " at the spot");
+
+            return;
+        }
+    }
+
+    follower_status = "here";
+
     if (!leader) {
 
         set_message("Following " + LEADER);
@@ -7291,6 +7505,11 @@ async function run_hunt() {
 
         // Followers are told this every PARTY_STATE_SECONDS
         current_hunt_monster = monster_name;
+
+        // Pick the meeting spot straight away so followers can set off
+        if (IS_LEADER && monster_name) {
+            hunt_destination(monster_name);
+        }
 
         // EVENT MONSTER MODE
         if (event_monster) {
