@@ -9099,17 +9099,38 @@ function init_socket_io(socket_server, server_index) {
 		// Single player: the Mod Menu changes settings while the game runs, holiday events included
 		socket.on("single_player_setting", function (data) {
 			if (typeof single_player != "object" || !players[socket.id] || !data) return;
-			if (data.action == "give_gold") {
-				// Give Gold: the amount is remembered, then every character online gets it
-				var amount = single_player.change("give_gold", data.value);
-				if (amount === undefined) return socket.emit("game_log", "That amount of gold can't be sent");
+			var amount_actions = { give_gold: ["give_gold", 1], take_gold: ["give_gold", -1], give_xp: ["give_xp", 1], take_xp: ["give_xp", -1] };
+			if (amount_actions[data.action]) {
+				// Give or take gold or XP: the amount is remembered, then the named character gets it, or every character online when no name is given
+				var amount = single_player.change(amount_actions[data.action][0], data.value);
+				var giving = amount_actions[data.action][1] > 0;
+				var what = data.action.endsWith("gold") ? "gold" : "XP";
+				if (amount === undefined) return socket.emit("game_log", "That amount of " + what + " can't be used");
+				var wanted = String(data.name || "").trim().toLowerCase();
+				var found = 0;
 				for (var id in players) {
 					var p = players[id];
-					if (!p || p.npc) continue;
-					p.gold += amount;
-					p.socket.emit("game_log", { message: "Received " + to_pretty_num(amount) + " gold from the Mod Menu", color: "gold" });
-					resend(p, "reopen");
+					if (!p || p.npc || (wanted && String(p.name).toLowerCase() != wanted)) continue;
+					found++;
+					var moved = amount;
+					if (what == "gold") {
+						if (!giving) moved = min(amount, p.gold);
+						p.gold += giving ? moved : -moved;
+					} else if (giving) {
+						p.xp += amount;
+						p.cid++;
+						p.u = true;
+						calculate_player_stats(p); // levels up as usual
+					} else {
+						moved = min(amount, p.xp); // takes from the current level's progress, never a whole level
+						p.xp -= moved;
+						p.cid++;
+						p.u = true;
+					}
+					p.socket.emit("game_log", { message: (giving ? "Received " : "Lost ") + to_pretty_num(moved) + " " + what + " from the Mod Menu", color: giving ? "gold" : "#E8584A" });
+					resend(p, what == "gold" ? "reopen" : "reopen+u+cid");
 				}
+				if (!found) socket.emit("game_log", wanted ? "No character called " + String(data.name).trim() + " is online" : "No characters are online");
 				return socket.emit("single_player_settings", single_player.mod_state());
 			}
 			var holiday = data.key && single_player.holiday_event(data.key);

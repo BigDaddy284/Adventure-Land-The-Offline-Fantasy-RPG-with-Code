@@ -191,6 +191,9 @@ starting_gold = 10000000
 # online when you press Send Gold. Kept here so it's remembered.
 give_gold = 1000000
 
+# The same for the Mod Menu's Give XP and Take XP buttons.
+give_xp = 100000
+
 
 # ---------- Merrit (market square visitor) ----------
 

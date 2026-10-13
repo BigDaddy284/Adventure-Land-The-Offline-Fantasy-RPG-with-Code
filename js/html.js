@@ -6501,7 +6501,24 @@ function render_single_player_mods_button() {
 	$("#sp-modmenu").html(html).show();
 }
 
+function single_player_mods_give_take_row(row) {
+	var html = "<div style='margin: 4px 12px'>";
+	if (row.note) html += "<div style='font-size: 20px; color: gray; line-height: 22px; margin-bottom: 4px'>" + html_escape(row.note) + "</div>";
+		// One line: a Gold/XP switch, an amount, a character name, then Give and Take. The buttons read the boxes when pressed (on mousedown, so a box doesn't lose focus and redraw first). An empty name means every character online.
+		var mode = single_player_mods_mode;
+		var box = "background: black; color: white; border: 4px solid gray; font-family: var(--pixel-font, pixel); font-size: 26px; padding: 2px 6px; box-sizing: border-box";
+		html += "<div style='display: flex; gap: 6px; align-items: center; justify-content: space-between'>";
+		html += "<div class='gamebutton' title='Switch between gold and XP' style='width: 56px; text-align: center; color: " + (mode == "gold" ? "#E8C34D" : "#8ECBF5") + "' onmousedown='event.preventDefault(); single_player_mods_switch()'>" + (mode == "gold" ? "Gold" : "XP") + "</div>";
+		html += "<input class='sp-mod-amount' value='" + html_escape(String(row.amounts[mode])) + "' inputmode='decimal' title='Amount' style='width: 120px; text-align: right; " + box + "' onkeydown='if(event.key==\"Enter\") this.blur()' onchange='change_single_player_setting(\"give_\" + single_player_mods_mode, this.value)' />";
+		html += "<input class='sp-mod-name' value='" + html_escape(single_player_mods_name) + "' placeholder='Name (all)' title='Character name. Leave empty for every character online' oninput='single_player_mods_name = this.value' style='width: 130px; " + box + "' />";
+		html += "<div class='gamebutton' style='color: #5DE376' onmousedown='event.preventDefault(); single_player_mods_give_take(\"give\")'>Give</div>";
+		html += "<div class='gamebutton' style='color: #E8584A' onmousedown='event.preventDefault(); single_player_mods_give_take(\"take\")'>Take</div>";
+		html += "</div>";
+	return html + "</div>";
+}
+
 function single_player_mods_row(row) {
+	if (row.amounts) return single_player_mods_give_take_row(row);
 	var html = "<div style='display: flex; justify-content: space-between; align-items: center; margin: 4px 12px; gap: 12px'>";
 	html += "<div style='line-height: 22px'><div style='font-size: 28px'>" + html_escape(row.label) + "</div>";
 	var note = row.note || "";
@@ -6510,16 +6527,13 @@ function single_player_mods_row(row) {
 	html += "</div>";
 	if (row.yesno)
 		html += "<div class='gamebutton' style='width: 70px; flex: none; text-align: center; color: " + (row.value ? "#5DE376" : "gray") + "' onclick='change_single_player_setting(\"" + row.key + "\"," + !row.value + ")'>" + (row.value ? "ON" : "OFF") + "</div>";
-	else if (row.button) {
-		// An amount and a button: the button reads the box when pressed (on mousedown, so the box doesn't lose focus and redraw first)
-		html += "<div style='flex: none; display: flex; gap: 8px; align-items: center'>";
-		html += "<input class='sp-mod-number' data-key='" + row.key + "' value='" + html_escape(String(row.value)) + "' inputmode='decimal' style='width: 150px; box-sizing: border-box; background: black; color: white; border: 4px solid gray; font-family: var(--pixel-font, pixel); font-size: 28px; padding: 2px 6px; text-align: right' onkeydown='if(event.key==\"Enter\") this.blur()' onchange='change_single_player_setting(this.dataset.key, this.value)' />";
-		html += "<div class='gamebutton' style='color: #E8C34D; white-space: nowrap' onmousedown='event.preventDefault(); single_player_mods_action(\"" + row.key + "\")'>" + html_escape(row.button) + "</div></div>";
-	} else
+	else
 		html += "<input class='sp-mod-number' data-key='" + row.key + "' value='" + html_escape(String(row.value)) + "' inputmode='decimal' style='flex: none; width: 150px; box-sizing: border-box; background: black; color: white; border: 4px solid gray; font-family: var(--pixel-font, pixel); font-size: 28px; padding: 2px 6px; text-align: right' onkeydown='if(event.key==\"Enter\") this.blur()' onchange='change_single_player_setting(this.dataset.key, this.value)' />";
 	return html + "</div>";
 }
 
+var single_player_mods_mode = "gold"; // what the Give / Take row changes: gold or xp
+var single_player_mods_name = ""; // the character name typed there, kept while the menu redraws
 var single_player_mods_group = null; // the group page that's open, or null for the home page
 
 function single_player_mods_html() {
@@ -6562,8 +6576,13 @@ function open_single_player_mods() {
 }
 
 // A Mod Menu button: sends what's in its box (Give Gold sends that much gold to every character online)
-function single_player_mods_action(key) {
-	socket.emit("single_player_setting", { action: key, value: $(".sp-mod-number[data-key='" + key + "']").val() });
+function single_player_mods_switch() {
+	single_player_mods_mode = single_player_mods_mode == "gold" ? "xp" : "gold";
+	$(".single-player-mods").replaceWith(single_player_mods_html());
+}
+
+function single_player_mods_give_take(kind) {
+	socket.emit("single_player_setting", { action: kind + "_" + single_player_mods_mode, value: $(".sp-mod-amount").val(), name: $(".sp-mod-name").val() || "" });
 }
 
 function change_single_player_setting(key, value) {

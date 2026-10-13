@@ -319,6 +319,9 @@ Fantasy Land started as a copy of the MongoDB port of [Adventure Land](https://g
 - **Sprites match everywhere:** the NPC pictures in the item info (like Exchangeable), shop, party and dialog windows now show each NPC the way it looks in the world, with its own hat, hair and face. The taller NPC sprites (Xyn, Cue, Gabriel, Leo, Pete, Tricksy and Ponty) are no longer cut off.
 - **Skill boxes always on show:** the skill bar now shows all 14 keys (1-7, then Q W E R X T B) in two rows at the bottom right, so nothing is hidden. Keys you added to your own skill bar still show after them. A **HIDE** button on its left collapses it to a single **SKILLS** button, like the events strip, and your choice is remembered. While it is open the log, XP bar and tutorial bar match its width. The CODE box that shows what your character is doing now sits at the right edge, directly above the skill boxes.
 
+### v23
+- **Give and Take, gold and XP** (Mod Menu, Characters, under Gold and XP): one line with a **Gold / XP** switch, an amount box, a **Name** box, then **Give** and **Take** buttons. Fill in a character's name to change only that character; leave it empty to change every character online. The amounts are remembered in `settings.txt` as `give_gold` and `give_xp`. Taking never goes below zero, and taking XP only removes progress in the current level, it never lowers a level. Giving XP levels the character up as usual.
+
 ## License
 
 [AdventureLandOnlyUse](LICENSE) — free for commercial use with attribution. See the license file for full terms.

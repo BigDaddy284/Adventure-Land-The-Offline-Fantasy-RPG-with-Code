@@ -53,7 +53,7 @@ test("God Mode, Fire Sale and Daisy's tokens have settings, and the Mod Menu che
 		.filter((row) => row.key)
 		.map((row) => row.key);
 	// Every setting is in the Mod Menu, holiday events and event monsters included
-	assert.deepEqual(Object.keys(single_player.DEFAULTS).filter((key) => !keys.includes(key)), []);
+	assert.deepEqual(Object.keys(single_player.DEFAULTS).filter((key) => !keys.includes(key) && !["give_gold", "give_xp"].includes(key)), []); // those two are the Give / Take row
 	assert.equal(sp.holiday_event("holiday_season"), "holidayseason");
 	assert.equal(sp.holiday_event("monster_grinch"), "grinch");
 	assert.equal(sp.holiday_event("monster_hunt_tokens"), undefined);
@@ -389,7 +389,20 @@ test("trader discount, exchange luck and give gold", () => {
 	settings.give_gold = 5;
 	const characters = sp.mod_state().groups.find((group) => group.name == "Characters");
 	assert.equal(characters.changed, 0);
-	assert.equal(characters.rows.find((row) => row.key == "give_gold").button, "Send Gold");
+	settings.give_xp = 5;
+	assert.equal(sp.mod_state().groups.find((group) => group.name == "Characters").changed, 0);
+	const give_take = sp.mod_state().groups.find((group) => group.name == "Characters").rows.find((row) => row.key == "give_take");
+	assert.deepEqual(JSON.parse(JSON.stringify(give_take.amounts)), { gold: 5, xp: 5 });
+	assert.equal(single_player.check_value("give_xp", "250000"), 250000);
+});
+
+test("give and take gold and XP go to the named character, or to everyone online when no name is given", () => {
+	const src = fs.readFileSync(path.join(__dirname, "..", "server.js"), "utf8");
+	const handler = src.slice(src.indexOf("var amount_actions"), src.indexOf("var holiday = data.key"));
+	for (const action of ["give_gold", "take_gold", "give_xp", "take_xp"]) assert.ok(handler.includes(action + ":"), action);
+	assert.ok(handler.includes("(wanted && String(p.name).toLowerCase() != wanted)"), "an empty name means everyone");
+	assert.ok(handler.includes("min(amount, p.gold)") && handler.includes("min(amount, p.xp)"), "taking never goes below zero");
+	assert.ok(handler.includes("calculate_player_stats(p)"), "giving XP levels up as usual");
 });
 
 test("the hidden files list only names files in the game folder, and never what players use", () => {

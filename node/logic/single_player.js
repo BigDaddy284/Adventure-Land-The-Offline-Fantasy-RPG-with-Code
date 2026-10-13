@@ -15,6 +15,7 @@ const DEFAULTS = {
 	trader_discount: 0,
 	exchange_luck: 1,
 	give_gold: 1000000,
+	give_xp: 100000,
 	ponty_restock_minutes: 0,
 	ponty_item_count: 20,
 	ponty_min_grade: 1,
@@ -325,7 +326,8 @@ const MOD_MENU = [
 			["run_speed", "Run speed", "1 = normal, 1.5 = half as fast again, 5 at most"],
 			["max_characters_online", "Characters online", "How many can play at once"],
 			["starting_gold", "Starting gold", "Gold for each new character"],
-			["give_gold", "Give Gold", "Gold for every character online, each time you press Send", "Send Gold"],
+			"Gold and XP",
+			["give_take", "Give / Take", "Pick Gold or XP, type an amount and a character name, then Give or Take. Leave the name empty for every character online. Taking XP never lowers a level"],
 		],
 	},
 	{
@@ -354,9 +356,10 @@ const WHOLE = {
 	starting_gold: 1e12,
 	merrit_visit_minutes: 1e6,
 	give_gold: 1e12,
+	give_xp: 1e12,
 };
 // Not counted as changed on the Mod Menu's home page: the amount Give Gold remembers isn't a mod
-const NOT_COUNTED = ["give_gold"];
+const NOT_COUNTED = ["give_gold", "give_xp"];
 // The highest other numbers can go
 const MAXIMUM = { run_speed: 5, trader_discount: 100 };
 
@@ -753,7 +756,8 @@ function create(settings) {
 									value: settings[row[0]],
 									yesno: typeof DEFAULTS[row[0]] == "boolean",
 									restart: RESTART.includes(row[0]),
-									button: row[3],
+									button: typeof row[3] == "string" ? row[3] : undefined,
+									amounts: row[0] == "give_take" ? { gold: settings.give_gold, xp: settings.give_xp } : undefined,
 								},
 					);
 					const changed = rows.filter((row) => row.key && !NOT_COUNTED.includes(row.key) && settings[row.key] !== DEFAULTS[row.key]).length;
