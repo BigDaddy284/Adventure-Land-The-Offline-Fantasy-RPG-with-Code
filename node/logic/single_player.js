@@ -14,6 +14,8 @@ const DEFAULTS = {
 	sell_multiplier: 1,
 	trader_discount: 0,
 	exchange_luck: 1,
+	exchange_speed: 1,
+	crafting_speed: 1,
 	give_gold: 1000000,
 	give_xp: 100000,
 	ponty_restock_minutes: 0,
@@ -285,6 +287,7 @@ const MOD_MENU = [
 			["gold_drop", "Gold dropped", "1 = normal, 2 = twice as much gold"],
 			["drop_everything", "Drop everything", "Every monster drops its whole drop list"],
 			["exchange_luck", "Exchange luck", "Every exchange, box, fish and mine: 1 = normal, 2 = rare rewards twice as likely"],
+			["exchange_speed", "Exchange speed", "How fast exchanges finish: 1 = normal, 2 = double speed, 0.5 = half speed"],
 		],
 	},
 	{
@@ -293,6 +296,7 @@ const MOD_MENU = [
 		rows: [
 			["upgrade_success", "Upgrade luck", "1 = normal, 2 = twice the chance of success"],
 			["compound_success", "Compound luck", "1 = normal, 2 = twice the chance of success"],
+			["crafting_speed", "Crafting speed", "How fast upgrades and compounds finish: 1 = normal, 2 = double speed, 0.5 = half speed"],
 			["safe_upgrades", "Safe upgrades", "A failed upgrade or compound keeps your items"],
 			"Gathering",
 			["fishing_mining_cooldown", "Fishing and mining wait", "Off = fish and mine again straight away"],
@@ -361,7 +365,9 @@ const WHOLE = {
 // Not counted as changed on the Mod Menu's home page: the amount Give Gold remembers isn't a mod
 const NOT_COUNTED = ["give_gold", "give_xp"];
 // The highest other numbers can go
-const MAXIMUM = { run_speed: 5, trader_discount: 100 };
+const MAXIMUM = { run_speed: 5, trader_discount: 100, exchange_speed: 100, crafting_speed: 100 };
+// The lowest a number can go, where 0 makes no sense
+const MINIMUM = { exchange_speed: 0.1, crafting_speed: 0.1 };
 
 // The game's name for a holiday event or event monster setting (holiday_season -> holidayseason,
 // monster_grinch -> grinch), or undefined for any other setting
@@ -379,7 +385,7 @@ function check_value(key, value) {
 	const number = Number(value);
 	if (value === "" || value === null || typeof value == "boolean" || !Number.isFinite(number) || number < 0) return undefined;
 	if (key in WHOLE) return Math.min(WHOLE[key], Math.round(number));
-	return Math.min(MAXIMUM[key] || Infinity, Math.round(number * 1000) / 1000);
+	return Math.max(MINIMUM[key] || 0, Math.min(MAXIMUM[key] || Infinity, Math.round(number * 1000) / 1000));
 }
 
 // Starting looks E to H for each class: male light, female light, male dark, female dark
@@ -711,6 +717,11 @@ function create(settings) {
 		luck_chance(chance) {
 			const luck = typeof settings.exchange_luck == "number" ? settings.exchange_luck : 1;
 			return Math.min(1, chance * luck);
+		},
+		// How long an exchange, upgrade or compound takes with Exchange speed or Crafting speed applied: 2 = twice as fast
+		speed_up(ms, key) {
+			const speed = typeof settings[key] == "number" && settings[key] > 0 ? settings[key] : 1;
+			return Math.max(1, Math.round(ms / speed));
 		},
 		// Sets every skill's cooldown from the design files' value and the Skill cooldowns setting
 		apply_cooldowns() {

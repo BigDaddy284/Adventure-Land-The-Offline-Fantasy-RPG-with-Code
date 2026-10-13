@@ -111,6 +111,14 @@ drop_everything = no
 # one is twice as likely, 0.5 = half as likely.
 exchange_luck = 1
 
+# Exchange speed: how fast exchanges finish (Xyn, boxes, gems, quest
+# items). A multiplier: 1 = normal, 2 = double speed, 0.5 = half speed.
+exchange_speed = 1
+
+# Crafting speed: how fast upgrades and compounds finish.
+# 1 = normal, 2 = double speed, 0.5 = half speed.
+crafting_speed = 1
+
 
 # ---------- Daisy (monster hunts) ----------
 

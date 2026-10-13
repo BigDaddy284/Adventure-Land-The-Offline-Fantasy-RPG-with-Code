@@ -6737,6 +6737,7 @@ function init_socket_io(socket_server, server_index) {
 				delete player.s.massexchangepp;
 				ex = "+u+cid";
 			}
+			if (typeof single_player == "object") ms = single_player.speed_up(ms, "exchange_speed"); // Single player: Exchange speed
 			player.q.exchange = { ms: ms, len: ms, name: item.name, id: dropId, q: def.e, num: num };
 			if (suffix) {
 				player.q.exchange.s = suffix;
@@ -7121,6 +7122,7 @@ function init_socket_io(socket_server, server_index) {
 					delete player.s.massproductionpp;
 					ex = "+u+cid";
 				}
+				if (typeof single_player == "object") len = single_player.speed_up(len, "crafting_speed"); // Single player: Crafting speed
 				player.q.compound = { ms: len, len: len, num: data.items[0], nums: [] };
 				player.items[data.items[0]] = {
 					name: "placeholder",
@@ -7330,6 +7332,7 @@ function init_socket_io(socket_server, server_index) {
 							delete player.s.massproductionpp;
 							ex = "+u+cid";
 						}
+						if (typeof single_player == "object") ms = single_player.speed_up(ms, "crafting_speed"); // Single player: Crafting speed
 						player.q.upgrade = { ms: ms, len: ms, num: data.item_num, silent: true };
 						player.items[data.item_num] = {
 							name: "placeholder",
@@ -7378,6 +7381,7 @@ function init_socket_io(socket_server, server_index) {
 							delete player.s.massproductionpp;
 							ex = "+u+cid";
 						}
+						if (typeof single_player == "object") ms = single_player.speed_up(ms, "crafting_speed"); // Single player: Crafting speed
 						player.q.upgrade = { ms: ms, len: ms, num: data.item_num };
 						player.items[data.item_num] = {
 							name: "placeholder",
@@ -7523,7 +7527,8 @@ function init_socket_io(socket_server, server_index) {
 						delete player.s.massproductionpp;
 						ex = "+u+cid";
 					}
-					player.q.upgrade = { ms: ms, len: ms, num: data.item_num };
+					if (typeof single_player == "object") ms = single_player.speed_up(ms, "crafting_speed"); // Single player: Crafting speed
+						player.q.upgrade = { ms: ms, len: ms, num: data.item_num };
 					if (gameplay == "hardcore") {
 						player.q.upgrade.ms = player.q.upgrade.len = 500;
 					}
@@ -7635,7 +7640,8 @@ function init_socket_io(socket_server, server_index) {
 						delete player.s.massproductionpp;
 						ex = "+u+cid";
 					}
-					player.q.upgrade = { ms: ms, len: ms, num: data.item_num };
+					if (typeof single_player == "object") ms = single_player.speed_up(ms, "crafting_speed"); // Single player: Crafting speed
+						player.q.upgrade = { ms: ms, len: ms, num: data.item_num };
 					player.items[data.item_num] = {
 						name: "placeholder",
 						p: {

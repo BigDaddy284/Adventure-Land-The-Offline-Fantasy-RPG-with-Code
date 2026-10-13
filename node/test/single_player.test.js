@@ -499,3 +499,24 @@ test("the code menu lists the Default Party Script between Character Default and
 	assert.match(menu, /num == "PARTY"\) continue/);
 	assert.match(source, /if \(!ui_list\.PARTY\) ui_list\.PARTY/);
 });
+
+test("Exchange speed and Crafting speed shorten exchanges, upgrades and compounds", () => {
+	const sp = single_player.create({ exchange_speed: 2, crafting_speed: 0.5 });
+	assert.equal(sp.speed_up(3000, "exchange_speed"), 1500);
+	assert.equal(sp.speed_up(10000, "crafting_speed"), 20000);
+	assert.equal(single_player.create({}).speed_up(3000, "exchange_speed"), 3000);
+	assert.equal(single_player.create({ exchange_speed: 1000 }).speed_up(3000, "exchange_speed"), 3);
+	assert.equal(single_player.check_value("exchange_speed", 500), 100);
+	assert.equal(single_player.check_value("crafting_speed", 0), 0.1);
+	assert.equal(single_player.check_value("crafting_speed", "2.5"), 2.5);
+	const groups = single_player.MOD_MENU || [];
+	const keys = (name) => ((groups.find((g) => g.name == name) || { rows: [] }).rows.map((r) => r[0]));
+	if (groups.length) {
+		assert.ok(keys("Loot").includes("exchange_speed"));
+		assert.ok(keys("Crafting & Gathering").includes("crafting_speed"));
+	}
+	const server = fs.readFileSync(path.join(__dirname, "../server.js"), "utf8");
+	assert.equal(server.split('single_player.speed_up(ms, "crafting_speed")').length - 1, 4);
+	assert.equal(server.split('single_player.speed_up(len, "crafting_speed")').length - 1, 1);
+	assert.equal(server.split('single_player.speed_up(ms, "exchange_speed")').length - 1, 1);
+});
