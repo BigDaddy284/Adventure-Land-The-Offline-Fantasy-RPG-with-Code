@@ -387,6 +387,9 @@ canvas { display:block; } /*replaces the overflow: hidden solution [07/07/16] */
 	margin-left: auto;
 	white-space: nowrap;
 }
+.game-controls.tools-collapsed > :not(.tools-toggle):not(.rewardsbutton){
+	display: none !important;
+}
 .game-controls .codebuttons{
 	display: contents;
 }

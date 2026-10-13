@@ -438,3 +438,12 @@ test("the redesigned monster sprites each have a sheet of their own that fits th
 	assert.equal(D.sprites.marmor6f_cave.type, "armor");
 	assert.equal(D.sprites.mbody6b_cave.type, "body");
 });
+
+test("the top right tools row has a hide/show button that is remembered", () => {
+	const root = path.join(__dirname, "..", "..");
+	const page = fs.readFileSync(path.join(root, "htmls/index.html"), "utf8");
+	assert.ok(/<div class="game-controls">\s*<div class="gamebutton tools-toggle"[^>]*toggle_tools\(\)/.test(page));
+	const js = fs.readFileSync(path.join(root, "js/html.js"), "utf8");
+	assert.ok(js.includes("function toggle_tools()") && js.includes('localStorage.setItem("tools_collapsed"'));
+	assert.ok(fs.readFileSync(path.join(root, "css/index.css"), "utf8").includes(".game-controls.tools-collapsed"));
+});

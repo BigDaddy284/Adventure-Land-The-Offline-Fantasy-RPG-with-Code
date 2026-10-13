@@ -772,6 +772,26 @@ function toggle_serverinfo() {
 	render_server();
 }
 
+// Show/hide button for the top right tools row (X, CODE, COM, SKILLS, GUIDE, TRAVEL, CONF); the choice is remembered in this browser
+var tools_collapsed = false;
+try {
+	tools_collapsed = localStorage.getItem("tools_collapsed") == "1";
+} catch (e) {}
+
+function render_tools_toggle() {
+	$(".game-controls").toggleClass("tools-collapsed", tools_collapsed);
+	$(".tools-toggle").html(tools_collapsed ? "&#9664; TOOLS" : "&#9654; HIDE");
+}
+
+function toggle_tools() {
+	tools_collapsed = !tools_collapsed;
+	try {
+		localStorage.setItem("tools_collapsed", tools_collapsed ? "1" : "0");
+	} catch (e) {}
+	render_tools_toggle();
+}
+$(render_tools_toggle);
+
 function render_server() {
 	render_event_announcements();
 	var html = "",
