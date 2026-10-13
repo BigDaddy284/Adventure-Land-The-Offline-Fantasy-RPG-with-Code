@@ -342,7 +342,7 @@ Fantasy Land started as a copy of the MongoDB port of [Adventure Land](https://g
 
 ### v26
 - **Code menu tidied:** **Load Base Code** and the **Character Default** button are gone, and so is **Reset to latest**. The menu now starts with the two default scripts, **[Default] Party AIO** and **[Default] Bank Items List**, then your numbered slots.
-- **Bank Items List:** a new default script, kept in its own slot like Party AIO. It starts empty, with notes on adding item ids (`BANK_ITEM_IDS.push("itemid");`). **Party AIO now reads it** by name, with `load_code("Bank Items List")`, instead of code slot 5. If you already have a slot named "Bank Items List", Party AIO keeps using that until you save the default one.
+- **Bank Items List:** a new default script, kept in its own slot like Party AIO. It explains what it's for and starts with four example items (`vitring`, `skullamulet`, `ftrinket`, `wbook0`), one `BANK_ITEM_IDS.push("itemid");` line each. **Party AIO now reads it** by name, with `load_code("Bank Items List")`, instead of code slot 5. If you already have a slot named "Bank Items List", Party AIO keeps using that until you save the default one.
 - **Yours to edit:** both default scripts are ordinary editable scripts. Type in your names or item ids and press **Save**, and your copy is kept (it is also what `load_code` and starting a character from the CODE window use).
 - **Reset button:** each default script has a **Reset** button on the right of its row. It loads the original script into the editor; your saved copy is only replaced when you press Save.
 
