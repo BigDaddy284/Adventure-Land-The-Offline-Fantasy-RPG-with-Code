@@ -416,3 +416,25 @@ test("Win + opens another game window next to the Mod Menu icon", () => {
 	assert.match(html, /sp-newwin[^"]*'[^]*?open_character_window\(\)[^]*?Win \+/);
 	assert.match(fs.readFileSync(path.join(root, "css/index.css"), "utf8"), /#sp-modmenu \.sp-newwin\{[^}]*width: calc\(100% \+ 10px\)/);
 });
+
+test("the redesigned monster sprites each have a sheet of their own that fits the monster", () => {
+	const D = require("./helpers/design");
+	const root = path.join(__dirname, "..", "..");
+	const man = JSON.parse(fs.readFileSync(path.join(root, "images/singleplayer/monsters/manifest.json"), "utf8"));
+	assert.equal(man.length, 136);
+	for (const v of man) {
+		const name = v.cave_body ? v.skin + "_cave" : v.skin;
+		const def = D.sprites[name];
+		assert.ok(def && def.file == `/images/singleplayer/monsters/${name}.png`, name);
+		assert.equal(JSON.stringify(def.matrix), JSON.stringify([[name]]), name);
+		const png = fs.readFileSync(path.join(root, def.file.slice(1)));
+		assert.equal(png.readUInt32BE(16), v.frame[0] * 3, name + " width");
+		assert.equal(png.readUInt32BE(20), v.frame[1] * 4, name + " height");
+		if (!v.cave_body)
+			for (const s of Object.values(D.sprites))
+				if (s !== def) assert.ok(!(s.matrix || []).some((r) => r.includes(v.skin)), v.skin + " still on an old sheet");
+	}
+	for (const id of ["cave_npc", "cave_darkmage", "cave_rogue", "cave_guard", "cave_mothkeeper"]) assert.ok(/_cave$/.test(D.monsters[id].skin), id);
+	assert.equal(D.sprites.marmor6f_cave.type, "armor");
+	assert.equal(D.sprites.mbody6b_cave.type, "body");
+});

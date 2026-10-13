@@ -138,7 +138,8 @@ test("the new monsters are tougher than their farms and carry regular achievemen
 		assert.ok(G.monster_gold[variant] > 0, variant);
 	}
 	assert.equal(G.monsters.manyeye.abilities.stone.cooldown, G.monsters.oneeye.abilities.stone.cooldown);
-	assert.equal(G.sprites.creatures2.matrix[0][1], "manyeye");
+	assert.equal(G.sprites.manyeye.matrix[0][0], "manyeye"); // redesigned sheet of its own
+	assert.equal(G.sprites.creatures2.matrix[0][1], null);
 	assert.deepEqual(
 		JSON.parse(
 			JSON.stringify(G.maps.ucliffs.monsters.filter((p) => p.type === "kobold").map((p) => [p.count, p.grow, p.roam])),

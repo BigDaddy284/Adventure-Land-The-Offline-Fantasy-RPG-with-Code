@@ -1,0 +1,3195 @@
+[
+ {
+  "skin": "a1",
+  "title": "Spike",
+  "round": 2,
+  "frame": [
+   27,
+   36
+  ],
+  "orig_frame": [
+   27,
+   36
+  ],
+  "fly": false,
+  "cave_body": false,
+  "monsters": [
+   [
+    "a1",
+    "Spike",
+    1
+   ]
+  ],
+  "file": "sheets/a1.png"
+ },
+ {
+  "skin": "a2",
+  "title": "Bill",
+  "round": 2,
+  "frame": [
+   27,
+   36
+  ],
+  "orig_frame": [
+   27,
+   36
+  ],
+  "fly": false,
+  "cave_body": false,
+  "monsters": [
+   [
+    "a2",
+    "Bill",
+    1
+   ]
+  ],
+  "file": "sheets/a2.png"
+ },
+ {
+  "skin": "a3",
+  "title": "Lestat",
+  "round": 2,
+  "frame": [
+   27,
+   36
+  ],
+  "orig_frame": [
+   27,
+   36
+  ],
+  "fly": false,
+  "cave_body": false,
+  "monsters": [
+   [
+    "a3",
+    "Lestat",
+    1
+   ]
+  ],
+  "file": "sheets/a3.png"
+ },
+ {
+  "skin": "a4",
+  "title": "Orlok",
+  "round": 2,
+  "frame": [
+   27,
+   36
+  ],
+  "orig_frame": [
+   27,
+   36
+  ],
+  "fly": false,
+  "cave_body": false,
+  "monsters": [
+   [
+    "a4",
+    "Orlok",
+    1
+   ]
+  ],
+  "file": "sheets/a4.png"
+ },
+ {
+  "skin": "a5",
+  "title": "Elena",
+  "round": 2,
+  "frame": [
+   27,
+   36
+  ],
+  "orig_frame": [
+   27,
+   36
+  ],
+  "fly": false,
+  "cave_body": false,
+  "monsters": [
+   [
+    "a5",
+    "Elena",
+    1
+   ]
+  ],
+  "file": "sheets/a5.png"
+ },
+ {
+  "skin": "a6",
+  "title": "Marceline",
+  "round": 2,
+  "frame": [
+   27,
+   36
+  ],
+  "orig_frame": [
+   27,
+   36
+  ],
+  "fly": false,
+  "cave_body": false,
+  "monsters": [
+   [
+    "a6",
+    "Marceline",
+    1
+   ]
+  ],
+  "file": "sheets/a6.png"
+ },
+ {
+  "skin": "a7",
+  "title": "Lucinda",
+  "round": 2,
+  "frame": [
+   27,
+   36
+  ],
+  "orig_frame": [
+   27,
+   36
+  ],
+  "fly": false,
+  "cave_body": false,
+  "monsters": [
+   [
+    "a7",
+    "Lucinda",
+    1
+   ]
+  ],
+  "file": "sheets/a7.png"
+ },
+ {
+  "skin": "a8",
+  "title": "Angel",
+  "round": 2,
+  "frame": [
+   27,
+   36
+  ],
+  "orig_frame": [
+   27,
+   36
+  ],
+  "fly": false,
+  "cave_body": false,
+  "monsters": [
+   [
+    "a8",
+    "Angel",
+    1
+   ]
+  ],
+  "file": "sheets/a8.png"
+ },
+ {
+  "skin": "arcticbee",
+  "title": "Arctic Bee",
+  "round": 1,
+  "frame": [
+   60,
+   64
+  ],
+  "orig_frame": [
+   60,
+   64
+  ],
+  "fly": true,
+  "cave_body": false,
+  "monsters": [
+   [
+    "arcticbee",
+    "Arctic Bee",
+    1
+   ]
+  ],
+  "file": "sheets/arcticbee.png"
+ },
+ {
+  "skin": "armadillo",
+  "title": "Armadillo",
+  "round": 1,
+  "frame": [
+   60,
+   64
+  ],
+  "orig_frame": [
+   60,
+   64
+  ],
+  "fly": false,
+  "cave_body": false,
+  "monsters": [
+   [
+    "armadillo",
+    "Armadillo",
+    1
+   ]
+  ],
+  "file": "sheets/armadillo.png"
+ },
+ {
+  "skin": "asoldier",
+  "title": "Lockbreaker",
+  "round": 2,
+  "frame": [
+   26,
+   36
+  ],
+  "orig_frame": [
+   26,
+   36
+  ],
+  "fly": false,
+  "cave_body": false,
+  "monsters": [
+   [
+    "cave_lockbreaker",
+    "Lockbreaker",
+    1
+   ]
+  ],
+  "file": "sheets/asoldier.png"
+ },
+ {
+  "skin": "bat",
+  "title": "Bat",
+  "round": 1,
+  "frame": [
+   60,
+   64
+  ],
+  "orig_frame": [
+   60,
+   64
+  ],
+  "fly": true,
+  "cave_body": false,
+  "monsters": [
+   [
+    "bat",
+    "Bat",
+    1
+   ],
+   [
+    "nerfedbat",
+    "Bat",
+    1
+   ],
+   [
+    "cave_bat",
+    "Cave Bat",
+    1
+   ]
+  ],
+  "file": "sheets/bat.png"
+ },
+ {
+  "skin": "bbpompom",
+  "title": "Pom Pom",
+  "round": 3,
+  "frame": [
+   60,
+   64
+  ],
+  "orig_frame": [
+   60,
+   64
+  ],
+  "fly": false,
+  "cave_body": false,
+  "monsters": [
+   [
+    "bbpompom",
+    "Pom Pom",
+    1
+   ]
+  ],
+  "file": "sheets/bbpompom.png"
+ },
+ {
+  "skin": "bee",
+  "title": "Bee",
+  "round": 1,
+  "frame": [
+   60,
+   64
+  ],
+  "orig_frame": [
+   60,
+   64
+  ],
+  "fly": true,
+  "cave_body": false,
+  "monsters": [
+   [
+    "bee",
+    "Bee",
+    1
+   ]
+  ],
+  "file": "sheets/bee.png"
+ },
+ {
+  "skin": "bigbird",
+  "title": "Eagle",
+  "round": 5,
+  "frame": [
+   61,
+   57
+  ],
+  "orig_frame": [
+   61,
+   57
+  ],
+  "fly": true,
+  "cave_body": false,
+  "monsters": [
+   [
+    "bigbird",
+    "Hawk",
+    1
+   ]
+  ],
+  "file": "sheets/bigbird.png"
+ },
+ {
+  "skin": "bluefairy",
+  "title": "Blue Fairy",
+  "round": 4,
+  "frame": [
+   28,
+   36
+  ],
+  "orig_frame": [
+   26,
+   36
+  ],
+  "fly": true,
+  "cave_body": false,
+  "monsters": [
+   [
+    "bluefairy",
+    "Fairy",
+    1
+   ]
+  ],
+  "file": "sheets/bluefairy.png"
+ },
+ {
+  "skin": "boar",
+  "title": "Wild Boar",
+  "round": 4,
+  "frame": [
+   65,
+   66
+  ],
+  "orig_frame": [
+   65,
+   66
+  ],
+  "fly": false,
+  "cave_body": false,
+  "monsters": [
+   [
+    "boar",
+    "Wild Boar",
+    1
+   ]
+  ],
+  "file": "sheets/boar.png"
+ },
+ {
+  "skin": "booboo",
+  "title": "Booboo",
+  "round": 4,
+  "frame": [
+   26,
+   36
+  ],
+  "orig_frame": [
+   26,
+   36
+  ],
+  "fly": true,
+  "cave_body": false,
+  "monsters": [
+   [
+    "booboo",
+    "Boo Boo",
+    1
+   ]
+  ],
+  "file": "sheets/booboo.png"
+ },
+ {
+  "skin": "bscorpion",
+  "title": "Black Scorpion",
+  "round": 1,
+  "frame": [
+   58,
+   64
+  ],
+  "orig_frame": [
+   58,
+   64
+  ],
+  "fly": false,
+  "cave_body": false,
+  "monsters": [
+   [
+    "bscorpion",
+    "Black Scorpion",
+    1
+   ]
+  ],
+  "file": "sheets/bscorpion.png"
+ },
+ {
+  "skin": "cgoo",
+  "title": "Irradiated Goo",
+  "round": 1,
+  "frame": [
+   60,
+   64
+  ],
+  "orig_frame": [
+   60,
+   64
+  ],
+  "fly": false,
+  "cave_body": false,
+  "monsters": [
+   [
+    "cgoo",
+    "Irradiated Goo",
+    1
+   ]
+  ],
+  "file": "sheets/cgoo.png"
+ },
+ {
+  "skin": "chestm",
+  "title": "Angry Chest",
+  "round": 2,
+  "frame": [
+   60,
+   64
+  ],
+  "orig_frame": [
+   60,
+   64
+  ],
+  "fly": false,
+  "cave_body": false,
+  "monsters": [
+   [
+    "chestm",
+    "Angry Chest",
+    1
+   ]
+  ],
+  "file": "sheets/chestm.png"
+ },
+ {
+  "skin": "chestx",
+  "title": "Mimic",
+  "round": 2,
+  "frame": [
+   60,
+   64
+  ],
+  "orig_frame": [
+   60,
+   64
+  ],
+  "fly": false,
+  "cave_body": false,
+  "monsters": [
+   [
+    "mimic",
+    "Mimic",
+    1
+   ]
+  ],
+  "file": "sheets/chestx.png"
+ },
+ {
+  "skin": "cobold",
+  "title": "Kobold",
+  "round": 1,
+  "frame": [
+   47,
+   50
+  ],
+  "orig_frame": [
+   47,
+   50
+  ],
+  "fly": false,
+  "cave_body": false,
+  "monsters": [
+   [
+    "kobold",
+    "Kobold",
+    1
+   ]
+  ],
+  "file": "sheets/cobold.png"
+ },
+ {
+  "skin": "crab",
+  "title": "Tiny Crab",
+  "round": 1,
+  "frame": [
+   60,
+   64
+  ],
+  "orig_frame": [
+   60,
+   64
+  ],
+  "fly": false,
+  "cave_body": false,
+  "monsters": [
+   [
+    "crab",
+    "Tiny Crab",
+    0.5
+   ],
+   [
+    "cave_crab",
+    "Cave Crab",
+    0.5
+   ]
+  ],
+  "file": "sheets/crab.png"
+ },
+ {
+  "skin": "crabx",
+  "title": "Huge Crab",
+  "round": 1,
+  "frame": [
+   60,
+   64
+  ],
+  "orig_frame": [
+   60,
+   64
+  ],
+  "fly": false,
+  "cave_body": false,
+  "monsters": [
+   [
+    "crabx",
+    "Huge Crab",
+    1
+   ],
+   [
+    "crabxx",
+    "Giga Crab",
+    1.5
+   ]
+  ],
+  "file": "sheets/crabx.png"
+ },
+ {
+  "skin": "croc",
+  "title": "Croc",
+  "round": 2,
+  "frame": [
+   76,
+   64
+  ],
+  "orig_frame": [
+   60,
+   64
+  ],
+  "fly": false,
+  "cave_body": false,
+  "monsters": [
+   [
+    "croc",
+    "Croc",
+    1
+   ]
+  ],
+  "file": "sheets/croc.png"
+ },
+ {
+  "skin": "cutebee",
+  "title": "Cute Bee",
+  "round": 1,
+  "frame": [
+   26,
+   36
+  ],
+  "orig_frame": [
+   26,
+   36
+  ],
+  "fly": true,
+  "cave_body": false,
+  "monsters": [
+   [
+    "cutebee",
+    "Cute Bee",
+    1
+   ]
+  ],
+  "file": "sheets/cutebee.png"
+ },
+ {
+  "skin": "dknight2",
+  "title": "Dark Knight",
+  "round": 2,
+  "frame": [
+   47,
+   50
+  ],
+  "orig_frame": [
+   47,
+   50
+  ],
+  "fly": false,
+  "cave_body": false,
+  "monsters": [
+   [
+    "dknight2",
+    "Dark Knight",
+    1
+   ]
+  ],
+  "file": "sheets/dknight2.png"
+ },
+ {
+  "skin": "dragold",
+  "title": "Dragold",
+  "round": 4,
+  "frame": [
+   96,
+   69
+  ],
+  "orig_frame": [
+   52,
+   53
+  ],
+  "fly": false,
+  "cave_body": false,
+  "monsters": [
+   [
+    "dragold",
+    "Dragold",
+    1
+   ]
+  ],
+  "file": "sheets/dragold.png"
+ },
+ {
+  "skin": "dryad",
+  "title": "Dryad",
+  "round": 3,
+  "frame": [
+   26,
+   36
+  ],
+  "orig_frame": [
+   26,
+   36
+  ],
+  "fly": false,
+  "cave_body": false,
+  "monsters": [
+   [
+    "dryad",
+    "Dryad",
+    1
+   ]
+  ],
+  "file": "sheets/dryad.png"
+ },
+ {
+  "skin": "eelemental",
+  "title": "Earth Elemental",
+  "round": 2,
+  "frame": [
+   60,
+   64
+  ],
+  "orig_frame": [
+   60,
+   64
+  ],
+  "fly": false,
+  "cave_body": false,
+  "monsters": [
+   [
+    "eelemental",
+    "Earth Elemental",
+    1
+   ]
+  ],
+  "file": "sheets/eelemental.png"
+ },
+ {
+  "skin": "ent",
+  "title": "Ent",
+  "round": 1,
+  "frame": [
+   47,
+   50
+  ],
+  "orig_frame": [
+   47,
+   50
+  ],
+  "fly": false,
+  "cave_body": false,
+  "monsters": [
+   [
+    "ent",
+    "Ent",
+    1
+   ]
+  ],
+  "file": "sheets/ent.png"
+ },
+ {
+  "skin": "felemental",
+  "title": "Fire Elemental",
+  "round": 3,
+  "frame": [
+   60,
+   64
+  ],
+  "orig_frame": [
+   60,
+   64
+  ],
+  "fly": false,
+  "cave_body": false,
+  "monsters": [
+   [
+    "felemental",
+    "Fire Elemental",
+    1
+   ]
+  ],
+  "file": "sheets/felemental.png"
+ },
+ {
+  "skin": "fieldgen0",
+  "title": "Field Generator",
+  "round": 2,
+  "frame": [
+   31,
+   36
+  ],
+  "orig_frame": [
+   31,
+   36
+  ],
+  "fly": false,
+  "cave_body": false,
+  "monsters": [
+   [
+    "fieldgen0",
+    "Field Generator",
+    1
+   ]
+  ],
+  "file": "sheets/fieldgen0.png"
+ },
+ {
+  "skin": "fireroamer",
+  "title": "Fire Spirit",
+  "round": 2,
+  "frame": [
+   60,
+   64
+  ],
+  "orig_frame": [
+   60,
+   64
+  ],
+  "fly": true,
+  "cave_body": false,
+  "monsters": [
+   [
+    "fireroamer",
+    "Fire Spirit",
+    1
+   ]
+  ],
+  "file": "sheets/fireroamer.png"
+ },
+ {
+  "skin": "franky",
+  "title": "Franky",
+  "round": 3,
+  "frame": [
+   25,
+   36
+  ],
+  "orig_frame": [
+   25,
+   36
+  ],
+  "fly": false,
+  "cave_body": false,
+  "monsters": [
+   [
+    "franky",
+    "Franky",
+    1
+   ]
+  ],
+  "file": "sheets/franky.png"
+ },
+ {
+  "skin": "frog",
+  "title": "Froggie",
+  "round": 1,
+  "frame": [
+   60,
+   64
+  ],
+  "orig_frame": [
+   60,
+   64
+  ],
+  "fly": false,
+  "cave_body": false,
+  "monsters": [
+   [
+    "frog",
+    "Froggie",
+    1
+   ]
+  ],
+  "file": "sheets/frog.png"
+ },
+ {
+  "skin": "fvampire",
+  "title": "Ms. Dracul",
+  "round": 3,
+  "frame": [
+   32,
+   36
+  ],
+  "orig_frame": [
+   26,
+   36
+  ],
+  "fly": false,
+  "cave_body": false,
+  "monsters": [
+   [
+    "fvampire",
+    "Ms. Dracul",
+    1
+   ]
+  ],
+  "file": "sheets/fvampire.png"
+ },
+ {
+  "skin": "gbluepro",
+  "title": "Protector of Frost",
+  "round": 1,
+  "frame": [
+   26,
+   36
+  ],
+  "orig_frame": [
+   26,
+   36
+  ],
+  "fly": false,
+  "cave_body": false,
+  "monsters": [
+   [
+    "gbluepro",
+    "Protector of Frost",
+    1
+   ]
+  ],
+  "file": "sheets/gbluepro.png"
+ },
+ {
+  "skin": "ggreenpro",
+  "title": "Protector of Nature",
+  "round": 2,
+  "frame": [
+   26,
+   36
+  ],
+  "orig_frame": [
+   26,
+   36
+  ],
+  "fly": false,
+  "cave_body": false,
+  "monsters": [
+   [
+    "ggreenpro",
+    "Protector of Nature",
+    1
+   ]
+  ],
+  "file": "sheets/ggreenpro.png"
+ },
+ {
+  "skin": "ghost",
+  "title": "Ghost",
+  "round": 2,
+  "frame": [
+   60,
+   64
+  ],
+  "orig_frame": [
+   60,
+   64
+  ],
+  "fly": true,
+  "cave_body": false,
+  "monsters": [
+   [
+    "ghost",
+    "Ghost",
+    1
+   ]
+  ],
+  "file": "sheets/ghost.png"
+ },
+ {
+  "skin": "goblin",
+  "title": "Sneaky Goblin",
+  "round": 1,
+  "frame": [
+   26,
+   36
+  ],
+  "orig_frame": [
+   26,
+   36
+  ],
+  "fly": false,
+  "cave_body": false,
+  "monsters": [
+   [
+    "goblin",
+    "Sneaky Goblin",
+    1
+   ]
+  ],
+  "file": "sheets/goblin.png"
+ },
+ {
+  "skin": "goldenbat",
+  "title": "Golden Bat",
+  "round": 1,
+  "frame": [
+   60,
+   64
+  ],
+  "orig_frame": [
+   60,
+   64
+  ],
+  "fly": true,
+  "cave_body": false,
+  "monsters": [
+   [
+    "goldenbat",
+    "Golden Bat",
+    1
+   ]
+  ],
+  "file": "sheets/goldenbat.png"
+ },
+ {
+  "skin": "goldenbot",
+  "title": "Golden Bot",
+  "round": 1,
+  "frame": [
+   31,
+   36
+  ],
+  "orig_frame": [
+   31,
+   36
+  ],
+  "fly": false,
+  "cave_body": false,
+  "monsters": [
+   [
+    "goldenbot",
+    "Golden Bot",
+    1
+   ]
+  ],
+  "file": "sheets/goldenbot.png"
+ },
+ {
+  "skin": "goo",
+  "title": "Goo",
+  "round": 1,
+  "frame": [
+   60,
+   64
+  ],
+  "orig_frame": [
+   60,
+   64
+  ],
+  "fly": false,
+  "cave_body": false,
+  "monsters": [
+   [
+    "goo",
+    "Goo",
+    1
+   ]
+  ],
+  "file": "sheets/goo.png"
+ },
+ {
+  "skin": "goo4",
+  "title": "Brawl Goo",
+  "round": 1,
+  "frame": [
+   24,
+   32
+  ],
+  "orig_frame": [
+   24,
+   32
+  ],
+  "fly": false,
+  "cave_body": false,
+  "monsters": [
+   [
+    "bgoo",
+    "Brawl Goo",
+    1.5
+   ]
+  ],
+  "file": "sheets/goo4.png"
+ },
+ {
+  "skin": "gooD",
+  "title": "Rainbow Goo",
+  "round": 1,
+  "frame": [
+   26,
+   32
+  ],
+  "orig_frame": [
+   24,
+   32
+  ],
+  "fly": false,
+  "cave_body": false,
+  "monsters": [
+   [
+    "rgoo",
+    "Rainbow Goo",
+    1.5
+   ]
+  ],
+  "file": "sheets/gooD.png"
+ },
+ {
+  "skin": "gpurplepro",
+  "title": "Protector of Darkness",
+  "round": 1,
+  "frame": [
+   26,
+   36
+  ],
+  "orig_frame": [
+   26,
+   36
+  ],
+  "fly": false,
+  "cave_body": false,
+  "monsters": [
+   [
+    "gpurplepro",
+    "Protector of Darkness",
+    1
+   ]
+  ],
+  "file": "sheets/gpurplepro.png"
+ },
+ {
+  "skin": "gredpro",
+  "title": "Protector of Fire",
+  "round": 1,
+  "frame": [
+   26,
+   36
+  ],
+  "orig_frame": [
+   26,
+   36
+  ],
+  "fly": false,
+  "cave_body": false,
+  "monsters": [
+   [
+    "gredpro",
+    "Protector of Fire",
+    1
+   ]
+  ],
+  "file": "sheets/gredpro.png"
+ },
+ {
+  "skin": "greenfairy",
+  "title": "Fairy (green)",
+  "round": 2,
+  "frame": [
+   28,
+   36
+  ],
+  "orig_frame": [
+   26,
+   36
+  ],
+  "fly": true,
+  "cave_body": false,
+  "monsters": [
+   [
+    "greenfairy",
+    "Fairy",
+    1
+   ]
+  ],
+  "file": "sheets/greenfairy.png"
+ },
+ {
+  "skin": "greenjr",
+  "title": "Green Jr.",
+  "round": 1,
+  "frame": [
+   25,
+   36
+  ],
+  "orig_frame": [
+   25,
+   36
+  ],
+  "fly": false,
+  "cave_body": false,
+  "monsters": [
+   [
+    "greenjr",
+    "Green Jr.",
+    1
+   ]
+  ],
+  "file": "sheets/greenjr.png"
+ },
+ {
+  "skin": "grinch",
+  "title": "Grinch",
+  "round": 3,
+  "frame": [
+   27,
+   36
+  ],
+  "orig_frame": [
+   27,
+   36
+  ],
+  "fly": false,
+  "cave_body": false,
+  "monsters": [
+   [
+    "grinch",
+    "Grinch",
+    1
+   ]
+  ],
+  "file": "sheets/grinch.png"
+ },
+ {
+  "skin": "gscorpion",
+  "title": "Scorpion (green)",
+  "round": 1,
+  "frame": [
+   60,
+   64
+  ],
+  "orig_frame": [
+   60,
+   64
+  ],
+  "fly": false,
+  "cave_body": false,
+  "monsters": [
+   [
+    "gscorpion",
+    "Scorpion",
+    1
+   ]
+  ],
+  "file": "sheets/gscorpion.png"
+ },
+ {
+  "skin": "harpy",
+  "title": "Harpy",
+  "round": 2,
+  "frame": [
+   52,
+   53
+  ],
+  "orig_frame": [
+   52,
+   53
+  ],
+  "fly": false,
+  "cave_body": false,
+  "monsters": [
+   [
+    "harpy",
+    "Harpy",
+    1
+   ]
+  ],
+  "file": "sheets/harpy.png"
+ },
+ {
+  "skin": "hen",
+  "title": "Chicken (hen)",
+  "round": 1,
+  "frame": [
+   42,
+   36
+  ],
+  "orig_frame": [
+   42,
+   36
+  ],
+  "fly": false,
+  "cave_body": false,
+  "monsters": [
+   [
+    "hen",
+    "Chicken",
+    1
+   ]
+  ],
+  "file": "sheets/hen.png"
+ },
+ {
+  "skin": "icegolem",
+  "title": "Ice Golem",
+  "round": 2,
+  "frame": [
+   47,
+   50
+  ],
+  "orig_frame": [
+   47,
+   50
+  ],
+  "fly": false,
+  "cave_body": false,
+  "monsters": [
+   [
+    "icegolem",
+    "Ice Golem",
+    1
+   ]
+  ],
+  "file": "sheets/icegolem.png"
+ },
+ {
+  "skin": "iceroamer",
+  "title": "Water Spirit",
+  "round": 4,
+  "frame": [
+   60,
+   64
+  ],
+  "orig_frame": [
+   60,
+   64
+  ],
+  "fly": true,
+  "cave_body": false,
+  "monsters": [
+   [
+    "iceroamer",
+    "Water Spirit",
+    1
+   ]
+  ],
+  "file": "sheets/iceroamer.png"
+ },
+ {
+  "skin": "jr",
+  "title": "Jr.",
+  "round": 1,
+  "frame": [
+   25,
+   36
+  ],
+  "orig_frame": [
+   25,
+   36
+  ],
+  "fly": false,
+  "cave_body": false,
+  "monsters": [
+   [
+    "jr",
+    "Jr.",
+    1
+   ]
+  ],
+  "file": "sheets/jr.png"
+ },
+ {
+  "skin": "kitty1",
+  "title": "Kitty",
+  "round": 2,
+  "frame": [
+   28,
+   36
+  ],
+  "orig_frame": [
+   26,
+   36
+  ],
+  "fly": false,
+  "cave_body": false,
+  "monsters": [
+   [
+    "kitty1",
+    "Kitty",
+    1
+   ]
+  ],
+  "file": "sheets/kitty1.png"
+ },
+ {
+  "skin": "kitty2",
+  "title": "Kitty",
+  "round": 2,
+  "frame": [
+   28,
+   36
+  ],
+  "orig_frame": [
+   26,
+   36
+  ],
+  "fly": false,
+  "cave_body": false,
+  "monsters": [
+   [
+    "kitty2",
+    "Kitty",
+    1
+   ]
+  ],
+  "file": "sheets/kitty2.png"
+ },
+ {
+  "skin": "kitty3",
+  "title": "Kitty",
+  "round": 2,
+  "frame": [
+   28,
+   36
+  ],
+  "orig_frame": [
+   26,
+   36
+  ],
+  "fly": false,
+  "cave_body": false,
+  "monsters": [
+   [
+    "kitty3",
+    "Kitty",
+    1
+   ]
+  ],
+  "file": "sheets/kitty3.png"
+ },
+ {
+  "skin": "kitty4",
+  "title": "Kitty",
+  "round": 2,
+  "frame": [
+   28,
+   36
+  ],
+  "orig_frame": [
+   26,
+   36
+  ],
+  "fly": false,
+  "cave_body": false,
+  "monsters": [
+   [
+    "kitty4",
+    "Kitty",
+    1
+   ]
+  ],
+  "file": "sheets/kitty4.png"
+ },
+ {
+  "skin": "ligerx",
+  "title": "Liger X",
+  "round": 2,
+  "frame": [
+   50,
+   46
+  ],
+  "orig_frame": [
+   50,
+   46
+  ],
+  "fly": false,
+  "cave_body": false,
+  "monsters": [
+   [
+    "ligerx",
+    "Liger X",
+    1
+   ]
+  ],
+  "file": "sheets/ligerx.png"
+ },
+ {
+  "skin": "manyeye",
+  "title": "Many Eye",
+  "round": 1,
+  "frame": [
+   52,
+   53
+  ],
+  "orig_frame": [
+   52,
+   53
+  ],
+  "fly": true,
+  "cave_body": false,
+  "monsters": [
+   [
+    "manyeye",
+    "Many Eye",
+    1
+   ]
+  ],
+  "file": "sheets/manyeye.png"
+ },
+ {
+  "skin": "marmor10d",
+  "title": "Cave Guard",
+  "round": 3,
+  "frame": [
+   27,
+   36
+  ],
+  "orig_frame": [
+   27,
+   36
+  ],
+  "fly": false,
+  "cave_body": true,
+  "monsters": [
+   [
+    "cave_guard",
+    "Cave Guard",
+    1
+   ]
+  ],
+  "file": "sheets/marmor10d.png"
+ },
+ {
+  "skin": "marmor6e",
+  "title": "Cornered Rogue",
+  "round": 3,
+  "frame": [
+   27,
+   36
+  ],
+  "orig_frame": [
+   27,
+   36
+  ],
+  "fly": false,
+  "cave_body": true,
+  "monsters": [
+   [
+    "cave_rogue",
+    "Cornered Rogue",
+    1
+   ]
+  ],
+  "file": "sheets/marmor6e.png"
+ },
+ {
+  "skin": "marmor6f",
+  "title": "Cave Traveler",
+  "round": 3,
+  "frame": [
+   27,
+   36
+  ],
+  "orig_frame": [
+   27,
+   36
+  ],
+  "fly": false,
+  "cave_body": true,
+  "monsters": [
+   [
+    "cave_npc",
+    "Cave Traveler",
+    1
+   ]
+  ],
+  "file": "sheets/marmor6f.png"
+ },
+ {
+  "skin": "mbody3f",
+  "title": "Moth Keeper",
+  "round": 4,
+  "frame": [
+   27,
+   36
+  ],
+  "orig_frame": [
+   27,
+   36
+  ],
+  "fly": false,
+  "cave_body": true,
+  "monsters": [
+   [
+    "cave_mothkeeper",
+    "Moth Keeper",
+    1
+   ]
+  ],
+  "file": "sheets/mbody3f.png"
+ },
+ {
+  "skin": "mbody6b",
+  "title": "Dark Mage (cave)",
+  "round": 3,
+  "frame": [
+   27,
+   36
+  ],
+  "orig_frame": [
+   27,
+   36
+  ],
+  "fly": false,
+  "cave_body": true,
+  "monsters": [
+   [
+    "cave_darkmage",
+    "Dark Mage",
+    1
+   ]
+  ],
+  "file": "sheets/mbody6b.png"
+ },
+ {
+  "skin": "mechagnome",
+  "title": "Mechagnome",
+  "round": 5,
+  "frame": [
+   26,
+   36
+  ],
+  "orig_frame": [
+   26,
+   36
+  ],
+  "fly": false,
+  "cave_body": false,
+  "monsters": [
+   [
+    "mechagnome",
+    "Mech-a Gnome",
+    1
+   ]
+  ],
+  "file": "sheets/mechagnome.png"
+ },
+ {
+  "skin": "minimush",
+  "title": "Pom Pom (small)",
+  "round": 2,
+  "frame": [
+   60,
+   64
+  ],
+  "orig_frame": [
+   60,
+   64
+  ],
+  "fly": false,
+  "cave_body": false,
+  "monsters": [
+   [
+    "minimush",
+    "Pom Pom",
+    1
+   ]
+  ],
+  "file": "sheets/minimush.png"
+ },
+ {
+  "skin": "mole",
+  "title": "Mole",
+  "round": 1,
+  "frame": [
+   60,
+   64
+  ],
+  "orig_frame": [
+   60,
+   64
+  ],
+  "fly": false,
+  "cave_body": false,
+  "monsters": [
+   [
+    "mole",
+    "Mole",
+    1
+   ]
+  ],
+  "file": "sheets/mole.png"
+ },
+ {
+  "skin": "mrgreen",
+  "title": "Mr. Green",
+  "round": 1,
+  "frame": [
+   26,
+   36
+  ],
+  "orig_frame": [
+   26,
+   36
+  ],
+  "fly": false,
+  "cave_body": false,
+  "monsters": [
+   [
+    "mrgreen",
+    "Mr. Green",
+    1
+   ]
+  ],
+  "file": "sheets/mrgreen.png"
+ },
+ {
+  "skin": "mrpumpkin",
+  "title": "Mr. Pumpkin",
+  "round": 1,
+  "frame": [
+   26,
+   36
+  ],
+  "orig_frame": [
+   26,
+   36
+  ],
+  "fly": false,
+  "cave_body": false,
+  "monsters": [
+   [
+    "mrpumpkin",
+    "Mr. Pumpkin",
+    1
+   ]
+  ],
+  "file": "sheets/mrpumpkin.png"
+ },
+ {
+  "skin": "mummy",
+  "title": "Mummy",
+  "round": 4,
+  "frame": [
+   26,
+   36
+  ],
+  "orig_frame": [
+   26,
+   36
+  ],
+  "fly": false,
+  "cave_body": false,
+  "monsters": [
+   [
+    "mummy",
+    "Mummy",
+    1
+   ],
+   [
+    "nerfedmummy",
+    "Mummy",
+    1
+   ]
+  ],
+  "file": "sheets/mummy.png"
+ },
+ {
+  "skin": "mvampire",
+  "title": "Dracul",
+  "round": 4,
+  "frame": [
+   26,
+   36
+  ],
+  "orig_frame": [
+   26,
+   36
+  ],
+  "fly": false,
+  "cave_body": false,
+  "monsters": [
+   [
+    "mvampire",
+    "Dracul",
+    1
+   ]
+  ],
+  "file": "sheets/mvampire.png"
+ },
+ {
+  "skin": "nelemental",
+  "title": "Nature Elemental",
+  "round": 3,
+  "frame": [
+   60,
+   64
+  ],
+  "orig_frame": [
+   60,
+   64
+  ],
+  "fly": false,
+  "cave_body": false,
+  "monsters": [
+   [
+    "nelemental",
+    "Nature Elemental",
+    1
+   ]
+  ],
+  "file": "sheets/nelemental.png"
+ },
+ {
+  "skin": "odino",
+  "title": "Dino",
+  "round": 2,
+  "frame": [
+   38,
+   36
+  ],
+  "orig_frame": [
+   38,
+   36
+  ],
+  "fly": false,
+  "cave_body": false,
+  "monsters": [
+   [
+    "odino",
+    "Dino",
+    1
+   ]
+  ],
+  "file": "sheets/odino.png"
+ },
+ {
+  "skin": "oneeye",
+  "title": "One Eye",
+  "round": 1,
+  "frame": [
+   52,
+   53
+  ],
+  "orig_frame": [
+   52,
+   53
+  ],
+  "fly": true,
+  "cave_body": false,
+  "monsters": [
+   [
+    "oneeye",
+    "One Eye",
+    1
+   ]
+  ],
+  "file": "sheets/oneeye.png"
+ },
+ {
+  "skin": "osnake",
+  "title": "Snake (orange)",
+  "round": 1,
+  "frame": [
+   60,
+   64
+  ],
+  "orig_frame": [
+   60,
+   64
+  ],
+  "fly": false,
+  "cave_body": false,
+  "monsters": [
+   [
+    "osnake",
+    "Snake",
+    1
+   ],
+   [
+    "cave_snake",
+    "Cave Snake",
+    1
+   ]
+  ],
+  "file": "sheets/osnake.png"
+ },
+ {
+  "skin": "phoenix",
+  "title": "Phoenix",
+  "round": 3,
+  "frame": [
+   61,
+   57
+  ],
+  "orig_frame": [
+   61,
+   57
+  ],
+  "fly": true,
+  "cave_body": false,
+  "monsters": [
+   [
+    "phoenix",
+    "Phoenix",
+    1
+   ]
+  ],
+  "file": "sheets/phoenix.png"
+ },
+ {
+  "skin": "pinkgoblin",
+  "title": "Pink Goblin",
+  "round": 4,
+  "frame": [
+   57,
+   64
+  ],
+  "orig_frame": [
+   57,
+   64
+  ],
+  "fly": false,
+  "cave_body": false,
+  "monsters": [
+   [
+    "pinkgoblin",
+    "Pink Goblin",
+    1
+   ]
+  ],
+  "file": "sheets/pinkgoblin.png"
+ },
+ {
+  "skin": "pinkgoo",
+  "title": "Love Goo",
+  "round": 1,
+  "frame": [
+   60,
+   64
+  ],
+  "orig_frame": [
+   60,
+   64
+  ],
+  "fly": false,
+  "cave_body": false,
+  "monsters": [
+   [
+    "pinkgoo",
+    "Love Goo",
+    1
+   ]
+  ],
+  "file": "sheets/pinkgoo.png"
+ },
+ {
+  "skin": "plantoid",
+  "title": "Sprawling",
+  "round": 1,
+  "frame": [
+   60,
+   64
+  ],
+  "orig_frame": [
+   60,
+   64
+  ],
+  "fly": false,
+  "cave_body": false,
+  "monsters": [
+   [
+    "plantoid",
+    "Sprawling",
+    1
+   ]
+  ],
+  "file": "sheets/plantoid.png"
+ },
+ {
+  "skin": "poisio",
+  "title": "Poisio",
+  "round": 5,
+  "frame": [
+   60,
+   64
+  ],
+  "orig_frame": [
+   60,
+   64
+  ],
+  "fly": false,
+  "cave_body": false,
+  "monsters": [
+   [
+    "poisio",
+    "Poisio",
+    1
+   ]
+  ],
+  "file": "sheets/poisio.png"
+ },
+ {
+  "skin": "porcupine",
+  "title": "Porcupine",
+  "round": 1,
+  "frame": [
+   42,
+   36
+  ],
+  "orig_frame": [
+   42,
+   36
+  ],
+  "fly": false,
+  "cave_body": false,
+  "monsters": [
+   [
+    "porcupine",
+    "Porcupine",
+    1
+   ]
+  ],
+  "file": "sheets/porcupine.png"
+ },
+ {
+  "skin": "pppompom",
+  "title": "Pom Pom",
+  "round": 2,
+  "frame": [
+   57,
+   64
+  ],
+  "orig_frame": [
+   57,
+   64
+  ],
+  "fly": false,
+  "cave_body": false,
+  "monsters": [
+   [
+    "pppompom",
+    "Pom Pom",
+    1
+   ]
+  ],
+  "file": "sheets/pppompom.png"
+ },
+ {
+  "skin": "prat",
+  "title": "Vampire Rat",
+  "round": 2,
+  "frame": [
+   57,
+   64
+  ],
+  "orig_frame": [
+   57,
+   64
+  ],
+  "fly": false,
+  "cave_body": false,
+  "monsters": [
+   [
+    "prat",
+    "Vampire Rat",
+    1
+   ]
+  ],
+  "file": "sheets/prat.png"
+ },
+ {
+  "skin": "puppy1",
+  "title": "Husky Pup",
+  "round": 4,
+  "frame": [
+   26,
+   36
+  ],
+  "orig_frame": [
+   26,
+   36
+  ],
+  "fly": false,
+  "cave_body": false,
+  "monsters": [
+   [
+    "puppy1",
+    "Puppy",
+    1
+   ]
+  ],
+  "file": "sheets/puppy1.png"
+ },
+ {
+  "skin": "puppy2",
+  "title": "Puppy",
+  "round": 3,
+  "frame": [
+   26,
+   36
+  ],
+  "orig_frame": [
+   26,
+   36
+  ],
+  "fly": false,
+  "cave_body": false,
+  "monsters": [
+   [
+    "puppy2",
+    "Puppy",
+    1
+   ]
+  ],
+  "file": "sheets/puppy2.png"
+ },
+ {
+  "skin": "puppy3",
+  "title": "Puppy",
+  "round": 3,
+  "frame": [
+   26,
+   36
+  ],
+  "orig_frame": [
+   26,
+   36
+  ],
+  "fly": false,
+  "cave_body": false,
+  "monsters": [
+   [
+    "puppy3",
+    "Puppy",
+    1
+   ]
+  ],
+  "file": "sheets/puppy3.png"
+ },
+ {
+  "skin": "puppy4",
+  "title": "Puppy",
+  "round": 3,
+  "frame": [
+   26,
+   36
+  ],
+  "orig_frame": [
+   26,
+   36
+  ],
+  "fly": false,
+  "cave_body": false,
+  "monsters": [
+   [
+    "puppy4",
+    "Puppy",
+    1
+   ]
+  ],
+  "file": "sheets/puppy4.png"
+ },
+ {
+  "skin": "rat",
+  "title": "Rat",
+  "round": 1,
+  "frame": [
+   60,
+   64
+  ],
+  "orig_frame": [
+   60,
+   64
+  ],
+  "fly": false,
+  "cave_body": false,
+  "monsters": [
+   [
+    "rat",
+    "Rat",
+    1
+   ],
+   [
+    "jrat",
+    "Rat",
+    1
+   ],
+   [
+    "cave_rat",
+    "Cave Rat",
+    1
+   ]
+  ],
+  "file": "sheets/rat.png"
+ },
+ {
+  "skin": "redfairy",
+  "title": "Fairy (red)",
+  "round": 2,
+  "frame": [
+   28,
+   36
+  ],
+  "orig_frame": [
+   26,
+   36
+  ],
+  "fly": true,
+  "cave_body": false,
+  "monsters": [
+   [
+    "redfairy",
+    "Fairy",
+    1
+   ]
+  ],
+  "file": "sheets/redfairy.png"
+ },
+ {
+  "skin": "rharpy",
+  "title": "Rebel Harpy",
+  "round": 2,
+  "frame": [
+   52,
+   53
+  ],
+  "orig_frame": [
+   52,
+   53
+  ],
+  "fly": false,
+  "cave_body": false,
+  "monsters": [
+   [
+    "rharpy",
+    "Rebel Harpy",
+    1
+   ]
+  ],
+  "file": "sheets/rharpy.png"
+ },
+ {
+  "skin": "rimedjinn",
+  "title": "Rime Djinn",
+  "round": 1,
+  "frame": [
+   52,
+   53
+  ],
+  "orig_frame": [
+   52,
+   53
+  ],
+  "fly": true,
+  "cave_body": false,
+  "monsters": [
+   [
+    "rimedjinn",
+    "Rime Djinn",
+    1
+   ]
+  ],
+  "file": "sheets/rimedjinn.png"
+ },
+ {
+  "skin": "rooster",
+  "title": "Chicken (rooster)",
+  "round": 1,
+  "frame": [
+   42,
+   36
+  ],
+  "orig_frame": [
+   42,
+   36
+  ],
+  "fly": false,
+  "cave_body": false,
+  "monsters": [
+   [
+    "rooster",
+    "Chicken",
+    1
+   ]
+  ],
+  "file": "sheets/rooster.png"
+ },
+ {
+  "skin": "rudolph",
+  "title": "Rudolph",
+  "round": 5,
+  "frame": [
+   65,
+   66
+  ],
+  "orig_frame": [
+   65,
+   66
+  ],
+  "fly": false,
+  "cave_body": false,
+  "monsters": [
+   [
+    "rudolph",
+    "Reindeer",
+    1
+   ]
+  ],
+  "file": "sheets/rudolph.png"
+ },
+ {
+  "skin": "scorpion",
+  "title": "Scorpion",
+  "round": 1,
+  "frame": [
+   60,
+   64
+  ],
+  "orig_frame": [
+   60,
+   64
+  ],
+  "fly": false,
+  "cave_body": false,
+  "monsters": [
+   [
+    "scorpion",
+    "Scorpion",
+    1
+   ],
+   [
+    "cave_scorpion",
+    "Cave Scorpion",
+    1
+   ]
+  ],
+  "file": "sheets/scorpion.png"
+ },
+ {
+  "skin": "shadow",
+  "title": "Dark Wizard",
+  "round": 2,
+  "frame": [
+   26,
+   36
+  ],
+  "orig_frame": [
+   26,
+   36
+  ],
+  "fly": false,
+  "cave_body": false,
+  "monsters": [
+   [
+    "d_wiz",
+    "Dark Wizard",
+    1
+   ]
+  ],
+  "file": "sheets/shadow.png"
+ },
+ {
+  "skin": "skeletor",
+  "title": "Skeletor",
+  "round": 1,
+  "frame": [
+   60,
+   64
+  ],
+  "orig_frame": [
+   60,
+   64
+  ],
+  "fly": false,
+  "cave_body": false,
+  "monsters": [
+   [
+    "skeletor",
+    "Skeletor",
+    1
+   ]
+  ],
+  "file": "sheets/skeletor.png"
+ },
+ {
+  "skin": "slenderman",
+  "title": "Slenderman",
+  "round": 4,
+  "frame": [
+   47,
+   50
+  ],
+  "orig_frame": [
+   47,
+   50
+  ],
+  "fly": false,
+  "cave_body": false,
+  "monsters": [
+   [
+    "slenderman",
+    "Slenderman",
+    1
+   ]
+  ],
+  "file": "sheets/slenderman.png"
+ },
+ {
+  "skin": "snake",
+  "title": "Snake (green)",
+  "round": 2,
+  "frame": [
+   60,
+   64
+  ],
+  "orig_frame": [
+   60,
+   64
+  ],
+  "fly": false,
+  "cave_body": false,
+  "monsters": [
+   [
+    "snake",
+    "Snake",
+    1
+   ]
+  ],
+  "file": "sheets/snake.png"
+ },
+ {
+  "skin": "snowman",
+  "title": "Snowman",
+  "round": 4,
+  "frame": [
+   27,
+   36
+  ],
+  "orig_frame": [
+   25,
+   36
+  ],
+  "fly": false,
+  "cave_body": false,
+  "monsters": [
+   [
+    "snowman",
+    "Snowman",
+    1
+   ]
+  ],
+  "file": "sheets/snowman.png"
+ },
+ {
+  "skin": "sparkbot",
+  "title": "Spark Bot",
+  "round": 1,
+  "frame": [
+   31,
+   36
+  ],
+  "orig_frame": [
+   31,
+   36
+  ],
+  "fly": false,
+  "cave_body": false,
+  "monsters": [
+   [
+    "sparkbot",
+    "Spark Bot",
+    1
+   ]
+  ],
+  "file": "sheets/sparkbot.png"
+ },
+ {
+  "skin": "spider",
+  "title": "Spider",
+  "round": 1,
+  "frame": [
+   60,
+   64
+  ],
+  "orig_frame": [
+   60,
+   64
+  ],
+  "fly": false,
+  "cave_body": false,
+  "monsters": [
+   [
+    "spider",
+    "Spider",
+    1
+   ],
+   [
+    "cave_spider",
+    "Cave Spider",
+    1
+   ],
+   [
+    "cave_broodmother",
+    "Amber Broodmother",
+    1
+   ]
+  ],
+  "file": "sheets/spider.png"
+ },
+ {
+  "skin": "spiderbl",
+  "title": "Black Spider Queen",
+  "round": 1,
+  "frame": [
+   80,
+   48
+  ],
+  "orig_frame": [
+   80,
+   48
+  ],
+  "fly": false,
+  "cave_body": false,
+  "monsters": [
+   [
+    "spiderbl",
+    "Black Spider Queen",
+    1
+   ]
+  ],
+  "file": "sheets/spiderbl.png"
+ },
+ {
+  "skin": "spiderbr",
+  "title": "Brown Spider Queen",
+  "round": 1,
+  "frame": [
+   80,
+   48
+  ],
+  "orig_frame": [
+   80,
+   48
+  ],
+  "fly": false,
+  "cave_body": false,
+  "monsters": [
+   [
+    "spiderbr",
+    "Brown Spider Queen",
+    1
+   ]
+  ],
+  "file": "sheets/spiderbr.png"
+ },
+ {
+  "skin": "spiderr",
+  "title": "Red Spider Queen",
+  "round": 1,
+  "frame": [
+   80,
+   48
+  ],
+  "orig_frame": [
+   80,
+   48
+  ],
+  "fly": false,
+  "cave_body": false,
+  "monsters": [
+   [
+    "spiderr",
+    "Red Spider Queen",
+    1
+   ]
+  ],
+  "file": "sheets/spiderr.png"
+ },
+ {
+  "skin": "squig",
+  "title": "Squig",
+  "round": 2,
+  "frame": [
+   60,
+   64
+  ],
+  "orig_frame": [
+   60,
+   64
+  ],
+  "fly": false,
+  "cave_body": false,
+  "monsters": [
+   [
+    "squig",
+    "Squig",
+    1
+   ]
+  ],
+  "file": "sheets/squig.png"
+ },
+ {
+  "skin": "squigtoad",
+  "title": "Squigtoad",
+  "round": 1,
+  "frame": [
+   60,
+   64
+  ],
+  "orig_frame": [
+   60,
+   64
+  ],
+  "fly": false,
+  "cave_body": false,
+  "monsters": [
+   [
+    "squigtoad",
+    "Squigtoad",
+    1
+   ]
+  ],
+  "file": "sheets/squigtoad.png"
+ },
+ {
+  "skin": "stompy",
+  "title": "Stompy",
+  "round": 5,
+  "frame": [
+   47,
+   50
+  ],
+  "orig_frame": [
+   47,
+   50
+  ],
+  "fly": false,
+  "cave_body": false,
+  "monsters": [
+   [
+    "stompy",
+    "Stompy",
+    1
+   ]
+  ],
+  "file": "sheets/stompy.png"
+ },
+ {
+  "skin": "stoneworm",
+  "title": "Stone Worm",
+  "round": 1,
+  "frame": [
+   60,
+   64
+  ],
+  "orig_frame": [
+   60,
+   64
+  ],
+  "fly": false,
+  "cave_body": false,
+  "monsters": [
+   [
+    "stoneworm",
+    "Stone Worm",
+    1
+   ],
+   [
+    "cave_sentinel",
+    "Counterweight Sentinel",
+    1
+   ]
+  ],
+  "file": "sheets/stoneworm.png"
+ },
+ {
+  "skin": "target",
+  "title": "Target Automatron",
+  "round": 2,
+  "frame": [
+   26,
+   36
+  ],
+  "orig_frame": [
+   26,
+   36
+  ],
+  "fly": false,
+  "cave_body": false,
+  "monsters": [
+   [
+    "target",
+    "Target Automatron",
+    1
+   ]
+  ],
+  "file": "sheets/target.png"
+ },
+ {
+  "skin": "target_a500",
+  "title": "Target Automatron (yellow)",
+  "round": 2,
+  "frame": [
+   26,
+   36
+  ],
+  "orig_frame": [
+   26,
+   36
+  ],
+  "fly": false,
+  "cave_body": false,
+  "monsters": [
+   [
+    "target_a500",
+    "Target Automatron",
+    1
+   ]
+  ],
+  "file": "sheets/target_a500.png"
+ },
+ {
+  "skin": "target_a750",
+  "title": "Target Automatron (red)",
+  "round": 2,
+  "frame": [
+   26,
+   36
+  ],
+  "orig_frame": [
+   26,
+   36
+  ],
+  "fly": false,
+  "cave_body": false,
+  "monsters": [
+   [
+    "target_a750",
+    "Target Automatron",
+    1
+   ]
+  ],
+  "file": "sheets/target_a750.png"
+ },
+ {
+  "skin": "target_ar500red",
+  "title": "Target Automatron (black and silver)",
+  "round": 2,
+  "frame": [
+   26,
+   36
+  ],
+  "orig_frame": [
+   26,
+   36
+  ],
+  "fly": false,
+  "cave_body": false,
+  "monsters": [
+   [
+    "target_ar500red",
+    "Target Automatron",
+    1
+   ]
+  ],
+  "file": "sheets/target_ar500red.png"
+ },
+ {
+  "skin": "target_ar900",
+  "title": "Target Automatron (green)",
+  "round": 2,
+  "frame": [
+   26,
+   36
+  ],
+  "orig_frame": [
+   26,
+   36
+  ],
+  "fly": false,
+  "cave_body": false,
+  "monsters": [
+   [
+    "target_ar900",
+    "Target Automatron",
+    1
+   ]
+  ],
+  "file": "sheets/target_ar900.png"
+ },
+ {
+  "skin": "target_r500",
+  "title": "Target Automatron (blue)",
+  "round": 2,
+  "frame": [
+   26,
+   36
+  ],
+  "orig_frame": [
+   26,
+   36
+  ],
+  "fly": false,
+  "cave_body": false,
+  "monsters": [
+   [
+    "target_r500",
+    "Target Automatron",
+    1
+   ]
+  ],
+  "file": "sheets/target_r500.png"
+ },
+ {
+  "skin": "target_r750",
+  "title": "Target Automatron (purple)",
+  "round": 2,
+  "frame": [
+   26,
+   36
+  ],
+  "orig_frame": [
+   26,
+   36
+  ],
+  "fly": false,
+  "cave_body": false,
+  "monsters": [
+   [
+    "target_r750",
+    "Target Automatron",
+    1
+   ]
+  ],
+  "file": "sheets/target_r750.png"
+ },
+ {
+  "skin": "targetron",
+  "title": "Targetron",
+  "round": 1,
+  "frame": [
+   31,
+   36
+  ],
+  "orig_frame": [
+   31,
+   36
+  ],
+  "fly": false,
+  "cave_body": false,
+  "monsters": [
+   [
+    "targetron",
+    "Targetron",
+    1
+   ]
+  ],
+  "file": "sheets/targetron.png"
+ },
+ {
+  "skin": "tiger",
+  "title": "Tiger",
+  "round": 2,
+  "frame": [
+   50,
+   46
+  ],
+  "orig_frame": [
+   50,
+   46
+  ],
+  "fly": false,
+  "cave_body": false,
+  "monsters": [
+   [
+    "tiger",
+    "Tiger",
+    1
+   ]
+  ],
+  "file": "sheets/tiger.png"
+ },
+ {
+  "skin": "tinyp",
+  "title": "Fairy (tiny)",
+  "round": 3,
+  "frame": [
+   26,
+   36
+  ],
+  "orig_frame": [
+   26,
+   36
+  ],
+  "fly": true,
+  "cave_body": false,
+  "monsters": [
+   [
+    "tinyp",
+    "Fairy",
+    1
+   ]
+  ],
+  "file": "sheets/tinyp.png"
+ },
+ {
+  "skin": "tortoise",
+  "title": "Tortoise",
+  "round": 1,
+  "frame": [
+   60,
+   64
+  ],
+  "orig_frame": [
+   60,
+   64
+  ],
+  "fly": false,
+  "cave_body": false,
+  "monsters": [
+   [
+    "tortoise",
+    "Tortoise",
+    1
+   ]
+  ],
+  "file": "sheets/tortoise.png"
+ },
+ {
+  "skin": "vbat",
+  "title": "Vampireling",
+  "round": 1,
+  "frame": [
+   26,
+   36
+  ],
+  "orig_frame": [
+   26,
+   36
+  ],
+  "fly": true,
+  "cave_body": false,
+  "monsters": [
+   [
+    "vbat",
+    "Vampireling",
+    1
+   ]
+  ],
+  "file": "sheets/vbat.png"
+ },
+ {
+  "skin": "wabbit",
+  "title": "Wabbit",
+  "round": 1,
+  "frame": [
+   60,
+   64
+  ],
+  "orig_frame": [
+   60,
+   64
+  ],
+  "fly": false,
+  "cave_body": false,
+  "monsters": [
+   [
+    "wabbit",
+    "Wabbit",
+    1
+   ]
+  ],
+  "file": "sheets/wabbit.png"
+ },
+ {
+  "skin": "wdino",
+  "title": "Pale Dino",
+  "round": 2,
+  "frame": [
+   38,
+   36
+  ],
+  "orig_frame": [
+   38,
+   36
+  ],
+  "fly": false,
+  "cave_body": false,
+  "monsters": [
+   [
+    "paledino",
+    "Pale Dino",
+    1
+   ]
+  ],
+  "file": "sheets/wdino.png"
+ },
+ {
+  "skin": "welemental",
+  "title": "Water Elemental",
+  "round": 5,
+  "frame": [
+   60,
+   64
+  ],
+  "orig_frame": [
+   60,
+   64
+  ],
+  "fly": false,
+  "cave_body": false,
+  "monsters": [
+   [
+    "welemental",
+    "Water Elemental",
+    1
+   ]
+  ],
+  "file": "sheets/welemental.png"
+ },
+ {
+  "skin": "wolf",
+  "title": "White Wolf",
+  "round": 2,
+  "frame": [
+   65,
+   66
+  ],
+  "orig_frame": [
+   65,
+   66
+  ],
+  "fly": false,
+  "cave_body": false,
+  "monsters": [
+   [
+    "wolf",
+    "White Wolf",
+    1
+   ],
+   [
+    "cave_wolf",
+    "Cave Wolf",
+    1
+   ]
+  ],
+  "file": "sheets/wolf.png"
+ },
+ {
+  "skin": "wolfie",
+  "title": "Dark Hound",
+  "round": 2,
+  "frame": [
+   65,
+   66
+  ],
+  "orig_frame": [
+   65,
+   66
+  ],
+  "fly": false,
+  "cave_body": false,
+  "monsters": [
+   [
+    "wolfie",
+    "Dark Hound",
+    1
+   ]
+  ],
+  "file": "sheets/wolfie.png"
+ },
+ {
+  "skin": "xmagefi",
+  "title": "Mage (fire)",
+  "round": 2,
+  "frame": [
+   26,
+   36
+  ],
+  "orig_frame": [
+   26,
+   36
+  ],
+  "fly": false,
+  "cave_body": false,
+  "monsters": [
+   [
+    "xmagefi",
+    "Mage",
+    1
+   ]
+  ],
+  "file": "sheets/xmagefi.png"
+ },
+ {
+  "skin": "xmagefz",
+  "title": "Mage (frost)",
+  "round": 2,
+  "frame": [
+   26,
+   36
+  ],
+  "orig_frame": [
+   26,
+   36
+  ],
+  "fly": false,
+  "cave_body": false,
+  "monsters": [
+   [
+    "xmagefz",
+    "Mage",
+    1
+   ]
+  ],
+  "file": "sheets/xmagefz.png"
+ },
+ {
+  "skin": "xmagen",
+  "title": "Mage (nature)",
+  "round": 2,
+  "frame": [
+   26,
+   36
+  ],
+  "orig_frame": [
+   26,
+   36
+  ],
+  "fly": false,
+  "cave_body": false,
+  "monsters": [
+   [
+    "xmagen",
+    "Mage",
+    1
+   ]
+  ],
+  "file": "sheets/xmagen.png"
+ },
+ {
+  "skin": "xmagex",
+  "title": "Dark Mage",
+  "round": 2,
+  "frame": [
+   26,
+   36
+  ],
+  "orig_frame": [
+   26,
+   36
+  ],
+  "fly": false,
+  "cave_body": false,
+  "monsters": [
+   [
+    "xmagex",
+    "Dark Mage",
+    1
+   ]
+  ],
+  "file": "sheets/xmagex.png"
+ },
+ {
+  "skin": "xscorpion",
+  "title": "Scorpion (frost)",
+  "round": 1,
+  "frame": [
+   60,
+   64
+  ],
+  "orig_frame": [
+   60,
+   64
+  ],
+  "fly": false,
+  "cave_body": false,
+  "monsters": [
+   [
+    "xscorpion",
+    "Scorpion",
+    1
+   ]
+  ],
+  "file": "sheets/xscorpion.png"
+ },
+ {
+  "skin": "zapper0",
+  "title": "Zapper",
+  "round": 2,
+  "frame": [
+   31,
+   36
+  ],
+  "orig_frame": [
+   31,
+   36
+  ],
+  "fly": false,
+  "cave_body": false,
+  "monsters": [
+   [
+    "zapper0",
+    "Zapper",
+    1
+   ]
+  ],
+  "file": "sheets/zapper0.png"
+ }
+]
