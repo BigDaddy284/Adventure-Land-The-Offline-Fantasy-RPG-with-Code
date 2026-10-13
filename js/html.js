@@ -6469,7 +6469,6 @@ function render_skillbar(empty) {
 				else if (G.skills[current.name || current]) skin = G.skills[current.name || current].skin;
 				html += item_container({ skid: id, skin: skin || "", draggable: false, droppable: true, onclick: "on_skill('" + id + "')" }, current);
 			} else html += item_container({ skid: id, draggable: false, droppable: true });
-			if (i % 7 == 6) html += "<div></div>";
 		});
 		html += "</div>";
 	}

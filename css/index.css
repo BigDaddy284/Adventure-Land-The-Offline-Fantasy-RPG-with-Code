@@ -1660,7 +1660,7 @@ li{
 #sp-modmenu{ right: calc(var(--sp-log-w) - 5px); }
 #skillbar{ position: relative; }
 #skillbar .skillbar-row{ display: inline-flex; align-items: flex-end; font-size: 0; }
-#skillbar .skillbar-slots{ background-color: black; border: 5px solid gray; padding: 2px; width: 378px; box-sizing: content-box; text-align: left; }
+#skillbar .skillbar-slots{ background-color: black; border: 5px solid gray; padding: 2px; width: 378px; box-sizing: content-box; text-align: left; display: grid; grid-template-columns: repeat(7, auto); justify-content: space-between; }
 #skillbar .skillbar-toggle{ position: absolute; right: calc(100% - 5px); bottom: 0; }
 #skillbar .skillbar-row.collapsed .skillbar-toggle{ position: static; margin-right: -5px; }
 #skillbar .skillbar-toggle .gamebutton{ padding: 6px 8px; font-size: 24px; line-height: 18px; }
