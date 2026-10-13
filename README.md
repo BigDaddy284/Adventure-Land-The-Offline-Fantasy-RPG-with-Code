@@ -4,6 +4,12 @@ Fantasy Land is a single-player version of Adventure Land, the MMORPG you can pl
 
 It's built on the MongoDB port of [Adventure Land](https://github.com/kaansoral/adventureland_mongodb) by Kaan Soral and the Adventure Land developers. All credit for the original game goes to them. See the Thanks page in the game.
 
+## Made with AI
+
+Fantasy Land was built with the help of AI. The changes in this version of the game (the Mod Menu and its settings, the single-player changes, the screen layout, the Default Party Script and the packaging) were written with Anthropic's Claude as a coding assistant, working from the requests and testing of the project's owner.
+
+The new artwork is AI-generated too: the redrawn monsters, the redesigned town NPCs, the new character looks and the title screen art. It is used alongside the original Adventure Land art, which was made by the Adventure Land artists and is unchanged where it hasn't been replaced.
+
 ## What you need to install
 
 Install these once:
