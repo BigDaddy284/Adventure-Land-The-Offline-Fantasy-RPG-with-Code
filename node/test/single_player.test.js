@@ -438,3 +438,8 @@ test("the redesigned monster sprites each have a sheet of their own that fits th
 	assert.equal(D.sprites.marmor6f_cave.type, "armor");
 	assert.equal(D.sprites.mbody6b_cave.type, "body");
 });
+
+test("entering a map never logs a PvP or safe zone warning", () => {
+	const src = fs.readFileSync(path.join(__dirname, "..", "..", "js", "functions.js"), "utf8");
+	assert.ok(!/this_is_a_(safe_)?pvp_zone|this_is_a_safe_zone|this_is_a_pvp_server/.test(src));
+});
