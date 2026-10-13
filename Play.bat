@@ -31,6 +31,9 @@ if not exist node\node_modules\ (
 	popd
 )
 
+rem Hide the game's own files, so the folder only shows what you use (turn on Hidden items in File Explorer to see them)
+if exist singleplayer\hidden.txt for /f "usebackq eol=# delims=" %%F in ("singleplayer\hidden.txt") do if exist "%%F" attrib +h "%%F" >nul 2>nul
+
 rem ---------- 1. Database ----------
 rem The game keeps its own database on port 27018 (separate from any MongoDB service on 27017),
 rem started as a one-member replica set because the game needs database transactions.

@@ -1,0 +1,69 @@
+# Fantasy Land hides everything players don't need to open, so the game folder shows only what they use.
+# Play.bat (and so Fantasy Land.exe) hides these each time the game starts. scripts\make_player_zip.py hides them in the zip too.
+# One name per line, relative to the game folder. Lines starting with # are ignored. Turn on "Hidden items" in
+# File Explorer's View menu to see them. Never list: Fantasy Land.exe, Play.bat, Stop.bat, settings.txt, README.md,
+# CHANGELOG.md, LICENSE, logs, singleplayer\data
+
+# The game's code
+admin_bots.js
+admin_dashboard.js
+adventure_functions.js
+api.js
+crons.js
+filters.js
+main.js
+mainframe.js
+mcp_api.js
+models.js
+seo_paths.js
+steam_news.js
+steam_signin.js
+steam_signup.js
+update_notes.js
+version.js
+web_assets.js
+package.json
+package-lock.json
+settings.example.txt
+
+# The game's files and the packages it installs
+common
+css
+design
+docs
+htmls
+images
+js
+languages
+node
+node_modules
+scripts
+secretsandconfig
+sounds
+utility
+
+# Inside singleplayer, only data (your saved game) stays visible
+singleplayer\config
+singleplayer\events_page
+singleplayer\events_page.js
+singleplayer\hidden.txt
+singleplayer\init_db.js
+singleplayer\launcher
+singleplayer\README.md
+singleplayer\stop_db.js
+singleplayer\text.js
+singleplayer\wait_port.js
+singleplayer\web.js
+
+# Developer files (not in the player zip, hidden if they are there)
+.git
+.github
+.gitattributes
+.gitignore
+.prettierignore
+.prettierrc
+.vscode
+mongodb_todo.md
+tauri
+UPDATE_NOTES.md
+useful

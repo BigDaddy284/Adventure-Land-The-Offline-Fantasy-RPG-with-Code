@@ -75,6 +75,7 @@ Holiday events and event monsters are switched in the Mod Menu too.
 
 Each of these opens a character in its own window:
 
+- **Win + button:** the small **Win +** button on top of the Mod Menu icon, at the bottom of the screen, opens a new game window on the character select page.
 - **Characters list:** open the Characters tab and click **Deploy** next to an offline character.
 - **Chat:** type `/window CharacterName`. `/window` on its own opens the character select page.
 - **CODE:** call `open_character_window("CharacterName")`.
@@ -122,11 +123,13 @@ New settings added by a newer version are written to the end of your `settings.t
 
 ## Where things are
 
+The game's own files are hidden, so the game folder shows only what you use: `Fantasy Land.exe`, `Play.bat`, `Stop.bat`, `settings.txt`, this README, `CHANGELOG.md`, `LICENSE`, `logs` and `singleplayer\data`. To see everything, open the folder in File Explorer and turn on **View > Show > Hidden items**. The list of hidden files is `singleplayer\hidden.txt`; `Play.bat` applies it each time the game starts.
+
 - `Fantasy Land.exe`: starts the game, and stops it when you close the game window. Its source is in `singleplayer\launcher`.
 - `Play.bat` and `Stop.bat`: start and stop the game with console windows.
 - `logs\`: messages from the database, website and game server when started by `Fantasy Land.exe`.
 - `CHANGELOG.md`: the changes below, on their own.
-- `settings.txt`: your settings. `settings.example.txt` holds the defaults.
+- `settings.txt`: your settings. `settings.example.txt` (hidden) holds the defaults.
 - `singleplayer\data`: your saved game (the database). Back this folder up to keep your characters safe, with the game stopped.
 - `singleplayer\`: the single-player config, launch helpers and text changes.
 - `node\logic\single_player.js`: reads `settings.txt` and applies it to the game.
@@ -306,6 +309,9 @@ Fantasy Land started as a copy of the MongoDB port of [Adventure Land](https://g
 - New Mod Menu setting, **Trader Discount %** (`trader_discount`, in Market): percent off the gold price of everything in the NPC shops, Ponty and Lost and Found. 0 = normal, 100 = free. Seashell prices aren't changed.
 - **Sell price** is now called **Sell Item Price** in the Mod Menu: what NPCs pay for your items, 1 = normal, 2 = double.
 - **The Mod Menu is grouped:** it opens on a page of groups (Combat, Monsters, Loot, Crafting & Gathering, Market, Characters and Holiday Events), each showing how many of its settings you've changed. Click a group to open its page, and Back to return.
+- **New Win + button:** a small **Win +** button sits on top of the Mod Menu icon, styled like the Close button and exactly as wide as the icon. Click it to open a new game window on the character select page, the same as `/new_window`, so you don't have to type anything for each new window.
+- **Hidden files:** the game's own files, including `steam_news.js`, `steam_signin.js` and `steam_signup.js`, are hidden in the game folder, so it only shows what you use. They're hidden in the zip and again every time the game starts, from the list in `singleplayer\hidden.txt`. Turn on Hidden items in File Explorer to see them.
+- **Smaller download:** the zip no longer includes developer files: the `.git` folders, the Steam desktop client's source (`tauri`), tests and notes. None of them are used when the game runs. `scripts\make_player_zip.py` makes the zip.
 - **New looks for the town's NPCs:** 23 NPCs have been redesigned to suit what they do. Seven have their own new sprites: Cue the enchantress, Xyn hovering on blue orbs, Gabriel with a scythe, Leo, Pete, Tricksy and Ponty at his market stall. The other sixteen wear new character outfits: Lucas, Rose, Tristian, Ernis, Garwyn, Alia, Divian, Haila, Mr. Dworf, Fvona, Bean, Gn. Spence, Daisy, Cole, Favoré and Dorr.
 
 ## License

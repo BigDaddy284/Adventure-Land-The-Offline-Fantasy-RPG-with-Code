@@ -789,6 +789,16 @@ canvas { display:block; } /*replaces the overflow: hidden solution [07/07/16] */
 .ui-close-corner{
 	transform: translate(50%, -50%);
 }
+/* Single player: "Win +" on top of the Mod Menu icon. As wide as the icon's box (its 5px borders included), so nothing overhangs; stays when close buttons are switched off */
+#sp-modmenu .sp-newwin{
+	top: -32px;
+	left: -5px;
+	right: auto;
+	width: calc(100% + 10px);
+	padding: 0 0 2px;
+	border-width: 5px;
+	display: inline-flex !important;
+}
 .ui-close-skills{
 	top: -32px;
 	left: -5px;

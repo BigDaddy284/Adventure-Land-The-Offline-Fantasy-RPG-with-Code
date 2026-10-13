@@ -391,3 +391,28 @@ test("trader discount, exchange luck and give gold", () => {
 	assert.equal(characters.changed, 0);
 	assert.equal(characters.rows.find((row) => row.key == "give_gold").button, "Send Gold");
 });
+
+test("the hidden files list only names files in the game folder, and never what players use", () => {
+	const root = path.resolve(__dirname, "../..");
+	const lines = fs
+		.readFileSync(path.join(root, "singleplayer/hidden.txt"), "utf8")
+		.split(/\r?\n/)
+		.map((line) => line.trim())
+		.filter((line) => line && !line.startsWith("#"));
+	assert.ok(lines.includes("steam_news.js") && lines.includes("steam_signin.js") && lines.includes("steam_signup.js"));
+	const normal = lines.map((line) => line.replace(/\\/g, "/").toLowerCase());
+	for (const line of lines) assert.ok(!/^[a-z]:|^[\\/]|\.\.|[*?"<>|]/i.test(line), line + " is a plain relative name");
+	for (const used of ["fantasy land.exe", "play.bat", "stop.bat", "settings.txt", "readme.md", "changelog.md", "license", "logs", "singleplayer", "singleplayer/data"])
+		assert.ok(!normal.includes(used), used + " stays visible");
+	// Play.bat applies the list, and everything it names that is part of the game exists
+	assert.match(fs.readFileSync(path.join(root, "Play.bat"), "utf8"), /singleplayer\\hidden\.txt[\s\S]*attrib \+h/);
+	for (const line of lines)
+		if (!/^\.|node_modules|secretsandconfig|^tauri$|^useful$|mongodb_todo|UPDATE_NOTES/.test(line)) assert.ok(fs.existsSync(path.join(root, line.replace(/\\/g, "/"))), line + " exists");
+});
+
+test("Win + opens another game window next to the Mod Menu icon", () => {
+	const root = path.resolve(__dirname, "../..");
+	const html = fs.readFileSync(path.join(root, "js/html.js"), "utf8");
+	assert.match(html, /sp-newwin[^"]*'[^]*?open_character_window\(\)[^]*?Win \+/);
+	assert.match(fs.readFileSync(path.join(root, "css/index.css"), "utf8"), /#sp-modmenu \.sp-newwin\{[^}]*width: calc\(100% \+ 10px\)/);
+});

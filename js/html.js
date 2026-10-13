@@ -6448,7 +6448,10 @@ var single_player_mods_state = null;
 
 function render_single_player_mods_button() {
 	var skin = (G.items.computer && G.items.computer.skin) || "ancientcomputer";
-	$("#sp-modmenu").html(item_container({ skin: skin, draggable: false, onclick: "open_single_player_mods()" })).show();
+	var html = item_container({ skin: skin, draggable: false, onclick: "open_single_player_mods()" });
+	// "Win +" opens another game window (the same as /new_window). It matches the Close button and sits on top of the icon, as wide as the icon's box
+	html += "<button type='button' class='gamebutton ui-close ui-close-word sp-newwin' title='Open another game window' aria-label='Open another game window' onpointerdown='stpr(event)' onclick='btc(event); open_character_window()'><span aria-hidden='true'>Win +</span></button>";
+	$("#sp-modmenu").html(html).show();
 }
 
 function single_player_mods_row(row) {
