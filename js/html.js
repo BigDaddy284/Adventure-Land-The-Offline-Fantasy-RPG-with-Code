@@ -562,7 +562,7 @@ function anniversary_collection_html() {
 			"</div></div>";
 	});
 	html += "</div><div style='display:flex;align-items:center;gap:10px;margin-top:14px'>";
-	if (npc) html += "<div style='flex:none'>" + sprite(npc.skin, { cx: clone(npc.cx || {}), cosmetic_head_y: npc.cosmetic_head_y, width: 52, height: 72, scale: 2 }) + "</div>";
+	if (npc) html += "<div style='flex:none'>" + npc_sprite(npc, { width: 52, height: 72, scale: 2 }) + "</div>";
 	html +=
 		"<div style='flex:1;min-width:0'><span style='color:#FFE2A0'>" +
 		html_escape(npc.name) +
@@ -790,7 +790,6 @@ function toggle_tools() {
 	} catch (e) {}
 	render_tools_toggle();
 }
-$(render_tools_toggle);
 
 function render_server() {
 	render_event_announcements();
@@ -825,7 +824,7 @@ function render_server() {
 			context.key +
 			"\")'>";
 		if (visual.skin) html += sprite(visual.skin, { cx: clone(visual.cx || {}), overflow: true, j: 0 });
-		else if (npc && npc.skin) html += sprite(npc.skin, { cx: clone(npc.cx || {}), overflow: true });
+		else if (npc && npc.skin) html += npc_sprite(npc, { overflow: true });
 		else if (visual_icon) html += "<div style='margin-top: -1px; margin-left: -3px; margin-right: -3px'>" + item_container({ skin: visual_icon.skin, bcolor: "black" }) + "</div>";
 		else if (icon) html += "<div style='margin-top: -1px; margin-left: -3px; margin-right: -3px'>" + item_container({ skin: icon.skin, bcolor: "black" }) + "</div>";
 		else html += "<div style='font-size: 32px; line-height: 42px; color:#69BE86'>?</div>";
@@ -2964,7 +2963,7 @@ function render_item_help(container, name, level, pure) {
 				"<div style='display:inline-block; text-align: center; margin-right: 5px' class='clickable' onclick='smart_smart_move(\"npc\",\"" +
 				nname +
 				"\")'><div style='border: 2px solid gray; background-color: #464973; height: 54px; width: 54px; display: inline-block'>" +
-				sprite(npc.skin, { width: 50, height: 50 }) +
+				npc_sprite(npc, { width: 50, height: 50 }) +
 				"</div><div></div><div class='tinybutton' style='margin-top: -6px'>" +
 				npc.name +
 				"</div></div>";
@@ -2980,7 +2979,7 @@ function render_item_help(container, name, level, pure) {
 			"<div style='display:inline-block; text-align: center; margin-right: 5px' class='clickable' onclick='smart_smart_move(\"npc\",\"" +
 			npc_id +
 			"\")'><div style='border: 2px solid gray; background-color: #464973; height: 54px; width: 54px; display: inline-block'>" +
-			sprite(npc.skin, { width: 50, height: 50 }) +
+			npc_sprite(npc, { width: 50, height: 50 }) +
 			"</div><div></div><div class='tinybutton' style='margin-top: -6px'>" +
 			npc.name +
 			"</div></div>";
@@ -2997,7 +2996,7 @@ function render_item_help(container, name, level, pure) {
 				"<div style='display:inline-block; text-align: center; margin-right: 5px' class='clickable' onclick='smart_smart_move(\"npc\",\"" +
 				npc_id +
 				"\")'><div style='border: 2px solid gray; background-color: #464973; height: 54px; width: 54px; display: inline-block'>" +
-				sprite(npc.skin, { width: 50, height: 50 }) +
+				npc_sprite(npc, { width: 50, height: 50 }) +
 				"</div><div></div><div class='tinybutton' style='margin-top: -6px'>" +
 				npc.name +
 				"</div></div>";
@@ -3017,7 +3016,7 @@ function render_item_help(container, name, level, pure) {
 			"<div style='display:inline-block; text-align: center' class='clickable' onclick='smart_smart_move(\"npc\",\"" +
 			id +
 			"\")'><div style='border: 2px solid gray; background-color: #464973; height: 54px; width: 54px; display: inline-block'>" +
-			sprite(npc.skin, { width: 50, height: 50 }) +
+			npc_sprite(npc, { width: 50, height: 50 }) +
 			"</div><div></div><div class='tinybutton' style='margin-top: -6px'>" +
 			npc.name +
 			"</div></div>";
@@ -3037,7 +3036,7 @@ function render_item_help(container, name, level, pure) {
 			"<div style='display:inline-block; text-align: center' class='clickable' onclick='smart_smart_move(\"npc\",\"" +
 			id +
 			"\")'><div style='border: 2px solid gray; background-color: #464973; height: 54px; width: 54px; display: inline-block'>" +
-			sprite(npc.skin, { width: 50, height: 50 }) +
+			npc_sprite(npc, { width: 50, height: 50 }) +
 			"</div><div></div><div class='tinybutton' style='margin-top: -6px'>" +
 			npc.name +
 			"</div></div>";
@@ -3049,7 +3048,7 @@ function render_item_help(container, name, level, pure) {
 			"<div style='display:inline-block; text-align: center' class='clickable' onclick='smart_smart_move(\"npc\",\"" +
 			id +
 			"\")'><div style='border: 2px solid gray; background-color: #464973; height: 54px; width: 54px; display: inline-block'>" +
-			sprite(npc.skin, { width: 50, height: 50 }) +
+			npc_sprite(npc, { width: 50, height: 50 }) +
 			"</div><div></div><div class='tinybutton' style='margin-top: -6px'>" +
 			npc.name +
 			"</div></div>";
@@ -3085,7 +3084,7 @@ function render_item_help(container, name, level, pure) {
 			"<div style='display:inline-block; text-align: center' class='clickable' onclick='smart_smart_move(\"npc\",\"" +
 			id +
 			"\")'><div style='border: 2px solid gray; background-color: #464973; height: 54px; width: 54px; display: inline-block'>" +
-			sprite(npc.skin, { cx: clone(npc.cx || {}), cosmetic_head_y: npc.cosmetic_head_y, width: 50, height: 50 }) +
+			npc_sprite(npc, { width: 50, height: 50 }) +
 			"</div><div></div><div class='tinybutton' style='margin-top: -6px'>" +
 			npc.name +
 			"</div></div>";
@@ -3099,7 +3098,7 @@ function render_item_help(container, name, level, pure) {
 			"<div style='display:inline-block; text-align: center' class='clickable' onclick='smart_smart_move(\"npc\",\"" +
 			id +
 			"\")'><div style='border: 2px solid gray; background-color: #464973; height: 54px; width: 54px; display: inline-block'>" +
-			sprite(npc.skin, { width: 50, height: 50 }) +
+			npc_sprite(npc, { width: 50, height: 50 }) +
 			"</div><div></div><div class='tinybutton' style='margin-top: -6px'>" +
 			npc.name +
 			"</div></div>";
@@ -3648,7 +3647,7 @@ function render_tutorial_items() {
 	});
 	$(".tutorial-npc").each(function () {
 		var npc = G.npcs[$(this).attr("data-npc")];
-		if (npc) $(this).css({ display: "inline-flex", direction: "ltr", lineHeight: 0 }).html(sprite(npc.skin, { scale: 3, width: 80, height: (G.dimensions[npc.skin] || G.dimensions.default_character)[1] * 3, overflow: true }));
+		if (npc) $(this).css({ display: "inline-flex", direction: "ltr", lineHeight: 0 }).html(npc_sprite(npc, { scale: 3, width: 80, height: (G.dimensions[npc.skin] || G.dimensions.default_character)[1] * 3, overflow: true }));
 	});
 	$(".tutorial-monster").each(function () {
 		var name = $(this).attr("data-monster");
@@ -6801,7 +6800,7 @@ function render_travel(the_map) {
 				"," +
 				(position[1] + 20) +
 				");'><div style='border: 2px solid gray; background-color: #464973; height: 54px; width: 54px; display: inline-block'>" +
-				sprite(npc.skin, { width: 50, height: 50, cx: npc.cx }) +
+				npc_sprite(npc, { width: 50, height: 50 }) +
 				"</div><div></div><div class='tinybutton' style='margin-top: -6px'>" +
 				npc.name +
 				"</div></div>";
@@ -7976,6 +7975,19 @@ function sprite_image(name, args) {
 		console.log(e);
 	}
 	return "";
+}
+
+// An NPC drawn the way it looks in the world: its own cosmetics (cx) and head position, and the whole frame for the taller sheet NPCs
+function npc_sprite(npc, args) {
+	args = args || {};
+	if (npc.cx && !args.cx) args.cx = clone(npc.cx);
+	if (npc.cosmetic_head_y && !args.cosmetic_head_y) args.cosmetic_head_y = npc.cosmetic_head_y;
+	precompute_image_positions();
+	var cell = IID[npc.skin];
+	if (!npc.cx && !args.overflow && cell && cell[5] > 40 && !G.dimensions[npc.skin]) {
+		args.scale = Math.min(args.scale || 1.5, (args.height || 50) / ((npc.height || cell[5]) + (npc.feet || 0))); // the figure fits the box, the empty room in the frame is cut off
+	}
+	return sprite(npc.skin, args);
 }
 
 function sprite(name, args) {

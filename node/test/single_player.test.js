@@ -447,3 +447,9 @@ test("the top right tools row has a hide/show button that is remembered", () => 
 	assert.ok(js.includes("function toggle_tools()") && js.includes('localStorage.setItem("tools_collapsed"'));
 	assert.ok(fs.readFileSync(path.join(root, "css/index.css"), "utf8").includes(".game-controls.tools-collapsed"));
 });
+
+test("every NPC picture is drawn through npc_sprite, so it shows the NPC's own look", () => {
+	const js = fs.readFileSync(path.join(__dirname, "..", "..", "js", "html.js"), "utf8");
+	assert.ok(/function npc_sprite\(/.test(js));
+	assert.ok(!/\bsprite\(npc\.skin/.test(js.replace(/return sprite\(npc\.skin, args\);/, "")));
+});

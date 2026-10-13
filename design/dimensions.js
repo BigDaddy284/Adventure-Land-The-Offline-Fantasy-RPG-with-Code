@@ -1168,8 +1168,8 @@ dimensions["manyeye"] = dimensions["oneeye"].slice();
 
 // Redesigned monsters whose frame size changed: crop to the new art.
 dimensions["croc"] = [70, 38, -3];
-dimensions["gooD"] = [24, 20, 1, -1];
-dimensions["kitty1"] = [27, 17, 0, 6, 5];
-dimensions["kitty2"] = [27, 17, 0, 6, 5];
-dimensions["kitty3"] = [27, 17, 0, 6, 5];
-dimensions["kitty4"] = [27, 17, 0, 6, 5];
+dimensions["gooD"] = [24, 20, 1];
+dimensions["kitty1"] = [27, 17, 0];
+dimensions["kitty2"] = [27, 17, 0];
+dimensions["kitty3"] = [27, 17, 0];
+dimensions["kitty4"] = [27, 17, 0];

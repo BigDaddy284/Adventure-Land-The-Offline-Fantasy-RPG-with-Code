@@ -1471,6 +1471,7 @@ test("native CODE and the recipe directory follow the same event flag as craftin
 				to_pretty_num: String,
 				clone: plain,
 				sprite: () => "",
+				npc_sprite: () => "",
 				item_container: (_options, item) => {
 					if (item) visible.push(item.name);
 					return "";

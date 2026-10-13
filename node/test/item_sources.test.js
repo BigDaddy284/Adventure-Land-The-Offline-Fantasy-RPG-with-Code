@@ -28,6 +28,7 @@ function render(name, data = {}) {
 		colors: { property: "white", inspect: "white" },
 		clone: structuredClone,
 		sprite: (name) => "<sprite>" + name + "</sprite>",
+		npc_sprite: (npc) => "<sprite>" + npc.skin + "</sprite>",
 		bold_prop_line: (key, value) => key + value,
 		to_pretty_fraction: (value) => "odds:" + value,
 		item_container: (options, item) => {

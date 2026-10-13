@@ -1711,6 +1711,7 @@ function init_socket(args) {
 			$("#progressui").remove();
 			$("#content").html("");
 			$("#topmid,#bottommid,#toprightcorner,#bottomleftcorner2,#bottomleftcorner").show();
+			if (typeof render_tools_toggle == "function") render_tools_toggle();
 			$(".xpsui").css("display", "block");
 			$(".tutorialui").css("display", "block");
 			$("body").append('<input id="chatinput" onkeypress="if(event.keyCode==13) say($(this).rfval()); send_typing();" type="text" autocomplete="off" name="alchatinput" placeholder=""/>');

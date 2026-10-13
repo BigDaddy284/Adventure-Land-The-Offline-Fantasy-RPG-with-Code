@@ -57,6 +57,10 @@ function fixture() {
 			state.sprites.push({ skin, args });
 			return "<span>native-sprite</span>";
 		},
+		npc_sprite: (npc, args) => {
+			state.sprites.push({ skin: npc.skin, args });
+			return "<span>native-sprite</span>";
+		},
 		item_container: () => "<span>native-item</span>",
 		$: (selector) => ({
 			length: 0,

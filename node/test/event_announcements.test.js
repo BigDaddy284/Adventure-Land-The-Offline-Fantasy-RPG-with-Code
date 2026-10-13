@@ -56,6 +56,10 @@ function setup(extra = {}) {
 			visuals.push(args);
 			return '<span class="sprite"></span>';
 		},
+		npc_sprite: (npc, args) => {
+			visuals.push([npc.skin, args]);
+			return '<span class="sprite"></span>';
+		},
 		item_container: (...args) => {
 			visuals.push(args);
 			return '<span class="item"></span>';
@@ -328,7 +332,7 @@ test("upcoming cards have no actions and skip all graphics in headless mode", ()
 			},
 		},
 	);
-	context.sprite = context.item_container = () => {
+	context.sprite = context.npc_sprite = context.item_container = () => {
 		throw new Error("Headless cards requested a sprite");
 	};
 	context.render_upcoming_content();

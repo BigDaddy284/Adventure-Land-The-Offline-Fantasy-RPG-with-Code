@@ -125,6 +125,7 @@ test("the schedule guide uses its own clock through the item renderer without a 
 		window: { desktop: false },
 		randomStr: () => "schedule_test",
 		sprite: () => "",
+		npc_sprite: () => "",
 		$: (selector) => ({
 			html(html) {
 				if (selector !== ".events-tracker") return;
