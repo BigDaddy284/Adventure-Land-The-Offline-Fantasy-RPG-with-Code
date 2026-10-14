@@ -1,7 +1,9 @@
 //go:build windows
 
 // Fantasy Land.exe: starts the game with no console windows (by running Play.bat hidden), opens the game window,
-// and when the last game window closes, runs Stop.bat so the characters save and everything shuts down cleanly.
+// and when the game window closes, runs Stop.bat so the characters save and everything shuts down cleanly.
+// The game window is this program's own window (the WebView2 browser engine that comes with Windows), so Task Manager
+// shows it as Fantasy Land with the game's icon. Without WebView2 it falls back to an Edge app window.
 //
 // Build (from this folder): GOOS=windows GOARCH=amd64 go build -ldflags "-H windowsgui -s -w" -o "../../Fantasy Land.exe"
 // The icon and file details come from rsrc_windows_amd64.syso, made from winres/ with: go-winres make --arch amd64
@@ -17,12 +19,17 @@ import (
 	"syscall"
 	"time"
 	"unsafe"
+
+	"github.com/jchv/go-webview2"
 )
 
 const (
 	gameURL    = "http://127.0.0.1:8090"
 	profileDir = "FantasyLandSinglePlayer" // the game window's own Edge profile, in %LOCALAPPDATA% (same as Play.bat)
 	title      = "Fantasy Land"
+	// The browser flags the Edge app window used: the game keeps running at full speed in the background or minimised
+	browserFlags = "--disable-background-timer-throttling --disable-renderer-backgrounding --disable-backgrounding-occluded-windows " +
+		"--disable-features=CalculateNativeWinOcclusion,IntensiveWakeUpThrottling --autoplay-policy=no-user-gesture-required"
 )
 
 var (
@@ -51,6 +58,8 @@ var (
 	pCreateMutexW     = kernel32.NewProc("CreateMutexW")
 	pSetLastError     = kernel32.NewProc("SetLastError")
 	pGetStockObject   = gdi32.NewProc("GetStockObject")
+	pFindWindowW      = user32.NewProc("FindWindowW")
+	pCoInitializeEx   = syscall.NewLazyDLL("ole32.dll").NewProc("CoInitializeEx")
 )
 
 const (
@@ -143,7 +152,7 @@ func createWindow() {
 	sw, _, _ := pGetSystemMetrics.Call(0)
 	sh, _, _ := pGetSystemMetrics.Call(1)
 	// WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX
-	window, _, _ = pCreateWindowExW.Call(0, uintptr(unsafe.Pointer(class.ClassName)), uintptr(unsafe.Pointer(utf16(title))), 0x00CA0000,
+	window, _, _ = pCreateWindowExW.Call(0, uintptr(unsafe.Pointer(class.ClassName)), uintptr(unsafe.Pointer(utf16(title+" Launcher"))), 0x00CA0000,
 		(sw-width)/2, (sh-height)/2, width, height, 0, 0, instance, 0)
 	font, _, _ := pGetStockObject.Call(17) // DEFAULT_GUI_FONT
 	// WS_CHILD | WS_VISIBLE | SS_LEFT
@@ -177,6 +186,9 @@ func runBatch(name string, launcher bool, log *os.File) error {
 	cmd.Env = os.Environ()
 	if launcher {
 		cmd.Env = append(cmd.Env, "FL_LAUNCHER=1")
+	}
+	if name == "Stop.bat" {
+		cmd.Env = append(cmd.Env, "FL_STOPPING=1") // so Stop.bat doesn't close this program while it is still stopping the game
 	}
 	cmd.SysProcAttr = &syscall.SysProcAttr{HideWindow: true, CreationFlags: createNoWindow}
 	return cmd.Run()
@@ -251,6 +263,55 @@ func turnOffBackgroundMode() {
 	}
 }
 
+// Shows the game in this program's own window and returns when it is closed. Returns false, without showing anything,
+// when the WebView2 browser engine isn't there, so the caller can use Edge instead.
+func gameWindow() bool {
+	runtime.LockOSThread() // the window and its message loop stay on this thread
+	defer runtime.UnlockOSThread()
+	pCoInitializeEx.Call(0, 2) // COINIT_APARTMENTTHREADED, which WebView2 needs on this thread
+	os.Setenv("WEBVIEW2_ADDITIONAL_BROWSER_ARGUMENTS", browserFlags)
+	width, height := uint(1280), uint(800)
+	sw, _, _ := pGetSystemMetrics.Call(0)
+	sh, _, _ := pGetSystemMetrics.Call(1)
+	if sw > 0 && uint(sw) < width+40 {
+		width = uint(sw) - 40
+	}
+	if sh > 0 && uint(sh) < height+80 {
+		height = uint(sh) - 80
+	}
+	view := webview2.NewWithOptions(webview2.WebViewOptions{
+		Debug:     true, // keeps F12 and the right-click menu, which are handy when writing code
+		AutoFocus: true,
+		DataPath:  filepath.Join(profilePath(), "WebView2"),
+		WindowOptions: webview2.WindowOptions{
+			Title:  title,
+			Width:  width,
+			Height: height,
+			IconId: 1, // the exe's own icon
+			Center: true,
+		},
+	})
+	if view == nil {
+		return false
+	}
+	view.Navigate(gameURL)
+	hide() // the start-up window is no longer needed
+	view.Run()
+	view.Destroy()
+	return true
+}
+
+// A second double-click on Fantasy Land.exe brings the game window forward
+func focusGameWindow() bool {
+	hwnd, _, _ := pFindWindowW.Call(uintptr(unsafe.Pointer(utf16("webview"))), uintptr(unsafe.Pointer(utf16(title))))
+	if hwnd == 0 {
+		return false
+	}
+	pShowWindow.Call(hwnd, 9) // SW_RESTORE
+	pSetForeground.Call(hwnd)
+	return true
+}
+
 func openGameWindow() bool {
 	turnOffBackgroundMode()
 	cmd := exec.Command("cmd.exe", "/c", "start", "", "msedge", "--app="+gameURL, "--user-data-dir="+profilePath(), "--no-first-run", "--window-size=1280,800",
@@ -310,7 +371,15 @@ func run() {
 		return
 	}
 
-	// Wait for the game window, then for the last game window to close
+	// The game window is ours (WebView2): when it closes, stop the game
+	closed := make(chan bool, 1)
+	go func() { closed <- gameWindow() }()
+	if <-closed {
+		stopGame(log)
+		return
+	}
+
+	// No WebView2: wait for the Edge game window, then for the last game window to close
 	edge := openGameWindow()
 	for i := 0; edge && i < 60 && !gameWindowOpen(); i++ {
 		time.Sleep(time.Second)
@@ -353,7 +422,9 @@ func main() {
 	pSetLastError.Call(0)
 	_, _, lastErr := pCreateMutexW.Call(0, 0, uintptr(unsafe.Pointer(utf16("FantasyLandLauncher"))))
 	if lastErr == syscall.Errno(183) { // ERROR_ALREADY_EXISTS
-		openGameWindow()
+		if !focusGameWindow() {
+			openGameWindow()
+		}
 		return
 	}
 

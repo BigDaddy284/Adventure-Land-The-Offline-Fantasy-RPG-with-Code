@@ -1,7 +1,9 @@
 @echo off
 rem Fantasy Land (single player Adventure Land): closes the game window, game server, website and database started by Play.bat.
-rem Game window: only Edge processes using the game's own profile folder, so your normal Edge windows stay open.
-powershell -NoProfile -Command "Get-CimInstance Win32_Process -Filter \"Name='msedge.exe'\" | Where-Object { ($_.CommandLine -like '*FantasyLandSinglePlayer*' -or $_.CommandLine -like '*AdventureLandSinglePlayer*') } | ForEach-Object { Stop-Process -Id $_.ProcessId -Force -ErrorAction SilentlyContinue }" >nul 2>nul
+rem Game window: only Edge and WebView2 processes using the game's own profile folder, so your normal Edge windows stay open.
+powershell -NoProfile -Command "Get-CimInstance Win32_Process -Filter \"Name='msedge.exe' OR Name='msedgewebview2.exe'\" | Where-Object { ($_.CommandLine -like '*FantasyLandSinglePlayer*' -or $_.CommandLine -like '*AdventureLandSinglePlayer*') } | ForEach-Object { Stop-Process -Id $_.ProcessId -Force -ErrorAction SilentlyContinue }" >nul 2>nul
+rem The game window is Fantasy Land.exe's own window. When this was not started by Fantasy Land.exe itself, close it too.
+if not defined FL_STOPPING taskkill /im "Fantasy Land.exe" /f >nul 2>nul
 rem Give the game server a moment to save the characters that just disconnected
 echo Saving characters...
 rem (ping rather than timeout, because timeout fails when Fantasy Land.exe runs this without a window)

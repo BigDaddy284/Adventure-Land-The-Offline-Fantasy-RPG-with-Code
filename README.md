@@ -16,7 +16,7 @@ Install these once:
 
 1. **Node.js** (the LTS version) from https://nodejs.org. Keep the default options. It runs the game's website and game server.
 2. **MongoDB Community Server** from https://www.mongodb.com/try/download/community. Choose "Complete" and keep the default options. MongoDB Compass is optional. This is the database that saves your characters, items and settings.
-3. **Microsoft Edge.** It comes with Windows, and the game opens in its own Edge window.
+3. **Microsoft Edge.** It comes with Windows. The game window uses WebView2, the browser engine that comes with Edge and Windows 11, so there is nothing extra to install on most PCs.
 
 Git isn't needed, because the shared engine already comes in the game folder.
 
@@ -345,6 +345,7 @@ Fantasy Land started as a copy of the MongoDB port of [Adventure Land](https://g
 - **Bank Items List:** a new default script, kept in its own slot like Party AIO. It explains what it's for and starts with one example item, `// BANK_ITEM_IDS.push("vitring");`, commented out so nothing is banked until you add your own `BANK_ITEM_IDS.push("itemid");` lines. **Party AIO now reads it** by name, with `load_code("Bank Items List")`, instead of code slot 5. If you already have a slot named "Bank Items List", Party AIO keeps using that until you save the default one.
 - **Yours to edit:** both default scripts are ordinary editable scripts. Type in your names or item ids and press **Save**, and your copy is kept (it is also what `load_code` and starting a character from the CODE window use).
 - **Reset button:** each default script has a **Reset** button on the right of its row. It loads the original script into the editor; your saved copy is only replaced when you press Save.
+- **Fantasy Land in Task Manager:** `Fantasy Land.exe` now shows the game in its own window (using WebView2) instead of opening Edge, so Task Manager lists the game as **Fantasy Land** with the game's icon, with the browser parts in its dropdown. The window is the same size, F12 and the right-click menu still work, and the game keeps running at full speed in the background or minimised. Closing the window saves and stops the game as before, and double-clicking the exe again brings the window forward. If WebView2 isn't on the PC, it opens the game in an Edge window like before. The game window keeps its settings in its own folder, so on-screen choices such as collapsed boxes start fresh once. `Play.bat` on its own still opens Edge.
 
 ## License
 
