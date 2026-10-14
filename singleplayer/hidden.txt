@@ -49,6 +49,7 @@ singleplayer\hidden.txt
 singleplayer\init_db.js
 singleplayer\launcher
 singleplayer\README.md
+singleplayer\other_copy_db.js
 singleplayer\stop_db.js
 singleplayer\text.js
 singleplayer\wait_port.js

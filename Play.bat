@@ -37,6 +37,13 @@ attrib -h package-lock.json >nul 2>nul
 rem Hide the game's own files, so the folder only shows what you use (turn on Hidden items in File Explorer to see them)
 if exist singleplayer\hidden.txt for /f "usebackq eol=# delims=" %%F in ("singleplayer\hidden.txt") do if exist "%%F" attrib +h "%%F" >nul 2>nul
 
+rem ---------- Another copy left running ----------
+rem The website, game server or database can still be running from another Fantasy Land folder (an older version, or a game
+rem ended from Task Manager). They're closed first, so this copy runs its own files, saves into its own folder, and the other
+rem folder can be deleted. The database gets a clean shutdown so that folder's saves are kept.
+powershell -NoProfile -Command "$d='%~dp0'.ToLower(); Get-NetTCPConnection -State Listen -LocalPort 8090,7192 -ErrorAction SilentlyContinue | ForEach-Object { $p = Get-CimInstance Win32_Process -Filter \"ProcessId=$($_.OwningProcess)\"; if ($p -and $p.Name -eq 'node.exe' -and -not ([string]$p.CommandLine).ToLower().Contains($d)) { Stop-Process -Id $p.ProcessId -Force -ErrorAction SilentlyContinue } }" >nul 2>nul
+node singleplayer\other_copy_db.js
+
 rem ---------- 1. Database ----------
 rem The game keeps its own database on port 27018 (separate from any MongoDB service on 27017),
 rem started as a one-member replica set because the game needs database transactions.
@@ -74,7 +81,7 @@ echo Starting the website...
 node singleplayer\wait_port.js 8090 1 website >nul 2>nul
 if not errorlevel 1 goto website_running
 if defined FL_LAUNCHER goto start_website_hidden
-start "Fantasy Land - Website" /min cmd /k node main.js
+start "Fantasy Land - Website" /min cmd /k node "%~dp0main.js"
 goto website_running
 :start_website_hidden
 start "" /b cmd /c "node "%~dp0main.js" > "%~dp0logs\website.log" 2>&1"
@@ -86,7 +93,7 @@ echo Starting the game server...
 node singleplayer\wait_port.js 7192 1 "game server" >nul 2>nul
 if not errorlevel 1 goto game_server_running
 if defined FL_LAUNCHER goto start_game_server_hidden
-start "Fantasy Land - Game Server" /min cmd /k "cd node && node server.js local"
+start "Fantasy Land - Game Server" /min cmd /k "cd node && node "%~dp0node\server.js" local"
 goto game_server_running
 :start_game_server_hidden
 start "" /b cmd /c "cd node && node "%~dp0node\server.js" local > "%~dp0logs\game-server.log" 2>&1"
