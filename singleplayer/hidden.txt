@@ -21,6 +21,7 @@ steam_signin.js
 steam_signup.js
 update_notes.js
 web_assets.js
+WebView2Loader.dll
 package.json
 settings.example.txt
 
