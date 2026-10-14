@@ -501,6 +501,12 @@ test("the code menu lists only the default Party AIO and Bank Items List, each w
 	assert.match(menu, /reset_default_code\(/);
 	assert.match(menu, /num == "PARTY" \|\| num == "BANKLIST"\) continue/);
 	assert.match(source, /load_code\(slot \+ "_LATEST", 1\)/);
+	// Reset asks first, with Confirm and Cancel, and only the Confirm button loads the original
+	const reset = source.slice(source.indexOf("function reset_default_code"), source.indexOf("function load_base_code"));
+	assert.match(reset, /show_confirm\(/);
+	assert.match(reset, /"Confirm"/);
+	assert.match(reset, /"Cancel"/);
+	assert.ok(reset.indexOf("show_confirm") < reset.indexOf("load_code("));
 	assert.match(source, /if \(!ui_list\.BANKLIST\) ui_list\.BANKLIST/);
 });
 

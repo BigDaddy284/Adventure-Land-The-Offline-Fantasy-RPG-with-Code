@@ -6599,9 +6599,9 @@ function update_servers_and_characters() {
 // The Reset button next to a default script (Party AIO, Bank Items List): loads the original into the editor
 function reset_default_code(slot, name) {
 	show_confirm(
-		"Load the original " + name + " into the editor? Your saved copy is only replaced when you press Save.",
-		["#D06631", phrase.html("client.confirm.yes")],
-		phrase.html("client.confirm.no"),
+		"Reset <span style='color: #E5A94D'>" + name + "</span>?<br /><span style='color: gray'>This puts the original script back in the editor. Your saved copy is only replaced when you press Save.</span>",
+		["#D06631", "Confirm"],
+		"Cancel",
 		function () {
 			load_code(slot + "_LATEST", 1);
 			hide_modal(true);

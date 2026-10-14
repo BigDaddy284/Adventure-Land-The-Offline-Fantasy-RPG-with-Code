@@ -16,6 +16,8 @@ import (
 	"path/filepath"
 	"runtime"
 	"strings"
+	"sync"
+	"sync/atomic"
 	"syscall"
 	"time"
 	"unsafe"
@@ -263,9 +265,43 @@ func turnOffBackgroundMode() {
 	}
 }
 
-// Shows the game in this program's own window and returns when it is closed. Returns false, without showing anything,
-// when the WebView2 browser engine isn't there, so the caller can use Edge instead.
-func gameWindow() bool {
+var (
+	openWindows int32 // game windows open now; the game stops when the last one closes
+	allClosed   = make(chan struct{})
+	closeOnce   sync.Once
+)
+
+// In every game window: window.open for a page of the game (the Mod Menu's Win + button, /window NAME, the Characters tab)
+// opens another Fantasy Land window instead of the browser's own pop-up window, which has an address bar.
+// Other links still open as they normally do. Extra windows show the page's title (the character's name).
+const windowScript = `(function () {
+	var nativeOpen = window.open;
+	window.open = function (url, target, features) {
+		try {
+			var u = new URL(url || "/", location.href);
+			if (u.origin === location.origin && window.flOpenWindow) {
+				window.flOpenWindow(u.href);
+				return { closed: false, focus: function () {}, close: function () {}, postMessage: function () {} };
+			}
+		} catch (e) {}
+		return nativeOpen.apply(window, arguments);
+	};
+	function sync() {
+		if (window.flSetTitle && document.title) window.flSetTitle(document.title);
+	}
+	if (window.flSetTitle) {
+		document.addEventListener("DOMContentLoaded", function () {
+			sync();
+			var t = document.querySelector("title");
+			if (t) new MutationObserver(sync).observe(t, { childList: true, characterData: true, subtree: true });
+		});
+	}
+})();`
+
+// Shows the game at url in a window of its own and returns when that window is closed. Each window has its own thread
+// and message loop, so closing one leaves the others open. created gets false, with nothing shown, when the WebView2
+// browser engine isn't there, so the caller can use Edge instead.
+func gameWindow(url string, first bool, created chan<- bool) {
 	runtime.LockOSThread() // the window and its message loop stay on this thread
 	defer runtime.UnlockOSThread()
 	pCoInitializeEx.Call(0, 2) // COINIT_APARTMENTTHREADED, which WebView2 needs on this thread
@@ -287,18 +323,34 @@ func gameWindow() bool {
 			Title:  title,
 			Width:  width,
 			Height: height,
-			IconId: 1, // the exe's own icon
-			Center: true,
+			IconId: 1,     // the exe's own icon
+			Center: first, // extra windows cascade
 		},
 	})
 	if view == nil {
-		return false
+		if created != nil {
+			created <- false
+		}
+		return
 	}
-	view.Navigate(gameURL)
-	hide() // the start-up window is no longer needed
+	atomic.AddInt32(&openWindows, 1)
+	if created != nil {
+		created <- true
+	}
+	view.Bind("flOpenWindow", func(target string) { go gameWindow(target, false, nil) })
+	if !first {
+		view.Bind("flSetTitle", func(text string) { view.SetTitle(text) })
+	}
+	view.Init(windowScript)
+	view.Navigate(url)
+	if first {
+		hide() // the start-up window is no longer needed
+	}
 	view.Run()
 	view.Destroy()
-	return true
+	if atomic.AddInt32(&openWindows, -1) == 0 {
+		closeOnce.Do(func() { close(allClosed) })
+	}
 }
 
 // A second double-click on Fantasy Land.exe brings the game window forward
@@ -371,10 +423,11 @@ func run() {
 		return
 	}
 
-	// The game window is ours (WebView2): when it closes, stop the game
-	closed := make(chan bool, 1)
-	go func() { closed <- gameWindow() }()
-	if <-closed {
+	// The game windows are ours (WebView2): when the last one closes, stop the game
+	created := make(chan bool, 1)
+	go gameWindow(gameURL, true, created)
+	if <-created {
+		<-allClosed
 		stopGame(log)
 		return
 	}
