@@ -205,4 +205,5 @@ Fantasy Land started as a copy of the MongoDB port of [Adventure Land](https://g
 
 ### v26.1
 - **Antivirus-friendly exe:** some antivirus programs (Surfshark's, for one) removed `Fantasy Land.exe` while the v26 zip was being unzipped. The exe now opens its window with Microsoft's own `WebView2Loader.dll` (hidden, next to the exe) and keeps track of extra windows in a simpler way, so it no longer looks suspicious. Nothing changes in how the game plays.
+- **Window titles:** the first game window now shows the game's full name and your character's name, like the extra windows already did.
 - **Unzip into a new folder:** if Windows ever asks for admin rights or says "Destination Folder Access Denied" while unzipping, delete the old folder or rename the zip and unzip it again, so it goes into a fresh folder.

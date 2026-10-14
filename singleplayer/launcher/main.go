@@ -330,9 +330,7 @@ func gameWindow(url string, first bool, created chan<- bool) bool {
 		created <- true
 	}
 	view.Bind("flOpenWindow", func(target string) { go spawnWindow(target) })
-	if !first {
-		view.Bind("flSetTitle", func(text string) { view.SetTitle(text) })
-	}
+	view.Bind("flSetTitle", func(text string) { view.SetTitle(text) }) // the window shows the page's title, like the game's own name and character
 	view.Init(windowScript)
 	view.Navigate(url)
 	if first {
@@ -370,7 +368,7 @@ func otherWindows() int {
 
 // A second double-click on Fantasy Land.exe brings the game window forward
 func focusGameWindow() bool {
-	hwnd, _, _ := pFindWindowW.Call(uintptr(unsafe.Pointer(utf16("webview"))), uintptr(unsafe.Pointer(utf16(title))))
+	hwnd, _, _ := pFindWindowW.Call(uintptr(unsafe.Pointer(utf16("webview"))), 0) // any game window: their titles follow the page
 	if hwnd == 0 {
 		return false
 	}
