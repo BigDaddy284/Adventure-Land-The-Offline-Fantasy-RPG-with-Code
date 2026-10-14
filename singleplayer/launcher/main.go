@@ -16,8 +16,6 @@ import (
 	"path/filepath"
 	"runtime"
 	"strings"
-	"sync"
-	"sync/atomic"
 	"syscall"
 	"time"
 	"unsafe"
@@ -265,12 +263,6 @@ func turnOffBackgroundMode() {
 	}
 }
 
-var (
-	openWindows int32 // game windows open now; the game stops when the last one closes
-	allClosed   = make(chan struct{})
-	closeOnce   sync.Once
-)
-
 // In every game window: window.open for a page of the game (the Mod Menu's Win + button, /window NAME, the Characters tab)
 // opens another Fantasy Land window instead of the browser's own pop-up window, which has an address bar.
 // Other links still open as they normally do. Extra windows show the page's title (the character's name).
@@ -298,10 +290,10 @@ const windowScript = `(function () {
 	}
 })();`
 
-// Shows the game at url in a window of its own and returns when that window is closed. Each window has its own thread
-// and message loop, so closing one leaves the others open. created gets false, with nothing shown, when the WebView2
-// browser engine isn't there, so the caller can use Edge instead.
-func gameWindow(url string, first bool, created chan<- bool) {
+// Shows the game at url in a window of its own and returns when that window is closed. Returns false, with nothing shown,
+// when the WebView2 browser engine isn't there, so the caller can use Edge instead. created (optional) gets true once the window is up.
+// Every game window is its own Fantasy Land.exe process (see spawnWindow), so closing one never touches the others.
+func gameWindow(url string, first bool, created chan<- bool) bool {
 	runtime.LockOSThread() // the window and its message loop stay on this thread
 	defer runtime.UnlockOSThread()
 	pCoInitializeEx.Call(0, 2) // COINIT_APARTMENTTHREADED, which WebView2 needs on this thread
@@ -331,13 +323,12 @@ func gameWindow(url string, first bool, created chan<- bool) {
 		if created != nil {
 			created <- false
 		}
-		return
+		return false
 	}
-	atomic.AddInt32(&openWindows, 1)
 	if created != nil {
 		created <- true
 	}
-	view.Bind("flOpenWindow", func(target string) { go gameWindow(target, false, nil) })
+	view.Bind("flOpenWindow", func(target string) { go spawnWindow(target) })
 	if !first {
 		view.Bind("flSetTitle", func(text string) { view.SetTitle(text) })
 	}
@@ -348,9 +339,42 @@ func gameWindow(url string, first bool, created chan<- bool) {
 	}
 	view.Run()
 	view.Destroy()
-	if atomic.AddInt32(&openWindows, -1) == 0 {
-		closeOnce.Do(func() { close(allClosed) })
+	return true
+}
+
+// Opens another game window: another copy of this program, so every window has its own process and browser
+func spawnWindow(url string) {
+	exe, err := os.Executable()
+	if err != nil {
+		return
 	}
+	cmd := exec.Command(exe, "--window", url)
+	if cmd.Start() == nil {
+		go cmd.Wait()
+	}
+}
+
+// How many other copies of this program (extra game windows) are running
+func otherWindows() int {
+	exe, err := os.Executable()
+	if err != nil {
+		return 0
+	}
+	name := filepath.Base(exe)
+	snapshot, err := syscall.CreateToolhelp32Snapshot(syscall.TH32CS_SNAPPROCESS, 0)
+	if err != nil {
+		return 0
+	}
+	defer syscall.CloseHandle(snapshot)
+	var entry syscall.ProcessEntry32
+	entry.Size = uint32(unsafe.Sizeof(entry))
+	count := 0
+	for err = syscall.Process32First(snapshot, &entry); err == nil; err = syscall.Process32Next(snapshot, &entry) {
+		if strings.EqualFold(syscall.UTF16ToString(entry.ExeFile[:]), name) && entry.ProcessID != uint32(os.Getpid()) {
+			count++
+		}
+	}
+	return count
 }
 
 // A second double-click on Fantasy Land.exe brings the game window forward
@@ -423,11 +447,18 @@ func run() {
 		return
 	}
 
-	// The game windows are ours (WebView2): when the last one closes, stop the game
+	// The game window is ours (WebView2): when it and any extra windows (other copies of this program) have closed, stop the game
 	created := make(chan bool, 1)
-	go gameWindow(gameURL, true, created)
+	closed := make(chan struct{})
+	go func() {
+		gameWindow(gameURL, true, created)
+		close(closed)
+	}()
 	if <-created {
-		<-allClosed
+		<-closed
+		for otherWindows() > 0 {
+			time.Sleep(time.Second)
+		}
 		stopGame(log)
 		return
 	}
@@ -471,12 +502,20 @@ func main() {
 	exe, _ := os.Executable()
 	gameDir = filepath.Dir(exe)
 
+	// An extra game window: just the window, no start-up or shut-down (the first copy of this program does those)
+	if len(os.Args) >= 3 && os.Args[1] == "--window" {
+		if !gameWindow(os.Args[2], false, nil) {
+			openGameWindow() // no WebView2: an Edge window
+		}
+		return
+	}
+
 	// Only one launcher at a time: a second double-click just opens another game window
 	pSetLastError.Call(0)
 	_, _, lastErr := pCreateMutexW.Call(0, 0, uintptr(unsafe.Pointer(utf16("FantasyLandLauncher"))))
 	if lastErr == syscall.Errno(183) { // ERROR_ALREADY_EXISTS
 		if !focusGameWindow() {
-			openGameWindow()
+			spawnWindow(gameURL)
 		}
 		return
 	}
