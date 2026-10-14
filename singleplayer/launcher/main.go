@@ -56,6 +56,7 @@ var (
 	pDestroyWindow    = user32.NewProc("DestroyWindow")
 	pGetModuleHandleW = kernel32.NewProc("GetModuleHandleW")
 	pCreateMutexW     = kernel32.NewProc("CreateMutexW")
+	pOpenMutexW       = kernel32.NewProc("OpenMutexW")
 	pSetLastError     = kernel32.NewProc("SetLastError")
 	pGetStockObject   = gdi32.NewProc("GetStockObject")
 	pFindWindowW      = user32.NewProc("FindWindowW")
@@ -354,27 +355,17 @@ func spawnWindow(url string) {
 	}
 }
 
-// How many other copies of this program (extra game windows) are running
+// Every extra game window process holds a handle to this named mutex, so it
+// exists exactly while at least one extra window is open
+const windowsMutex = "FantasyLandExtraWindows"
+
 func otherWindows() int {
-	exe, err := os.Executable()
-	if err != nil {
+	handle, _, _ := pOpenMutexW.Call(0x100000, 0, uintptr(unsafe.Pointer(utf16(windowsMutex)))) // SYNCHRONIZE
+	if handle == 0 {
 		return 0
 	}
-	name := filepath.Base(exe)
-	snapshot, err := syscall.CreateToolhelp32Snapshot(syscall.TH32CS_SNAPPROCESS, 0)
-	if err != nil {
-		return 0
-	}
-	defer syscall.CloseHandle(snapshot)
-	var entry syscall.ProcessEntry32
-	entry.Size = uint32(unsafe.Sizeof(entry))
-	count := 0
-	for err = syscall.Process32First(snapshot, &entry); err == nil; err = syscall.Process32Next(snapshot, &entry) {
-		if strings.EqualFold(syscall.UTF16ToString(entry.ExeFile[:]), name) && entry.ProcessID != uint32(os.Getpid()) {
-			count++
-		}
-	}
-	return count
+	syscall.CloseHandle(syscall.Handle(handle))
+	return 1
 }
 
 // A second double-click on Fantasy Land.exe brings the game window forward
@@ -504,6 +495,7 @@ func main() {
 
 	// An extra game window: just the window, no start-up or shut-down (the first copy of this program does those)
 	if len(os.Args) >= 3 && os.Args[1] == "--window" {
+		pCreateMutexW.Call(0, 0, uintptr(unsafe.Pointer(utf16(windowsMutex)))) // released when this process ends
 		if !gameWindow(os.Args[2], false, nil) {
 			openGameWindow() // no WebView2: an Edge window
 		}
