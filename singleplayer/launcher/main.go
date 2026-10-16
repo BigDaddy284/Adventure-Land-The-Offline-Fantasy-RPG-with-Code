@@ -26,7 +26,7 @@ import (
 const (
 	gameURL    = "http://127.0.0.1:8090"
 	profileDir = "AdventureLandSinglePlayer" // the game window's own Edge profile, in %LOCALAPPDATA% (same as Play.bat)
-	title      = "Adventure Land: The Offline Fantasy CRPG with Code"
+	title      = "Adventure Land: The Offline Fantasy RPG with Code"
 	// The browser flags the Edge app window used: the game keeps running at full speed in the background or minimised
 	browserFlags = "--disable-background-timer-throttling --disable-renderer-backgrounding --disable-backgrounding-occluded-windows " +
 		"--disable-features=CalculateNativeWinOcclusion,IntensiveWakeUpThrottling --autoplay-policy=no-user-gesture-required"

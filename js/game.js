@@ -444,7 +444,7 @@ function disconnect() {
 		);
 	}
 
-	if (character) $("title").html(title_m + " - " + (window.single_player_mode ? character.name + ": Adventure Land: The Offline Fantasy CRPG with Code" : character.name)); // Single player: the character's name, then the game's
+	if (character) $("title").html(title_m + " - " + (window.single_player_mode ? character.name + ": Adventure Land: The Offline Fantasy RPG with Code" : character.name)); // Single player: the character's name, then the game's
 }
 
 function position_map() {
@@ -1781,7 +1781,7 @@ function init_socket(args) {
 		$(".charactername").html(character.name);
 		page.title = character.name;
 		if (gameplay == "hardcore") page.title = phrase("game.title.hardcore", { character: character.name });
-		if (window.single_player_mode) page.title = character.name + ": Adventure Land: The Offline Fantasy CRPG with Code"; // Single player: the character's name, then the game's
+		if (window.single_player_mode) page.title = character.name + ": Adventure Land: The Offline Fantasy RPG with Code"; // Single player: the character's name, then the game's
 		try {
 			var get = "";
 			if (no_html) get += ((!get && "?") || "&") + "no_html=true";

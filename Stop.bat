@@ -1,5 +1,5 @@
 @echo off
-rem Adventure Land: The Offline Fantasy CRPG with Code (single player): closes the game window, game server, website and database started by Play.bat.
+rem Adventure Land: The Offline Fantasy RPG with Code (single player): closes the game window, game server, website and database started by Play.bat.
 rem Game window: only Edge and WebView2 processes using the game's own profile folder, so your normal Edge windows stay open.
 powershell -NoProfile -Command "Get-CimInstance Win32_Process -Filter \"Name='msedge.exe' OR Name='msedgewebview2.exe'\" | Where-Object { $_.CommandLine -like '*AdventureLandSinglePlayer*' } | ForEach-Object { Stop-Process -Id $_.ProcessId -Force -ErrorAction SilentlyContinue }" >nul 2>nul
 rem The game window is Adventure Land.exe's own window. When this was not started by Adventure Land.exe itself, close it too.

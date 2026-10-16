@@ -558,7 +558,7 @@ async function get_domain(req, user) {
 	};
 	domain.title = phrase("server.page.adventure_land_the_code_mmorpg");
 	domain.name = game_name;
-	if (options.single_player) ((domain.title = "Adventure Land: The Offline Fantasy CRPG with Code"), (domain.name = "Adventure Land")); // Single player: game name
+	if (options.single_player) ((domain.title = "Adventure Land: The Offline Fantasy RPG with Code"), (domain.name = "Adventure Land")); // Single player: game name
 	domain.scale = 2;
 	domain.perfect_pixels = true;
 	domain.fast_mode = true;

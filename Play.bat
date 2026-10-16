@@ -1,5 +1,5 @@
 @echo off
-rem Adventure Land: The Offline Fantasy CRPG with Code (single player): starts the database, website and game server in order, then opens the game.
+rem Adventure Land: The Offline Fantasy RPG with Code (single player): starts the database, website and game server in order, then opens the game.
 rem The first run also installs everything, which takes a few minutes.
 setlocal
 cd /d "%~dp0"

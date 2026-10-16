@@ -1,6 +1,6 @@
-# Adventure Land: The Offline Fantasy CRPG with Code: single-player files
+# Adventure Land: The Offline Fantasy RPG with Code: single-player files
 
-This folder holds the single-player parts of Adventure Land: The Offline Fantasy CRPG with Code:
+This folder holds the single-player parts of Adventure Land: The Offline Fantasy RPG with Code:
 
 - `config\`: the local config, linked as `secretsandconfig` by `Play.bat`.
 - `data\`: your saved game (the database). It's made on the first start.

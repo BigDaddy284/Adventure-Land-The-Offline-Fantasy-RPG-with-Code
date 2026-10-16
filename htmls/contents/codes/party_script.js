@@ -1,4 +1,4 @@
-// ADVENTURE LAND: THE OFFLINE FANTASY CRPG WITH CODE - PARTY AIO (Default Party Script)
+// ADVENTURE LAND: THE OFFLINE FANTASY RPG WITH CODE - PARTY AIO (Default Party Script)
 //
 // SET-UP: type your character names into LEADER, FOLLOWERS and ROLES
 // below, then press Save. Your names are kept in your own "Party AIO"

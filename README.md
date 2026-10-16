@@ -1,6 +1,6 @@
-# Adventure Land: The Offline Fantasy CRPG with Code
+# Adventure Land: The Offline Fantasy RPG with Code
 
-**Adventure Land: The Offline Fantasy CRPG with Code** is an offline, single-player version of Adventure Land, the MMORPG you can play by writing code. It runs entirely on your own Windows PC. There are no other players, no account to sign up for, and nothing to buy. You can play several characters at once, and one settings file lets you tune the game to suit you.
+**Adventure Land: The Offline Fantasy RPG with Code** is an offline, single-player version of Adventure Land, the MMORPG you can play by writing code. It runs entirely on your own Windows PC. There are no other players, no account to sign up for, and nothing to buy. You can play several characters at once, and one settings file lets you tune the game to suit you.
 
 It's built on the MongoDB port of [Adventure Land](https://github.com/kaansoral/adventureland_mongodb) by Kaan Soral and the Adventure Land developers. All credit for the original game goes to them. See the Thanks page in the game.
 
@@ -233,7 +233,7 @@ This offline version started as a copy of the MongoDB port of [Adventure Land](h
   - Male: Ironclad Veteran (warrior), Ashen Hood (rogue), Ember Sage (mage), Sunforged Templar (paladin) and Trailwise Trader (merchant).
   - Female: Frost Shieldmaiden (warrior), Greenwood Warden (ranger), Silver Oracle (priest), Tidecaller Witch (mage) and Crimson Knife (rogue).
 - **Title screen:** the game now opens on a title screen with a Login button that goes on to character select. A note in the corner reads "A derivative of Adventure Land, with thanks to Kaan Soral".
-- **Character select:** no seasonal event or update notices. The log says "Welcome to Adventure Land: The Offline Fantasy CRPG with Code!" with a few tips, instead of the server name and update notes.
+- **Character select:** no seasonal event or update notices. The log says "Welcome to Adventure Land: The Offline Fantasy RPG with Code!" with a few tips, instead of the server name and update notes.
 - **In Game list:** character select lists up to 8 characters, then a 1st and 2nd merchant.
 - `Stop.bat` also stops a game started by Adventure Land.exe.
 - **Logout:** the settings window has a Logout button in its top left, matching Close, that goes back to the title screen.
@@ -244,7 +244,7 @@ This offline version started as a copy of the MongoDB port of [Adventure Land](h
 - The title screen's Login button is half the size.
 - The "A derivative of Adventure Land" note moved to the bottom left, so the log box no longer covers it.
 - The log says "Click Login to get started." under the welcome while the title screen is showing.
-- Character select shows "Adventure Land: The Offline Fantasy CRPG with Code" where it used to show "Server: Americas I".
+- Character select shows "Adventure Land: The Offline Fantasy RPG with Code" where it used to show "Server: Americas I".
 
 ### v15
 - **Mod Menu:** a new button at the bottom of the screen, left of the game log, opens a window with every setting. Changes apply straight away and are saved to `settings.txt`.
@@ -256,7 +256,7 @@ This offline version started as a copy of the MongoDB port of [Adventure Land](h
 - Items you sell to an NPC are gone. Ponty no longer stocks them and only sells his own restocked gear. The `ponty_keep_sold_items` setting is removed, and an older `settings.txt` drops it on the next start.
 - **Character select:** the menu box with Character Ops and Logout is gone. Character Ops now sits at the top of the In Game box. To log out, use the Logout button in the settings window.
 - **Events page:** the Info button on character select opens a rewritten Events page about how events work offline: holidays and event monsters you switch on yourself, the daily and nightly events, and links to each event's guide. The home server and realm parts are gone. It's translated into every language the game supports (text in `singleplayer/events_page`).
-- **Game window:** the icon is the game's title screen picture instead of the Adventure Land logo, and the window title always reads "Adventure Land: The Offline Fantasy CRPG with Code" instead of the character's name.
+- **Game window:** the icon is the game's title screen picture instead of the Adventure Land logo, and the window title always reads "Adventure Land: The Offline Fantasy RPG with Code" instead of the character's name.
 
 ### v16
 - **Holiday events moved into the Mod Menu:** the holiday and event monster switches are at the bottom of the Mod Menu. The candy cane button and the separate Holiday Events menu are gone.
@@ -277,7 +277,7 @@ This offline version started as a copy of the MongoDB port of [Adventure Land](h
 - The game server waits up to 60 seconds, instead of 12, before giving up on a window that's busy (for example while another window loads), and no longer closes character select and loading windows when more than 5 are open at once.
 - New starting looks E to H for every class, as a male and a female in light and dark skin: barbarian warriors, paladins in blue plate, a pope and a nun for priests, a wizard and a witch for mages, ninja rogues, Robin Hood rangers in green caps, and banker merchants. The game's own looks stay on A to D. The looks added in earlier versions are removed; characters already made with them keep their look.
 - Game windows keep running at full speed when they're in the background or minimised. Edge normally slows hidden windows down, which slowed your characters' CODE.
-- Each game window's title is the character's name, then the game's name, for example "Chillyinit: Adventure Land: The Offline Fantasy CRPG with Code". Character select still shows just the game's name.
+- Each game window's title is the character's name, then the game's name, for example "Chillyinit: Adventure Land: The Offline Fantasy RPG with Code". Character select still shows just the game's name.
 
 ### v20
 - **Fixed:** going over 3 fighters or 1 merchant online disconnected every fighter (or every merchant) a few seconds later. A leftover rule from the online game's website checked every few seconds for 3 characters and 1 merchant per player, and kicked all of them. It's off in single player, so Characters online and the 2 merchant limit are the only limits.
@@ -353,10 +353,10 @@ This offline version started as a copy of the MongoDB port of [Adventure Land](h
 - **Player and Coding Guide:** the Player and Coding Guide is now in the zip, next to this README. It covers installing, the screen, the Mod Menu, how the game works, learning to code, Party AIO, the Bank Items List and every common CODE function.
 
 ### v28
-- **New name: Adventure Land: The Offline Fantasy CRPG with Code.** As Adventure Land's creator, Kaan Soral, suggested, the game is now released as an offline sub-game of Adventure Land, so it can keep using Adventure Land's art. The old name is gone everywhere: the game's text, the launcher, the window titles, the icons, the settings file, the README and the guide.
+- **New name: Adventure Land: The Offline Fantasy RPG with Code.** As Adventure Land's creator, Kaan Soral, suggested, the game is now released as an offline sub-game of Adventure Land, so it can keep using Adventure Land's art. The old name is gone everywhere: the game's text, the launcher, the window titles, the icons, the settings file, the README and the guide.
 - **Adventure Land again in the game's text:** everything that used to be changed to the old name as the game loaded now reads Adventure Land again, in every language. The tutorial comic, its page 2 and the Cave of Many Dreams comic are back to their original Adventure Land pictures.
-- **Title screen:** the picture above the Login button now says "Adventure Land: The Offline Fantasy CRPG with Code". The game's icon uses the same picture.
-- **Window titles:** each game window reads the character's name, then "Adventure Land: The Offline Fantasy CRPG with Code", for example "Chillyinit: Adventure Land: The Offline Fantasy CRPG with Code".
+- **Title screen:** the picture above the Login button now says "Adventure Land: The Offline Fantasy RPG with Code". The game's icon uses the same picture.
+- **Window titles:** each game window reads the character's name, then "Adventure Land: The Offline Fantasy RPG with Code", for example "Chillyinit: Adventure Land: The Offline Fantasy RPG with Code".
 - **`Adventure Land.exe`:** the launcher has the new name. It also keeps its window settings in a new folder, so on-screen choices such as collapsed boxes start fresh once.
 - **Moving from an older version:** unzip v28 into a new folder. To keep your characters, copy the old folder's `singleplayer\data` folder into the new one's `singleplayer` folder before the first start.
 
