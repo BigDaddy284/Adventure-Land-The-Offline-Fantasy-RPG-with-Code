@@ -88,7 +88,7 @@ Each of these opens a character in its own window:
 
 **Characters online** in the Mod Menu (`max_characters_online` in `settings.txt`) sets how many can be online together, merchants included, up to 18. Up to 2 of them can be merchants at the same time. Opening a 3rd merchant, or one character more than Characters online allows, is turned away, and a message in that window's log says why.
 
-All 18 character slots are free, so there are no slots to buy.
+You can make up to 100 characters, and every slot is free, so there are no slots to buy. The character select page shows them 6 at a time: use the **<** and **>** buttons under the list to turn the pages.
 
 **Running a lot of windows.** Every character runs in its own game window, and each window uses roughly as much memory and processor time as a browser tab running a game. The game doesn't stop you at a hardware limit, so the more windows you open the more your PC has to do. Things to watch for:
 
@@ -352,6 +352,11 @@ Fantasy Land started as a copy of the MongoDB port of [Adventure Land](https://g
 - **Window titles:** the first game window now shows the game's full name and your character's name, like the extra windows already did.
 - **Old copies can't get in the way:** if the game's database, website or game server is still running from another Fantasy Land folder (an older version, or a game ended from Task Manager), starting the game closes them first. The database is shut down cleanly so that folder's saves are kept, this copy runs its own files and saves into its own folder, and the old folder can be deleted.
 - **Unzip into a new folder:** if Windows ever asks for admin rights or says "Destination Folder Access Denied" while unzipping, delete the old folder or rename the zip and unzip it again, so it goes into a fresh folder.
+
+### v27.1
+- **100 character slots:** you can now make up to 100 characters (it was 18). The character select page shows them 6 at a time on 17 pages, with **<** and **>** buttons and a page counter under the list. Up to 18 can still be online at once (Characters online in the Mod Menu). Making a lot of characters in one go is no longer stopped after about 13.
+- **Closing the first window no longer freezes the others:** the first game window now runs as its own copy of `Fantasy Land.exe`, like the extra windows. Before, closing it first left the other windows frozen until the game was ended from Task Manager. The game still saves and stops when the last window closes.
+- **Player and Coding Guide:** `Fantasy Land v27.1 Player and Coding Guide.docx` is now in the zip, next to this README. It covers installing, the screen, the Mod Menu, how the game works, learning to code, Party AIO, the Bank Items List and every common CODE function.
 
 ## License
 

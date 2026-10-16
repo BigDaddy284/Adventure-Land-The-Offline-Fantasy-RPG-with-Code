@@ -293,7 +293,9 @@ const windowScript = `(function () {
 
 // Shows the game at url in a window of its own and returns when that window is closed. Returns false, with nothing shown,
 // when the WebView2 browser engine isn't there, so the caller can use Edge instead. created (optional) gets true once the window is up.
-// Every game window is its own Fantasy Land.exe process (see spawnWindow), so closing one never touches the others.
+// Every game window, the first one included, is its own Fantasy Land.exe process (see spawnWindow and firstWindow), and that
+// process ends as soon as its window closes. All the windows share one WebView2 browser, which stalls every window if a
+// closed window's process keeps running with nothing answering it, so no window may be shown by the launcher process itself.
 func gameWindow(url string, first bool, created chan<- bool) bool {
 	runtime.LockOSThread() // the window and its message loop stay on this thread
 	defer runtime.UnlockOSThread()
@@ -333,9 +335,6 @@ func gameWindow(url string, first bool, created chan<- bool) bool {
 	view.Bind("flSetTitle", func(text string) { view.SetTitle(text) }) // the window shows the page's title, like the game's own name and character
 	view.Init(windowScript)
 	view.Navigate(url)
-	if first {
-		hide() // the start-up window is no longer needed
-	}
 	view.Run()
 	view.Destroy()
 	return true
@@ -352,6 +351,21 @@ func spawnWindow(url string) {
 		go cmd.Wait()
 	}
 }
+
+// The first game window, as another copy of this program like the extra windows. Exit code 3 means WebView2 isn't there.
+func firstWindow() *exec.Cmd {
+	exe, err := os.Executable()
+	if err != nil {
+		return nil
+	}
+	cmd := exec.Command(exe, "--window", gameURL, "--first")
+	if cmd.Start() != nil {
+		return nil
+	}
+	return cmd
+}
+
+const noWebView2 = 3
 
 // Every extra game window process holds a handle to this named mutex, so it
 // exists exactly while at least one extra window is open
@@ -436,20 +450,33 @@ func run() {
 		return
 	}
 
-	// The game window is ours (WebView2): when it and any extra windows (other copies of this program) have closed, stop the game
-	created := make(chan bool, 1)
-	closed := make(chan struct{})
-	go func() {
-		gameWindow(gameURL, true, created)
-		close(closed)
-	}()
-	if <-created {
-		<-closed
-		for otherWindows() > 0 {
-			time.Sleep(time.Second)
+	// The game window is ours (WebView2), in a copy of this program of its own: when it and any extra windows have closed, stop the game
+	if first := firstWindow(); first != nil {
+		exited := make(chan int, 1)
+		go func() {
+			first.Wait()
+			exited <- first.ProcessState.ExitCode()
+		}()
+		code := -1
+		for waiting := true; waiting; {
+			select {
+			case code = <-exited:
+				waiting = false
+			case <-time.After(200 * time.Millisecond):
+				if hwnd, _, _ := pFindWindowW.Call(uintptr(unsafe.Pointer(utf16("webview"))), 0); hwnd != 0 {
+					hide() // the start-up window is no longer needed
+					code = <-exited
+					waiting = false
+				}
+			}
 		}
-		stopGame(log)
-		return
+		if code != noWebView2 {
+			for otherWindows() > 0 {
+				time.Sleep(time.Second)
+			}
+			stopGame(log)
+			return
+		}
 	}
 
 	// No WebView2: wait for the Edge game window, then for the last game window to close
@@ -494,7 +521,11 @@ func main() {
 	// An extra game window: just the window, no start-up or shut-down (the first copy of this program does those)
 	if len(os.Args) >= 3 && os.Args[1] == "--window" {
 		pCreateMutexW.Call(0, 0, uintptr(unsafe.Pointer(utf16(windowsMutex)))) // released when this process ends
-		if !gameWindow(os.Args[2], false, nil) {
+		first := len(os.Args) >= 4 && os.Args[3] == "--first"
+		if !gameWindow(os.Args[2], first, nil) {
+			if first {
+				os.Exit(noWebView2) // the launcher opens Edge instead
+			}
 			openGameWindow() // no WebView2: an Edge window
 		}
 		return

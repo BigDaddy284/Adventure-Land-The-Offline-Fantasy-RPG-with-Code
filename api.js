@@ -12,8 +12,9 @@ function sint(x) {
 }
 
 function can_create_character_check(user, ip) {
-	if (ip && gf(ip, "limit_create_character", 0) > 12) return { can: false, reason: "ip" };
-	if (gf(user, "characters", []).length >= 18) return { can: false, reason: "abs" };
+	var sp = typeof options == "object" && options && options.single_player;
+	if (!sp && ip && gf(ip, "limit_create_character", 0) > 12) return { can: false, reason: "ip" }; // Single player: no limit on how fast characters are made
+	if (gf(user, "characters", []).length >= (sp ? 100 : 18)) return { can: false, reason: "abs" }; // Single player: up to 100 characters
 	if (gf(user, "characters", []).length >= get_character_slots(user)) {
 		if (can_spend_shells(user.cash, 200)) return { can: true, paid: true };
 		return { can: false, reason: "limit" };

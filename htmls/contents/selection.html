@@ -100,7 +100,7 @@
 			>
 				{{ phrase("pages.contents.selection.create") }}
 			</div>
-			{% if character_slots <= characters|length and characters|length < 18 %}
+			{% if character_slots <= characters|length and characters|length < (100 if domain.single_player else 18) %}
 			<div style="color: #5dac40; margin-top: 4px">{{ phrase("pages.contents.selection.cost-200-shells") }}</div>
 			<div style="color: gray">{{ phrase("pages.contents.selection.slots-in-use") }}</div>
 			{% endif %}

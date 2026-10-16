@@ -1,5 +1,7 @@
-{% for c in [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17] %}
-	{% if c==0 %}<div class='page1'>{%endif%}{% if c==6 %}<div class='page2 hidden'>{%endif%}{% if c==12 %}<div class='page3 hidden'>{%endif%}
+{# Single player: up to 100 characters, 6 to a page (18 otherwise) #}
+{% set per_page = 6 %}{% set max_characters = 100 if domain.single_player else 18 %}{% set page_count = ((max_characters + per_page - 1) / per_page)|int %}
+{% for c in range(0, max_characters) %}
+	{% if c % per_page == 0 %}<div class='selection-page page{{ (c / per_page)|int + 1 }}{% if c %} hidden{% endif %}'>{%endif%}
 		{% if characters[c] %}
 			<div class="gamebutton mb5 vtop selection-character" data-character="{{characters[c]._id|e}}" data-name="{{characters[c].info.name|e}}" {% if not domain.single_player %}data-home="{{characters[c].info.p.home|e}}" onmouseenter="show_character_home(this)" onmouseleave="hide_character_home()" {% endif %}onclick="if(bc(this)) return; enter_selected_character('{{characters[c].info.name}}','{{characters[c]._id}}')" style='text-align: left; width: 160px'>
 				{% if not domain.single_player %}<span class="selection-home-server"></span>{% endif %}{# Single player: one world, no home server tag #}
@@ -29,15 +31,22 @@
 				<span class="gray selection-slot-label" title="{{ unused|e }}" style="display:block; overflow:hidden; white-space:nowrap">{{ unused }}</span>
 			</div>
 		{% endif %}
-	{% if c==5 or c==11 or c==17 %}</div>{%endif%}
+	{% if c % per_page == per_page - 1 or c == max_characters - 1 %}</div>{%endif%}
 {% endfor %}
 <div class='mb5'>
-	<div class="gamebutton pgbt pgbt1" style='width: 62px' onclick="$('.page2').hide(); $('.page3').hide(); $('.page1').show(); $('.pgbt').css('color','gray'); $('.pgbt1').css('color','white');">{{ phrase("pages.contents.selection_characters.page-1") }}</div>
-	<div class="gamebutton pgbt pgbt2" style='width: 61px; color: gray' onclick="$('.page1').hide(); $('.page3').hide(); $('.page2').show(); $('.pgbt').css('color','gray'); $('.pgbt2').css('color','white');">{{ phrase("pages.contents.selection_characters.page-2") }}</div>
-	<div class="gamebutton pgbt pgbt3" style='width: 61px; color: gray' onclick="$('.page1').hide(); $('.page2').hide(); $('.page3').show(); $('.pgbt').css('color','gray'); $('.pgbt3').css('color','white');">{{ phrase("pages.contents.selection_characters.page-3") }}</div>
-	<div class="gamebutton {%if not characters %}mt5{%endif%} mb5 nchb" style='text-align: center; width: 62px' {% if characters|length < 18 %}onclick="pcs(); $('.menu').hide(); $('.salesui').hide(); $('.newcharacter').show(); load_class_info('rogue','male'); resize(); chartype='',gendertype='';"{% endif %}><span style='{% if characters|length >= 18 %}color:gray{% endif %}'>{{ phrase("pages.contents.selection_characters.new") }}</span></div>
+	<div class="gamebutton" style='width: 62px' onclick="selection_page(-1)">&lt;</div>
+	<div class="gamebutton selection-page-label" style='width: 61px'>1 / {{ page_count }}</div>
+	<div class="gamebutton" style='width: 61px' onclick="selection_page(1)">&gt;</div>
+	<div class="gamebutton {%if not characters %}mt5{%endif%} mb5 nchb" style='text-align: center; width: 62px' {% if characters|length < max_characters %}onclick="pcs(); $('.menu').hide(); $('.salesui').hide(); $('.newcharacter').show(); load_class_info('rogue','male'); resize(); chartype='',gendertype='';"{% endif %}><span style='{% if characters|length >= max_characters %}color:gray{% endif %}'>{{ phrase("pages.contents.selection_characters.new") }}</span></div>
 </div>
 <script>
+	var selection_page_now = 1, selection_page_count = {{ page_count }};
+	function selection_page(step) {
+		selection_page_now = ((selection_page_now - 1 + step + selection_page_count) % selection_page_count) + 1;
+		$('.selection-page').hide();
+		$('.page' + selection_page_now).show();
+		$('.selection-page-label').text(selection_page_now + ' / ' + selection_page_count);
+	}
 	user_id="{{user and user._id or ''}}";
 	user_auth="{{user and user.info.auths[0] or ''}}";
 	$(window).off("resize.character_home").on("resize.character_home", hide_character_home);

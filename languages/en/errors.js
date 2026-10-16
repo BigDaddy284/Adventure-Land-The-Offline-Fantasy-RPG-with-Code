@@ -73,7 +73,7 @@ module.exports = {
 	// Account/API error too_many_characters_from_ip; shown after a failed manual action, never used as a protocol value.
 	"error.too_many_characters_from_ip": "Too many characters were created from this connection. Please try again later.",
 	// Account/API error cant_create_more_than_18; shown after a failed manual action, never used as a protocol value.
-	"error.cant_create_more_than_18": "An account can have up to 18 characters.",
+	"error.cant_create_more_than_18": "An account can have up to 100 characters.",
 	// Account/API error reached_character_limit; shown after a failed manual action, never used as a protocol value.
 	"error.reached_character_limit": "Your account has no free character slots.",
 	// Account/API error no_character; shown after a failed manual action, never used as a protocol value.

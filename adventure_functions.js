@@ -183,7 +183,7 @@ function gf(element, name, def) {
 }
 
 function get_character_slots(user) {
-	if (typeof options == "object" && options && options.single_player) return 18; // Single player: every slot is free
+	if (typeof options == "object" && options && options.single_player) return 100; // Single player: every slot is free, up to 100
 	var included = user && user.pid ? 8 : 5;
 	var slots = gf(user, "slots", included);
 	return Math.min(18, Math.max(included, Number.isSafeInteger(slots) ? slots : included));
