@@ -33,7 +33,7 @@ Adventure Land is used under the **Adventure Land Only Use** license ([LICENSE](
 - **Up to 100 characters,** several of them online and in their own windows at the same time.
 - **A Mod Menu and a settings file** to tune the game: XP, drops, prices, damage, holiday events and more.
 - **Party AIO and Bank Items List,** two ready-made scripts for running a whole party and sorting your bank.
-- **A Player and Coding Guide** that takes you from installing the game to writing your own scripts.
+- **A Player and Coding Guide** ([Word document](guides/Adventure%20Land%20v28%20Player%20and%20Coding%20Guide.docx)) that takes you from installing the game to writing your own scripts.
 - **No setup puzzles:** double-click `Adventure Land.exe`. It starts the database, website and game server for you and opens the game.
 
 ## Made with AI
