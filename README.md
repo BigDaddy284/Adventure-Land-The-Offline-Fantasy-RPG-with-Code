@@ -1,8 +1,40 @@
+<div align="center">
+
+<img src="images/singleplayer/login-title.png" alt="Adventure Land: The Offline Fantasy RPG with Code" width="720">
+
 # Adventure Land: The Offline Fantasy RPG with Code
 
-**Adventure Land: The Offline Fantasy RPG with Code** is an offline, single-player version of Adventure Land, the MMORPG you can play by writing code. It runs entirely on your own Windows PC. There are no other players, no account to sign up for, and nothing to buy. You can play several characters at once, and one settings file lets you tune the game to suit you.
+**The MMORPG you play by writing code, now on your own PC with no other players, no account and nothing to buy.**
 
-It's built on the MongoDB port of [Adventure Land](https://github.com/kaansoral/adventureland_mongodb) by Kaan Soral and the Adventure Land developers. All credit for the original game goes to them. See the Thanks page in the game.
+[Thanks](#thanks-and-accreditation) · [What it is](#what-it-is) · [Install and play](#what-you-need-to-install) · [Settings](#settings) · [What changed](#changes-from-the-original-game) · [License](#license)
+
+</div>
+
+---
+
+## Thanks and accreditation
+
+This game exists because of **[Adventure Land](https://adventure.land)**, created by **Kaan Soral**. Every map, monster, class, item, sound and line of game code that makes this game what it is came from him and the Adventure Land team. Kaan open-sourced the game, and when asked about this project he gave his blessing to release it as a sub-game of Adventure Land, with the name **Adventure Land: The Offline Fantasy RPG with Code**, and said its assets are covered by Adventure Land's. Thank you, Kaan.
+
+- **Kaan Soral and the Adventure Land developers:** the original game, its engine and its source code: [adventureland_mongodb](https://github.com/kaansoral/adventureland_mongodb), the MongoDB port this game is built on.
+- **Ellian**, Adventure Land's pixel artist, and the other artists, composers and developers whose libraries, assets and work Adventure Land is built from. Their art and music are what you see and hear in this game.
+- **Mark Jayson Lacandula (Json)**, one of Adventure Land's first players, who helped shape the game's map editor and maps.
+- **Adventure Land's players and community**, on Steam and on [/r/mmorpg](https://www.reddit.com/r/mmorpg/), who tested, gave feedback and kept the game going for years.
+- **Steam** and **Google Cloud**, who Kaan thanks for helping Adventure Land reach its players.
+- **[Anthropic's Claude](https://claude.ai/code)**, the AI coding assistant that helped write this offline version, working from the requests and testing of the project's owner. See [Made with AI](#made-with-ai).
+
+Adventure Land is used under the **Adventure Land Only Use** license ([LICENSE](LICENSE)): attribution is required, with a link back to [adventure.land](https://adventure.land). This project is an unofficial derivative and is not the online game. To play Adventure Land online, with other players, go to **[adventure.land](https://adventure.land)**.
+
+## What it is
+
+**Adventure Land: The Offline Fantasy RPG with Code** is an offline, single-player version of Adventure Land, the MMORPG you can play by writing code. It runs entirely on your own Windows PC. There are no other players, no account to sign up for, and nothing to buy.
+
+- **Play by hand or by code.** Use the mouse and keyboard like any other RPG, or write small JavaScript programs (CODE) that play your characters for you.
+- **Up to 100 characters,** several of them online and in their own windows at the same time.
+- **A Mod Menu and a settings file** to tune the game: XP, drops, prices, damage, holiday events and more.
+- **Party AIO and Bank Items List,** two ready-made scripts for running a whole party and sorting your bank.
+- **A Player and Coding Guide** that takes you from installing the game to writing your own scripts.
+- **No setup puzzles:** double-click `Adventure Land.exe`. It starts the database, website and game server for you and opens the game.
 
 ## Made with AI
 
