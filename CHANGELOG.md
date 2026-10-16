@@ -215,3 +215,6 @@ This offline version started as a copy of the MongoDB port of [Adventure Land](h
 - **Window titles:** each game window reads the character's name, then "Adventure Land: The Offline Fantasy RPG with Code", for example "Chillyinit: Adventure Land: The Offline Fantasy RPG with Code".
 - **`Adventure Land.exe`:** the launcher has the new name. It also keeps its window settings in a new folder, so on-screen choices such as collapsed boxes start fresh once.
 - **Moving from an older version:** unzip v28 into a new folder. To keep your characters, copy the old folder's `singleplayer\data` folder into the new one's `singleplayer` folder before the first start.
+
+### v28.1
+- **settings.txt and the Mod Menu work again:** on a fresh install `settings.txt` was made as a hidden file, so it didn't show in the game folder and Windows refused to save Mod Menu changes to it, which showed an error. It is now made as a normal file, and a hidden one left by v28 is unhidden when the game starts.
