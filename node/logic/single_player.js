@@ -178,7 +178,9 @@ function missing_settings(text, example_text) {
 }
 
 function load() {
-	if (!fs.existsSync(SETTINGS_FILE) && fs.existsSync(EXAMPLE_FILE)) fs.copyFileSync(EXAMPLE_FILE, SETTINGS_FILE);
+	// Written rather than copied: on Windows a copy keeps the example's Hidden attribute, and a hidden file can't be saved to
+	if (!fs.existsSync(SETTINGS_FILE) && fs.existsSync(EXAMPLE_FILE))
+		fs.writeFileSync(SETTINGS_FILE, fs.readFileSync(EXAMPLE_FILE));
 	if (fs.existsSync(SETTINGS_FILE)) {
 		const text = fs.readFileSync(SETTINGS_FILE, "utf8");
 		const renamed = rename_settings(text);

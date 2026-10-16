@@ -19,7 +19,10 @@ if not exist common\ (
 rem The config link is remade every start, so renaming or moving this folder never breaks it
 rmdir secretsandconfig 2>nul
 if not exist secretsandconfig\ mklink /J secretsandconfig singleplayer\config >nul
-if not exist settings.txt copy settings.example.txt settings.txt >nul
+rem settings.example.txt is hidden and copy skips hidden files, so it is copied with type. An earlier build could leave
+rem settings.txt hidden too, and Windows refuses to save a hidden file, so it is unhidden.
+attrib -h settings.txt >nul 2>nul
+if not exist settings.txt type settings.example.txt > settings.txt
 if not exist node_modules\ (
 	echo Installing website packages...
 	call npm install --no-audit --no-fund || (pause & exit /b 1)
