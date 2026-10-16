@@ -25,6 +25,10 @@ This game exists because of **[Adventure Land](https://adventure.land)**, create
 
 Adventure Land is used under the **Adventure Land Only Use** license ([LICENSE](LICENSE)): attribution is required, with a link back to [adventure.land](https://adventure.land). This project is an unofficial derivative and is not the online game. To play Adventure Land online, with other players, go to **[adventure.land](https://adventure.land)**.
 
+## A hobby project, offered as-is
+
+This is a hobby project, made for fun in spare time. It is offered **as-is, with no warranty, no support and no promised updates.** There may be bugs, and some may never be fixed. Issues are turned off on this repository and I'm not able to answer questions, take requests or fix problems. You're welcome to use it, learn from it and change it for your own use under the terms of the [license](LICENSE), at your own risk. Back up anything you care about, such as your `singleplayer\data` folder.
+
 ## What it is
 
 **Adventure Land: The Offline Fantasy RPG with Code** is an offline, single-player version of Adventure Land, the MMORPG you can play by writing code. It runs entirely on your own Windows PC. There are no other players, no account to sign up for, and nothing to buy.
