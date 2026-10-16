@@ -18,7 +18,7 @@ This game exists because of **[Adventure Land](https://adventure.land)**, create
 
 - **Kaan Soral and the Adventure Land developers:** the original game, its engine and its source code: [adventureland_mongodb](https://github.com/kaansoral/adventureland_mongodb), the MongoDB port this game is built on.
 - **Ellian**, Adventure Land's pixel artist, and the other artists, composers and developers whose libraries, assets and work Adventure Land is built from. Their art and music are what you see and hear in this game.
-- **Mark Jayson Lacandula (Json)**, one of Adventure Land's first players, who helped shape the game's map editor and maps.
+- **Mark Jayson Lacandula (Json)**, one of Adventure Land's first players, who went on to make all of its maps, extend its tilesets and sprites, and learn pixel art along the way.
 - **Adventure Land's players and community**, on Steam and on [/r/mmorpg](https://www.reddit.com/r/mmorpg/), who tested, gave feedback and kept the game going for years.
 - **Steam** and **Google Cloud**, who Kaan thanks for helping Adventure Land reach its players.
 - **[Anthropic's Claude](https://claude.ai/code)**, the AI coding assistant that helped write this offline version, working from the requests and testing of the project's owner. See [Made with AI](#made-with-ai).
