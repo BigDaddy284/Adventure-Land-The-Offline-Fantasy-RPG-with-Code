@@ -4214,7 +4214,8 @@ function chest_exchange(chest, name) {
 	});
 	if (done && bonus)
 		bonus.forEach(function (drop) {
-			if (Math.random() < (typeof single_player == "object" ? single_player.luck_chance(drop[0]) : drop[0])) chest_exchange(chest, [drop]);
+			if (Math.random() < (typeof single_player == "object" ? single_player.luck_chance(drop[0]) : drop[0]))
+				chest_exchange(chest, [drop]);
 		});
 }
 

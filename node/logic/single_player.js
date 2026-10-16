@@ -118,7 +118,10 @@ const RENAMED_NOTES = [
 		"# Item drop chance from every monster, everywhere.\r\n# 100 = normal, 200 = twice as many drops, 0 = nothing drops.\r\n",
 		"# Item drop chance from every monster, everywhere. A multiplier:\r\n# 1 = normal, 2 = every item is twice as likely to drop,\r\n# 0.5 = half as likely, 0 = nothing drops.\r\n",
 	],
-	["# Gold dropped by monsters. 100 = normal.\r\n", "# Gold dropped by monsters. A multiplier: 1 = normal, 2 = double.\r\n"],
+	[
+		"# Gold dropped by monsters. 100 = normal.\r\n",
+		"# Gold dropped by monsters. A multiplier: 1 = normal, 2 = double.\r\n",
+	],
 	["# Very silly. Overrides drop_rate_percent.", "# Very silly. Overrides drop_rate."],
 	[
 		"# Multiplies the success chance. 100 = normal, 200 = twice as\r\n# likely, 1000 = almost never fails.",
@@ -138,7 +141,10 @@ const RENAMED_NOTES = [
 // drop_rate = 2) and removed ones are taken out
 function rename_settings(text) {
 	Object.keys(RENAMED).forEach(function (old) {
-		const pattern = new RegExp("^([ \\t]*)" + old + "([ \\t]*=[ \\t]*)([^#\\r\\n]*?)%?([ \\t]*(#[^\\r\\n]*)?)(?=\\r?$)", "im");
+		const pattern = new RegExp(
+			"^([ \\t]*)" + old + "([ \\t]*=[ \\t]*)([^#\\r\\n]*?)%?([ \\t]*(#[^\\r\\n]*)?)(?=\\r?$)",
+			"im",
+		);
 		text = text.replace(pattern, function (line, indent, eq, value, rest) {
 			const number = Number(value.trim());
 			const converted = value.trim() !== "" && Number.isFinite(number) ? String(number / RENAMED[old][1]) : value;
@@ -147,7 +153,13 @@ function rename_settings(text) {
 	});
 	REMOVED.forEach(function (key) {
 		// the setting's line, with the notes written straight above it
-		text = text.replace(new RegExp("(^[ \\t]*\\r?\\n)?(^[ \\t]*#[^\\r\\n]*\\r?\\n)*^[ \\t]*" + key + "[ \\t]*=[^\\r\\n]*(\\r?\\n)?", "gim"), "");
+		text = text.replace(
+			new RegExp(
+				"(^[ \\t]*\\r?\\n)?(^[ \\t]*#[^\\r\\n]*\\r?\\n)*^[ \\t]*" + key + "[ \\t]*=[^\\r\\n]*(\\r?\\n)?",
+				"gim",
+			),
+			"",
+		);
 	});
 	RENAMED_NOTES.forEach(function ([before, after]) {
 		text = text.split(before).join(after).split(before.replace(/\r\n/g, "\n")).join(after.replace(/\r\n/g, "\n"));
@@ -288,7 +300,11 @@ const MOD_MENU = [
 			["drop_rate", "Drop luck", "1 = normal, 2 = every item twice as likely to drop"],
 			["gold_drop", "Gold dropped", "1 = normal, 2 = twice as much gold"],
 			["drop_everything", "Drop everything", "Every monster drops its whole drop list"],
-			["exchange_luck", "Exchange luck", "Every exchange, box, fish and mine: 1 = normal, 2 = rare rewards twice as likely"],
+			[
+				"exchange_luck",
+				"Exchange luck",
+				"Every exchange, box, fish and mine: 1 = normal, 2 = rare rewards twice as likely",
+			],
 			["exchange_speed", "Exchange speed", "How fast exchanges finish: 1 = normal, 2 = double speed, 0.5 = half speed"],
 		],
 	},
@@ -298,7 +314,11 @@ const MOD_MENU = [
 		rows: [
 			["upgrade_success", "Upgrade luck", "1 = normal, 2 = twice the chance of success"],
 			["compound_success", "Compound luck", "1 = normal, 2 = twice the chance of success"],
-			["crafting_speed", "Crafting speed", "How fast upgrades and compounds finish: 1 = normal, 2 = double speed, 0.5 = half speed"],
+			[
+				"crafting_speed",
+				"Crafting speed",
+				"How fast upgrades and compounds finish: 1 = normal, 2 = double speed, 0.5 = half speed",
+			],
 			["safe_upgrades", "Safe upgrades", "A failed upgrade or compound keeps your items"],
 			"Gathering",
 			["fishing_mining_cooldown", "Fishing and mining wait", "Off = fish and mine again straight away"],
@@ -310,7 +330,11 @@ const MOD_MENU = [
 		note: "NPC shops, Ponty and Merrit",
 		rows: [
 			["fire_sale", "Fire Sale", "Everything in the NPC shops, Ponty and Lost and Found is free"],
-			["trader_discount", "Trader Discount %", "Off gold prices in NPC shops, Ponty and Lost and Found: 0 = normal, 100 = free"],
+			[
+				"trader_discount",
+				"Trader Discount %",
+				"Off gold prices in NPC shops, Ponty and Lost and Found: 0 = normal, 100 = free",
+			],
 			["sell_multiplier", "Sell Item Price", "What NPCs pay for your items: 1 = normal, 2 = double"],
 			"Ponty",
 			["ponty_restock_minutes", "Restock minutes", "0 = normal Ponty"],
@@ -333,7 +357,11 @@ const MOD_MENU = [
 			["max_characters_online", "Characters online", "How many can play at once"],
 			["starting_gold", "Starting gold", "Gold for each new character"],
 			"Gold and XP",
-			["give_take", "Give / Take", "Pick Gold or XP, type an amount and a character name, then Give or Take. Leave the name empty for every character online. Taking XP never lowers a level"],
+			[
+				"give_take",
+				"Give / Take",
+				"Pick Gold or XP, type an amount and a character name, then Give or Take. Leave the name empty for every character online. Taking XP never lowers a level",
+			],
 		],
 	},
 	{
@@ -376,7 +404,8 @@ const MINIMUM = { exchange_speed: 0.1, crafting_speed: 0.1 };
 function holiday_event(key) {
 	const event = Object.keys(EVENT_SETTINGS).find((name) => EVENT_SETTINGS[name] == key);
 	if (event) return event;
-	if (typeof key == "string" && key.startsWith("monster_") && EVENT_MONSTERS.includes(key.slice(8))) return key.slice(8);
+	if (typeof key == "string" && key.startsWith("monster_") && EVENT_MONSTERS.includes(key.slice(8)))
+		return key.slice(8);
 }
 
 // Checks a value from the Mod Menu: true/false for yes/no settings, a number 0 or above for the rest.
@@ -385,7 +414,8 @@ function check_value(key, value) {
 	if (!(key in DEFAULTS)) return undefined;
 	if (typeof DEFAULTS[key] == "boolean") return typeof value == "boolean" ? value : undefined;
 	const number = Number(value);
-	if (value === "" || value === null || typeof value == "boolean" || !Number.isFinite(number) || number < 0) return undefined;
+	if (value === "" || value === null || typeof value == "boolean" || !Number.isFinite(number) || number < 0)
+		return undefined;
 	if (key in WHOLE) return Math.min(WHOLE[key], Math.round(number));
 	return Math.max(MINIMUM[key] || 0, Math.min(MAXIMUM[key] || Infinity, Math.round(number * 1000) / 1000));
 }
@@ -560,13 +590,20 @@ async function upgrade_looks(db) {
 			const info = character.info || {};
 			const look = upgraded_look(type, info.skin, info.cx);
 			if (!look) continue;
-			await db.collection("character").updateOne({ _id: character._id }, { $set: { "info.skin": look.skin, "info.cx": look.cx } });
+			await db
+				.collection("character")
+				.updateOne({ _id: character._id }, { $set: { "info.skin": look.skin, "info.cx": look.cx } });
 			const owner = character.owner && (await db.collection("user").findOne({ _id: character.owner }));
 			const list = owner && owner.info && owner.info.characters;
 			if (Array.isArray(list))
 				for (let i = 0; i < list.length; i++)
 					if (list[i] && list[i].id == character._id)
-						await db.collection("user").updateOne({ _id: owner._id }, { $set: { ["info.characters." + i + ".skin"]: look.skin, ["info.characters." + i + ".cx"]: look.cx } });
+						await db
+							.collection("user")
+							.updateOne(
+								{ _id: owner._id },
+								{ $set: { ["info.characters." + i + ".skin"]: look.skin, ["info.characters." + i + ".cx"]: look.cx } },
+							);
 			moved++;
 		}
 	}
@@ -599,7 +636,13 @@ function prune_docs(docs) {
 			if (!Array.isArray(entry)) return true;
 			if (entry[0] == "limits") {
 				// The online rules page becomes a single player page about characters online and slots
-				entry.splice(0, 3, "characters-and-limits", "Characters & Limits", "characters online,merchants,slots,windows,limits");
+				entry.splice(
+					0,
+					3,
+					"characters-and-limits",
+					"Characters & Limits",
+					"characters online,merchants,slots,windows,limits",
+				);
 				return true;
 			}
 			if (REMOVED_GUIDES.includes(entry[0])) return false;
@@ -620,7 +663,8 @@ function prune_docs(docs) {
 		});
 		const map = docs.interaction_map || {};
 		for (const group of Object.values(map))
-			if (group && typeof group == "object") for (const key of Object.keys(group)) if (group[key] == "server_services") group[key] = "sp_server_services";
+			if (group && typeof group == "object")
+				for (const key of Object.keys(group)) if (group[key] == "server_services") group[key] = "sp_server_services";
 	}
 	for (const name of Object.keys(interactions))
 		if (interactions[name].functions)
@@ -698,7 +742,8 @@ function create(settings) {
 			add_looks(G.classes);
 			if (G.drops) strip_shell_drops(G.drops);
 			// Items bought with Shells show their seashell price
-			for (const [name, def] of Object.entries(G.items || {})) if (def && def.cash) def.seashells = item_seashell_price(name, def.cash, 1);
+			for (const [name, def] of Object.entries(G.items || {}))
+				if (def && def.cash) def.seashells = item_seashell_price(name, def.cash, 1);
 			return G;
 		},
 		// A gold price in the NPC shops, Ponty or Lost and Found after Fire Sale and the Trader Discount
@@ -713,7 +758,9 @@ function create(settings) {
 			const luck = typeof settings.exchange_luck == "number" ? settings.exchange_luck : 1;
 			if (luck == 1 || !Array.isArray(table) || table.length < 2) return table;
 			const most = Math.max(...table.map((drop) => drop[0]));
-			return table.map((drop) => (drop[0] < most && drop[1] != "empty" ? [drop[0] * luck].concat(drop.slice(1)) : drop));
+			return table.map((drop) =>
+				drop[0] < most && drop[1] != "empty" ? [drop[0] * luck].concat(drop.slice(1)) : drop,
+			);
 		},
 		// The chance of an exchange's bonus reward with Exchange luck applied
 		luck_chance(chance) {
@@ -739,7 +786,8 @@ function create(settings) {
 		},
 		apply_options(options) {
 			// The game's own limits are remembered, so lowering the setting while playing works too
-			if (!base_limits) base_limits = { character_limit: options.character_limit || 0, ip_limit: options.ip_limit || 0 };
+			if (!base_limits)
+				base_limits = { character_limit: options.character_limit || 0, ip_limit: options.ip_limit || 0 };
 			const most = Math.max(1, settings.max_characters_online);
 			options.character_limit = Math.max(base_limits.character_limit, most);
 			options.ip_limit = Math.max(base_limits.ip_limit, most);
@@ -773,7 +821,9 @@ function create(settings) {
 									amounts: row[0] == "give_take" ? { gold: settings.give_gold, xp: settings.give_xp } : undefined,
 								},
 					);
-					const changed = rows.filter((row) => row.key && !NOT_COUNTED.includes(row.key) && settings[row.key] !== DEFAULTS[row.key]).length;
+					const changed = rows.filter(
+						(row) => row.key && !NOT_COUNTED.includes(row.key) && settings[row.key] !== DEFAULTS[row.key],
+					).length;
 					return { name: group.name, note: group.note, changed, rows };
 				}),
 			};

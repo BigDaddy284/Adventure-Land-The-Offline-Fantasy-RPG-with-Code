@@ -1994,7 +1994,8 @@ function consume_one_by_id(player, id) {
 function pay_seashells(player, amount) {
 	if (amount <= 0) return true;
 	var have = 0;
-	for (var i = 0; i < player.items.length; i++) if (player.items[i] && player.items[i].name == "seashell") have += player.items[i].q || 1;
+	for (var i = 0; i < player.items.length; i++)
+		if (player.items[i] && player.items[i].name == "seashell") have += player.items[i].q || 1;
 	if (have < amount) return false;
 	for (var i = 0; i < player.items.length && amount > 0; i++) {
 		if (!player.items[i] || player.items[i].name != "seashell") continue;
@@ -2016,7 +2017,14 @@ function refund_seashells(player, amount) {
 
 // Single player: the log line when seashells are short
 function seashells_short(socket, amount) {
-	socket.emit("game_log", localization.message("server.game_log.sp_need_seashells", { amount: String(to_pretty_num(amount)) }, { color: "gray" }));
+	socket.emit(
+		"game_log",
+		localization.message(
+			"server.game_log.sp_need_seashells",
+			{ amount: String(to_pretty_num(amount)) },
+			{ color: "gray" },
+		),
+	);
 }
 
 function create_new_item(name, quantity) {
@@ -4302,7 +4310,14 @@ function complete_attack(attacker, target, info) {
 		attack = cave_damage(attacker, target, info, attack);
 		if (typeof single_player == "object" && target.is_player && attack > 0 && attacker != target)
 			attack = round(single_player.scale("hp_loss", attack)); // Single player: HP loss
-		if (typeof single_player == "object" && attacker.is_player && !target.is_player && attack > 0 && !info.heal && !info.positive)
+		if (
+			typeof single_player == "object" &&
+			attacker.is_player &&
+			!target.is_player &&
+			attack > 0 &&
+			!info.heal &&
+			!info.positive
+		)
 			attack = max(1, round(single_player.scale("damage", attack))); // Single player: damage multiplier
 		target.hp = min(target.hp - attack, target.max_hp); // both for damage and heal
 		var net = original - max(0, target.hp);
@@ -7136,7 +7151,8 @@ function init_socket_io(socket_server, server_index) {
 					},
 				};
 				// Single player: Safe upgrades, a failed compound leaves the other two items where they are
-				var sp_safe = typeof single_player == "object" && single_player.settings.safe_upgrades && !(result <= probability);
+				var sp_safe =
+					typeof single_player == "object" && single_player.settings.safe_upgrades && !(result <= probability);
 				if (!sp_safe) {
 					player.items[data.items[1]] = null;
 					player.items[data.items[2]] = null;
@@ -7528,7 +7544,7 @@ function init_socket_io(socket_server, server_index) {
 						ex = "+u+cid";
 					}
 					if (typeof single_player == "object") ms = single_player.speed_up(ms, "crafting_speed"); // Single player: Crafting speed
-						player.q.upgrade = { ms: ms, len: ms, num: data.item_num };
+					player.q.upgrade = { ms: ms, len: ms, num: data.item_num };
 					if (gameplay == "hardcore") {
 						player.q.upgrade.ms = player.q.upgrade.len = 500;
 					}
@@ -7641,7 +7657,7 @@ function init_socket_io(socket_server, server_index) {
 						ex = "+u+cid";
 					}
 					if (typeof single_player == "object") ms = single_player.speed_up(ms, "crafting_speed"); // Single player: Crafting speed
-						player.q.upgrade = { ms: ms, len: ms, num: data.item_num };
+					player.q.upgrade = { ms: ms, len: ms, num: data.item_num };
 					player.items[data.item_num] = {
 						name: "placeholder",
 						p: {
@@ -8327,7 +8343,13 @@ function init_socket_io(socket_server, server_index) {
 					var new_item = create_new_item(name, quantity);
 					add_item(player, new_item, { announce: false });
 					if (typeof single_player == "object") {
-						if (seashells) socket.emit("game_log", localization.message("server.game_log.sp_spent_seashells", { amount: String(to_pretty_num(seashells)) }));
+						if (seashells)
+							socket.emit(
+								"game_log",
+								localization.message("server.game_log.sp_spent_seashells", {
+									amount: String(to_pretty_num(seashells)),
+								}),
+							);
 					} else
 						socket.emit(
 							"game_log",
@@ -8424,7 +8446,11 @@ function init_socket_io(socket_server, server_index) {
 					S.blessed_minutes = 60 * 24 * 3;
 					S.blessed_by = player.name;
 
-					if (typeof single_player == "object") socket.emit("game_log", localization.message("server.game_log.sp_spent_seashells", { amount: String(to_pretty_num(seashells)) }));
+					if (typeof single_player == "object")
+						socket.emit(
+							"game_log",
+							localization.message("server.game_log.sp_spent_seashells", { amount: String(to_pretty_num(seashells)) }),
+						);
 					else
 						socket.emit(
 							"game_log",
@@ -9105,14 +9131,21 @@ function init_socket_io(socket_server, server_index) {
 		// Single player: the Mod Menu changes settings while the game runs, holiday events included
 		socket.on("single_player_setting", function (data) {
 			if (typeof single_player != "object" || !players[socket.id] || !data) return;
-			var amount_actions = { give_gold: ["give_gold", 1], take_gold: ["give_gold", -1], give_xp: ["give_xp", 1], take_xp: ["give_xp", -1] };
+			var amount_actions = {
+				give_gold: ["give_gold", 1],
+				take_gold: ["give_gold", -1],
+				give_xp: ["give_xp", 1],
+				take_xp: ["give_xp", -1],
+			};
 			if (amount_actions[data.action]) {
 				// Give or take gold or XP: the amount is remembered, then the named character gets it, or every character online when no name is given
 				var amount = single_player.change(amount_actions[data.action][0], data.value);
 				var giving = amount_actions[data.action][1] > 0;
 				var what = data.action.endsWith("gold") ? "gold" : "XP";
 				if (amount === undefined) return socket.emit("game_log", "That amount of " + what + " can't be used");
-				var wanted = String(data.name || "").trim().toLowerCase();
+				var wanted = String(data.name || "")
+					.trim()
+					.toLowerCase();
 				var found = 0;
 				for (var id in players) {
 					var p = players[id];
@@ -9133,10 +9166,17 @@ function init_socket_io(socket_server, server_index) {
 						p.cid++;
 						p.u = true;
 					}
-					p.socket.emit("game_log", { message: (giving ? "Received " : "Lost ") + to_pretty_num(moved) + " " + what + " from the Mod Menu", color: giving ? "gold" : "#E8584A" });
+					p.socket.emit("game_log", {
+						message: (giving ? "Received " : "Lost ") + to_pretty_num(moved) + " " + what + " from the Mod Menu",
+						color: giving ? "gold" : "#E8584A",
+					});
 					resend(p, what == "gold" ? "reopen" : "reopen+u+cid");
 				}
-				if (!found) socket.emit("game_log", wanted ? "No character called " + String(data.name).trim() + " is online" : "No characters are online");
+				if (!found)
+					socket.emit(
+						"game_log",
+						wanted ? "No character called " + String(data.name).trim() + " is online" : "No characters are online",
+					);
 				return socket.emit("single_player_settings", single_player.mod_state());
 			}
 			var holiday = data.key && single_player.holiday_event(data.key);
@@ -11950,7 +11990,10 @@ function init_socket_io(socket_server, server_index) {
 					}
 					if (code === null && default_script) {
 						try {
-							code = require("fs").readFileSync(require("path").join(__dirname, "..", "htmls", "contents", "codes", default_script.file), "utf8");
+							code = require("fs").readFileSync(
+								require("path").join(__dirname, "..", "htmls", "contents", "codes", default_script.file),
+								"utf8",
+							);
 						} catch (e) {}
 					}
 				}
@@ -13645,13 +13688,21 @@ function remove_monster(target, args) {
 		if (target.map_def.grow && (target.map_def.live || 0) <= (target.map_def.count * 2) / 3) {
 			setTimeout(new_monster_f(target.oin, target.map_def, { before_respawn: target }), 25);
 		} else if (G.monsters[target.type].respawn > 200) {
-			monster_respawns.push([target, single_player_respawn(round(G.monsters[target.type].respawn * (720 + Math.random() * 480))), Date.now()]);
+			monster_respawns.push([
+				target,
+				single_player_respawn(round(G.monsters[target.type].respawn * (720 + Math.random() * 480))),
+				Date.now(),
+			]);
 			//setTimeout(
 			//	new_monster_f(target.oin, target.map_def, { before_respawn: target }),
 			//	round(G.monsters[target.type].respawn * (720 + Math.random() * 480)),
 			//);
 		} else {
-			monster_respawns.push([target, single_player_respawn(round(G.monsters[target.type].respawn * 1000 + Math.random() * 900)), Date.now()]);
+			monster_respawns.push([
+				target,
+				single_player_respawn(round(G.monsters[target.type].respawn * 1000 + Math.random() * 900)),
+				Date.now(),
+			]);
 			//setTimeout(
 			//	new_monster_f(target.oin, target.map_def, { before_respawn: target }),
 			//	round(G.monsters[target.type].respawn * 1000 + Math.random() * 900),
@@ -15140,7 +15191,11 @@ function update_instance(instance) {
 							"game_response",
 							{ response: "compound_fail", level: item.level, num: ref.num, stale: ref.stale },
 						]);
-						if (calculate_item_value(item) + (def.edge || 0) * 2000000 > 920000 && !player.stealth && !player.p.c_safe) {
+						if (
+							calculate_item_value(item) + (def.edge || 0) * 2000000 > 920000 &&
+							!player.stealth &&
+							!player.p.c_safe
+						) {
 							broadcast(
 								"server_message",
 								item_message(
@@ -15225,7 +15280,12 @@ function update_instance(instance) {
 							"game_response",
 							{ response: "upgrade_fail", level: new_level, num: ref.num, stale: ref.stale },
 						]);
-						if (announce && calculate_item_value(item) > 4800000 && !player.stealth && !(typeof single_player == "object" && player.p.u_fail)) {
+						if (
+							announce &&
+							calculate_item_value(item) > 4800000 &&
+							!player.stealth &&
+							!(typeof single_player == "object" && player.p.u_fail)
+						) {
 							broadcast(
 								"server_message",
 								item_message(
@@ -15322,7 +15382,11 @@ function update_instance(instance) {
 						consume_skill(player, "fishing", true);
 						if (player.slots.mainhand) {
 							var prop = calculate_item_properties(player.slots.mainhand);
-							if (prop.breaks && !(typeof single_player == "object" && !single_player.settings.tools_break) && Math.random() < max(0, prop.breaks / 100.0)) {
+							if (
+								prop.breaks &&
+								!(typeof single_player == "object" && !single_player.settings.tools_break) &&
+								Math.random() < max(0, prop.breaks / 100.0)
+							) {
 								player.cid++;
 								player.u = true;
 								player.cslots.mainhand = player.slots.mainhand = null;
@@ -15359,7 +15423,11 @@ function update_instance(instance) {
 						consume_skill(player, "mining", true);
 						if (player.slots.mainhand) {
 							var prop = calculate_item_properties(player.slots.mainhand);
-							if (prop.breaks && !(typeof single_player == "object" && !single_player.settings.tools_break) && Math.random() < max(0, prop.breaks / 100.0)) {
+							if (
+								prop.breaks &&
+								!(typeof single_player == "object" && !single_player.settings.tools_break) &&
+								Math.random() < max(0, prop.breaks / 100.0)
+							) {
 								player.cid++;
 								player.u = true;
 								player.cslots.mainhand = player.slots.mainhand = null;
@@ -15425,7 +15493,8 @@ function update_instance(instance) {
 				// console.log(player.red_zone);
 				if (player.red_zone > smap_edge) {
 					player.red_zone = 0;
-					if (!(typeof single_player == "object" && single_player.settings.god_mode)) player.hp -= parseInt(player.hp / 2 + 1000); // Single player: not with God Mode
+					if (!(typeof single_player == "object" && single_player.settings.god_mode))
+						player.hp -= parseInt(player.hp / 2 + 1000); // Single player: not with God Mode
 					player.socket.emit("game_log", localization.message("server.game_log.received_a_movement_penalty", {}));
 					player.socket.emit(
 						"game_log",
@@ -16036,7 +16105,12 @@ function single_player_merrit_buyout(player) {
 	player.gold += total;
 	// Merchant XP as if the sale went through a normal stall purchase, which earns XP from the sales tax
 	if (player.type == "merchant")
-		merchant_xp_logic(player, { name: "Merrit", owner: "merrit" }, total, total - round(total * (1 - (player.tax || 0))));
+		merchant_xp_logic(
+			player,
+			{ name: "Merrit", owner: "merrit" },
+			total,
+			total - round(total * (1 - (player.tax || 0))),
+		);
 	player.socket.emit(
 		"game_log",
 		localization.message("server.game_log.received_gold", { amount: String(to_pretty_num(total)) }),

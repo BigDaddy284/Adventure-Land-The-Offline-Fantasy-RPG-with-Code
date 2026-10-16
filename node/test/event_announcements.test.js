@@ -332,9 +332,12 @@ test("upcoming cards have no actions and skip all graphics in headless mode", ()
 			},
 		},
 	);
-	context.sprite = context.npc_sprite = context.item_container = () => {
-		throw new Error("Headless cards requested a sprite");
-	};
+	context.sprite =
+		context.npc_sprite =
+		context.item_container =
+			() => {
+				throw new Error("Headless cards requested a sprite");
+			};
 	context.render_upcoming_content();
 	assert.match(html, /New Rare Drops/);
 	assert.doesNotMatch(html, /event-announcement-effects|class="sprite"|class="item"/);

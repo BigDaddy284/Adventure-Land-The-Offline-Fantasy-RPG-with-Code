@@ -13,7 +13,10 @@ test("settings.txt parsing accepts comments, percent signs, yes/no and ignores b
 });
 
 test("the old percent drop and gold settings still work, and the new names win", () => {
-	assert.deepEqual(single_player.parse("drop_rate_percent = 300\ngold_drop_percent = 50\n"), { drop_rate: 3, gold_drop: 0.5 });
+	assert.deepEqual(single_player.parse("drop_rate_percent = 300\ngold_drop_percent = 50\n"), {
+		drop_rate: 3,
+		gold_drop: 0.5,
+	});
 	assert.deepEqual(single_player.parse("drop_rate = 2\ndrop_rate_percent = 300\n"), { drop_rate: 2 });
 	assert.equal(
 		single_player.rename_settings(
@@ -53,7 +56,10 @@ test("God Mode, Fire Sale and Daisy's tokens have settings, and the Mod Menu che
 		.filter((row) => row.key)
 		.map((row) => row.key);
 	// Every setting is in the Mod Menu, holiday events and event monsters included
-	assert.deepEqual(Object.keys(single_player.DEFAULTS).filter((key) => !keys.includes(key) && !["give_gold", "give_xp"].includes(key)), []); // those two are the Give / Take row
+	assert.deepEqual(
+		Object.keys(single_player.DEFAULTS).filter((key) => !keys.includes(key) && !["give_gold", "give_xp"].includes(key)),
+		[],
+	); // those two are the Give / Take row
 	assert.equal(sp.holiday_event("holiday_season"), "holidayseason");
 	assert.equal(sp.holiday_event("monster_grinch"), "grinch");
 	assert.equal(sp.holiday_event("monster_hunt_tokens"), undefined);
@@ -97,7 +103,9 @@ test("scales apply percents and cap success chances at 100%", () => {
 test("old HP loss and MP usage percents become multipliers", () => {
 	assert.deepEqual(single_player.parse("hp_loss_percent = 50\nmp_usage_percent = 0\n"), { hp_loss: 0.5, mp_usage: 0 });
 	assert.equal(
-		single_player.rename_settings("# Damage your characters take. 50 = you lose half as much HP,\n# 0 = you never lose HP from attacks.\nhp_loss_percent = 50\n"),
+		single_player.rename_settings(
+			"# Damage your characters take. 50 = you lose half as much HP,\n# 0 = you never lose HP from attacks.\nhp_loss_percent = 50\n",
+		),
 		"# Damage your characters take. A multiplier: 1 = normal,\n# 0.5 = you lose half as much HP, 0 = you never lose HP from attacks.\nhp_loss = 0.5\n",
 	);
 });
@@ -106,7 +114,9 @@ test("old upgrade and compound percents become multipliers", () => {
 	const values = single_player.parse("upgrade_success_percent = 250\ncompound_success_percent = 50\n");
 	assert.equal(values.upgrade_success, 2.5);
 	assert.equal(values.compound_success, 0.5);
-	const text = single_player.rename_settings("# Multiplies the success chance. 100 = normal, 200 = twice as\n# likely, 1000 = almost never fails.\nupgrade_success_percent = 300\n");
+	const text = single_player.rename_settings(
+		"# Multiplies the success chance. 100 = normal, 200 = twice as\n# likely, 1000 = almost never fails.\nupgrade_success_percent = 300\n",
+	);
 	assert.match(text, /^upgrade_success = 3$/m);
 	assert.match(text, /1 = normal, 2 = twice as/);
 });
@@ -156,12 +166,28 @@ test("single player website blocks payments and online-only pages and API calls"
 		web.block_paths({ path }, { status: (s) => ((status = s), { send() {} }) }, () => {});
 		return status;
 	};
-	["/shells", "/steam-purchase", "/steam-signin/start", "/mcp", "/mcp_api/x", "/r/abc", "/sitemap.xml", "/mainframe", "/docs/guide/hub", "/docs/guide/advanced/pvp", "/docs/guide/limits"].forEach((p) =>
-		assert.equal(blocked(p), 404, p),
-	);
-	["/", "/character/Me/in/US/I/", "/data.js", "/api/servers_and_characters", "/docs", "/docs/guide/characters-and-limits", "/docs/guide/multi"].forEach((p) =>
-		assert.equal(blocked(p), 200, p),
-	);
+	[
+		"/shells",
+		"/steam-purchase",
+		"/steam-signin/start",
+		"/mcp",
+		"/mcp_api/x",
+		"/r/abc",
+		"/sitemap.xml",
+		"/mainframe",
+		"/docs/guide/hub",
+		"/docs/guide/advanced/pvp",
+		"/docs/guide/limits",
+	].forEach((p) => assert.equal(blocked(p), 404, p));
+	[
+		"/",
+		"/character/Me/in/US/I/",
+		"/data.js",
+		"/api/servers_and_characters",
+		"/docs",
+		"/docs/guide/characters-and-limits",
+		"/docs/guide/multi",
+	].forEach((p) => assert.equal(blocked(p), 200, p));
 	const REF = { stripe_payment: {}, steam_payment_start: {}, save_code: {} };
 	web.restrict_api(REF);
 	assert.deepEqual(Object.keys(REF), ["save_code"]);
@@ -262,11 +288,21 @@ test("event monsters switch on and off on their own, apart from their holiday", 
 test("characters made with a pre-v19 E to H look move onto the current look for that letter", async () => {
 	const sp = require("../logic/single_player");
 	const look = sp.upgraded_look("warrior", "marmor6c", { head: "fmakeup01", hair: "hairdo519", upper: "kept" });
-	assert.deepEqual(look, { skin: "marmor3f", cx: { upper: "kept", hair: "hairdo417", hat: "hat300", chin: "beard100", head: "mmakeup02" } });
+	assert.deepEqual(look, {
+		skin: "marmor3f",
+		cx: { upper: "kept", hair: "hairdo417", hat: "hat300", chin: "beard100", head: "mmakeup02" },
+	});
 	assert.equal(sp.upgraded_look("warrior", "marmor6c", { head: "fmakeup01", hair: "hairdo100" }), null);
 	assert.equal(sp.upgraded_look("warrior", "marmor3f", sp.CLASS_LOOKS.warrior[0][1]), null);
 	const docs = {
-		character: [{ _id: "CH1", type: "ranger", owner: "US1", info: { skin: "marmor5c", cx: { head: "fmakeup01", hair: "hairdo208", hat: "hat221" } } }],
+		character: [
+			{
+				_id: "CH1",
+				type: "ranger",
+				owner: "US1",
+				info: { skin: "marmor5c", cx: { head: "fmakeup01", hair: "hairdo208", hat: "hat221" } },
+			},
+		],
 		user: [{ _id: "US1", info: { characters: [{ id: "CH9" }, { id: "CH1", skin: "marmor5c", cx: {} }] } }],
 	};
 	const set = (doc, path, value) => {
@@ -305,16 +341,37 @@ test("Shells are replaced by seashells: prices, bag payments and drop tables", (
 	assert.equal(sp.take_items(bag, "seashell", 10000), true);
 	assert.equal(bag[0], null);
 	assert.equal(bag[3].q, 49);
-	const drops = { monsters: { goo: [[0.001, "shells", 50], [1, "gslime"]] }, "5bucks": [[0.02, "5bucks", 2], [1, "shells", 800]], gem1: [[1, "gold", 5], [0.001, "shells", 50]] };
+	const drops = {
+		monsters: {
+			goo: [
+				[0.001, "shells", 50],
+				[1, "gslime"],
+			],
+		},
+		"5bucks": [
+			[0.02, "5bucks", 2],
+			[1, "shells", 800],
+		],
+		gem1: [
+			[1, "gold", 5],
+			[0.001, "shells", 50],
+		],
+	};
 	sp.strip_shell_drops(drops);
 	assert.deepEqual(drops.monsters.goo, [[1, "gslime"]]);
 	assert.deepEqual(drops.gem1, [[1, "gold", 5]]);
-	assert.deepEqual(drops["5bucks"], [[0.02, "5bucks", 2], [1, "seashell", 6667]]);
+	assert.deepEqual(drops["5bucks"], [
+		[0.02, "5bucks", 2],
+		[1, "seashell", 6667],
+	]);
 	const G = { items: { cosmo0: { cash: 289 }, hpot0: { g: 20 } }, drops: { x: [[1, "shells", 75]] }, classes: {} };
 	sp.create({}).apply_game_data(G);
 	assert.equal(G.items.cosmo0.seashells, 2410); // set by hand
 	assert.equal(sp.item_seashell_price("cosmo2", 129, 1), 1075);
-	assert.deepEqual([1, 2, 3, 4, 5, 12].map((length) => sp.rename_seashells(length, 640)), [350000, 150000, 50000, 10000, 5334, 5334]);
+	assert.deepEqual(
+		[1, 2, 3, 4, 5, 12].map((length) => sp.rename_seashells(length, 640)),
+		[350000, 150000, 50000, 10000, 5334, 5334],
+	);
 	assert.equal(G.items.hpot0.seashells, undefined);
 	assert.deepEqual(G.drops.x, [[1, "seashell", 625]]);
 });
@@ -341,7 +398,13 @@ test("respawn time, death penalty, skill cooldowns, run speed and safe upgrades"
 	assert.equal(single_player.check_value("run_speed", 50), 5);
 	assert.equal(single_player.DEFAULTS.safe_upgrades, false);
 	// Skill cooldowns follow the setting while the game runs; monster skills are left alone
-	const G = { skills: { charge: { cooldown: 40000 }, fishing: { reuse_cooldown: 300000 }, rimeshatter: { cooldown: 8000, monster: true } } };
+	const G = {
+		skills: {
+			charge: { cooldown: 40000 },
+			fishing: { reuse_cooldown: 300000 },
+			rimeshatter: { cooldown: 8000, monster: true },
+		},
+	};
 	settings.fishing_mining_cooldown = true;
 	sp.apply_game_data(G);
 	assert.equal(G.skills.charge.cooldown, 40000);
@@ -391,7 +454,10 @@ test("trader discount, exchange luck and give gold", () => {
 	assert.equal(characters.changed, 0);
 	settings.give_xp = 5;
 	assert.equal(sp.mod_state().groups.find((group) => group.name == "Characters").changed, 0);
-	const give_take = sp.mod_state().groups.find((group) => group.name == "Characters").rows.find((row) => row.key == "give_take");
+	const give_take = sp
+		.mod_state()
+		.groups.find((group) => group.name == "Characters")
+		.rows.find((row) => row.key == "give_take");
 	assert.deepEqual(JSON.parse(JSON.stringify(give_take.amounts)), { gold: 5, xp: 5 });
 	assert.equal(single_player.check_value("give_xp", "250000"), 250000);
 });
@@ -399,9 +465,13 @@ test("trader discount, exchange luck and give gold", () => {
 test("give and take gold and XP go to the named character, or to everyone online when no name is given", () => {
 	const src = fs.readFileSync(path.join(__dirname, "..", "server.js"), "utf8");
 	const handler = src.slice(src.indexOf("var amount_actions"), src.indexOf("var holiday = data.key"));
-	for (const action of ["give_gold", "take_gold", "give_xp", "take_xp"]) assert.ok(handler.includes(action + ":"), action);
+	for (const action of ["give_gold", "take_gold", "give_xp", "take_xp"])
+		assert.ok(handler.includes(action + ":"), action);
 	assert.ok(handler.includes("(wanted && String(p.name).toLowerCase() != wanted)"), "an empty name means everyone");
-	assert.ok(handler.includes("min(amount, p.gold)") && handler.includes("min(amount, p.xp)"), "taking never goes below zero");
+	assert.ok(
+		handler.includes("min(amount, p.gold)") && handler.includes("min(amount, p.xp)"),
+		"taking never goes below zero",
+	);
 	assert.ok(handler.includes("calculate_player_stats(p)"), "giving XP levels up as usual");
 });
 
@@ -415,19 +485,34 @@ test("the hidden files list only names files in the game folder, and never what 
 	assert.ok(lines.includes("steam_news.js") && lines.includes("steam_signin.js") && lines.includes("steam_signup.js"));
 	const normal = lines.map((line) => line.replace(/\\/g, "/").toLowerCase());
 	for (const line of lines) assert.ok(!/^[a-z]:|^[\\/]|\.\.|[*?"<>|]/i.test(line), line + " is a plain relative name");
-	for (const used of ["adventure land.exe", "play.bat", "stop.bat", "settings.txt", "readme.md", "changelog.md", "license", "logs", "singleplayer", "singleplayer/data"])
+	for (const used of [
+		"adventure land.exe",
+		"play.bat",
+		"stop.bat",
+		"settings.txt",
+		"readme.md",
+		"changelog.md",
+		"license",
+		"logs",
+		"singleplayer",
+		"singleplayer/data",
+	])
 		assert.ok(!normal.includes(used), used + " stays visible");
 	// Play.bat applies the list, and everything it names that is part of the game exists
 	assert.match(fs.readFileSync(path.join(root, "Play.bat"), "utf8"), /singleplayer\\hidden\.txt[\s\S]*attrib \+h/);
 	for (const line of lines)
-		if (!/^\.|node_modules|secretsandconfig|^tauri$|^useful$|mongodb_todo|UPDATE_NOTES/.test(line)) assert.ok(fs.existsSync(path.join(root, line.replace(/\\/g, "/"))), line + " exists");
+		if (!/^\.|node_modules|secretsandconfig|^tauri$|^useful$|mongodb_todo|UPDATE_NOTES/.test(line))
+			assert.ok(fs.existsSync(path.join(root, line.replace(/\\/g, "/"))), line + " exists");
 });
 
 test("Win + opens another game window next to the Mod Menu icon", () => {
 	const root = path.resolve(__dirname, "../..");
 	const html = fs.readFileSync(path.join(root, "js/html.js"), "utf8");
 	assert.match(html, /sp-newwin[^"]*'[^]*?open_character_window\(\)[^]*?Win \+/);
-	assert.match(fs.readFileSync(path.join(root, "css/index.css"), "utf8"), /#sp-modmenu \.sp-newwin\{[^}]*width: calc\(100% \+ 10px\)/);
+	assert.match(
+		fs.readFileSync(path.join(root, "css/index.css"), "utf8"),
+		/#sp-modmenu \.sp-newwin\{[^}]*width: calc\(100% \+ 10px\)/,
+	);
 });
 
 test("the redesigned monster sprites each have a sheet of their own that fits the monster", () => {
@@ -447,7 +532,8 @@ test("the redesigned monster sprites each have a sheet of their own that fits th
 			for (const s of Object.values(D.sprites))
 				if (s !== def) assert.ok(!(s.matrix || []).some((r) => r.includes(v.skin)), v.skin + " still on an old sheet");
 	}
-	for (const id of ["cave_npc", "cave_darkmage", "cave_rogue", "cave_guard", "cave_mothkeeper"]) assert.ok(/_cave$/.test(D.monsters[id].skin), id);
+	for (const id of ["cave_npc", "cave_darkmage", "cave_rogue", "cave_guard", "cave_mothkeeper"])
+		assert.ok(/_cave$/.test(D.monsters[id].skin), id);
 	assert.equal(D.sprites.marmor6f_cave.type, "armor");
 	assert.equal(D.sprites.mbody6b_cave.type, "body");
 });
@@ -481,7 +567,10 @@ test("the skill bar shows every key in two rows, collapses, and the log follows 
 
 test("files the game rewrites are never hidden, because Windows refuses to write a hidden file", () => {
 	const root = path.resolve(__dirname, "../..");
-	const lines = fs.readFileSync(path.join(root, "singleplayer/hidden.txt"), "utf8").split(/\r?\n/).map((line) => line.trim().replace(/\\/g, "/"));
+	const lines = fs
+		.readFileSync(path.join(root, "singleplayer/hidden.txt"), "utf8")
+		.split(/\r?\n/)
+		.map((line) => line.trim().replace(/\\/g, "/"));
 	for (const name of ["version.js", "package-lock.json", "settings.txt"]) assert.ok(!lines.includes(name), name);
 	const main = fs.readFileSync(path.join(root, "main.js"), "utf8");
 	assert.match(main, /try \{\s*fs\.writeFileSync\(filePath, lines\.join/); // a failed version bump never stops the website
@@ -520,7 +609,7 @@ test("Exchange speed and Crafting speed shorten exchanges, upgrades and compound
 	assert.equal(single_player.check_value("crafting_speed", 0), 0.1);
 	assert.equal(single_player.check_value("crafting_speed", "2.5"), 2.5);
 	const groups = single_player.MOD_MENU || [];
-	const keys = (name) => ((groups.find((g) => g.name == name) || { rows: [] }).rows.map((r) => r[0]));
+	const keys = (name) => (groups.find((g) => g.name == name) || { rows: [] }).rows.map((r) => r[0]);
 	if (groups.length) {
 		assert.ok(keys("Loot").includes("exchange_speed"));
 		assert.ok(keys("Crafting & Gathering").includes("crafting_speed"));

@@ -332,11 +332,23 @@ test("single player: Shells purchases, bank packs and blessings are paid in seas
 		for (const short of [false, true]) {
 			const f = gameFixture(0, event === "bank");
 			f.context.single_player = sp.create({});
-			Object.assign(f.context, { cache_item: (item) => item, bless_loop() {}, discord_call() {}, realm_broadcast() {}, region: "US", server_name: "I" });
+			Object.assign(f.context, {
+				cache_item: (item) => item,
+				bless_loop() {},
+				discord_call() {},
+				realm_broadcast() {},
+				region: "US",
+				server_name: "I",
+			});
 			load(f.context, "node/server.js", ["consume", "pay_seashells", "refund_seashells", "seashells_short"]);
 			f.player.esize = 40;
 			f.player.citems = [];
-			f.player.items = short ? [{ name: "seashell", q: Math.min(need - 1, 9999) }] : [{ name: "seashell", q: 9999 }, { name: "seashell", q: 9999 }];
+			f.player.items = short
+				? [{ name: "seashell", q: Math.min(need - 1, 9999) }]
+				: [
+						{ name: "seashell", q: 9999 },
+						{ name: "seashell", q: 9999 },
+					];
 			socketHandler(f.context, event)({ ...data, request_id: "fixture-request" });
 			for (let i = 0; i < 20; i++) await new Promise(setImmediate);
 			const left = f.player.items.reduce((sum, item) => sum + ((item && item.name == "seashell" && item.q) || 0), 0);
