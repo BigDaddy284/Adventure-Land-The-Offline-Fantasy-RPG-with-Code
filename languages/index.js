@@ -235,7 +235,7 @@ function create_catalog_loader(directory, domains) {
 	};
 }
 
-// Single player: the game's name and a few lines are changed as the text loads (singleplayer/text.js)
+// Single player: a few lines are changed as the text loads (singleplayer/text.js)
 var single_player_text = null;
 try {
 	// (not under the test runner, whose checks expect the original text)

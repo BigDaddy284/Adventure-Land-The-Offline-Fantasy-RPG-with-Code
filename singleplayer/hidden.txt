@@ -1,7 +1,7 @@
-# Fantasy Land hides everything players don't need to open, so the game folder shows only what they use.
-# Play.bat (and so Fantasy Land.exe) hides these each time the game starts. scripts\make_player_zip.py hides them in the zip too.
+# The game hides everything players don't need to open, so the game folder shows only what they use.
+# Play.bat (and so Adventure Land.exe) hides these each time the game starts. scripts\make_player_zip.py hides them in the zip too.
 # One name per line, relative to the game folder. Lines starting with # are ignored. Turn on "Hidden items" in
-# File Explorer's View menu to see them. Never list: Fantasy Land.exe, Play.bat, Stop.bat, settings.txt, README.md,
+# File Explorer's View menu to see them. Never list: Adventure Land.exe, Play.bat, Stop.bat, settings.txt, README.md,
 # CHANGELOG.md, LICENSE, logs, singleplayer\data
 
 # The game's code

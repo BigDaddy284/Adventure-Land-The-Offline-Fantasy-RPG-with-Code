@@ -1,12 +1,12 @@
-# Fantasy Land - The Code (NOMMO) RPG
+# Adventure Land: The Offline Fantasy CRPG with Code
 
-Fantasy Land is a single-player version of Adventure Land, the MMORPG you can play by writing code. It runs entirely on your own Windows PC. There are no other players, no account to sign up for, and nothing to buy. You can play several characters at once, and one settings file lets you tune the game to suit you.
+**Adventure Land: The Offline Fantasy CRPG with Code** is an offline, single-player version of Adventure Land, the MMORPG you can play by writing code. It runs entirely on your own Windows PC. There are no other players, no account to sign up for, and nothing to buy. You can play several characters at once, and one settings file lets you tune the game to suit you.
 
 It's built on the MongoDB port of [Adventure Land](https://github.com/kaansoral/adventureland_mongodb) by Kaan Soral and the Adventure Land developers. All credit for the original game goes to them. See the Thanks page in the game.
 
 ## Made with AI
 
-Fantasy Land was built with the help of AI. The changes in this version of the game (the Mod Menu and its settings, the single-player changes, the screen layout, the Party AIO script and the packaging) were written with Anthropic's Claude as a coding assistant, working from the requests and testing of the project's owner.
+This offline version was built with the help of AI. The changes in this version of the game (the Mod Menu and its settings, the single-player changes, the screen layout, the Party AIO script and the packaging) were written with Anthropic's Claude as a coding assistant, working from the requests and testing of the project's owner.
 
 The new artwork is AI-generated too: the redrawn monsters, the redesigned town NPCs, the new character looks and the title screen art. It is used alongside the original Adventure Land art, which was made by the Adventure Land artists and is unchanged where it hasn't been replaced.
 
@@ -22,8 +22,8 @@ Git isn't needed, because the shared engine already comes in the game folder.
 
 ## Playing
 
-1. Extract the zip somewhere, for example `C:\FantasyLand`. Use a new, empty folder each time rather than unzipping over an older copy.
-2. Double-click **`Fantasy Land.exe`**.
+1. Extract the zip somewhere, for example `C:\AdventureLand`. Use a new, empty folder each time rather than unzipping over an older copy.
+2. Double-click **`Adventure Land.exe`**.
 
 A small window shows the progress while it starts the database, the website and the game server, with no console windows. Then the game opens in its own window. It opens on the title screen: press Login (or Enter) to go to character select. The very first start also installs the game's packages and loads the maps, so it takes a few minutes. After that it's quick.
 
@@ -31,22 +31,22 @@ On character select, click a Free Slot (or New) to create a character, then clic
 
 You're logged in automatically. Everything stays on your PC, and only your PC can connect to the game.
 
-The first time you run `Fantasy Land.exe`, Windows may show "Windows protected your PC", because the file isn't digitally signed. Click "More info", then "Run anyway". Windows only asks once.
+The first time you run `Adventure Land.exe`, Windows may show "Windows protected your PC", because the file isn't digitally signed. Click "More info", then "Run anyway". Windows only asks once.
 
 ## Stopping
 
-Just close the game window. Fantasy Land.exe shows "Saving your characters..." while it waits for your characters to save and stops everything, then closes by itself. If you have several character windows open, it waits until you close the last one.
+Just close the game window. Adventure Land.exe shows "Saving your characters..." while it waits for your characters to save and stops everything, then closes by itself. If you have several character windows open, it waits until you close the last one.
 
 Don't end the game's processes in Task Manager, so your characters get a chance to save.
 
 ## Play.bat and Stop.bat
 
-These do the same job as `Fantasy Land.exe` with console windows you can see, which helps when something goes wrong:
+These do the same job as `Adventure Land.exe` with console windows you can see, which helps when something goes wrong:
 
 - **`Play.bat`** starts everything in order and opens the game.
 - **`Stop.bat`** closes the game window, waits a few seconds so your characters save, then stops the game server, the website and the database. Always use it rather than just closing the console windows, so the database shuts down cleanly.
 
-When the game is started with `Fantasy Land.exe`, the database, website and game server write their messages to the `logs` folder instead.
+When the game is started with `Adventure Land.exe`, the database, website and game server write their messages to the `logs` folder instead.
 
 ## Settings
 
@@ -113,7 +113,7 @@ Your game is kept in two places, and these are all you need to carry over:
 
 1. Close the game (or run `Stop.bat`).
 2. Extract the new zip over your game folder, replacing files when asked.
-3. Start with `Fantasy Land.exe`.
+3. Start with `Adventure Land.exe`.
 
 Your `settings.txt` and saved game are kept, since the zip contains neither. Extracting over the folder doesn't delete files that a newer version no longer uses, which is harmless.
 
@@ -123,17 +123,17 @@ Your `settings.txt` and saved game are kept, since the zip contains neither. Ext
 2. Extract the new zip to its own folder.
 3. Copy the `singleplayer\data` folder from the old folder into the new folder's `singleplayer` folder.
 4. Copy `settings.txt` from the old folder into the new folder.
-5. Start the new folder's `Fantasy Land.exe`. Once you're happy everything is there, the old folder can be deleted.
+5. Start the new folder's `Adventure Land.exe`. Once you're happy everything is there, the old folder can be deleted.
 
 New settings added by a newer version are written to the end of your `settings.txt` automatically, and your own values are kept.
 
 ## Where things are
 
-The game's own files are hidden, so the game folder shows only what you use: `Fantasy Land.exe`, `Play.bat`, `Stop.bat`, `settings.txt`, this README, `CHANGELOG.md`, `LICENSE`, `logs` and `singleplayer\data`. To see everything, open the folder in File Explorer and turn on **View > Show > Hidden items**. The list of hidden files is `singleplayer\hidden.txt`; `Play.bat` applies it each time the game starts.
+The game's own files are hidden, so the game folder shows only what you use: `Adventure Land.exe`, `Play.bat`, `Stop.bat`, `settings.txt`, this README, `CHANGELOG.md`, `LICENSE`, `logs` and `singleplayer\data`. To see everything, open the folder in File Explorer and turn on **View > Show > Hidden items**. The list of hidden files is `singleplayer\hidden.txt`; `Play.bat` applies it each time the game starts.
 
-- `Fantasy Land.exe`: starts the game, and stops it when you close the game window. Its source is in `singleplayer\launcher`.
+- `Adventure Land.exe`: starts the game, and stops it when you close the game window. Its source is in `singleplayer\launcher`.
 - `Play.bat` and `Stop.bat`: start and stop the game with console windows.
-- `logs\`: messages from the database, website and game server when started by `Fantasy Land.exe`.
+- `logs\`: messages from the database, website and game server when started by `Adventure Land.exe`.
 - `CHANGELOG.md`: the changes below, on their own.
 - `settings.txt`: your settings. `settings.example.txt` (hidden) holds the defaults.
 - `singleplayer\data`: your saved game (the database). Back this folder up to keep your characters safe, with the game stopped.
@@ -144,7 +144,7 @@ The game's own database runs on port 27018, separate from any other MongoDB on y
 
 ## Changes from the original game
 
-Fantasy Land started as a copy of the MongoDB port of [Adventure Land](https://github.com/kaansoral/adventureland_mongodb). These are the changes made since then, by version. Every code change is marked with a `// Single player:` comment so it's easy to find.
+This offline version started as a copy of the MongoDB port of [Adventure Land](https://github.com/kaansoral/adventureland_mongodb). These are the changes made since then, by version. Every code change is marked with a `// Single player:` comment so it's easy to find.
 
 ### v1
 - Added `settings.txt`, one plain text file of game settings.
@@ -192,7 +192,6 @@ Fantasy Land started as a copy of the MongoDB port of [Adventure Land](https://g
   - With `merrit_buys_stall`, he buys everything on each merchant's stall at the listed price. You get the gold and the items leave the stall. Nothing in your bag is touched.
 
 ### v6
-- Renamed the game to Venture Land.
 - Added a credits box to the character select screen.
 - Removed server selection.
 
@@ -201,7 +200,6 @@ Fantasy Land started as a copy of the MongoDB port of [Adventure Land](https://g
 - The game folder can be renamed or moved without breaking anything, because `Play.bat` remakes the config link on every start.
 
 ### v8
-- Renamed the game to **Fantasy Land - The Code (NOMMO) RPG**.
 - Merchants earn XP from Merrit's buyouts.
 - Added a **Holiday Events** menu, opened by the candy cane button above the skill bar. Events switch on and off while you play.
 
@@ -222,7 +220,6 @@ Fantasy Land started as a copy of the MongoDB port of [Adventure Land](https://g
 - The Thanks page now thanks Adventure Land, Kaan Soral, the developers and the artists.
 
 ### v11
-- "Adventure Land" now reads "Fantasy Land" in the game's text, in every language. The Thanks page keeps the original name.
 - The Wizard has a new line, in every language: "I don't know who made this land, but it's fantastic!"
 - Removed the "email hello@adventure.land" help line from the loading screen, in every language.
 - The chat header shows only the map name.
@@ -232,23 +229,22 @@ Fantasy Land started as a copy of the MongoDB port of [Adventure Land](https://g
 - Changed the Privacy Policy to say the game never goes online by itself.
 
 ### v13
-- The tutorial comic and the Cave of Many Dreams comic show "Fantasy Land", in every language.
 - **New starting looks:** 10 in all, 5 male and 5 female, each with a second skin tone. They show as extra look buttons (E to H) on the character creation screen when a class has them.
   - Male: Ironclad Veteran (warrior), Ashen Hood (rogue), Ember Sage (mage), Sunforged Templar (paladin) and Trailwise Trader (merchant).
   - Female: Frost Shieldmaiden (warrior), Greenwood Warden (ranger), Silver Oracle (priest), Tidecaller Witch (mage) and Crimson Knife (rogue).
-- **Title screen:** the game now opens on a Fantasy Land title screen with a Login button that goes on to character select. A note in the corner reads "A derivative of Adventure Land, with thanks to Kaan Soral".
-- **Character select:** no seasonal event or update notices. The log says "Welcome to Fantasy Land!" with a few tips, instead of the server name and update notes.
+- **Title screen:** the game now opens on a title screen with a Login button that goes on to character select. A note in the corner reads "A derivative of Adventure Land, with thanks to Kaan Soral".
+- **Character select:** no seasonal event or update notices. The log says "Welcome to Adventure Land: The Offline Fantasy CRPG with Code!" with a few tips, instead of the server name and update notes.
 - **In Game list:** character select lists up to 8 characters, then a 1st and 2nd merchant.
-- `Stop.bat` also stops a game started by Fantasy Land.exe.
+- `Stop.bat` also stops a game started by Adventure Land.exe.
 - **Logout:** the settings window has a Logout button in its top left, matching Close, that goes back to the title screen.
-- **Fantasy Land.exe:** has the title screen picture as its icon. It starts the game with no console windows. When you close the last game window, it saves and stops everything, then closes itself.
+- **Adventure Land.exe:** has the title screen picture as its icon. It starts the game with no console windows. When you close the last game window, it saves and stops everything, then closes itself.
 - Rewrote this README.
 
 ### v14
 - The title screen's Login button is half the size.
 - The "A derivative of Adventure Land" note moved to the bottom left, so the log box no longer covers it.
 - The log says "Click Login to get started." under the welcome while the title screen is showing.
-- Character select shows "Fantasy Land - The Code (NOMMO) RPG" where it used to show "Server: Americas I".
+- Character select shows "Adventure Land: The Offline Fantasy CRPG with Code" where it used to show "Server: Americas I".
 
 ### v15
 - **Mod Menu:** a new button at the bottom of the screen, left of the game log, opens a window with every setting. Changes apply straight away and are saved to `settings.txt`.
@@ -259,13 +255,11 @@ Fantasy Land started as a copy of the MongoDB port of [Adventure Land](https://g
 - `starting_gold` changes count for the next new character without a restart.
 - Items you sell to an NPC are gone. Ponty no longer stocks them and only sells his own restocked gear. The `ponty_keep_sold_items` setting is removed, and an older `settings.txt` drops it on the next start.
 - **Character select:** the menu box with Character Ops and Logout is gone. Character Ops now sits at the top of the In Game box. To log out, use the Logout button in the settings window.
-- **Events page:** the Info button on character select opens a rewritten Events page about how events work in Fantasy Land: holidays and event monsters you switch on yourself, the daily and nightly events, and links to each event's guide. The home server and realm parts are gone. It's translated into every language the game supports (text in `singleplayer/events_page`).
-- **Game window:** the icon is the Fantasy Land title screen picture instead of the Adventure Land logo, and the window title always reads "Fantasy Land - The Code (NOMMO) RPG" instead of the character's name.
-- **Goo comic:** the "Fantasy Land" title now also shows when the comic opens from the tutorial in game. Before, it only showed on the website version.
+- **Events page:** the Info button on character select opens a rewritten Events page about how events work offline: holidays and event monsters you switch on yourself, the daily and nightly events, and links to each event's guide. The home server and realm parts are gone. It's translated into every language the game supports (text in `singleplayer/events_page`).
+- **Game window:** the icon is the game's title screen picture instead of the Adventure Land logo, and the window title always reads "Adventure Land: The Offline Fantasy CRPG with Code" instead of the character's name.
 
 ### v16
 - **Holiday events moved into the Mod Menu:** the holiday and event monster switches are at the bottom of the Mod Menu. The candy cane button and the separate Holiday Events menu are gone.
-- **Comic page 2:** the speech bubble now says "We built Fantasy Land inside their machines.", in every language.
 - The Events page says to switch holidays in the Mod Menu, in every language.
 
 ### v17
@@ -283,7 +277,7 @@ Fantasy Land started as a copy of the MongoDB port of [Adventure Land](https://g
 - The game server waits up to 60 seconds, instead of 12, before giving up on a window that's busy (for example while another window loads), and no longer closes character select and loading windows when more than 5 are open at once.
 - New starting looks E to H for every class, as a male and a female in light and dark skin: barbarian warriors, paladins in blue plate, a pope and a nun for priests, a wizard and a witch for mages, ninja rogues, Robin Hood rangers in green caps, and banker merchants. The game's own looks stay on A to D. The looks added in earlier versions are removed; characters already made with them keep their look.
 - Game windows keep running at full speed when they're in the background or minimised. Edge normally slows hidden windows down, which slowed your characters' CODE.
-- Each game window's title is the character's name, then the game's name, for example "Chillyinit: Fantasy Land - The Code (NOMMO) RPG". Character select still shows just the game's name.
+- Each game window's title is the character's name, then the game's name, for example "Chillyinit: Adventure Land: The Offline Fantasy CRPG with Code". Character select still shows just the game's name.
 
 ### v20
 - **Fixed:** going over 3 fighters or 1 merchant online disconnected every fighter (or every merchant) a few seconds later. A leftover rule from the online game's website checked every few seconds for 3 characters and 1 merchant per player, and kicked all of them. It's off in single player, so Characters online and the 2 merchant limit are the only limits.
@@ -345,18 +339,26 @@ Fantasy Land started as a copy of the MongoDB port of [Adventure Land](https://g
 - **Bank Items List:** a new default script, kept in its own slot like Party AIO. It explains what it's for and starts with one example item, `// BANK_ITEM_IDS.push("vitring");`, commented out so nothing is banked until you add your own `BANK_ITEM_IDS.push("itemid");` lines. **Party AIO now reads it** by name, with `load_code("Bank Items List")`, instead of code slot 5. If you already have a slot named "Bank Items List", Party AIO keeps using that until you save the default one.
 - **Yours to edit:** both default scripts are ordinary editable scripts. Type in your names or item ids and press **Save**, and your copy is kept (it is also what `load_code` and starting a character from the CODE window use).
 - **Reset button:** each default script has a **Reset** button on the right of its row. It asks first, in a small box with **Confirm** and **Cancel** buttons, so a stray click can't wipe anything. Confirm loads the original script into the editor; your saved copy is only replaced when you press Save.
-- **Fantasy Land in Task Manager:** `Fantasy Land.exe` now shows the game in its own window (using WebView2) instead of opening Edge, so Task Manager lists the game as **Fantasy Land** with the game's icon, with the browser parts in its dropdown. The window is the same size, F12 and the right-click menu still work, and the game keeps running at full speed in the background or minimised. Extra game windows (the Mod Menu's **Win +** button, `/window NAME`, the Characters tab) are Fantasy Land windows too, with the same icon and no address bar, and each shows the page's title so you can tell them apart. Each extra window runs as its own copy of `Fantasy Land.exe`, so closing one never affects the others, and Task Manager may list one entry per window. The game saves and stops when the last window closes, and double-clicking the exe again brings the first window forward. If WebView2 isn't on the PC, it opens the game in an Edge window like before. The game window keeps its settings in its own folder, so on-screen choices such as collapsed boxes start fresh once. `Play.bat` on its own still opens Edge.
+- **The game in Task Manager:** `Adventure Land.exe` now shows the game in its own window (using WebView2) instead of opening Edge, so Task Manager lists the game by its name with the game's icon, with the browser parts in its dropdown. The window is the same size, F12 and the right-click menu still work, and the game keeps running at full speed in the background or minimised. Extra game windows (the Mod Menu's **Win +** button, `/window NAME`, the Characters tab) are game windows too, with the same icon and no address bar, and each shows the page's title so you can tell them apart. Each extra window runs as its own copy of `Adventure Land.exe`, so closing one never affects the others, and Task Manager may list one entry per window. The game saves and stops when the last window closes, and double-clicking the exe again brings the first window forward. If WebView2 isn't on the PC, it opens the game in an Edge window like before. The game window keeps its settings in its own folder, so on-screen choices such as collapsed boxes start fresh once. `Play.bat` on its own still opens Edge.
 
 ### v27
-- **Antivirus-friendly exe:** some antivirus programs (Surfshark's, for one) removed `Fantasy Land.exe` while the v26 zip was being unzipped. The exe now opens its window with Microsoft's own `WebView2Loader.dll` (hidden, next to the exe) and keeps track of extra windows in a simpler way, so it no longer looks suspicious. Nothing changes in how the game plays.
+- **Antivirus-friendly exe:** some antivirus programs (Surfshark's, for one) removed `Adventure Land.exe` while the v26 zip was being unzipped. The exe now opens its window with Microsoft's own `WebView2Loader.dll` (hidden, next to the exe) and keeps track of extra windows in a simpler way, so it no longer looks suspicious. Nothing changes in how the game plays.
 - **Window titles:** the first game window now shows the game's full name and your character's name, like the extra windows already did.
-- **Old copies can't get in the way:** if the game's database, website or game server is still running from another Fantasy Land folder (an older version, or a game ended from Task Manager), starting the game closes them first. The database is shut down cleanly so that folder's saves are kept, this copy runs its own files and saves into its own folder, and the old folder can be deleted.
+- **Old copies can't get in the way:** if the game's database, website or game server is still running from another copy of the game's folder (an older version, or a game ended from Task Manager), starting the game closes them first. The database is shut down cleanly so that folder's saves are kept, this copy runs its own files and saves into its own folder, and the old folder can be deleted.
 - **Unzip into a new folder:** if Windows ever asks for admin rights or says "Destination Folder Access Denied" while unzipping, delete the old folder or rename the zip and unzip it again, so it goes into a fresh folder.
 
 ### v27.1
 - **100 character slots:** you can now make up to 100 characters (it was 18). The character select page shows them 6 at a time on 17 pages, with **<** and **>** buttons and a page counter under the list. Up to 18 can still be online at once (Characters online in the Mod Menu). Making a lot of characters in one go is no longer stopped after about 13.
-- **Closing the first window no longer freezes the others:** the first game window now runs as its own copy of `Fantasy Land.exe`, like the extra windows. Before, closing it first left the other windows frozen until the game was ended from Task Manager. The game still saves and stops when the last window closes.
-- **Player and Coding Guide:** `Fantasy Land v27.1 Player and Coding Guide.docx` is now in the zip, next to this README. It covers installing, the screen, the Mod Menu, how the game works, learning to code, Party AIO, the Bank Items List and every common CODE function.
+- **Closing the first window no longer freezes the others:** the first game window now runs as its own copy of `Adventure Land.exe`, like the extra windows. Before, closing it first left the other windows frozen until the game was ended from Task Manager. The game still saves and stops when the last window closes.
+- **Player and Coding Guide:** the Player and Coding Guide is now in the zip, next to this README. It covers installing, the screen, the Mod Menu, how the game works, learning to code, Party AIO, the Bank Items List and every common CODE function.
+
+### v28
+- **New name: Adventure Land: The Offline Fantasy CRPG with Code.** As Adventure Land's creator, Kaan Soral, suggested, the game is now released as an offline sub-game of Adventure Land, so it can keep using Adventure Land's art. The old name is gone everywhere: the game's text, the launcher, the window titles, the icons, the settings file, the README and the guide.
+- **Adventure Land again in the game's text:** everything that used to be changed to the old name as the game loaded now reads Adventure Land again, in every language. The tutorial comic, its page 2 and the Cave of Many Dreams comic are back to their original Adventure Land pictures.
+- **Title screen:** the picture above the Login button now says "Adventure Land: The Offline Fantasy CRPG with Code". The game's icon uses the same picture.
+- **Window titles:** each game window reads the character's name, then "Adventure Land: The Offline Fantasy CRPG with Code", for example "Chillyinit: Adventure Land: The Offline Fantasy CRPG with Code".
+- **`Adventure Land.exe`:** the launcher has the new name. It also keeps its window settings in a new folder, so on-screen choices such as collapsed boxes start fresh once.
+- **Moving from an older version:** unzip v28 into a new folder. To keep your characters, copy the old folder's `singleplayer\data` folder into the new one's `singleplayer` folder before the first start.
 
 ## License
 

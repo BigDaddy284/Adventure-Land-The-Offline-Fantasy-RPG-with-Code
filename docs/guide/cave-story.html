@@ -1,6 +1,6 @@
 <div style="width:480px;font-size:24px">
 	<p>Cave of Many Dreams</p>
 	{% for page in [1,2,3,4,5] %}
-	<p>{% if domain.single_player %}<span style="position:relative;display:inline-block;width:480px;height:270px;vertical-align:top">{% endif %}<img src="/images/comics/cave/{% if domain.language != 'en' %}{{domain.language}}/{% endif %}{{page}}.png?v=2" width="480" height="270" style="image-rendering:crisp-edges;image-rendering:pixelated" alt="{{ phrase('docs.cave.comic.page' + page + '.alt')|e }}">{% if domain.single_player %}<img src="/images/singleplayer/cave-title.png" alt="" width="86" height="11" style="position:absolute;left:389px;top:257px;image-rendering:crisp-edges;image-rendering:pixelated;pointer-events:none"></span>{% endif %}</p>
+	<p><img src="/images/comics/cave/{% if domain.language != 'en' %}{{domain.language}}/{% endif %}{{page}}.png?v=2" width="480" height="270" style="image-rendering:crisp-edges;image-rendering:pixelated" alt="{{ phrase('docs.cave.comic.page' + page + '.alt')|e }}"></p>
 	{% endfor %}
 </div>

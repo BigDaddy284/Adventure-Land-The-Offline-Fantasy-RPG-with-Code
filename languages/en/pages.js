@@ -3559,7 +3559,7 @@ module.exports = {
 };
 
 // Single player: the About panel on the login and character pages describes the single player game.
-module.exports["pages.sp.about.intro"] = "Fantasy Land is a single player RPG you can <span class='mw'>CODE</span>. Play up to 18 characters, let Javascript do the grinding, while you do something productive!";
+module.exports["pages.sp.about.intro"] = "Adventure Land: The Offline Fantasy CRPG with Code is a single player RPG you can <span class='mw'>CODE</span>. Play up to 18 characters, let Javascript do the grinding, while you do something productive!";
 module.exports["pages.sp.about.mod"] = "The <span class='mw'>MOD MENU</span> lets you tune the game to your taste: XP, drops, upgrade luck, events and how many characters play at once.";
 module.exports["pages.sp.about.economy"] = "Your <span class='mw'>MERCHANT</span> can keep a stand open to <span class='mw'>SELL</span> to Merrit, while Ponty and Ron keep their own stock.";
 module.exports["pages.sp.about.events"] = "<span class='mw'>DAILY EVENTS</span>, bosses and holiday events run on your own world, and you choose which ones are on.";

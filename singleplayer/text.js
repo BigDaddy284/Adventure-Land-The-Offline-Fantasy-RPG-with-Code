@@ -2,14 +2,8 @@
 
 // Single player: changes the game's text as it loads, for every language, without touching the language files
 // (so updates from the original game still merge cleanly).
-// - "Adventure Land" becomes "Fantasy Land" (every translation keeps the name in English)
 // - the Wizard no longer says he made the game or gives the original email address
 // - the loading screen's "email us" help line is removed
-
-const NAME = "Fantasy Land";
-
-// Adventure Land's own thanks keep its name, since they credit people for work on Adventure Land
-const KEEP_NAME = ["pages.contents.credits."];
 
 const WIZARD_KEY = "interface.interaction.well_hello_there_i_m_wizard_i_made_this_game";
 const WIZARD = {
@@ -60,10 +54,9 @@ function apply(language, entries) {
 				.split(LINE_BREAK)
 				.filter((part) => !part.includes("@adventure.land"))
 				.join("<br /><br />");
-		if (!KEEP_NAME.some((prefix) => id.startsWith(prefix))) text = text.replace(/Adventure Land/g, NAME);
 		entries[id] = text;
 	}
 	return entries;
 }
 
-module.exports = { NAME, WIZARD, apply };
+module.exports = { WIZARD, apply };

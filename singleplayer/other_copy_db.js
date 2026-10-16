@@ -1,4 +1,4 @@
-// Single player: stops a game database that is still running from another Fantasy Land folder (an older version, or a game that
+// Single player: stops a game database that is still running from another copy of the game's folder (an older version, or a game that
 // was ended from Task Manager), so this copy starts its own and saves into its own folder. Usage: node other_copy_db.js
 // Exits 0 when nothing needs doing (no database running, or it is this folder's own).
 const net = require("node:net");
@@ -24,7 +24,7 @@ function port_open() {
 		const options = await client.db("admin").command({ getCmdLineOpts: 1 });
 		const theirs = path.resolve(String((options.parsed && options.parsed.storage && options.parsed.storage.dbPath) || "")).toLowerCase().replace(/[\\/]+$/, "");
 		if (theirs == ours) return;
-		console.log("Closing the database left running from another Fantasy Land folder...");
+		console.log("Closing the database left running from another copy of the game...");
 		await client.db("admin").command({ shutdown: 1 }).catch(() => {}); // a clean shutdown, so that folder's saves are kept
 	} catch (e) {
 		return; // can't tell whose it is: leave it alone

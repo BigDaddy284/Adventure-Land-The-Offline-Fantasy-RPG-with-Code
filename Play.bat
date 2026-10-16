@@ -1,10 +1,10 @@
 @echo off
-rem Fantasy Land (single player Adventure Land): starts the database, website and game server in order, then opens the game.
+rem Adventure Land: The Offline Fantasy CRPG with Code (single player): starts the database, website and game server in order, then opens the game.
 rem The first run also installs everything, which takes a few minutes.
 setlocal
 cd /d "%~dp0"
-title Fantasy Land - Launcher
-rem Fantasy Land.exe runs this with FL_LAUNCHER set: everything then starts without console windows,
+title Adventure Land - Launcher
+rem Adventure Land.exe runs this with AL_LAUNCHER set: everything then starts without console windows,
 rem and their messages go to the logs folder instead.
 if not exist logs\ mkdir logs
 
@@ -38,7 +38,7 @@ rem Hide the game's own files, so the folder only shows what you use (turn on Hi
 if exist singleplayer\hidden.txt for /f "usebackq eol=# delims=" %%F in ("singleplayer\hidden.txt") do if exist "%%F" attrib +h "%%F" >nul 2>nul
 
 rem ---------- Another copy left running ----------
-rem The website, game server or database can still be running from another Fantasy Land folder (an older version, or a game
+rem The website, game server or database can still be running from another Adventure Land folder (an older version, or a game
 rem ended from Task Manager). They're closed first, so this copy runs its own files, saves into its own folder, and the other
 rem folder can be deleted. The database gets a clean shutdown so that folder's saves are kept.
 powershell -NoProfile -Command "$d='%~dp0'.ToLower(); Get-NetTCPConnection -State Listen -LocalPort 8090,7192 -ErrorAction SilentlyContinue | ForEach-Object { $p = Get-CimInstance Win32_Process -Filter \"ProcessId=$($_.OwningProcess)\"; if ($p -and $p.Name -eq 'node.exe' -and -not ([string]$p.CommandLine).ToLower().Contains($d)) { Stop-Process -Id $p.ProcessId -Force -ErrorAction SilentlyContinue } }" >nul 2>nul
@@ -60,8 +60,8 @@ exit /b 1
 :start_database
 if not exist singleplayer\data\ mkdir singleplayer\data
 echo Starting the database...
-if defined FL_LAUNCHER goto start_database_hidden
-start "Fantasy Land - Database" /min "%MONGOD%" --dbpath "%~dp0singleplayer\data" --bind_ip 127.0.0.1 --port 27018 --replSet rs0
+if defined AL_LAUNCHER goto start_database_hidden
+start "Adventure Land - Database" /min "%MONGOD%" --dbpath "%~dp0singleplayer\data" --bind_ip 127.0.0.1 --port 27018 --replSet rs0
 goto database_running
 :start_database_hidden
 start "" /b "%MONGOD%" --dbpath "%~dp0singleplayer\data" --bind_ip 127.0.0.1 --port 27018 --replSet rs0 --logpath "%~dp0logs\database.log" --logappend
@@ -80,8 +80,8 @@ rem ---------- 2. Website ----------
 echo Starting the website...
 node singleplayer\wait_port.js 8090 1 website >nul 2>nul
 if not errorlevel 1 goto website_running
-if defined FL_LAUNCHER goto start_website_hidden
-start "Fantasy Land - Website" /min cmd /k node "%~dp0main.js"
+if defined AL_LAUNCHER goto start_website_hidden
+start "Adventure Land - Website" /min cmd /k node "%~dp0main.js"
 goto website_running
 :start_website_hidden
 start "" /b cmd /c "node "%~dp0main.js" > "%~dp0logs\website.log" 2>&1"
@@ -92,8 +92,8 @@ rem ---------- 3. Game server ----------
 echo Starting the game server...
 node singleplayer\wait_port.js 7192 1 "game server" >nul 2>nul
 if not errorlevel 1 goto game_server_running
-if defined FL_LAUNCHER goto start_game_server_hidden
-start "Fantasy Land - Game Server" /min cmd /k "cd node && node "%~dp0node\server.js" local"
+if defined AL_LAUNCHER goto start_game_server_hidden
+start "Adventure Land - Game Server" /min cmd /k "cd node && node "%~dp0node\server.js" local"
 goto game_server_running
 :start_game_server_hidden
 start "" /b cmd /c "cd node && node "%~dp0node\server.js" local > "%~dp0logs\game-server.log" 2>&1"
@@ -101,11 +101,11 @@ start "" /b cmd /c "cd node && node "%~dp0node\server.js" local > "%~dp0logs\gam
 node singleplayer\wait_port.js 7192 180 "game server" || (pause & exit /b 1)
 
 rem ---------- 4. Play ----------
-rem Fantasy Land.exe opens the game window itself, so it can tell when you close it
-if defined FL_LAUNCHER echo Opening the game...& exit /b 0
+rem Adventure Land.exe opens the game window itself, so it can tell when you close it
+if defined AL_LAUNCHER echo Opening the game...& exit /b 0
 rem Opens the game in its own resizable window (Edge app mode with its own profile, so Stop.bat can close it).
 echo Opening the game...
-start "" msedge --app=http://127.0.0.1:8090 --user-data-dir="%LOCALAPPDATA%\FantasyLandSinglePlayer" --no-first-run --window-size=1280,800 --disable-background-timer-throttling --disable-renderer-backgrounding --disable-backgrounding-occluded-windows --disable-features=CalculateNativeWinOcclusion,IntensiveWakeUpThrottling 2>nul || start "" http://127.0.0.1:8090
+start "" msedge --app=http://127.0.0.1:8090 --user-data-dir="%LOCALAPPDATA%\AdventureLandSinglePlayer" --no-first-run --window-size=1280,800 --disable-background-timer-throttling --disable-renderer-backgrounding --disable-backgrounding-occluded-windows --disable-features=CalculateNativeWinOcclusion,IntensiveWakeUpThrottling 2>nul || start "" http://127.0.0.1:8090
 echo.
 echo Everything is running. Close the game window when you're done, then run Stop.bat.
 timeout /t 8 >nul

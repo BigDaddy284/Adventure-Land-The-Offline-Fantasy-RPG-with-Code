@@ -1,5 +1,5 @@
-// Fantasy Land copy: loads WebView2Loader.dll from disk only (it ships next to
-// Fantasy Land.exe). The upstream version also embedded the DLL and loaded it
+// Adventure Land (offline) copy: loads WebView2Loader.dll from disk only (it ships next to
+// Adventure Land.exe). The upstream version also embedded the DLL and loaded it
 // from memory, which antivirus software flags.
 package webviewloader
 

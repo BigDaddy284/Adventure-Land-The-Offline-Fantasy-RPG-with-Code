@@ -1,11 +1,11 @@
 //go:build windows
 
-// Fantasy Land.exe: starts the game with no console windows (by running Play.bat hidden), opens the game window,
+// Adventure Land.exe: starts the game with no console windows (by running Play.bat hidden), opens the game window,
 // and when the game window closes, runs Stop.bat so the characters save and everything shuts down cleanly.
 // The game window is this program's own window (the WebView2 browser engine that comes with Windows), so Task Manager
-// shows it as Fantasy Land with the game's icon. Without WebView2 it falls back to an Edge app window.
+// shows it as Adventure Land with the game's icon. Without WebView2 it falls back to an Edge app window.
 //
-// Build (from this folder): GOOS=windows GOARCH=amd64 go build -ldflags "-H windowsgui -s -w" -o "../../Fantasy Land.exe"
+// Build (from this folder): GOOS=windows GOARCH=amd64 go build -ldflags "-H windowsgui -s -w" -o "../../Adventure Land.exe"
 // The icon and file details come from rsrc_windows_amd64.syso, made from winres/ with: go-winres make --arch amd64
 package main
 
@@ -25,8 +25,8 @@ import (
 
 const (
 	gameURL    = "http://127.0.0.1:8090"
-	profileDir = "FantasyLandSinglePlayer" // the game window's own Edge profile, in %LOCALAPPDATA% (same as Play.bat)
-	title      = "Fantasy Land"
+	profileDir = "AdventureLandSinglePlayer" // the game window's own Edge profile, in %LOCALAPPDATA% (same as Play.bat)
+	title      = "Adventure Land: The Offline Fantasy CRPG with Code"
 	// The browser flags the Edge app window used: the game keeps running at full speed in the background or minimised
 	browserFlags = "--disable-background-timer-throttling --disable-renderer-backgrounding --disable-backgrounding-occluded-windows " +
 		"--disable-features=CalculateNativeWinOcclusion,IntensiveWakeUpThrottling --autoplay-policy=no-user-gesture-required"
@@ -146,7 +146,7 @@ func createWindow() {
 	instance, _, _ := pGetModuleHandleW.Call(0)
 	cursor, _, _ := pLoadCursorW.Call(0, 32512)
 	icon, _, _ := pLoadIconW.Call(instance, 1) // the exe's own icon
-	class := wndClassEx{WndProc: syscall.NewCallback(wndProc), Instance: instance, Icon: icon, IconSm: icon, Cursor: cursor, Background: 16, ClassName: utf16("FantasyLandLauncher")}
+	class := wndClassEx{WndProc: syscall.NewCallback(wndProc), Instance: instance, Icon: icon, IconSm: icon, Cursor: cursor, Background: 16, ClassName: utf16("AdventureLandLauncher")}
 	class.Size = uint32(unsafe.Sizeof(class))
 	pRegisterClassExW.Call(uintptr(unsafe.Pointer(&class)))
 	const width, height = 460, 170
@@ -159,7 +159,7 @@ func createWindow() {
 	// WS_CHILD | WS_VISIBLE | SS_LEFT
 	label, _, _ = pCreateWindowExW.Call(0, uintptr(unsafe.Pointer(utf16("STATIC"))), uintptr(unsafe.Pointer(utf16(""))), 0x50000000, 18, 16, width-50, 70, window, 0, instance, 0)
 	// WS_CHILD | BS_PUSHBUTTON (shown only when needed)
-	button, _, _ = pCreateWindowExW.Call(0, uintptr(unsafe.Pointer(utf16("BUTTON"))), uintptr(unsafe.Pointer(utf16("Stop Fantasy Land"))), 0x40000000, (width-170)/2, 88, 150, 28, window, buttonID, instance, 0)
+	button, _, _ = pCreateWindowExW.Call(0, uintptr(unsafe.Pointer(utf16("BUTTON"))), uintptr(unsafe.Pointer(utf16("Stop the game"))), 0x40000000, (width-170)/2, 88, 150, 28, window, buttonID, instance, 0)
 	pSendMessageW.Call(label, wmSetFont, font, 1)
 	pSendMessageW.Call(button, wmSetFont, font, 1)
 }
@@ -186,10 +186,10 @@ func runBatch(name string, launcher bool, log *os.File) error {
 	cmd.Stdout, cmd.Stderr = log, log
 	cmd.Env = os.Environ()
 	if launcher {
-		cmd.Env = append(cmd.Env, "FL_LAUNCHER=1")
+		cmd.Env = append(cmd.Env, "AL_LAUNCHER=1")
 	}
 	if name == "Stop.bat" {
-		cmd.Env = append(cmd.Env, "FL_STOPPING=1") // so Stop.bat doesn't close this program while it is still stopping the game
+		cmd.Env = append(cmd.Env, "AL_STOPPING=1") // so Stop.bat doesn't close this program while it is still stopping the game
 	}
 	cmd.SysProcAttr = &syscall.SysProcAttr{HideWindow: true, CreationFlags: createNoWindow}
 	return cmd.Run()
@@ -265,24 +265,24 @@ func turnOffBackgroundMode() {
 }
 
 // In every game window: window.open for a page of the game (the Mod Menu's Win + button, /window NAME, the Characters tab)
-// opens another Fantasy Land window instead of the browser's own pop-up window, which has an address bar.
+// opens another game window instead of the browser's own pop-up window, which has an address bar.
 // Other links still open as they normally do. Extra windows show the page's title (the character's name).
 const windowScript = `(function () {
 	var nativeOpen = window.open;
 	window.open = function (url, target, features) {
 		try {
 			var u = new URL(url || "/", location.href);
-			if (u.origin === location.origin && window.flOpenWindow) {
-				window.flOpenWindow(u.href);
+			if (u.origin === location.origin && window.alOpenWindow) {
+				window.alOpenWindow(u.href);
 				return { closed: false, focus: function () {}, close: function () {}, postMessage: function () {} };
 			}
 		} catch (e) {}
 		return nativeOpen.apply(window, arguments);
 	};
 	function sync() {
-		if (window.flSetTitle && document.title) window.flSetTitle(document.title);
+		if (window.alSetTitle && document.title) window.alSetTitle(document.title);
 	}
-	if (window.flSetTitle) {
+	if (window.alSetTitle) {
 		document.addEventListener("DOMContentLoaded", function () {
 			sync();
 			var t = document.querySelector("title");
@@ -293,7 +293,7 @@ const windowScript = `(function () {
 
 // Shows the game at url in a window of its own and returns when that window is closed. Returns false, with nothing shown,
 // when the WebView2 browser engine isn't there, so the caller can use Edge instead. created (optional) gets true once the window is up.
-// Every game window, the first one included, is its own Fantasy Land.exe process (see spawnWindow and firstWindow), and that
+// Every game window, the first one included, is its own Adventure Land.exe process (see spawnWindow and firstWindow), and that
 // process ends as soon as its window closes. All the windows share one WebView2 browser, which stalls every window if a
 // closed window's process keeps running with nothing answering it, so no window may be shown by the launcher process itself.
 func gameWindow(url string, first bool, created chan<- bool) bool {
@@ -331,8 +331,8 @@ func gameWindow(url string, first bool, created chan<- bool) bool {
 	if created != nil {
 		created <- true
 	}
-	view.Bind("flOpenWindow", func(target string) { go spawnWindow(target) })
-	view.Bind("flSetTitle", func(text string) { view.SetTitle(text) }) // the window shows the page's title, like the game's own name and character
+	view.Bind("alOpenWindow", func(target string) { go spawnWindow(target) })
+	view.Bind("alSetTitle", func(text string) { view.SetTitle(text) }) // the window shows the page's title, like the game's own name and character
 	view.Init(windowScript)
 	view.Navigate(url)
 	view.Run()
@@ -369,7 +369,7 @@ const noWebView2 = 3
 
 // Every extra game window process holds a handle to this named mutex, so it
 // exists exactly while at least one extra window is open
-const windowsMutex = "FantasyLandExtraWindows"
+const windowsMutex = "AdventureLandExtraWindows"
 
 func otherWindows() int {
 	handle, _, _ := pOpenMutexW.Call(0x100000, 0, uintptr(unsafe.Pointer(utf16(windowsMutex)))) // SYNCHRONIZE
@@ -380,7 +380,7 @@ func otherWindows() int {
 	return 1
 }
 
-// A second double-click on Fantasy Land.exe brings the game window forward
+// A second double-click on Adventure Land.exe brings the game window forward
 func focusGameWindow() bool {
 	hwnd, _, _ := pFindWindowW.Call(uintptr(unsafe.Pointer(utf16("webview"))), 0) // any game window: their titles follow the page
 	if hwnd == 0 {
@@ -408,7 +408,7 @@ func openInBrowser() {
 
 func stopGame(log *os.File) {
 	showButton(false)
-	status("Saving your characters and closing Fantasy Land...\n\nThis window closes by itself when everything has stopped.")
+	status("Saving your characters and closing the game...\n\nThis window closes by itself when everything has stopped.")
 	show()
 	runBatch("Stop.bat", false, log)
 }
@@ -417,7 +417,7 @@ func run() {
 	defer pPostMessageW.Call(window, msgQuit, 0, 0)
 
 	if _, err := os.Stat(filepath.Join(gameDir, "Play.bat")); err != nil {
-		messageBox("Fantasy Land.exe needs to be in the game folder, next to Play.bat.", 0x10)
+		messageBox("Adventure Land.exe needs to be in the game folder, next to Play.bat.", 0x10)
 		return
 	}
 	os.MkdirAll(filepath.Join(gameDir, "logs"), 0755)
@@ -429,7 +429,7 @@ func run() {
 	}
 	defer log.Close()
 
-	status("Starting Fantasy Land...\n\nThe very first start installs everything and can take a few minutes.")
+	status("Starting Adventure Land...\n\nThe very first start installs everything and can take a few minutes.")
 	show()
 	started := make(chan error, 1)
 	go func() { started <- runBatch("Play.bat", true, log) }()
@@ -439,13 +439,13 @@ func run() {
 			waiting = false
 		case <-time.After(400 * time.Millisecond):
 			if line := lastLine(logPath); line != "" {
-				status("Starting Fantasy Land...\n\n" + line)
+				status("Starting Adventure Land...\n\n" + line)
 			}
 		}
 	}
 	if err != nil {
 		hide()
-		messageBox("Fantasy Land couldn't start:\n\n"+lastLines(logPath, 6)+"\n\nThe full details are in the logs folder, in launcher.log.", 0x10)
+		messageBox("Adventure Land couldn't start:\n\n"+lastLines(logPath, 6)+"\n\nThe full details are in the logs folder, in launcher.log.", 0x10)
 		stopGame(log)
 		return
 	}
@@ -506,7 +506,7 @@ func run() {
 		if !edge {
 			openInBrowser()
 		}
-		status("Fantasy Land is running in your browser.\n\nWhen you're done playing, click Stop to save and close everything.")
+		status("Adventure Land is running in your browser.\n\nWhen you're done playing, click Stop to save and close everything.")
 		showButton(true)
 		show()
 		<-stopRequested
@@ -533,7 +533,7 @@ func main() {
 
 	// Only one launcher at a time: a second double-click just opens another game window
 	pSetLastError.Call(0)
-	_, _, lastErr := pCreateMutexW.Call(0, 0, uintptr(unsafe.Pointer(utf16("FantasyLandLauncher"))))
+	_, _, lastErr := pCreateMutexW.Call(0, 0, uintptr(unsafe.Pointer(utf16("AdventureLandLauncher"))))
 	if lastErr == syscall.Errno(183) { // ERROR_ALREADY_EXISTS
 		if !focusGameWindow() {
 			spawnWindow(gameURL)

@@ -1,5 +1,5 @@
 # ============================================================
-#  Fantasy Land - The Code (NOMMO) RPG - Settings
+#  Adventure Land: The Offline Fantasy CRPG with Code - Settings
 # ============================================================
 #  Edit this file with Notepad, save it, then restart the game:
 #  run Stop.bat, then Play.bat. Or change them while playing:

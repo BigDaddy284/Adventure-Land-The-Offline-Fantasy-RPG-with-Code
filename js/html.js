@@ -3675,7 +3675,7 @@ function turn_tutorial_lore(direction) {
 	while (960 / divisor > available && divisor < 16) divisor *= 2;
 	container.closest(".guide-article").css("width", 960 / divisor + 10);
 	container.attr("data-page", page);
-	container.find("img").attr("src", "/images/tutorial/lore/" + container.attr("data-language") + "/page-0" + page + ".jpg?v=native-20261012").attr("alt", container.find("img").attr("data-alt-" + page)).css({ width: 960 / divisor, height: 540 / divisor });
+	container.find("img").attr("src", "/images/tutorial/lore/" + container.attr("data-language") + "/page-0" + page + ".jpg?v=native-20261016").attr("alt", container.find("img").attr("data-alt-" + page)).css({ width: 960 / divisor, height: 540 / divisor });
 	container.find(".tutorial-lore-prev").css("visibility", page === 1 ? "hidden" : "visible");
 	container.find(".tutorial-lore-skip").css("visibility", page === 5 ? "hidden" : "visible");
 	container.find(".tutorial-lore-next").toggle(page < 5);
@@ -8748,7 +8748,7 @@ function merrit_shell_odds_html() {
 
 // Single player: the log's welcome message, with a few tips on the character select screen
 function single_player_welcome() {
-	add_log("Welcome to Fantasy Land!", "#73BD6D");
+	add_log("Welcome to Adventure Land: The Offline Fantasy CRPG with Code!", "#73BD6D");
 	if ($("#sp-login").is(":visible")) add_log("Click Login to get started.", "white");
 	if (window.character || (typeof inside != "undefined" && inside != "selection")) return;
 	[

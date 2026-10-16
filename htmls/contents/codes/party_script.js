@@ -1,4 +1,4 @@
-// ADVENTURE LAND / FANTASY LAND - PARTY AIO (Default Party Script)
+// ADVENTURE LAND: THE OFFLINE FANTASY CRPG WITH CODE - PARTY AIO (Default Party Script)
 //
 // SET-UP: type your character names into LEADER, FOLLOWERS and ROLES
 // below, then press Save. Your names are kept in your own "Party AIO"
@@ -363,7 +363,7 @@ var MANUAL_MONSTER_LAST_KILL = 0;
 // TIMED EVENT MONSTERS (ALWAYS WATCHED)
 //
 // These monsters only appear during game events (Mr Pumpkin and Mr Green
-// at Halloween, for example). In Fantasy Land each one can be switched on
+// at Halloween, for example). In this offline version each one can be switched on
 // all year in the Holiday Events menu. Anything listed here is watched ALL
 // the time, whether the leader is on a Daisy assignment or the manual
 // rotation above.

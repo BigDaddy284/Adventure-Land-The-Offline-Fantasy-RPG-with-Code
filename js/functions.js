@@ -113,7 +113,7 @@ function update_login_server() {
 		destination = phrase.html("interface.selection.destination").replace("{server}", function () {
 			return "<span style='color:white'>" + phrase.escape(home_server_name(home)) + "</span>";
 		});
-	if (selected && typeof single_player_mode != "undefined" && single_player_mode) destination = "<span style='color:white'>Fantasy Land - The Code (NOMMO) RPG</span>"; // Single player: the game's name instead of the server
+	if (selected && typeof single_player_mode != "undefined" && single_player_mode) destination = "<span style='color:white'>Adventure Land: The Offline Fantasy CRPG with Code</span>"; // Single player: the game's name instead of the server
 	$(".selection-destination").html(destination);
 	$(".selection-connecting").toggle(!!selected && !socket_welcomed);
 	$(".selection-server").each(function () {

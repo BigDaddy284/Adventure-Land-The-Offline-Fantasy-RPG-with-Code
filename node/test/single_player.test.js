@@ -415,7 +415,7 @@ test("the hidden files list only names files in the game folder, and never what 
 	assert.ok(lines.includes("steam_news.js") && lines.includes("steam_signin.js") && lines.includes("steam_signup.js"));
 	const normal = lines.map((line) => line.replace(/\\/g, "/").toLowerCase());
 	for (const line of lines) assert.ok(!/^[a-z]:|^[\\/]|\.\.|[*?"<>|]/i.test(line), line + " is a plain relative name");
-	for (const used of ["fantasy land.exe", "play.bat", "stop.bat", "settings.txt", "readme.md", "changelog.md", "license", "logs", "singleplayer", "singleplayer/data"])
+	for (const used of ["adventure land.exe", "play.bat", "stop.bat", "settings.txt", "readme.md", "changelog.md", "license", "logs", "singleplayer", "singleplayer/data"])
 		assert.ok(!normal.includes(used), used + " stays visible");
 	// Play.bat applies the list, and everything it names that is part of the game exists
 	assert.match(fs.readFileSync(path.join(root, "Play.bat"), "utf8"), /singleplayer\\hidden\.txt[\s\S]*attrib \+h/);
