@@ -14,7 +14,7 @@
 
 ## Thanks and accreditation
 
-This game exists because of **[Adventure Land](https://adventure.land)**, created by **Kaan Soral**. Every map, monster, class, item, sound and line of game code that makes this game what it is came from him and the Adventure Land team. Kaan open-sourced the game, and when asked about this project he gave his blessing to release it as a sub-game of Adventure Land, with the name **Adventure Land: The Offline Fantasy RPG with Code**, and said its assets are covered by Adventure Land's. Thank you, Kaan.
+This game exists because of **[Adventure Land](https://adventure.land)**, created by **Kaan Soral**. Every map, monster, class, item, sound and line of game code that makes this game what it is came from him and the Adventure Land team. Kaan open-sourced the game, and when asked about this project he gave his blessing, Thank you, Kaan.
 
 - **Kaan Soral and the Adventure Land developers:** the original game, its engine and its source code: [adventureland_mongodb](https://github.com/kaansoral/adventureland_mongodb), the MongoDB port this game is built on.
 - **Ellian**, Adventure Land's pixel artist, and the other artists, composers and developers whose libraries, assets and work Adventure Land is built from. Their art and music are what you see and hear in this game.
