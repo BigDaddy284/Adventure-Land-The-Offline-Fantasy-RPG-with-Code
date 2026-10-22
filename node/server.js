@@ -637,6 +637,18 @@ async function init_game() {
 		init_tavern();
 		init_server();
 		await pull_server_information();
+		if (typeof single_player == "object") {
+			// Single player: characters left marked as in the game by a game that didn't stop cleanly (e.g. the PC restarted)
+			try {
+				var released = await single_player.release_stale_sessions(db);
+				if (released.characters || released.users)
+					console.log(
+						"Released " + released.characters + " character(s) and " + released.users + " bank(s) left in the game",
+					);
+			} catch (e) {
+				log_trace("release stale sessions", e);
+			}
+		}
 		server.started = true;
 		server.live = true;
 

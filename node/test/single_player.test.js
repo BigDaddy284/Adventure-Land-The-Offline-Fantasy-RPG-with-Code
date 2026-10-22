@@ -619,3 +619,18 @@ test("Exchange speed and Crafting speed shorten exchanges, upgrades and compound
 	assert.equal(server.split('single_player.speed_up(len, "crafting_speed")').length - 1, 1);
 	assert.equal(server.split('single_player.speed_up(ms, "exchange_speed")').length - 1, 1);
 });
+
+test("starting the game releases characters and banks a game that did not stop cleanly left in the game", async () => {
+	const calls = [];
+	const db = {
+		collection: (name) => ({
+			updateMany: async (filter, update) => {
+				calls.push([name, filter, update]);
+				return { modifiedCount: name == "character" ? 3 : 1 };
+			},
+		}),
+	};
+	assert.deepEqual(await single_player.release_stale_sessions(db), { characters: 3, users: 1 });
+	assert.deepEqual(calls[0], ["character", { server: { $nin: [null, ""] } }, { $set: { online: false, server: "" } }]);
+	assert.deepEqual(calls[1], ["user", { server: { $nin: [null, ""] } }, { $set: { server: "", mounted_to: "" } }]);
+});

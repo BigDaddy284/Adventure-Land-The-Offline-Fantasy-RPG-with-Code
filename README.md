@@ -14,7 +14,7 @@
 
 ## Thanks and accreditation
 
-This game exists because of **[Adventure Land](https://adventure.land)**, created by **Kaan Soral**. Every map, monster, class, item, sound and line of game code that makes this game what it is came from him and the Adventure Land team. Kaan open-sourced the game, and when asked about this project he gave his blessing, Thank you, Kaan.
+This game exists because of **[Adventure Land](https://adventure.land)**, created by **Kaan Soral**. Every map, monster, class, item, sound and line of game code that makes this game what it is came from him and the Adventure Land team. Kaan open-sourced the game, and when asked about this project he gave his blessing to release it as a sub-game of Adventure Land, with the name **Adventure Land: The Offline Fantasy RPG with Code**, and said its assets are covered by Adventure Land's. Thank you, Kaan.
 
 - **Kaan Soral and the Adventure Land developers:** the original game, its engine and its source code: [adventureland_mongodb](https://github.com/kaansoral/adventureland_mongodb), the MongoDB port this game is built on.
 - **Ellian**, Adventure Land's pixel artist, and the other artists, composers and developers whose libraries, assets and work Adventure Land is built from. Their art and music are what you see and hear in this game.
@@ -83,6 +83,23 @@ These do the same job as `Adventure Land.exe` with console windows you can see, 
 - **`Stop.bat`** closes the game window, waits a few seconds so your characters save, then stops the game server, the website and the database. Always use it rather than just closing the console windows, so the database shuts down cleanly.
 
 When the game is started with `Adventure Land.exe`, the database, website and game server write their messages to the `logs` folder instead.
+
+## If characters are stuck as "already logged in"
+
+If the PC restarts, loses power or the game is ended in Task Manager, the game can't log your characters out, so it still thinks they are in the game and won't let you log in to them. The fix is `singleplayer\release_stale.js`, a small script that clears those leftover marks. Your characters, items and progress are not touched.
+
+1. Double-click **`Play.bat`** (not `Adventure Land.exe`, which closes the database when the game closes). Leave its windows open.
+2. Open a Command Prompt in the game folder (type `cmd` in File Explorer's address bar) and run:
+
+   ```
+   node singleplayer\release_stale.js
+   ```
+
+   It should say `Released N character(s)`.
+3. Close the game window and run **`Stop.bat`**.
+4. Start the game as usual. Your characters can log in again.
+
+If your copy of the game doesn't have `release_stale.js` in its `singleplayer` folder, download it from this repository's [singleplayer](singleplayer/release_stale.js) folder and put it there. Newer builds of the game also do this by themselves every time they start.
 
 ## Settings
 

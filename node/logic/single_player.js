@@ -784,6 +784,7 @@ function create(settings) {
 				if (!settings.fishing_mining_cooldown && (name == "fishing" || name == "mining")) def.reuse_cooldown = 0;
 			}
 		},
+		release_stale_sessions,
 		apply_options(options) {
 			// The game's own limits are remembered, so lowering the setting while playing works too
 			if (!base_limits)
@@ -862,7 +863,21 @@ function create(settings) {
 	};
 }
 
+// A game that ended without a clean stop (the PC restarted, the power went, a process was ended in Task Manager) leaves its
+// characters marked as in the game, and the next login is refused. The game server holds no players when it starts, so
+// every mark left in the database is stale: clear them, and the bank claims (a bank open in a character that is gone).
+async function release_stale_sessions(db) {
+	const characters = await db
+		.collection("character")
+		.updateMany({ server: { $nin: [null, ""] } }, { $set: { online: false, server: "" } });
+	const users = await db
+		.collection("user")
+		.updateMany({ server: { $nin: [null, ""] } }, { $set: { server: "", mounted_to: "" } });
+	return { characters: characters.modifiedCount || 0, users: users.modifiedCount || 0 };
+}
+
 module.exports = {
+	release_stale_sessions,
 	DEFAULTS,
 	parse,
 	missing_settings,
